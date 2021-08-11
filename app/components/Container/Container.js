@@ -9,7 +9,7 @@ const Container = ({children, backgroundColor, style = {}}) => {
   }
   return (
     <View style={containerStyles}>
-      <StatusBar backgroundColor={COLORS.primary} barStyle={'light-content'} />
+      {/* <StatusBar backgroundColor={COLORS.primary} barStyle={'light-content'} /> */}
       {children}
     </View>
   );
