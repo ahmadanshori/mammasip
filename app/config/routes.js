@@ -15,6 +15,7 @@ import {
   ProfileScreen,
 } from '../screens/menu';
 import {LoginScreen, RegisterScreen} from '../screens/auth';
+import {ChangePasswordScreen} from '../screens/profile';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -32,7 +33,7 @@ const TabNavigator = () => {
         headerShown: false,
       }}>
       <Tab.Screen
-        name="Home"
+        name="HomeTab"
         component={HomeScreen}
         options={{
           tabBarLabel: 'Beranda',
@@ -48,7 +49,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Article"
+        name="ArticleTab"
         component={ArticleScreen}
         options={{
           tabBarLabel: 'Artikel',
@@ -66,12 +67,12 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('Article');
+              navigationRef.current.navigate('ArticleTab');
               // if (token) {
-              //   navigationRef.current.navigate('Article');
+              //   navigationRef.current.navigate('ArticleTab');
               // } else {
               //   navigationRef.current.navigate('Login', {
-              //     nav: 'Article',
+              //     nav: 'ArticleTab',
               //   });
               // }
             };
@@ -80,7 +81,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Video"
+        name="VideoTab"
         component={VideoScreen}
         options={{
           tabBarLabel: 'Video',
@@ -100,10 +101,10 @@ const TabNavigator = () => {
             const validation = async () => {
               navigationRef.current.navigate('Login');
               // if (token) {
-              //   navigationRef.current.navigate('Video');
+              //   navigationRef.current.navigate('VideoTab');
               // } else {
               //   navigationRef.current.navigate('Login', {
-              //     nav: 'Video',
+              //     nav: 'VideoTab',
               //   });
               // }
             };
@@ -112,7 +113,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Message"
+        name="MessageTab"
         component={MessageScreen}
         options={{
           tabBarLabel: 'Pesan',
@@ -130,12 +131,12 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('Message');
+              navigationRef.current.navigate('MessageTab');
               // if (token) {
-              //   navigationRef.current.navigate('Message');
+              //   navigationRef.current.navigate('MessageTab');
               // } else {
               //   navigationRef.current.navigate('Login', {
-              //     nav: 'Message',
+              //     nav: 'MessageTab',
               //   });
               // }
             };
@@ -144,7 +145,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="ProfileTab"
         component={ProfileScreen}
         options={{
           tabBarLabel: 'Profile',
@@ -162,12 +163,12 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('Profile');
+              navigationRef.current.navigate('ProfileTab');
               // if (token) {
-              //   navigationRef.current.navigate('Profile');
+              //   navigationRef.current.navigate('ProfileTab');
               // } else {
               //   navigationRef.current.navigate('Login', {
-              //     nav: 'Profile',
+              //     nav: 'ProfileTab',
               //   });
               // }
             };
@@ -204,6 +205,10 @@ export default function App() {
           <Stack.Screen component={TabNavigator} name="Home" />
           <Stack.Screen component={LoginScreen} name="Login" />
           <Stack.Screen component={RegisterScreen} name="Register" />
+          <Stack.Screen
+            component={ChangePasswordScreen}
+            name="ChangePassword"
+          />
         </>
       </Stack.Navigator>
     </NavigationContainer>

@@ -5,9 +5,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {COLORS, FONTS} from '../../constants';
 
-const ProfileItem = ({iconName, title, number}) => {
+const ProfileItem = ({iconName, title, number, onPress}) => {
   return (
-    <TouchableNativeFeedback>
+    <TouchableNativeFeedback onPress={onPress}>
       <View
         style={[
           styles.container,

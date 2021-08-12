@@ -6,7 +6,10 @@ import {ProfileHeader} from '../../components/Headers';
 import {ProfileItem} from '../../components/Items';
 import Point from '../../components/Point';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
+  const handleNavigate = type => {
+    navigation.navigate(`${type}`);
+  };
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -19,7 +22,11 @@ const ProfileScreen = () => {
             number={100}
           />
           <ProfileItem iconName="account-outline" title="Edit data diri" />
-          <ProfileItem iconName="lock-outline" title="Ganti Password" />
+          <ProfileItem
+            iconName="lock-outline"
+            title="Ganti Password"
+            onPress={() => handleNavigate('ChangePassword')}
+          />
           <ProfileItem iconName="comment-question-outline" title="FAQ" />
           <ProfileItem iconName="ballot-outline" title="Syarat & Ketentuan" />
           <ProfileItem iconName="exit-to-app" title="Keluar" />
