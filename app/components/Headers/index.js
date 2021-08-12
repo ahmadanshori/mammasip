@@ -1,2 +1,3 @@
 import HomeHeader from './HomeHeader';
-export {HomeHeader};
+import ProfileHeader from './ProfileHeader';
+export {HomeHeader, ProfileHeader};

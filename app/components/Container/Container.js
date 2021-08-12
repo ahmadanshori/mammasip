@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StatusBar, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {COLORS} from '../../constants';
 
 const Container = ({children, backgroundColor, style = {}}) => {
@@ -7,12 +7,7 @@ const Container = ({children, backgroundColor, style = {}}) => {
   if (backgroundColor) {
     containerStyles.push({backgroundColor});
   }
-  return (
-    <View style={containerStyles}>
-      {/* <StatusBar backgroundColor={COLORS.primary} barStyle={'light-content'} /> */}
-      {children}
-    </View>
-  );
+  return <View style={containerStyles}>{children}</View>;
 };
 
 const styles = StyleSheet.create({

@@ -13,7 +13,9 @@ export const COLORS = {
   black: '#0A0A0A',
   blackShadow: 'rgba(0,0,0, 0.8)',
   green: '#00960a',
-  yellow: '#F4C30E',
+  darkYellow: '#F4C30E',
+  yellow: '#F9E186',
+  lightYellow: '#FDF3CF',
   red: '#d61841',
   separator: '#EDEDED',
   border: '#E0E0E0',
@@ -37,7 +39,7 @@ export const SIZES = {
 export const FONTS = {
   text8: {fontFamily: 'Inter-Regular', fontSize: 8},
   textBold8: {fontFamily: 'Inter-Bold', fontSize: 8},
-  text10: {fontFamily: 'Inter-Regular', fontSize: 10, letterSpacing: 0.14},
+  text10: {fontFamily: 'Inter-Regular', fontSize: 10},
   textBold10: {
     fontFamily: 'Inter-Bold',
     fontSize: 10,

@@ -35,7 +35,7 @@ const TabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Beranda',
           tabBarIcon: ({focused}) => {
             return (
               <Ionicons

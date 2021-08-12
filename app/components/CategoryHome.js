@@ -40,7 +40,8 @@ const CategoryHome = ({onPressCategory}) => {
         style={styles.wrapper}
         activeOpacity={SIZES.opacity}
         onPress={onPressCategory}>
-        <View style={[styles.iconWrapper, {backgroundColor: COLORS.yellow}]}>
+        <View
+          style={[styles.iconWrapper, {backgroundColor: COLORS.darkYellow}]}>
           <MaterialIcons name="calculate" size={26} color={COLORS.white} />
         </View>
         <Text style={[FONTS.text8, {color: COLORS.black}]}>

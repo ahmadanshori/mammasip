@@ -1,2 +1,3 @@
 import HomeItem from './HomeItem';
-export {HomeItem};
+import ProfileItem from './ProfileItem';
+export {HomeItem, ProfileItem};
