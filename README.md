@@ -19,6 +19,7 @@ app => config => routes
 ```
 
 global Color, Font, Size
+example use = COLORS.primary
 
 ```groovy
 app => constants => theme
@@ -27,7 +28,7 @@ app => constants => theme
 global Function ex: format rupiah
 
 ```groovy
-app => libs => theme
+app => libs
 ```
 
 global Hooks ex: handleError
