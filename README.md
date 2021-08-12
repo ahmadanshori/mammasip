@@ -1,7 +1,5 @@
 # mammasip
 
-aplikasi kedokteran
-
 API
 
 ```groovy
