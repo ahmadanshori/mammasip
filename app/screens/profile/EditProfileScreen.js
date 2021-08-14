@@ -38,10 +38,7 @@ const EditProfileScreen = ({navigation}) => {
 
   const handleEditProfile = useCallback(() => {
     setError(null);
-    if (field.email !== field.phone) {
-      setError('Kombinasi email baru tidak sama!');
-    }
-  }, [field]);
+  }, []);
 
   const pictureWithCamera = async () => {
     setIsPicture(false);
@@ -71,7 +68,7 @@ const EditProfileScreen = ({navigation}) => {
     } catch (err) {}
   };
   const handleOpenPhoto = () => setIsPicture(true);
-  console.log('picture', picture);
+
   return (
     <Container>
       <HeaderTitle
