@@ -1,2 +1,3 @@
 import ChangePasswordScreen from './ChangePasswordScreen';
-export {ChangePasswordScreen};
+import EditProfileScreen from './EditProfileScreen';
+export {ChangePasswordScreen, EditProfileScreen};

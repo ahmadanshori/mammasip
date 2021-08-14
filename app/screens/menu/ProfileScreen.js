@@ -21,7 +21,11 @@ const ProfileScreen = ({navigation}) => {
             title="Bookmark"
             number={100}
           />
-          <ProfileItem iconName="account-outline" title="Edit data diri" />
+          <ProfileItem
+            iconName="account-outline"
+            title="Edit data diri"
+            onPress={() => handleNavigate('EditProfile')}
+          />
           <ProfileItem
             iconName="lock-outline"
             title="Ganti Password"

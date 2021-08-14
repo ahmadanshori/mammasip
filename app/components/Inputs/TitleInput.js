@@ -21,23 +21,32 @@ const TitleInput = ({
   keyboardType,
   style = {},
   onSubmitEditing,
-  maxLength,
+  maxLength = 25,
 }) => {
   const [show, setShow] = useState(true);
+  const [color, setColor] = useState(COLORS.border);
+  const handleFocus = () => {
+    setColor(COLORS.primary);
+  };
 
+  const handleBlur = () => {
+    setColor(COLORS.border);
+  };
   const handleShowButton = useCallback(() => {
     setShow(show ? false : true);
   }, [show]);
   return (
     <View style={style}>
       <Text style={[FONTS.textBold12, styles.title]}>{title}</Text>
-      <View style={[styles.container, err ? styles.error : styles.success]}>
+      <View style={[styles.wrapper, err ? styles.error : {borderColor: color}]}>
         <TextInput
           style={styles.input}
           placeholder={placeholder}
           secureTextEntry={pass ? show : false}
           onChangeText={onChangeText}
           keyboardType={keyboardType}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           value={value}
           autoFocus={autoFocus}
           onSubmitEditing={onSubmitEditing}
@@ -63,14 +72,13 @@ const TitleInput = ({
 
 const styles = StyleSheet.create({
   title: {color: COLORS.black, marginLeft: 4},
-  container: {
+  wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.white,
     borderWidth: 1,
     paddingHorizontal: 14,
     borderRadius: 6,
-    borderColor: COLORS.border,
     height: 48,
     marginTop: 8,
   },
@@ -95,6 +103,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: '100%',
+    fontFamily: 'Inter-Regular',
     // paddingLeft: 8,
   },
   buttonShow: {

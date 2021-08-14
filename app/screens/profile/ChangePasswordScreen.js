@@ -39,6 +39,7 @@ const ChangePasswordScreen = ({navigation}) => {
           title="Password Lama"
           placeholder="8-16 Karakter"
           pass
+          autoFocus={true}
           onChangeText={val => handleInput(val, 'oldPassword')}
           value={field.oldPassword}
           maxLength={16}
