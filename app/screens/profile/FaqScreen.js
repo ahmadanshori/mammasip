@@ -37,7 +37,7 @@ const FaqScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  scroll: {paddingHorizontal: 16},
+  scroll: {paddingHorizontal: 16, paddingBottom: 16},
   title: {
     paddingVertical: 30,
     justifyContent: 'center',

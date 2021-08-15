@@ -29,7 +29,7 @@ const Accordion = ({title}) => {
         <View style={styles.answerWrapper}>
           <Text
             style={[FONTS.textBold12, {color: COLORS.black, marginBottom: 16}]}>
-            Kenapa payudara ada benjolan tapi tidak sakit?
+            {title}
           </Text>
           <Text style={[FONTS.text12, {color: COLORS.black}]}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus
