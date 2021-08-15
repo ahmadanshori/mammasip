@@ -1,2 +1,3 @@
 import TitleInput from './TitleInput';
-export {TitleInput};
+import SearchInput from './SearchInput';
+export {TitleInput, SearchInput};

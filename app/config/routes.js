@@ -15,7 +15,11 @@ import {
   ProfileScreen,
 } from '../screens/menu';
 import {LoginScreen, RegisterScreen} from '../screens/auth';
-import {ChangePasswordScreen, EditProfileScreen} from '../screens/profile';
+import {
+  ChangePasswordScreen,
+  EditProfileScreen,
+  FaqScreen,
+} from '../screens/profile';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -210,6 +214,7 @@ export default function App() {
             name="ChangePassword"
           />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
+          <Stack.Screen component={FaqScreen} name="Faq" />
         </>
       </Stack.Navigator>
     </NavigationContainer>

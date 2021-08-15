@@ -31,7 +31,11 @@ const ProfileScreen = ({navigation}) => {
             title="Ganti Password"
             onPress={() => handleNavigate('ChangePassword')}
           />
-          <ProfileItem iconName="comment-question-outline" title="FAQ" />
+          <ProfileItem
+            iconName="comment-question-outline"
+            title="FAQ"
+            onPress={() => handleNavigate('Faq')}
+          />
           <ProfileItem iconName="ballot-outline" title="Syarat & Ketentuan" />
           <ProfileItem iconName="exit-to-app" title="Keluar" />
         </View>

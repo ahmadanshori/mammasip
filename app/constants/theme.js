@@ -9,7 +9,7 @@ export const COLORS = {
   white: '#ffffff',
   darkWhite: '#FBFBFB',
   gray: '#b2b2b2',
-  lightGray: '#d6d6d6',
+  lightGray: '#F5F5F5',
   black: '#0A0A0A',
   blackShadow: 'rgba(0,0,0, 0.8)',
   green: '#00960a',
@@ -54,6 +54,7 @@ export const FONTS = {
   text14: {fontFamily: 'Inter-Regular', fontSize: 14, letterSpacing: 0.2},
   textBold14: {fontFamily: 'Inter-Bold', fontSize: 14, letterSpacing: 0.2},
   text16: {fontFamily: 'Inter-Regular', fontSize: 16, letterSpacing: 0.37},
+  textBold18: {fontFamily: 'Inter-Bold', fontSize: 18},
   textBold16: {
     fontFamily: 'Inter-Bold',
     fontSize: 16,
