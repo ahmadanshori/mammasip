@@ -12,7 +12,7 @@ const Mainbutton = ({title, style = {}, onPress, disable = false}) => {
         disable ? styles.inactive : [styles.active, style],
       ]}
       onPress={onPress}>
-      <Text style={[FONTS.textBold14, {color: COLORS.white}]}>{title}</Text>
+      <Text style={[FONTS.textBold14, {color: COLORS.gray}]}>{title}</Text>
     </TouchableOpacity>
   );
 };

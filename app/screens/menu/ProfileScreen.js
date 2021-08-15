@@ -1,12 +1,17 @@
-import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 import {Container} from '../../components/Container';
 import {ProfileHeader} from '../../components/Headers';
 import {ProfileItem} from '../../components/Items';
 import Point from '../../components/Point';
+import Divider from '../../components/Divider';
+import {FONTS, COLORS} from '../../constants';
 
 const ProfileScreen = ({navigation}) => {
+  const [isOn, setIsOn] = useState(true);
   const handleNavigate = type => {
     navigation.navigate(`${type}`);
   };
@@ -14,7 +19,7 @@ const ProfileScreen = ({navigation}) => {
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProfileHeader />
-        <View style={styles.container}>
+        <View style={styles.wrapper}>
           <Point />
           <ProfileItem
             iconName="bookmark-outline"
@@ -31,6 +36,36 @@ const ProfileScreen = ({navigation}) => {
             title="Ganti Password"
             onPress={() => handleNavigate('ChangePassword')}
           />
+        </View>
+        <Divider />
+        <View style={styles.wrapper}>
+          <View style={styles.reminder}>
+            <Icon name="bell-ring" size={20} />
+            <Text
+              style={[FONTS.textBold12, {color: COLORS.black, marginLeft: 8}]}>
+              Notifikasi & Reminder
+            </Text>
+          </View>
+          <View>
+            <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
+              Jurnal berat badan
+            </Text>
+            <View style={styles.between}>
+              <Text style={[FONTS.text12, {color: COLORS.black}]}>
+                Pengukur berat badan mingguan
+              </Text>
+              <ToggleSwitch
+                isOn={isOn}
+                onColor={COLORS.primary}
+                offColor={COLORS.gray}
+                size="medium"
+                onToggle={() => setIsOn(state => !state)}
+              />
+            </View>
+          </View>
+        </View>
+        <Divider />
+        <View style={styles.wrapper}>
           <ProfileItem
             iconName="comment-question-outline"
             title="FAQ"
@@ -44,7 +79,14 @@ const ProfileScreen = ({navigation}) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {padding: 16},
+  wrapper: {paddingHorizontal: 16, paddingTop: 16, paddingBottom: 8},
+  reminder: {flexDirection: 'row', alignItems: 'center', marginBottom: 24},
+  between: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 24,
+  },
 });
 
 export default ProfileScreen;
