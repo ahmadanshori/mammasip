@@ -10,7 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {
   HomeScreen,
   ArticleScreen,
-  VideoScreen,
+  SearchScreen,
   MessageScreen,
   ProfileScreen,
 } from '../screens/menu';
@@ -56,7 +56,7 @@ const TabNavigator = () => {
         name="ArticleTab"
         component={ArticleScreen}
         options={{
-          tabBarLabel: 'Artikel',
+          tabBarLabel: 'Alat Hitung',
           tabBarIcon: ({focused}) => {
             return (
               <MaterialIcons
@@ -85,14 +85,14 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="VideoTab"
-        component={VideoScreen}
+        name="SearchTab"
+        component={SearchScreen}
         options={{
-          tabBarLabel: 'Video',
+          tabBarLabel: 'Telusuri',
           tabBarIcon: ({focused}) => {
             return (
-              <AntDesign
-                name={focused ? 'play' : 'playcircleo'}
+              <Ionicons
+                name={'search'}
                 size={22}
                 color={focused ? COLORS.primary : COLORS.gray}
               />
@@ -103,7 +103,7 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('Login');
+              navigationRef.current.navigate('SearchTab');
               // if (token) {
               //   navigationRef.current.navigate('VideoTab');
               // } else {
@@ -120,11 +120,11 @@ const TabNavigator = () => {
         name="MessageTab"
         component={MessageScreen}
         options={{
-          tabBarLabel: 'Pesan',
+          tabBarLabel: 'Jurnal',
           tabBarIcon: ({focused}) => {
             return (
               <MaterialCommunityIcons
-                name={focused ? 'message-text' : 'message-text-outline'}
+                name={'calendar'}
                 size={22}
                 color={focused ? COLORS.primary : COLORS.gray}
               />

@@ -1,49 +1,40 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import {COLORS, FONTS, SIZES} from '../../constants';
+import {View, Text, StyleSheet} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {COLORS, FONTS} from '../../constants';
 
 const HomeHeader = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.wrapper}>
-        <View>
-          <Text style={[FONTS.text10, {color: COLORS.white}]}>
-            Halo, mommies
-          </Text>
-          <Text style={[FONTS.textBold12, {color: COLORS.white}]}>
-            Jaga pola makanmu hari ini.
-          </Text>
-        </View>
-        <Ionicons name="notifications-outline" size={24} color={COLORS.white} />
-      </View>
-      <View style={styles.imgWrapper}>
-        <Image
-          source={require('../../assets/images/woman.png')}
-          style={styles.img}
-        />
+      <Text style={[FONTS.textBold12, {color: COLORS.white}]}>
+        Selamat datang di MammaSIP
+      </Text>
+      <View style={styles.row}>
+        <Text style={[FONTS.text10, {color: COLORS.white, marginRight: 8}]}>
+          ayla
+        </Text>
+        <Icon name="account-circle" size={24} color={COLORS.white} />
       </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
+    height: 150,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     backgroundColor: COLORS.primary,
     paddingHorizontal: 16,
     paddingTop: 16,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
   },
-  wrapper: {
+
+  row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-  },
-  imgWrapper: {justifyContent: 'center', alignItems: 'center'},
-  img: {
-    height: SIZES.width2,
-    width: SIZES.width2,
+    width: '40%',
   },
 });
 

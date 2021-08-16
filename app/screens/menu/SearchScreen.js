@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-const VidioScreen = () => {
+const SearchScreen = () => {
   return (
     <View>
-      <Text>VidioScreen</Text>
+      <Text>SearchScreen</Text>
     </View>
   );
 };
 const styles = StyleSheet.create({});
 
-export default VidioScreen;
+export default SearchScreen;

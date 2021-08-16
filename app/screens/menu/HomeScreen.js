@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import {HomeHeader} from '../../components/Headers';
-import CategoryHome from '../../components/CategoryHome';
+import Banner from '../../components/Banner';
 import {HomeItem} from '../../components/Items';
 import {FONTS, COLORS} from '../../constants';
 
@@ -10,7 +10,10 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <HomeHeader />
-      <CategoryHome />
+      <View style={{paddingHorizontal: 16}}>
+        <Banner />
+      </View>
+
       <View style={styles.box}>
         <View>
           <View style={styles.titleWrapper}>
