@@ -12,12 +12,16 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
-import {MainButton} from '../../components/Buttons';
+import {MainButton, TitleButton} from '../../components/Buttons';
+import Gender from '../../components/Gender';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const RegisterScreen = ({navigation}) => {
   const [field, setField] = useState({
     email: '',
+    fullname: '',
+    gender: 'female',
+    date: '',
     password: '',
     confirmPassword: '',
   });
@@ -39,7 +43,7 @@ const RegisterScreen = ({navigation}) => {
             style={styles.iconBack}
             onPress={() => navigation.goBack()}
             activeOpacity={SIZES.opacity}>
-            <Icon name="arrow-back" size={28} color={COLORS.black} />
+            <Icon name="arrow-back" size={22} color={COLORS.black} />
           </TouchableOpacity>
           <View>
             <Text style={[FONTS.textBold24, {color: COLORS.primary}]}>
@@ -57,6 +61,16 @@ const RegisterScreen = ({navigation}) => {
           onChangeText={val => handleInput(val, 'email')}
           value={field.email}
         />
+        <TitleInput
+          title="Nama Lengkap"
+          placeholder="Syifa Hadju"
+          onChangeText={val => handleInput(val, 'fullname')}
+          value={field.fullname}
+          style={styles.pass}
+          maxLength={50}
+        />
+        <TitleButton title="Tanggal Lahir" placeholder="1 Januari 2000" />
+        <Gender />
         <TitleInput
           title="Password"
           placeholder="8-16 Karakter"
@@ -103,13 +117,15 @@ const RegisterScreen = ({navigation}) => {
             !field.password ||
             !field.confirmPassword ||
             !field.email ||
+            !field.fullname ||
+            !field.date ||
             !isCheck
           }
         />
         <TouchableOpacity
           style={styles.register}
           activeOpacity={1}
-          onPress={() => navigation.navigate('Register')}>
+          onPress={() => navigation.goBack()}>
           <Text style={[FONTS.text12, {color: COLORS.black}]}>
             Sudah punya akun?{' '}
           </Text>
@@ -134,7 +150,7 @@ const styles = StyleSheet.create({
   authText: {flex: 1, color: COLORS.black, textAlign: 'center'},
   container: {paddingHorizontal: 16},
   header: {marginVertical: 36, flexDirection: 'row', alignItems: 'center'},
-  iconBack: {paddingRight: 16, paddingVertical: 8},
+  iconBack: {paddingRight: 24, paddingLeft: 8, paddingVertical: 8},
   img: {height: 24, width: 24, marginRight: 16},
   or: {color: COLORS.black, width: '20%', textAlign: 'center'},
   separatorWrapper: {
