@@ -37,7 +37,7 @@ const LoginScreen = ({navigation}) => {
               Masuk
             </Text>
             <Text style={[FONTS.text12, {color: COLORS.black}]}>
-              Masuk kembali ke akun anda sekarang..
+              Masuk kembali ke akun anda sekarang.
             </Text>
           </View>
         </View>

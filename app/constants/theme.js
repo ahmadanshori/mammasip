@@ -16,7 +16,8 @@ export const COLORS = {
   darkYellow: '#F4C30E',
   yellow: '#F9E186',
   lightYellow: '#FDF3CF',
-  red: '#d61841',
+  red: '#ED4A4A',
+  blue: '#7097EA',
   separator: '#EDEDED',
   border: '#E0E0E0',
 };
@@ -54,12 +55,16 @@ export const FONTS = {
   text14: {fontFamily: 'Inter-Regular', fontSize: 14, letterSpacing: 0.2},
   textBold14: {fontFamily: 'Inter-Bold', fontSize: 14, letterSpacing: 0.2},
   text16: {fontFamily: 'Inter-Regular', fontSize: 16, letterSpacing: 0.37},
-  textBold18: {fontFamily: 'Inter-Bold', fontSize: 18},
   textBold16: {
     fontFamily: 'Inter-Bold',
     fontSize: 16,
     letterSpacing: 0.37,
   },
+  textBold20: {
+    fontFamily: 'Inter-Bold',
+    fontSize: 20,
+  },
+  textBold18: {fontFamily: 'Inter-Bold', fontSize: 18},
   textBold24: {
     fontFamily: 'Inter-Bold',
     fontSize: 24,

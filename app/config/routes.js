@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {
   HomeScreen,
-  ArticleScreen,
+  CalculatorScreen,
   SearchScreen,
   JurnalScreen,
   ProfileScreen,
@@ -53,8 +53,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="ArticleTab"
-        component={ArticleScreen}
+        name="calculatorTab"
+        component={CalculatorScreen}
         options={{
           tabBarLabel: 'Alat Hitung',
           tabBarIcon: ({focused}) => {
@@ -71,12 +71,12 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('ArticleTab');
+              navigationRef.current.navigate('calculatorTab');
               // if (token) {
-              //   navigationRef.current.navigate('ArticleTab');
+              //   navigationRef.current.navigate('calculatorTab');
               // } else {
               //   navigationRef.current.navigate('Login', {
-              //     nav: 'ArticleTab',
+              //     nav: 'calculatorTab',
               //   });
               // }
             };
