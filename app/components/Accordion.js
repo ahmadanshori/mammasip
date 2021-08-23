@@ -15,9 +15,7 @@ const Accordion = ({title}) => {
         style={styles.button}
         onPress={handleButton}
         activeOpacity={1}>
-        <Text style={[FONTS.text12, {color: COLORS.black, marginRight: 8}]}>
-          {title}
-        </Text>
+        <Text style={[FONTS.text12, styles.title]}>{title}</Text>
         <Icon
           name={isSelected ? 'up' : 'down'}
           size={14}
@@ -64,6 +62,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.border,
   },
+  title: {color: COLORS.black, marginRight: 8, flex: 1},
   answerWrapper: {
     borderWidth: 1,
     borderRadius: 4,

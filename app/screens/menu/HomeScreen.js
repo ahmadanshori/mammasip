@@ -1,12 +1,18 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableNativeFeedback,
+} from 'react-native';
 
 import {HomeHeader} from '../../components/Headers';
 import Banner from '../../components/Banner';
 import {HomeItem} from '../../components/Items';
 import {FONTS, COLORS} from '../../constants';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <HomeHeader />
@@ -31,39 +37,46 @@ const HomeScreen = () => {
           dirimu!
         </Text>
         <View style={styles.row}>
-          <View
-            style={[
-              styles.categoryWrapper,
-              {backgroundColor: COLORS.secondary},
-            ]}>
-            <Image
-              source={require('../../assets/images/1.png')}
-              style={styles.img}
-            />
-            <View>
-              <Text style={[FONTS.textBold10, {color: COLORS.white}]}>
-                Pesan Penting
-              </Text>
-              <Text style={[FONTS.text8, {color: COLORS.white}]}>
-                Dr. Lula Kamal M.Sc
-              </Text>
+          <TouchableNativeFeedback>
+            <View
+              style={[
+                styles.categoryWrapper,
+                {backgroundColor: COLORS.secondary},
+              ]}>
+              <Image
+                source={require('../../assets/images/1.png')}
+                style={styles.img}
+              />
+              <View>
+                <Text style={[FONTS.textBold10, {color: COLORS.white}]}>
+                  Pesan Penting
+                </Text>
+                <Text style={[FONTS.text8, {color: COLORS.white}]}>
+                  Dr. Lula Kamal M.Sc
+                </Text>
+              </View>
             </View>
-          </View>
-          <View
-            style={[styles.categoryWrapper, {backgroundColor: COLORS.primary}]}>
-            <Image
-              source={require('../../assets/images/2.png')}
-              style={styles.img}
-            />
-            <View>
-              <Text style={[FONTS.textBold10, {color: COLORS.white}]}>
-                Tanya Jawab
-              </Text>
-              <Text style={[FONTS.text8, {color: COLORS.white}]}>
-                Seputar kesehatan
-              </Text>
+          </TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={() => navigation.navigate('Faq')}>
+            <View
+              style={[
+                styles.categoryWrapper,
+                {backgroundColor: COLORS.primary},
+              ]}>
+              <Image
+                source={require('../../assets/images/2.png')}
+                style={styles.img}
+              />
+              <View>
+                <Text style={[FONTS.textBold10, {color: COLORS.white}]}>
+                  Tanya Jawab
+                </Text>
+                <Text style={[FONTS.text8, {color: COLORS.white}]}>
+                  Seputar kesehatan
+                </Text>
+              </View>
             </View>
-          </View>
+          </TouchableNativeFeedback>
         </View>
       </View>
       {/* <View style={styles.box}>

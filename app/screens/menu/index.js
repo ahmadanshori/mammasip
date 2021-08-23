@@ -1,11 +1,11 @@
 import HomeScreen from './HomeScreen';
-import CalculatorScreen from './CalculatorScreen';
+import AlatHitungScreen from './AlatHitungScreen';
 import SearchScreen from './SearchScreen';
 import JurnalScreen from './JurnalScreen';
 import ProfileScreen from './ProfileScreen';
 export {
   HomeScreen,
-  CalculatorScreen,
+  AlatHitungScreen,
   SearchScreen,
   JurnalScreen,
   ProfileScreen,

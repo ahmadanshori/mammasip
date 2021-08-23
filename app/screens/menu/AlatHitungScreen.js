@@ -4,7 +4,10 @@ import {Container} from '../../components/Container';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS} from '../../constants';
 
-const CalculatorScreen = () => {
+const AlatHitungScreen = ({navigation}) => {
+  const handleNavigation = type => {
+    navigation.navigate(type);
+  };
   return (
     <Container style={styles.container}>
       <View style={styles.header}>
@@ -17,18 +20,21 @@ const CalculatorScreen = () => {
       </View>
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
+        onPress={() => handleNavigation('WeightCalculator')}
         backgroundColor={COLORS.blue}
         title="Massa Tubuh Ideal (BMR)"
         description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
       />
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
+        onPress={() => handleNavigation('WeightCalculator')}
         backgroundColor={COLORS.secondary}
         title="Kebutuhan Kalori Harian (BMI)"
         description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
       />
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
+        onPress={() => handleNavigation('WeightCalculator')}
         backgroundColor={COLORS.red}
         title="Resiko Penyakit Kanker"
         description="Analisa dari kebiasaan dan pola makan
@@ -57,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CalculatorScreen;
+export default AlatHitungScreen;

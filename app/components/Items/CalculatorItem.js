@@ -1,26 +1,40 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableNativeFeedback,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS, FONTS} from '../../constants';
 
-const CalculatorItem = ({title, description, source, backgroundColor}) => {
+const CalculatorItem = ({
+  title,
+  description,
+  source,
+  backgroundColor,
+  onPress,
+}) => {
   const containerStyles = [styles.wrapper];
   if (backgroundColor) {
     containerStyles.push({backgroundColor});
   }
   return (
-    <View style={containerStyles}>
-      <Image source={source} style={styles.img} />
-      <View style={styles.textWrapper}>
-        <Text style={[FONTS.textBold12, {color: COLORS.white}]}>{title}</Text>
-        <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
-          {description}
-        </Text>
+    <TouchableNativeFeedback onPress={onPress}>
+      <View style={containerStyles}>
+        <Image source={source} style={styles.img} />
+        <View style={styles.textWrapper}>
+          <Text style={[FONTS.textBold12, {color: COLORS.white}]}>{title}</Text>
+          <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
+            {description}
+          </Text>
+        </View>
+        <View style={styles.iconWrapper}>
+          <Icon name="chevron-right" size={20} />
+        </View>
       </View>
-      <View style={styles.iconWrapper}>
-        <Icon name="chevron-right" size={20} />
-      </View>
-    </View>
+    </TouchableNativeFeedback>
   );
 };
 const styles = StyleSheet.create({

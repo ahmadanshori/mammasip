@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {
   HomeScreen,
-  CalculatorScreen,
+  AlatHitungScreen,
   SearchScreen,
   JurnalScreen,
   ProfileScreen,
@@ -20,6 +20,7 @@ import {
   EditProfileScreen,
   FaqScreen,
 } from '../screens/profile';
+import {WeightCalculatorScreen} from '../screens/alathitung';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -53,8 +54,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="calculatorTab"
-        component={CalculatorScreen}
+        name="alathitungTab"
+        component={AlatHitungScreen}
         options={{
           tabBarLabel: 'Alat Hitung',
           tabBarIcon: ({focused}) => {
@@ -71,12 +72,12 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('calculatorTab');
+              navigationRef.current.navigate('alathitungTab');
               // if (token) {
-              //   navigationRef.current.navigate('calculatorTab');
+              //   navigationRef.current.navigate('alathitungTab');
               // } else {
               //   navigationRef.current.navigate('Login', {
-              //     nav: 'calculatorTab',
+              //     nav: 'alathitungTab',
               //   });
               // }
             };
@@ -215,6 +216,10 @@ export default function App() {
           />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />
+          <Stack.Screen
+            component={WeightCalculatorScreen}
+            name="WeightCalculator"
+          />
         </>
       </Stack.Navigator>
     </NavigationContainer>
