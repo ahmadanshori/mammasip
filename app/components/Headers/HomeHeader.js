@@ -6,12 +6,10 @@ import {COLORS, FONTS} from '../../constants';
 const HomeHeader = () => {
   return (
     <View style={styles.container}>
-      <Text style={[FONTS.textBold12, {color: COLORS.white}]}>
-        Selamat datang di MammaSIP
-      </Text>
+      <Text style={[FONTS.textBold12, {color: COLORS.white}]}>MammaSIP</Text>
       <View style={styles.row}>
         <Text style={[FONTS.text10, {color: COLORS.white, marginRight: 8}]}>
-          ayla
+          Ayla
         </Text>
         <Icon name="account-circle" size={24} color={COLORS.white} />
       </View>

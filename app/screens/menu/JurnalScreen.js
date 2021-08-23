@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-const MessageScreen = () => {
+const JurnalScreen = () => {
   return (
     <View>
-      <Text>MessageScreen</Text>
+      <Text>JurnalScreen</Text>
     </View>
   );
 };
 const styles = StyleSheet.create({});
 
-export default MessageScreen;
+export default JurnalScreen;

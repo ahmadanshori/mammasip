@@ -11,7 +11,7 @@ import {
   HomeScreen,
   ArticleScreen,
   SearchScreen,
-  MessageScreen,
+  JurnalScreen,
   ProfileScreen,
 } from '../screens/menu';
 import {LoginScreen, RegisterScreen} from '../screens/auth';
@@ -117,8 +117,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="MessageTab"
-        component={MessageScreen}
+        name="JurnalTab"
+        component={JurnalScreen}
         options={{
           tabBarLabel: 'Jurnal',
           tabBarIcon: ({focused}) => {
@@ -135,12 +135,12 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('MessageTab');
+              navigationRef.current.navigate('JurnalTab');
               // if (token) {
-              //   navigationRef.current.navigate('MessageTab');
+              //   navigationRef.current.navigate('JurnalTab');
               // } else {
               //   navigationRef.current.navigate('Login', {
-              //     nav: 'MessageTab',
+              //     nav: 'JurnalTab',
               //   });
               // }
             };
