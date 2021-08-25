@@ -9,10 +9,16 @@ const Mainbutton = ({title, style = {}, onPress, disable = false}) => {
       activeOpacity={disable ? 1 : SIZES.opacity}
       style={[
         styles.button,
-        disable ? styles.inactive : [styles.active, style],
+        disable ? [styles.inactive, style] : [styles.active, style],
       ]}
       onPress={onPress}>
-      <Text style={[FONTS.textBold14, {color: COLORS.gray}]}>{title}</Text>
+      <Text
+        style={[
+          FONTS.textBold14,
+          {color: disable ? COLORS.gray : COLORS.white},
+        ]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };

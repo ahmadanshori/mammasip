@@ -1,2 +1,4 @@
 import WeightCalculatorScreen from './WeightCalculatorScreen';
-export {WeightCalculatorScreen};
+import CaloriesScreen from './CaloriesScreen';
+import CancerRiskScreen from './CancerRiskScreen';
+export {WeightCalculatorScreen, CaloriesScreen, CancerRiskScreen};

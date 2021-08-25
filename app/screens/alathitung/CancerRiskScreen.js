@@ -9,16 +9,21 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
+import {ActivityLevelButton} from '../../components/RadioButton';
 import Accordion from '../../components/Accordion';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const WeightCalculatorScreen = ({navigation}) => {
-  const [field, setField] = useState({age: '', weight: '', height: ''});
+const CaloriesScreen = ({navigation}) => {
+  const [field, setField] = useState({
+    age: '',
+    gender: 'Perempuan',
+  });
 
   const handleNavigation = type => {
     navigation.navigate(type);
@@ -27,13 +32,17 @@ const WeightCalculatorScreen = ({navigation}) => {
   const handleInput = useCallback((type, value) => {
     setField(state => ({...state, [type]: value}));
   }, []);
+
+  const handleRadioButton = val => {
+    setField(state => ({...state, gender: val}));
+  };
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={COLORS.darkBlue} barStyle={'light-content'} />
+      <StatusBar backgroundColor={COLORS.red} barStyle={'light-content'} />
       <WeightCalculatorHeader
-        title="Hitung masa tubuh ideal"
+        title="Hitung kebutuhan kalori harian"
         onPressBack={() => navigation.goBack()}
-        backgroundColor={COLORS.darkBlue}
+        backgroundColor={COLORS.red}
       />
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.header}>
@@ -45,11 +54,12 @@ const WeightCalculatorScreen = ({navigation}) => {
           </View>
           <View style={styles.title}>
             <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
-              Basal Metabolic Rate (BMR)
+              Pengukur resiko kanker
             </Text>
             <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
-              Kebutuhan kalori minimal yang dipakai organ-organ tubuh untuk
-              melakukan tugas dasarnya.
+              Analisa resiko kanker berdasarkan gaya hidup anda. Hasil hanya
+              bersifat saran & tetap membutuhkan nasehat dokter untuk hasil yg
+              maksimal.
             </Text>
           </View>
         </View>
@@ -57,37 +67,33 @@ const WeightCalculatorScreen = ({navigation}) => {
           <View style={styles.dividerWrapper}>
             <View style={styles.divider} />
           </View>
+
+          <ActivityLevelButton
+            title="Tingkat Aktivitas"
+            onPress={handleRadioButton}
+            radio1="Perempuan"
+            radio2="Laki-laki"
+            selected={field.gender}
+          />
           <CalculatorInput
-            title="Berapa usia anda"
+            title="Usia Anda"
             type="Tahun"
-            placeholder="18"
+            placeholder="20"
             maxLength={3}
             keyboardType="numeric"
             onChangeText={val => handleInput('age', val)}
             value={field.age}
           />
-          <CalculatorInput
-            title="Berat badan"
-            type="Kg"
-            placeholder="56"
-            maxLength={3}
-            keyboardType="numeric"
-            onChangeText={val => handleInput('weight', val)}
-            value={field.weight}
-          />
-          <CalculatorInput
-            title="Tinggi Badan"
-            type="Cm"
-            placeholder="164"
-            maxLength={3}
-            keyboardType="numeric"
-            onChangeText={val => handleInput('height', val)}
-            value={field.height}
-          />
+          <View style={styles.row}>
+            <Ionicons name="alert-circle" size={14} color={COLORS.red} />
+            <Text style={[FONTS.text10, {color: COLORS.red, marginLeft: 4}]}>
+              Diperuntukan untuk usia 18 keatas
+            </Text>
+          </View>
           <MainButton
             title="Hitung"
-            style={styles.button}
-            disable={!field.age || !field.height || !field.weight}
+            style={styles.countButton}
+            disable={!field.gender || !field.age}
           />
           <View style={styles.margin}>
             <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
@@ -105,16 +111,16 @@ const WeightCalculatorScreen = ({navigation}) => {
             <CalculatorItem
               source={require('../../assets/images/woman.png')}
               onPress={() => handleNavigation('WeightCalculator')}
-              backgroundColor={COLORS.secondary}
-              title="Kebutuhan Kalori Harian (BMI)"
-              description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
+              backgroundColor={COLORS.blue}
+              title="Massa Tubuh Ideal (BMR)"
+              description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
             />
             <CalculatorItem
               source={require('../../assets/images/woman.png')}
-              onPress={() => handleNavigation('WeightCalculator')}
-              backgroundColor={COLORS.red}
-              title="Resiko Penyakit Kanker"
-              description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
+              onPress={() => handleNavigation('Calories')}
+              backgroundColor={COLORS.secondary}
+              title="Kebutuhan Kalori Harian (BMI)"
+              description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
             />
           </View>
           <View style={styles.margin}>
@@ -158,7 +164,7 @@ const styles = StyleSheet.create({
   scroll: {paddingBottom: 24},
   header: {
     width: '100%',
-    backgroundColor: COLORS.darkBlue,
+    backgroundColor: COLORS.red,
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: 16,
@@ -187,7 +193,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.separator,
     borderRadius: 8,
   },
-  button: {marginTop: 8},
+  row: {flexDirection: 'row', alignItems: 'center'},
+  countButton: {marginTop: 16},
   margin: {marginTop: 32},
   marginHeight: {marginTop: 64},
   askButton: {
@@ -200,4 +207,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WeightCalculatorScreen;
+export default CaloriesScreen;

@@ -20,7 +20,11 @@ import {
   EditProfileScreen,
   FaqScreen,
 } from '../screens/profile';
-import {WeightCalculatorScreen} from '../screens/alathitung';
+import {
+  WeightCalculatorScreen,
+  CaloriesScreen,
+  CancerRiskScreen,
+} from '../screens/alathitung';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -220,6 +224,8 @@ export default function App() {
             component={WeightCalculatorScreen}
             name="WeightCalculator"
           />
+          <Stack.Screen component={CaloriesScreen} name="Calories" />
+          <Stack.Screen component={CancerRiskScreen} name="CancerRisk" />
         </>
       </Stack.Navigator>
     </NavigationContainer>

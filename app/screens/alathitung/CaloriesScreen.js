@@ -13,12 +13,18 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
+import {ActivityLevelButton} from '../../components/RadioButton';
 import Accordion from '../../components/Accordion';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const WeightCalculatorScreen = ({navigation}) => {
-  const [field, setField] = useState({age: '', weight: '', height: ''});
+const CaloriesScreen = ({navigation}) => {
+  const [field, setField] = useState({
+    age: '',
+    weight: '',
+    height: '',
+    activity: 'Sedang',
+  });
 
   const handleNavigation = type => {
     navigation.navigate(type);
@@ -27,13 +33,20 @@ const WeightCalculatorScreen = ({navigation}) => {
   const handleInput = useCallback((type, value) => {
     setField(state => ({...state, [type]: value}));
   }, []);
+
+  const handleRadioButton = val => {
+    setField(state => ({...state, activity: val}));
+  };
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={COLORS.darkBlue} barStyle={'light-content'} />
+      <StatusBar
+        backgroundColor={COLORS.secondary}
+        barStyle={'light-content'}
+      />
       <WeightCalculatorHeader
-        title="Hitung masa tubuh ideal"
+        title="Hitung kebutuhan kalori harian"
         onPressBack={() => navigation.goBack()}
-        backgroundColor={COLORS.darkBlue}
+        backgroundColor={COLORS.secondary}
       />
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.header}>
@@ -45,11 +58,11 @@ const WeightCalculatorScreen = ({navigation}) => {
           </View>
           <View style={styles.title}>
             <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
-              Basal Metabolic Rate (BMR)
+              Body Mass Index (BMI)
             </Text>
             <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
-              Kebutuhan kalori minimal yang dipakai organ-organ tubuh untuk
-              melakukan tugas dasarnya.
+              Massa tubuh anda sudah ideal? apakah terhitung kurang, cukup atau
+              berlebih?.
             </Text>
           </View>
         </View>
@@ -84,6 +97,13 @@ const WeightCalculatorScreen = ({navigation}) => {
             onChangeText={val => handleInput('height', val)}
             value={field.height}
           />
+          <ActivityLevelButton
+            title="Tingkat Aktivitas"
+            onPress={handleRadioButton}
+            radio1="Sedang"
+            radio2="Berat"
+            selected={field.activity}
+          />
           <MainButton
             title="Hitung"
             style={styles.button}
@@ -105,13 +125,13 @@ const WeightCalculatorScreen = ({navigation}) => {
             <CalculatorItem
               source={require('../../assets/images/woman.png')}
               onPress={() => handleNavigation('WeightCalculator')}
-              backgroundColor={COLORS.secondary}
-              title="Kebutuhan Kalori Harian (BMI)"
-              description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
+              backgroundColor={COLORS.blue}
+              title="Massa Tubuh Ideal (BMR)"
+              description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
             />
             <CalculatorItem
               source={require('../../assets/images/woman.png')}
-              onPress={() => handleNavigation('WeightCalculator')}
+              onPress={() => handleNavigation('CancerRisk')}
               backgroundColor={COLORS.red}
               title="Resiko Penyakit Kanker"
               description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
@@ -158,7 +178,7 @@ const styles = StyleSheet.create({
   scroll: {paddingBottom: 24},
   header: {
     width: '100%',
-    backgroundColor: COLORS.darkBlue,
+    backgroundColor: COLORS.secondary,
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: 16,
@@ -200,4 +220,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WeightCalculatorScreen;
+export default CaloriesScreen;

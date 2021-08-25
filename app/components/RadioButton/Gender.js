@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
-import {COLORS, FONTS, SIZES} from '../constants';
+import {COLORS, FONTS, SIZES} from '../../constants';
 
 const Gender = () => {
   const [isGender, setIsgender] = useState(true);

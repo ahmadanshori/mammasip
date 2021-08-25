@@ -1,3 +1,4 @@
 import TitleInput from './TitleInput';
 import SearchInput from './SearchInput';
-export {TitleInput, SearchInput};
+import CalculatorInput from './CalculatorInput';
+export {TitleInput, SearchInput, CalculatorInput};

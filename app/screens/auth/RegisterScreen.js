@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
 import {MainButton, TitleButton} from '../../components/Buttons';
-import Gender from '../../components/Gender';
+import {Gender} from '../../components/RadioButton';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const RegisterScreen = ({navigation}) => {

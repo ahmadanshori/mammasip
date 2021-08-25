@@ -1,4 +1,5 @@
 import HomeHeader from './HomeHeader';
 import ProfileHeader from './ProfileHeader';
 import HeaderTitle from './HeaderTitle';
-export {HomeHeader, ProfileHeader, HeaderTitle};
+import WeightCalculatorHeader from './WeightCalculatorHeader';
+export {HomeHeader, ProfileHeader, HeaderTitle, WeightCalculatorHeader};

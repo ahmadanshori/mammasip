@@ -27,18 +27,17 @@ const AlatHitungScreen = ({navigation}) => {
       />
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
-        onPress={() => handleNavigation('WeightCalculator')}
+        onPress={() => handleNavigation('Calories')}
         backgroundColor={COLORS.secondary}
         title="Kebutuhan Kalori Harian (BMI)"
         description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
       />
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
-        onPress={() => handleNavigation('WeightCalculator')}
+        onPress={() => handleNavigation('CancerRisk')}
         backgroundColor={COLORS.red}
         title="Resiko Penyakit Kanker"
-        description="Analisa dari kebiasaan dan pola makan
-        sehari-hari anda."
+        description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
       />
     </Container>
   );

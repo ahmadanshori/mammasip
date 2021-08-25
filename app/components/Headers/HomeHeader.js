@@ -8,7 +8,7 @@ const HomeHeader = () => {
     <View style={styles.container}>
       <Text style={[FONTS.textBold12, {color: COLORS.white}]}>MammaSIP</Text>
       <View style={styles.row}>
-        <Text style={[FONTS.text10, {color: COLORS.white, marginRight: 8}]}>
+        <Text style={[FONTS.text12, {color: COLORS.white, marginRight: 8}]}>
           Ayla
         </Text>
         <Icon name="account-circle" size={24} color={COLORS.white} />
