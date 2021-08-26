@@ -22,8 +22,10 @@ import {
 } from '../screens/profile';
 import {
   WeightCalculatorScreen,
+  WeightDetailScreen,
   CaloriesScreen,
   CancerRiskScreen,
+  FoodSuggestionScreen,
 } from '../screens/alathitung';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
@@ -224,8 +226,13 @@ export default function App() {
             component={WeightCalculatorScreen}
             name="WeightCalculator"
           />
+          <Stack.Screen component={WeightDetailScreen} name="WeightDetail" />
           <Stack.Screen component={CaloriesScreen} name="Calories" />
           <Stack.Screen component={CancerRiskScreen} name="CancerRisk" />
+          <Stack.Screen
+            component={FoodSuggestionScreen}
+            name="FoodSuggestion"
+          />
         </>
       </Stack.Navigator>
     </NavigationContainer>

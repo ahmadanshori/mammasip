@@ -29,11 +29,7 @@ const ChangePasswordScreen = ({navigation}) => {
 
   return (
     <Container>
-      <HeaderTitle
-        back
-        title="Ganti Password"
-        onPressBack={() => navigation.goBack()}
-      />
+      <HeaderTitle back title="Ganti Password" />
       <ScrollView contentContainerStyle={styles.wrapper}>
         <TitleInput
           title="Password Lama"

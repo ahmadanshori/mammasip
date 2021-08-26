@@ -6,13 +6,11 @@ import {
   StatusBar,
   ScrollView,
   Image,
-  TouchableNativeFeedback,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
 
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
-import {MainButton} from '../../components/Buttons';
+import {MainButton, AskButton} from '../../components/Buttons';
 import Accordion from '../../components/Accordion';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
@@ -20,9 +18,9 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 const WeightCalculatorScreen = ({navigation}) => {
   const [field, setField] = useState({age: '', weight: '', height: ''});
 
-  const handleNavigation = type => {
+  const handleNavigation = useCallback(type => {
     navigation.navigate(type);
-  };
+  }, []);
 
   const handleInput = useCallback((type, value) => {
     setField(state => ({...state, [type]: value}));
@@ -87,6 +85,7 @@ const WeightCalculatorScreen = ({navigation}) => {
           <MainButton
             title="Hitung"
             style={styles.button}
+            onPress={() => navigation.navigate('WeightDetail')}
             disable={!field.age || !field.height || !field.weight}
           />
           <View style={styles.margin}>
@@ -104,14 +103,14 @@ const WeightCalculatorScreen = ({navigation}) => {
             </Text>
             <CalculatorItem
               source={require('../../assets/images/woman.png')}
-              onPress={() => handleNavigation('WeightCalculator')}
+              onPress={() => handleNavigation('Calories')}
               backgroundColor={COLORS.secondary}
               title="Kebutuhan Kalori Harian (BMI)"
               description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
             />
             <CalculatorItem
               source={require('../../assets/images/woman.png')}
-              onPress={() => handleNavigation('WeightCalculator')}
+              onPress={() => handleNavigation('CancerRisk')}
               backgroundColor={COLORS.red}
               title="Resiko Penyakit Kanker"
               description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
@@ -121,23 +120,12 @@ const WeightCalculatorScreen = ({navigation}) => {
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain
             </Text>
-            <TouchableNativeFeedback>
-              <View style={styles.askButton}>
-                <Icon name="questioncircleo" size={20} color={COLORS.primary} />
-                <Text
-                  style={[
-                    FONTS.textBold14,
-                    {color: COLORS.primary, marginLeft: 8},
-                  ]}>
-                  Tanya Jawab
-                </Text>
-              </View>
-            </TouchableNativeFeedback>
+            <AskButton onPress={() => navigation.navigate('Faq')} />
           </View>
           <View style={styles.margin}>
             <CalculatorItem
               source={require('../../assets/images/woman.png')}
-              onPress={() => handleNavigation('WeightCalculator')}
+              // onPress={() => handleNavigation('WeightCalculator')}
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"
               description="Uji pengetahuanmu dengan quiz

@@ -71,11 +71,7 @@ const EditProfileScreen = ({navigation}) => {
 
   return (
     <Container>
-      <HeaderTitle
-        back
-        title="Edit data diri"
-        onPressBack={() => navigation.goBack()}
-      />
+      <HeaderTitle back title="Edit data diri" />
       <ScrollView contentContainerStyle={styles.wrapper}>
         <PhotoProfile source={picture} onPress={handleOpenPhoto} />
         <TitleInput

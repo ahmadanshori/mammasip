@@ -1,9 +1,10 @@
 import React from 'react';
-import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const Mainbutton = ({title, style = {}, onPress, disable = false}) => {
+const MainButton = ({title, style = {}, onPress, disable = false, share}) => {
   return (
     <TouchableOpacity
       activeOpacity={disable ? 1 : SIZES.opacity}
@@ -12,13 +13,23 @@ const Mainbutton = ({title, style = {}, onPress, disable = false}) => {
         disable ? [styles.inactive, style] : [styles.active, style],
       ]}
       onPress={onPress}>
-      <Text
-        style={[
-          FONTS.textBold14,
-          {color: disable ? COLORS.gray : COLORS.white},
-        ]}>
-        {title}
-      </Text>
+      <View style={styles.wrapper}>
+        {share ? (
+          <Icon
+            name="share-social"
+            size={20}
+            color={COLORS.white}
+            style={styles.icon}
+          />
+        ) : null}
+        <Text
+          style={[
+            FONTS.textBold14,
+            {color: disable ? COLORS.gray : COLORS.white},
+          ]}>
+          {title}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -35,6 +46,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   inactive: {backgroundColor: COLORS.lightGray},
+  wrapper: {flexDirection: 'row', alignItems: 'center'},
+  icon: {marginRight: 8},
 });
 
-export default Mainbutton;
+export default MainButton;

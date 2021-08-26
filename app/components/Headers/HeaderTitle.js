@@ -7,23 +7,38 @@ import {
   Platform,
   StyleSheet,
 } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const HeaderTitle = ({onPressBack, title}) => {
+const HeaderTitle = ({ title, onSharePress}) => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.header}>
-      <View style={styles.wrapper}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={onPressBack}
-          activeOpacity={SIZES.opacity}>
-          <AntDesign
-            name={Platform.OS === 'ios' ? 'chevron-left' : 'arrowleft'}
-            size={18}
-          />
-        </TouchableOpacity>
-        <Text style={[FONTS.textBold14, {color: COLORS.black}]}>{title}</Text>
+      <View style={styles.body}>
+        <View style={styles.wrapper}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.goBack();
+            }}
+            activeOpacity={SIZES.opacity}>
+            <Icon
+              name={Platform.OS === 'ios' ? 'chevron-left' : 'arrowleft'}
+              size={18}
+            />
+          </TouchableOpacity>
+          <Text
+            style={[FONTS.textBold14, {color: COLORS.black, flex: 1}]}
+            numberOfLines={1}>
+            {title}
+          </Text>
+        </View>
+        {onSharePress ? (
+          <TouchableOpacity style={styles.shareButton} onPress={onSharePress}>
+            <Icon name="sharealt" size={18} />
+          </TouchableOpacity>
+        ) : null}
       </View>
     </SafeAreaView>
   );
@@ -33,21 +48,22 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     backgroundColor: COLORS.white,
-    shadowColor: COLORS.blackShadow,
-    shadowOffset: {height: 0, width: 2},
-    shadowOpacity: 0.3,
-    shadowRadius: 1,
-    elevation: 6,
     zIndex: 99,
+  },
+  body: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
+    flex: 1,
   },
   button: {
     paddingVertical: 16,
-    paddingHorizontal: 28,
+    paddingHorizontal: 24,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
@@ -57,6 +73,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   settingButton: {padding: 8},
+  shareButton: {paddingVertical: 16, paddingHorizontal: 24},
 });
 
 export default HeaderTitle;

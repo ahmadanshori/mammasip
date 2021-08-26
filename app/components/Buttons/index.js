@@ -1,3 +1,4 @@
 import MainButton from './MainButton';
 import TitleButton from './TitleButton';
-export {MainButton, TitleButton};
+import AskButton from './AskButton';
+export {MainButton, TitleButton, AskButton};

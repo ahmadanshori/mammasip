@@ -17,6 +17,7 @@ export const COLORS = {
   yellow: '#F9E186',
   lightYellow: '#FDF3CF',
   red: '#ED4A4A',
+  lightRed: '#FFECEC',
   blue: '#7097EA',
   darkBlue: '#4D7DE5',
   separator: '#EDEDED',
@@ -61,11 +62,11 @@ export const FONTS = {
     fontSize: 16,
     letterSpacing: 0.37,
   },
+  textBold18: {fontFamily: 'Inter-Bold', fontSize: 18},
   textBold20: {
     fontFamily: 'Inter-Bold',
     fontSize: 20,
   },
-  textBold18: {fontFamily: 'Inter-Bold', fontSize: 18},
   textBold24: {
     fontFamily: 'Inter-Bold',
     fontSize: 24,

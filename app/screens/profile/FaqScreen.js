@@ -11,7 +11,7 @@ import {COLORS, FONTS} from '../../constants';
 const FaqScreen = ({navigation}) => {
   return (
     <Container>
-      <HeaderTitle back title="FAQ" onPressBack={() => navigation.goBack()} />
+      <HeaderTitle back title="FAQ" />
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.title}>
           <Text style={[FONTS.textBold18, {color: COLORS.black}]}>
