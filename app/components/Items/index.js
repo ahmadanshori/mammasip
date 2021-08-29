@@ -1,4 +1,5 @@
 import HomeItem from './HomeItem';
 import ProfileItem from './ProfileItem';
 import CalculatorItem from './CalculatorItem';
-export {HomeItem, ProfileItem, CalculatorItem};
+import MealItem from './MealItem';
+export {HomeItem, ProfileItem, CalculatorItem, MealItem};

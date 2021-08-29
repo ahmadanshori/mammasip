@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
+import {MainButton} from '../../components/Buttons';
 import Divider from '../../components/Divider';
+import MealSuggestions from '../../components/MealSuggestions';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const data = [
@@ -40,6 +42,13 @@ const FoodSuggestionScreen = () => {
   const [calories, setcalories] = useState(null);
   const [pekan, setPekan] = useState(null);
   const [day, setDay] = useState(null);
+
+  const handlePekan = useCallback(event => {
+    setPekan(event);
+  }, []);
+  const handleDay = useCallback(event => {
+    setDay(event);
+  }, []);
   return (
     <Container>
       <HeaderTitle title="Atur menu makanan" />
@@ -100,7 +109,7 @@ const FoodSuggestionScreen = () => {
             <TouchableOpacity
               key={item.id}
               activeOpacity={SIZES.opacity}
-              onPress={() => setPekan(item)}
+              onPress={() => handlePekan(item)}
               style={[
                 styles.pekan,
                 pekan?.id === item.id && styles.pekenActive,
@@ -146,7 +155,7 @@ const FoodSuggestionScreen = () => {
                   styles.caloriesItem,
                   day?.id === item.id ? styles.active : styles.inActive,
                 ]}
-                onPress={() => setDay(item)}
+                onPress={() => handleDay(item)}
                 activeOpacity={SIZES.opacity}
                 key={item.id}>
                 <Text
@@ -161,6 +170,8 @@ const FoodSuggestionScreen = () => {
               </TouchableOpacity>
             ))}
           </ScrollView>
+          <MealSuggestions />
+          <MainButton title="Simpan" style={styles.dayWrapper} />
         </View>
       </ScrollView>
     </Container>
@@ -185,6 +196,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   row: {flexDirection: 'row', alignItems: 'center'},
+  justify: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   pekan: {width: '25%', alignItems: 'center', paddingBottom: 4},
   pekenActive: {borderBottomWidth: 1, borderColor: COLORS.primary},
   padding: {padding: 16},
@@ -206,6 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   dayWrapper: {marginTop: 24},
+  margin32: {marginTop: 32},
 });
 
 export default FoodSuggestionScreen;
