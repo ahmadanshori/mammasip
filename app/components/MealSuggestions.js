@@ -1,14 +1,57 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
 import {MealItem} from './Items';
 
-import {COLORS, FONTS} from '../constants';
+import {COLORS, FONTS, SIZES} from '../constants';
+const dayData = [
+  {id: 1, name: 'Senin'},
+  {id: 2, name: 'Selasa'},
+  {id: 3, name: 'Rabu'},
+  {id: 4, name: 'Kamis'},
+  {id: 5, name: 'Jumat'},
+  {id: 6, name: 'Sabtu'},
+  {id: 7, name: 'Minggu'},
+];
 
 const MealSuggestions = () => {
+  const [day, setDay] = useState(null);
+
+  const handleDay = useCallback(event => {
+    setDay(event);
+  }, []);
   return (
-    <View style={styles.container}>
+    <>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.dayWrapper}>
+        {dayData.map(item => (
+          <TouchableOpacity
+            style={[
+              styles.caloriesItem,
+              day?.id === item.id ? styles.active : styles.inActive,
+            ]}
+            onPress={() => handleDay(item)}
+            activeOpacity={SIZES.opacity}
+            key={item.id}>
+            <Text
+              style={[
+                FONTS.textBold12,
+                day?.id === item.id ? styles.textActive : styles.textInactive,
+              ]}>
+              {item.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
       <View style={styles.wrapper}>
         <View style={styles.row}>
           <Feather name="sunrise" size={16} color={COLORS.red} />
@@ -72,12 +115,23 @@ const MealSuggestions = () => {
           </Text>
         </View>
       </View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {borderBottomWidth: 1, borderColor: COLORS.border},
+  dayWrapper: {marginTop: 24},
+  caloriesItem: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  active: {backgroundColor: COLORS.shadowPrimary, borderColor: COLORS.primary},
+  inActive: {backgroundColor: COLORS.white, borderColor: COLORS.white},
+  textActive: {color: COLORS.primary},
+  textInactive: {color: COLORS.black},
   row: {flexDirection: 'row', alignItems: 'center'},
   wrapper: {
     flexDirection: 'row',
@@ -90,7 +144,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderWidth: 1,
     marginVertical: 16,
     borderRadius: 6,

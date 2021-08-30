@@ -11,10 +11,11 @@ import {
   HomeScreen,
   AlatHitungScreen,
   SearchScreen,
-  JurnalScreen,
+  JournalScreen,
   ProfileScreen,
 } from '../screens/menu';
 import {LoginScreen, RegisterScreen} from '../screens/auth';
+import {SportsJournalScreen} from '../screens/journal';
 import {
   ChangePasswordScreen,
   EditProfileScreen,
@@ -22,10 +23,12 @@ import {
 } from '../screens/profile';
 import {
   WeightCalculatorScreen,
-  WeightDetailScreen,
+  CalculationDetailScreen,
   CaloriesScreen,
   CancerRiskScreen,
   FoodSuggestionScreen,
+  CancerQuestionScreen,
+  MenuPackageScreen,
 } from '../screens/alathitung';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
@@ -124,8 +127,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="JurnalTab"
-        component={JurnalScreen}
+        name="JournalTab"
+        component={JournalScreen}
         options={{
           tabBarLabel: 'Jurnal',
           tabBarIcon: ({focused}) => {
@@ -142,12 +145,12 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('JurnalTab');
+              navigationRef.current.navigate('JournalTab');
               // if (token) {
-              //   navigationRef.current.navigate('JurnalTab');
+              //   navigationRef.current.navigate('JournalTab');
               // } else {
               //   navigationRef.current.navigate('Login', {
-              //     nav: 'JurnalTab',
+              //     nav: 'JournalTab',
               //   });
               // }
             };
@@ -226,13 +229,22 @@ export default function App() {
             component={WeightCalculatorScreen}
             name="WeightCalculator"
           />
-          <Stack.Screen component={WeightDetailScreen} name="WeightDetail" />
+          <Stack.Screen
+            component={CalculationDetailScreen}
+            name="CalculationDetail"
+          />
           <Stack.Screen component={CaloriesScreen} name="Calories" />
           <Stack.Screen component={CancerRiskScreen} name="CancerRisk" />
           <Stack.Screen
             component={FoodSuggestionScreen}
             name="FoodSuggestion"
           />
+          <Stack.Screen component={MenuPackageScreen} name="MenuPackage" />
+          <Stack.Screen
+            component={CancerQuestionScreen}
+            name="CancerQuestion"
+          />
+          <Stack.Screen component={SportsJournalScreen} name="SportsJournal" />
         </>
       </Stack.Navigator>
     </NavigationContainer>

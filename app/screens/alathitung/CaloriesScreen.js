@@ -26,9 +26,12 @@ const CaloriesScreen = ({navigation}) => {
     activity: 'Sedang',
   });
 
-  const handleNavigation = type => {
-    navigation.navigate(type);
-  };
+  const handleNavigation = useCallback(
+    (type, param) => {
+      navigation.navigate(type, param);
+    },
+    [navigation],
+  );
 
   const handleInput = useCallback((type, value) => {
     setField(state => ({...state, [type]: value}));
@@ -107,6 +110,7 @@ const CaloriesScreen = ({navigation}) => {
           <MainButton
             title="Hitung"
             style={styles.button}
+            onPress={() => handleNavigation('CalculationDetail', {type: 'BMR'})}
             disable={!field.age || !field.height || !field.weight}
           />
           <View style={styles.margin}>

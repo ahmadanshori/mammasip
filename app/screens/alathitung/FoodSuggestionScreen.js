@@ -28,27 +28,32 @@ const pekanData = [
   {id: 3, name: 'Pekan 3'},
   {id: 4, name: 'Pekan 4'},
 ];
-const dayData = [
-  {id: 1, name: 'Senin'},
-  {id: 2, name: 'Selasa'},
-  {id: 3, name: 'Rabu'},
-  {id: 4, name: 'Kamis'},
-  {id: 5, name: 'Jumat'},
-  {id: 6, name: 'Sabtu'},
-  {id: 7, name: 'Minggu'},
-];
 
-const FoodSuggestionScreen = () => {
+const FoodSuggestionScreen = ({navigation, route}) => {
+  const {handleFoodSuggestion} = route.params;
   const [calories, setcalories] = useState(null);
   const [pekan, setPekan] = useState(null);
-  const [day, setDay] = useState(null);
+  const [selectedMenu, setSelectedMenu] = useState({
+    id: 1,
+    name: 'Paket Menu 1',
+  });
 
   const handlePekan = useCallback(event => {
     setPekan(event);
   }, []);
-  const handleDay = useCallback(event => {
-    setDay(event);
+
+  const handleSave = () => {
+    handleFoodSuggestion('a');
+    navigation.goBack();
+  };
+  const changeMenuPackage = useCallback(() => {
+    navigation.navigate('MenuPackage', {updateMenu, menu: selectedMenu});
+  }, [selectedMenu, updateMenu, navigation]);
+
+  const updateMenu = useCallback(value => {
+    setSelectedMenu(value);
   }, []);
+
   return (
     <Container>
       <HeaderTitle title="Atur menu makanan" />
@@ -127,51 +132,33 @@ const FoodSuggestionScreen = () => {
               Saran Menu Makanan
             </Text>
           </View>
-          <View style={styles.menuSelected}>
+          <TouchableOpacity
+            style={styles.menuSelected}
+            onPress={changeMenuPackage}
+            activeOpacity={1}>
             <View>
               <Text style={[FONTS.text12, {color: COLORS.white}]}>
                 Pilihan menu
               </Text>
               <Text
                 style={[FONTS.textBold14, {color: COLORS.white, marginTop: 4}]}>
-                Paket Menu 1
+                {selectedMenu?.name}
               </Text>
             </View>
-            <TouchableOpacity
-              style={styles.changeText}
-              activeOpacity={SIZES.opacity}>
+            <View style={styles.changeText}>
               <Text style={[FONTS.textBold10, {color: COLORS.white}]}>
                 Ganti
               </Text>
-            </TouchableOpacity>
-          </View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.dayWrapper}>
-            {dayData.map(item => (
-              <TouchableOpacity
-                style={[
-                  styles.caloriesItem,
-                  day?.id === item.id ? styles.active : styles.inActive,
-                ]}
-                onPress={() => handleDay(item)}
-                activeOpacity={SIZES.opacity}
-                key={item.id}>
-                <Text
-                  style={[
-                    FONTS.textBold12,
-                    day?.id === item.id
-                      ? styles.textActive
-                      : styles.textInactive,
-                  ]}>
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+            </View>
+          </TouchableOpacity>
+
           <MealSuggestions />
-          <MainButton title="Simpan" style={styles.dayWrapper} />
+          <Divider height={1} />
+          <MainButton
+            title="Simpan"
+            style={styles.saveButton}
+            onPress={handleSave}
+          />
         </View>
       </ScrollView>
     </Container>
@@ -193,15 +180,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    marginBottom: 24,
   },
   row: {flexDirection: 'row', alignItems: 'center'},
-  justify: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  pekan: {width: '25%', alignItems: 'center', paddingBottom: 4},
+
+  pekan: {width: '25%', alignItems: 'center', paddingBottom: 4, paddingTop: 24},
   pekenActive: {borderBottomWidth: 1, borderColor: COLORS.primary},
   padding: {padding: 16},
   menuSelected: {
@@ -221,8 +203,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 40,
   },
-  dayWrapper: {marginTop: 24},
-  margin32: {marginTop: 32},
+  saveButton: {marginTop: 24},
 });
 
 export default FoodSuggestionScreen;

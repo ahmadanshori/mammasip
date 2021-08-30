@@ -18,8 +18,8 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 const WeightCalculatorScreen = ({navigation}) => {
   const [field, setField] = useState({age: '', weight: '', height: ''});
 
-  const handleNavigation = useCallback(type => {
-    navigation.navigate(type);
+  const handleNavigation = useCallback((type, param) => {
+    navigation.navigate(type, param);
   }, []);
 
   const handleInput = useCallback((type, value) => {
@@ -85,7 +85,7 @@ const WeightCalculatorScreen = ({navigation}) => {
           <MainButton
             title="Hitung"
             style={styles.button}
-            onPress={() => navigation.navigate('WeightDetail')}
+            onPress={() => handleNavigation('CalculationDetail', {type: 'BMI'})}
             disable={!field.age || !field.height || !field.weight}
           />
           <View style={styles.margin}>

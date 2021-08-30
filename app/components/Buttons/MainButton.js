@@ -4,14 +4,24 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const MainButton = ({title, style = {}, onPress, disable = false, share}) => {
+const MainButton = ({
+  title,
+  style = {},
+  onPress,
+  disable = false,
+  share,
+  backgroundColor,
+}) => {
+  const containerStyles = [
+    [styles.button, disable ? styles.inactive : styles.active, style],
+  ];
+  if (backgroundColor) {
+    containerStyles.push({backgroundColor});
+  }
   return (
     <TouchableOpacity
       activeOpacity={disable ? 1 : SIZES.opacity}
-      style={[
-        styles.button,
-        disable ? [styles.inactive, style] : [styles.active, style],
-      ]}
+      style={containerStyles}
       onPress={onPress}>
       <View style={styles.wrapper}>
         {share ? (

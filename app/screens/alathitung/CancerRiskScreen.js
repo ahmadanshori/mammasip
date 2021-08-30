@@ -93,6 +93,7 @@ const CaloriesScreen = ({navigation}) => {
           <MainButton
             title="Hitung"
             style={styles.countButton}
+            onPress={() => handleNavigation('CancerQuestion')}
             disable={!field.gender || !field.age}
           />
           <View style={styles.margin}>

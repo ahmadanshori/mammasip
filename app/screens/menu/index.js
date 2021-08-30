@@ -1,12 +1,12 @@
 import HomeScreen from './HomeScreen';
 import AlatHitungScreen from './AlatHitungScreen';
 import SearchScreen from './SearchScreen';
-import JurnalScreen from './JurnalScreen';
+import JournalScreen from './JournalScreen';
 import ProfileScreen from './ProfileScreen';
 export {
   HomeScreen,
   AlatHitungScreen,
   SearchScreen,
-  JurnalScreen,
+  JournalScreen,
   ProfileScreen,
 };

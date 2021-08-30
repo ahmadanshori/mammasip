@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   Text,
@@ -12,27 +12,34 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {MainButton, AskButton} from '../../components/Buttons';
+import MealSuggestions from '../../components/MealSuggestions';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import Divider from '../../components/Divider';
 
-const WeightDetailScreen = ({navigation}) => {
+const CalculationDetailScreen = ({navigation, route}) => {
+  const {type} = route.params;
+  const [foodSuggestion, setFoodSuggestion] = useState(null);
   const handleShare = () => {};
-  const handleNavigation = useCallback(type => {
-    navigation.navigate(type);
+
+  const handleNavigation = useCallback((val, param) => {
+    navigation.navigate(val, param);
   }, []);
+
+  const handleFoodSuggestion = value => {
+    setFoodSuggestion(value);
+  };
   return (
     <Container>
       <HeaderTitle
-        title="Hasil Perhitungan BMI Anda"
+        title={`Hasil Perhitungan ${type} Anda`}
         onSharePress={handleShare}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.titleBmi}>
-          <Text style={[FONTS.textBold18, {color: COLORS.black}]}>
-            BMI anda adalah{' '}
-          </Text>
+          <Text style={FONTS.textBold18}>{type} anda adalah </Text>
           <Text style={[FONTS.textBold18, {color: COLORS.primary}]}>17.9</Text>
+          <Text style={FONTS.textBold18}> kcal</Text>
         </View>
         <View style={styles.padding}>
           <MainButton title="Bagikan" share />
@@ -44,7 +51,7 @@ const WeightDetailScreen = ({navigation}) => {
             </Text>
           </TouchableOpacity>
           <Text style={[FONTS.text12, {textAlign: 'center'}]}>
-            Hasil analisa perhitungan BMI
+            Hasil analisa perhitungan {type}
           </Text>
           <Divider height={2} style={styles.divider} />
           <Text
@@ -65,34 +72,66 @@ const WeightDetailScreen = ({navigation}) => {
         </View>
         <Divider />
         <View style={styles.padding}>
-          <Text
-            style={[FONTS.textBold16, {color: COLORS.black, marginBottom: 16}]}>
-            Saran Menu Makanan
-          </Text>
-          <View style={styles.warning}>
-            <View style={styles.row}>
-              <Ionicons name="alert-circle" size={20} color={COLORS.red} />
-              <Text
-                style={[FONTS.textBold12, {color: COLORS.red, marginLeft: 6}]}>
-                Anda belum mengatur jumlah kalori harian
-              </Text>
-            </View>
-            <Text style={[FONTS.text12, {color: COLORS.black, marginTop: 8}]}>
-              Yuk tentukan jumlah kalori harian biar sehat dan berat badanmu
-              jadi lebih ideal.
+          <View style={styles.justify}>
+            <Text
+              style={[
+                FONTS.textBold16,
+                {color: COLORS.black, marginBottom: 16},
+              ]}>
+              Saran Menu Makanan
             </Text>
+            <TouchableOpacity
+              style={styles.changeButton}
+              onPress={() =>
+                handleNavigation('FoodSuggestion', {
+                  handleFoodSuggestion,
+                })
+              }
+              activeOpacity={SIZES.opacity}>
+              <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
+                Ubah
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.foodWrapper}>
-            <Image
-              resizeMode="contain"
-              source={require('../../assets/icons/food.png')}
-              style={styles.foodImg}
-            />
-          </View>
-          <MainButton
-            title="Pilih Menu Makanan"
-            onPress={() => handleNavigation('FoodSuggestion')}
-          />
+
+          {foodSuggestion ? (
+            <MealSuggestions />
+          ) : (
+            <>
+              <View style={styles.warning}>
+                <View style={styles.row}>
+                  <Ionicons name="alert-circle" size={20} color={COLORS.red} />
+                  <Text
+                    style={[
+                      FONTS.textBold12,
+                      {color: COLORS.red, marginLeft: 6},
+                    ]}>
+                    Anda belum mengatur jumlah kalori harian
+                  </Text>
+                </View>
+                <Text
+                  style={[FONTS.text12, {color: COLORS.black, marginTop: 8}]}>
+                  Yuk tentukan jumlah kalori harian biar sehat dan berat badanmu
+                  jadi lebih ideal.
+                </Text>
+              </View>
+              <View style={styles.foodWrapper}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../../assets/icons/food.png')}
+                  style={styles.foodImg}
+                />
+              </View>
+              <MainButton
+                title="Pilih Menu Makanan"
+                onPress={() =>
+                  handleNavigation('FoodSuggestion', {
+                    handleFoodSuggestion,
+                  })
+                }
+              />
+            </>
+          )}
         </View>
         <Divider />
         <View style={styles.padding}>
@@ -166,6 +205,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   margin: {marginTop: 32},
+  changeButton: {
+    paddingBottom: 8,
+    paddingRight: 16,
+    paddingLeft: 24,
+  },
+  justify: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 });
 
-export default WeightDetailScreen;
+export default CalculationDetailScreen;
