@@ -63,6 +63,7 @@ export const FONTS = {
     fontSize: 16,
     letterSpacing: 0.37,
   },
+  text18: {fontFamily: 'Inter-Regular', fontSize: 18},
   textBold18: {fontFamily: 'Inter-Bold', fontSize: 18},
   textBold20: {
     fontFamily: 'Inter-Bold',

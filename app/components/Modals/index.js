@@ -1,2 +1,3 @@
 import ImageModal from './ImageModal';
-export {ImageModal};
+import ActivityModal from './ActivityModal';
+export {ImageModal, ActivityModal};
