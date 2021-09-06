@@ -15,7 +15,7 @@ import {
   ProfileScreen,
 } from '../screens/menu';
 import {LoginScreen, RegisterScreen} from '../screens/auth';
-import {SportsJournalScreen} from '../screens/journal';
+import {SportsJournalScreen, WeightJournalScreen} from '../screens/journal';
 import {
   ChangePasswordScreen,
   EditProfileScreen,
@@ -245,6 +245,7 @@ export default function App() {
             name="CancerQuestion"
           />
           <Stack.Screen component={SportsJournalScreen} name="SportsJournal" />
+          <Stack.Screen component={WeightJournalScreen} name="WeightJournal" />
         </>
       </Stack.Navigator>
     </NavigationContainer>

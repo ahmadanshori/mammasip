@@ -1,2 +1,3 @@
 import SportsJournalScreen from './SportsJournalScreen';
-export {SportsJournalScreen};
+import WeightJournalScreen from './WeightJournalScreen';
+export {SportsJournalScreen, WeightJournalScreen};

@@ -1,3 +1,4 @@
 import ImageModal from './ImageModal';
 import ActivityModal from './ActivityModal';
-export {ImageModal, ActivityModal};
+import ReminderModals from './ReminderModals';
+export {ImageModal, ActivityModal, ReminderModals};

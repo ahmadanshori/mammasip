@@ -28,7 +28,7 @@ const JournalScreen = ({navigation}) => {
       />
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
-        onPress={() => handleNavigation('Calories')}
+        onPress={() => handleNavigation('WeightJournal')}
         backgroundColor={COLORS.primary}
         title="Jurnal Berat Badan"
         description="Hitung berat badan ideal yang sesuai
