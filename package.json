@@ -20,6 +20,8 @@
     "date-fns": "^2.23.0",
     "react": "17.0.1",
     "react-native": "0.64.2",
+    "react-native-calendar": "^0.13.1",
+    "react-native-calendars": "^1.1266.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-crop-picker": "^0.36.2",
     "react-native-safe-area-context": "^3.2.0",

@@ -114,7 +114,11 @@ const SportsJournalScreen = () => {
             ]}>
             Riwayat olahraga
           </Text>
-          <Reminder onPress={() => setIsReminder(true)} time={time} />
+          <Reminder
+            onPress={() => setIsReminder(true)}
+            time={time}
+            title="Reminder Harian Aktif"
+          />
         </View>
         <Divider />
         <View style={styles.wrapper}>

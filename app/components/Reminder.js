@@ -4,13 +4,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS, FONTS, SIZES} from '../constants';
 import formatDate from '../libs/formatDate';
 
-const Reminder = ({onPress, time}) => {
+const Reminder = ({title, onPress, time}) => {
   return (
     <View style={styles.box}>
       <View>
         <View style={styles.row}>
           <Icon name="bell-ring" size={16} style={styles.margin} />
-          <Text style={FONTS.textBold12}>Reminder Harian Aktif</Text>
+          <Text style={FONTS.textBold12}>{title}</Text>
         </View>
         <Text style={[FONTS.text12, {color: COLORS.gray}]}>
           {time ? formatDate(time, 'dd MMMM yyyy hh:mm') : '--'}

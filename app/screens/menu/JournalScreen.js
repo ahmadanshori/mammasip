@@ -36,7 +36,7 @@ const JournalScreen = ({navigation}) => {
       />
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
-        onPress={() => handleNavigation('CancerRisk')}
+        onPress={() => handleNavigation('SkriningJournal')}
         backgroundColor={COLORS.secondary}
         title="Jurnal Skrining"
         description="Jadwal untuk dirimu melakukan SADARI & SADANIS"

@@ -1,3 +1,4 @@
 import SportsJournalScreen from './SportsJournalScreen';
 import WeightJournalScreen from './WeightJournalScreen';
-export {SportsJournalScreen, WeightJournalScreen};
+import SkriningJournalScreen from './SkriningJournalScreen';
+export {SportsJournalScreen, WeightJournalScreen, SkriningJournalScreen};

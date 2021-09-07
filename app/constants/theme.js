@@ -19,6 +19,7 @@ export const COLORS = {
   lightYellow: '#FDF3CF',
   red: '#ED4A4A',
   lightRed: '#FFECEC',
+  lightBlue: '#2963E0',
   blue: '#7097EA',
   darkBlue: '#4D7DE5',
   separator: '#EDEDED',

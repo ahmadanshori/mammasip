@@ -88,7 +88,11 @@ const WeightJournalScreen = ({navigation}) => {
               <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
             </TouchableOpacity>
           </View>
-          <Reminder onPress={() => setIsReminder(true)} time={time} />
+          <Reminder
+            onPress={() => setIsReminder(true)}
+            time={time}
+            title="Reminder Harian Aktif"
+          />
         </View>
         <Divider />
         <View style={styles.wrapper}>
