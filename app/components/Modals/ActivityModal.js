@@ -8,9 +8,9 @@ import {CalculatorInput} from '../Inputs';
 
 const ActivityModal = ({onClose, onAddPress}) => {
   const [activity, setActivity] = useState('Sedang');
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-
+  console.log(`time`, time);
   const handleActivity = value => {
     if (activity !== value) {
       setActivity(value);
@@ -27,7 +27,7 @@ const ActivityModal = ({onClose, onAddPress}) => {
       style={styles.container}
       activeOpacity={1}
       onPress={onClose}>
-      <View style={styles.box}>
+      <TouchableOpacity style={styles.box} activeOpacity={1}>
         <View style={styles.row}>
           <View style={styles.wrapper} />
           <View style={[styles.wrapper, {alignItems: 'center'}]}>
@@ -121,10 +121,10 @@ const ActivityModal = ({onClose, onAddPress}) => {
         <MainButton
           title="Tambah"
           style={styles.addButton}
-          disable={!time}
-          onPress={() => onAddPress({time, activity})}
+          disable={!time ? true : false}
+          onPress={() => (time ? onAddPress({time, activity}) : {})}
         />
-      </View>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };

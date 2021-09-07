@@ -10,31 +10,25 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {Container} from '../../components/Container';
 import {AskButton, MainButton} from '../../components/Buttons';
 import {HeaderTitle} from '../../components/Headers';
 import {VideoItem, CalculatorItem} from '../../components/Items';
-import {ActivityModal} from '../../components/Modals';
+import {ActivityModal, ReminderModals} from '../../components/Modals';
 import MealSuggestions from '../../components/MealSuggestions';
 import Reminder from '../../components/Reminder';
 import Divider from '../../components/Divider';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const data = [
-  {quarter: '12/08', earnings: 100},
-  {quarter: '14/08', earnings: 20},
-  {quarter: '17/08', earnings: 70},
-  {quarter: '21/08', earnings: 35},
-  {quarter: '4/09', earnings: 88},
-  {quarter: '15/09', earnings: 45},
-  {quarter: '28/09', earnings: 68},
-];
 const WeightJournalScreen = ({navigation}) => {
   const [isActivity, setIsActivity] = useState(false);
   const [foodSuggestion, setFoodSuggestion] = useState(null);
+  const [time, setTime] = useState(null);
+  const [isCalendar, setIsCalendar] = useState(false);
+  const [isReminder, setIsReminder] = useState(false);
 
   const handleAddActivity = value => {
     setIsActivity(false);
@@ -44,6 +38,17 @@ const WeightJournalScreen = ({navigation}) => {
   }, []);
   const handleFoodSuggestion = value => {
     setFoodSuggestion(value);
+  };
+  const onChange = (event, selectedDate) => {
+    setIsCalendar(false);
+    setTime(selectedDate);
+  };
+  const handleReminder = () => {
+    setIsReminder(false);
+  };
+  const handleCloseReminder = () => {
+    setIsReminder(false);
+    setTime(null);
   };
   return (
     <Container>
@@ -83,8 +88,7 @@ const WeightJournalScreen = ({navigation}) => {
               <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
             </TouchableOpacity>
           </View>
-
-          <Reminder />
+          <Reminder onPress={() => setIsReminder(true)} time={time} />
         </View>
         <Divider />
         <View style={styles.wrapper}>
@@ -194,11 +198,28 @@ const WeightJournalScreen = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-
+      {isReminder && (
+        <ReminderModals
+          onCalendar={() => setIsCalendar(true)}
+          time={time}
+          onSave={handleReminder}
+          onClose={handleCloseReminder}
+        />
+      )}
       {isActivity && (
         <ActivityModal
           onClose={() => setIsActivity(false)}
           onAddPress={handleAddActivity}
+        />
+      )}
+      {isCalendar && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={time || new Date()}
+          mode={'time'}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
         />
       )}
     </Container>

@@ -2,8 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS, FONTS, SIZES} from '../constants';
+import formatDate from '../libs/formatDate';
 
-const Reminder = ({onPress}) => {
+const Reminder = ({onPress, time}) => {
   return (
     <View style={styles.box}>
       <View>
@@ -12,7 +13,7 @@ const Reminder = ({onPress}) => {
           <Text style={FONTS.textBold12}>Reminder Harian Aktif</Text>
         </View>
         <Text style={[FONTS.text12, {color: COLORS.gray}]}>
-          Besok, 8 Sep 2021 09:00
+          {time ? formatDate(time, 'dd MMMM yyyy hh:mm') : '--'}
         </Text>
       </View>
       <TouchableOpacity

@@ -2,8 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import formatDate from '../../libs/formatDate';
 
-const ReminderModals = ({onClose, onPress}) => {
+const ReminderModals = ({onClose, onCalendar, time, onSave}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -24,8 +25,16 @@ const ReminderModals = ({onClose, onPress}) => {
         <Text style={[FONTS.textBold14, {marginVertical: 24}]}>
           Atur Reminder Harian
         </Text>
-        <TouchableOpacity style={styles.inputButton} onPress={onPress}>
-          <Text style={FONTS.text14}>12 : 33</Text>
+        <TouchableOpacity style={styles.inputButton} onPress={onCalendar}>
+          {time ? (
+            <Text style={[FONTS.text14, {color: COLORS.black}]}>
+              {formatDate(time, 'hh:mm')}
+            </Text>
+          ) : (
+            <Text style={[FONTS.text14, {color: COLORS.gray}]}>
+              {formatDate(new Date(), 'hh:mm')}
+            </Text>
+          )}
           <View>
             <AntDesign name="up" size={10} color={COLORS.gray} />
             <AntDesign name="down" size={10} color={COLORS.gray} />
@@ -35,7 +44,10 @@ const ReminderModals = ({onClose, onPress}) => {
           <TouchableOpacity style={styles.offButton} activeOpacit={1}>
             <Text style={[FONTS.text14, {color: COLORS.red}]}>Matikan</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.saveButton} activeOpacit={1}>
+          <TouchableOpacity
+            style={styles.saveButton}
+            activeOpacit={1}
+            onPress={onSave}>
             <Text style={[FONTS.text14, {color: COLORS.white}]}>Simpan</Text>
           </TouchableOpacity>
         </View>

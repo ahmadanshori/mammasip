@@ -32,19 +32,25 @@ const data = [
 ];
 const SportsJournalScreen = () => {
   const [isActivity, setIsActivity] = useState(false);
-  const [time, setTime] = useState(new Date());
-  const [show, setShow] = useState(false);
+  const [time, setTime] = useState(null);
+  const [isCalendar, setIsCalendar] = useState(false);
+  const [isReminder, setIsReminder] = useState(false);
+
   const handleAddActivity = value => {
     setIsActivity(false);
   };
   const onChange = (event, selectedDate) => {
-    console.log(`selectedDate`, selectedDate);
-    // setShow(Platform.OS === 'ios');
-    // setTime(selectedDate);
+    setIsCalendar(false);
+    setTime(selectedDate);
   };
-  const openTime = () => {
-    setShow(true);
+  const handleReminder = () => {
+    setIsReminder(false);
   };
+  const handleCloseReminder = () => {
+    setIsReminder(false);
+    setTime(null);
+  };
+
   return (
     <Container>
       <HeaderTitle title="Jurnal olahraga anda" />
@@ -108,7 +114,7 @@ const SportsJournalScreen = () => {
             ]}>
             Riwayat olahraga
           </Text>
-          <Reminder />
+          <Reminder onPress={() => setIsReminder(true)} time={time} />
         </View>
         <Divider />
         <View style={styles.wrapper}>
@@ -156,17 +162,24 @@ const SportsJournalScreen = () => {
           </View>
         </View>
       </ScrollView>
-      <ReminderModals onPress={() => setShow(true)} />
+      {isReminder && (
+        <ReminderModals
+          onCalendar={() => setIsCalendar(true)}
+          time={time}
+          onSave={handleReminder}
+          onClose={handleCloseReminder}
+        />
+      )}
       {isActivity && (
         <ActivityModal
           onClose={() => setIsActivity(false)}
           onAddPress={handleAddActivity}
         />
       )}
-      {show && (
+      {isCalendar && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={new Date()}
+          value={time || new Date()}
           mode={'time'}
           is24Hour={true}
           display="default"
