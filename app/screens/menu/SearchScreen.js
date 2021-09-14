@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container} from '../../components/Container';
+import {AskButton} from '../../components/Buttons';
 import {SearchHeader} from '../../components/Headers';
 import {VideoItem, VideoDetailItem} from '../../components/Items';
 import {
@@ -36,10 +37,13 @@ const SearchScreen = ({navigation}) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingHorizontal: 16, paddingBottom: 16}}>
-        <VideoRecomendation />
+        <VideoRecomendation
+          onPress={() => navigation.navigate('VideoDetail')}
+        />
         <ArticleRecomendation />
         <BookRekomendation />
         <ImportanLink />
+
         {/* ======== VIDEO ======== */}
         {/* <View>
           <View style={styles.header}>
@@ -60,6 +64,13 @@ const SearchScreen = ({navigation}) => {
           <VideoDetailItem />
         </View> */}
         {/* ======== ARTICLE ======== */}
+        <View style={styles.footer}>
+          <Text
+            style={[FONTS.textBold16, {textAlign: 'center', marginBottom: 16}]}>
+            Butuh informasi lainnya?
+          </Text>
+          <AskButton onPress={() => navigation.navigate('Faq')} />
+        </View>
       </ScrollView>
     </Container>
   );
@@ -74,6 +85,7 @@ const styles = StyleSheet.create({
   },
   row: {flexDirection: 'row', alignItems: 'center', marginTop: 8},
   icon: {marginRight: 8},
+  footer: {marginTop: 44},
 });
 
 export default SearchScreen;

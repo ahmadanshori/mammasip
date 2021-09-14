@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const ArticleDetailItem = ({onPress}) => {
+const ArticleDetailItem = ({onPress, bookmark}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -31,7 +31,11 @@ const ArticleDetailItem = ({onPress}) => {
         </View>
       </View>
       <TouchableOpacity style={{paddingHorizontal: 4}}>
-        <Icon name="bookmark-outline" size={20} />
+        <Icon
+          name={bookmark ? 'bookmark' : 'bookmark-outline'}
+          color={bookmark ? COLORS.primary : COLORS.black}
+          size={20}
+        />
       </TouchableOpacity>
     </TouchableOpacity>
   );

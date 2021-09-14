@@ -6,6 +6,11 @@ import {OutlineButton} from '../Buttons';
 import {COLORS, FONTS} from '../../constants';
 
 const data1 = [1, 2, 3, 4];
+const data2 = [
+  {id: 1, active: true},
+  {id: 2, active: false},
+  {id: 3, active: false},
+];
 
 const ArticleRecomendation = ({onPress}) => {
   return (
@@ -29,9 +34,9 @@ const ArticleRecomendation = ({onPress}) => {
         ))}
       </ScrollView>
       <View style={styles.body}>
-        <ArticleDetailItem />
-        <ArticleDetailItem />
-        <ArticleDetailItem />
+        {data2.map(item => (
+          <ArticleDetailItem key={item.id} bookmark={item.active} />
+        ))}
       </View>
       <OutlineButton title="Lihat Semua Artikel" />
     </View>

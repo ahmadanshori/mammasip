@@ -1,18 +1,20 @@
 import React from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {ArticleItem, BookItem} from '../Items';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {OutlineButton} from '../Buttons';
-import {COLORS, FONTS} from '../../constants';
+import {COLORS, FONTS, SIZES} from '../../constants';
 
-const data1 = [1, 2, 3, 4];
-
+const data = [
+  {id: 1, active: false},
+  {id: 2, active: true},
+  {id: 3, active: false},
+];
 const ImportantLink = ({onPress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.row}>
-          <MaterialIcons name="link" size={18} style={styles.icon} />
+          <Icon name="link" size={20} style={styles.icon} />
           <Text style={FONTS.textBold14}>Tautan Penting</Text>
         </View>
         <Text
@@ -23,16 +25,30 @@ const ImportantLink = ({onPress}) => {
           Lihat Semua
         </Text>
       </View>
-      <View>
-        <View>
-          <Text>Kesehatan diri & pola makan sehat</Text>
-          <Text>
-            https://mammasip.com/artikel/212031/kesehatan-diri-dan-pola-makan
-          </Text>
+      {data.map(item => (
+        <View style={styles.box} key={item.id}>
+          <View style={{flex: 1}}>
+            <Text style={FONTS.textBold12} numberOfLines={1}>
+              Kesehatan diri & pola makan sehat
+            </Text>
+            <Text
+              style={[FONTS.textBold10, {color: COLORS.blue, marginTop: 4}]}
+              numberOfLines={1}>
+              https://mammasip.com/artikel/212031/kesehatan-diri-dan-pola-makan
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.bookmark}
+            activeOpacity={SIZES.opacity}>
+            <Icon
+              name={item.active ? 'bookmark' : 'bookmark-outline'}
+              size={20}
+              color={item.active ? COLORS.primary : COLORS.black}
+            />
+          </TouchableOpacity>
         </View>
-        <View></View>
-      </View>
-      <OutlineButton title="Lihat Semua Tautan" />
+      ))}
+      <OutlineButton title="Lihat Semua Tautan" style={styles.button} />
     </View>
   );
 };
@@ -49,5 +65,18 @@ const styles = StyleSheet.create({
   icon: {marginRight: 8},
   body: {marginBottom: 8},
   margin: {marginBottom: 16},
+  box: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    borderWidth: 1,
+    paddingVertical: 16,
+    paddingLeft: 16,
+    borderRadius: 8,
+    borderColor: COLORS.border,
+    marginBottom: 8,
+  },
+  bookmark: {paddingHorizontal: 16, paddingBottom: 8},
+  button: {marginTop: 16},
 });
 export default ImportantLink;
