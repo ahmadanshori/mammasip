@@ -1,24 +1,33 @@
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {SIZES} from '../constants';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {COLORS, SIZES} from '../constants';
 
 const Banner = ({onPressCategory}) => {
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPressCategory}>
-      <Image
-        source={require('../assets/images/banner.png')}
-        style={styles.img}
-      />
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={onPressCategory}
+      style={styles.container}>
+      <View style={styles.background} />
+      <View style={styles.padding}>
+        <Image
+          source={require('../assets/images/banner.png')}
+          style={styles.img}
+        />
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {justifyContent: 'center'},
+  background: {height: 100, backgroundColor: COLORS.primary},
+  padding: {padding: 16},
   img: {
     height: SIZES.width2 - 32,
     width: '100%',
-    marginTop: -90,
     borderRadius: 8,
+    marginTop: -100,
   },
 });
 

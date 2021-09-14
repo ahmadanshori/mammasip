@@ -1,35 +1,19 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {COLORS, FONTS} from '../../constants';
 
-import {COLORS, FONTS, SIZES} from '../../constants';
-
-const HomeItem = ({}) => {
+const HomeItem = ({title, desc, color, source}) => {
+  const textStyles = [[FONTS.textBold14, styles.text]];
+  if (color) {
+    textStyles.push({color});
+  }
   return (
     <TouchableOpacity style={styles.container} activeOpacity={1}>
-      <Image
-        source={{uri: 'https://www.w3schools.com/w3css/img_snowtops.jpg'}}
-        style={styles.img}
-      />
-      <View style={styles.shadowImg}>
-        <TouchableOpacity style={styles.bookmark}>
-          <Icon name="bookmark-outline" size={20} color={COLORS.white} />
-        </TouchableOpacity>
-        <Icon name="play-circle" size={30} color={COLORS.white} />
+      <View>
+        <Text style={textStyles}>{title}</Text>
+        <Text style={FONTS.text10}>{desc}</Text>
       </View>
-      <View style={styles.body}>
-        <View style={styles.spaceBetween}>
-          <View style={styles.subtitle}>
-            <Text style={[FONTS.textBold8, {color: COLORS.primary}]}>
-              Sayangi dirimu
-            </Text>
-          </View>
-          <View />
-        </View>
-        <Text style={[FONTS.text10, {color: COLORS.black}]}>
-          Mari Lakukan Skrining Payudara Sebelum Terlambat.
-        </Text>
-      </View>
+      <Image resizeMode="contain" source={source} style={styles.img} />
     </TouchableOpacity>
   );
 };
@@ -37,41 +21,19 @@ const HomeItem = ({}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
-    width: SIZES.width2 - 20,
     borderRadius: 8,
-  },
-  img: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: SIZES.width4,
-    width: SIZES.width2 - 20,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-  },
-  shadowImg: {
-    height: SIZES.width4,
-    width: SIZES.width2 - 20,
-    backgroundColor: COLORS.shadowPrimary,
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    zIndex: 99,
-  },
-  bookmark: {position: 'absolute', top: 0, right: 0, padding: 8},
-  body: {paddingHorizontal: 8, paddingVertical: 10},
-  spaceBetween: {
+    paddingLeft: 16,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 8,
+    overflow: 'hidden',
   },
-  subtitle: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    backgroundColor: COLORS.lightPrimary,
-    borderRadius: 10,
+  text: {marginBottom: 4},
+  img: {
+    height: 75,
+    width: 75,
+    borderBottomRightRadius: 4,
   },
 });
 

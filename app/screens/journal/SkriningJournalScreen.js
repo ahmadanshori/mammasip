@@ -77,7 +77,7 @@ const SkriningJournalScreen = () => {
         <View style={styles.wrapper}>
           <Text style={[FONTS.textBold12, styles.margin8]}>Sadanis</Text>
           <Text style={FONTS.text12}>Pemeriksaan Payudara Klinis</Text>
-          <Sadanis time={reminder} />
+          <Sadanis time={reminder} data={sadanis} />
         </View>
         <Divider />
         <View style={styles.wrapper}>

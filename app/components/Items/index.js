@@ -3,4 +3,18 @@ import ProfileItem from './ProfileItem';
 import CalculatorItem from './CalculatorItem';
 import MealItem from './MealItem';
 import VideoItem from './VideoItem';
-export {HomeItem, ProfileItem, CalculatorItem, MealItem, VideoItem};
+import VideoDetailItem from './VideoDetailItem';
+import ArticleItem from './ArticleItem';
+import ArticleDetailItem from './ArticleDetailItem';
+import BookItem from './BookItem';
+export {
+  HomeItem,
+  ProfileItem,
+  CalculatorItem,
+  MealItem,
+  VideoItem,
+  VideoDetailItem,
+  ArticleItem,
+  ArticleDetailItem,
+  BookItem,
+};

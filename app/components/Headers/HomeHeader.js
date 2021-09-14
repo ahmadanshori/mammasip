@@ -18,7 +18,6 @@ const HomeHeader = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    height: 150,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -26,8 +25,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     paddingHorizontal: 16,
     paddingTop: 16,
+    paddingBottom: 8,
   },
-
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-end',

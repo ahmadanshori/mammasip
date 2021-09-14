@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const VideoItem = ({onPress}) => {
+const ArticleItem = ({category, video, onPress}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -18,26 +18,21 @@ const VideoItem = ({onPress}) => {
         <TouchableOpacity style={styles.bookmark}>
           <Icon name="bookmark-outline" size={20} color={COLORS.white} />
         </TouchableOpacity>
-        <View
-          style={{
-            backgroundColor: COLORS.shadowWhite,
-            borderRadius: 50,
-            height: 42,
-            width: 42,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Icon
-            name="play-circle"
-            size={35}
-            color={COLORS.white}
-            style={{marginLeft: 2}}
-          />
-        </View>
+        {video && <Icon name="play-circle" size={30} color={COLORS.white} />}
       </View>
       <View style={styles.body}>
-        <Text style={[FONTS.textBold10, {color: COLORS.black}]}>
-          Jenis dan Stadium penyakit Kanker Payudara.
+        {category && (
+          <View style={styles.spaceBetween}>
+            <View style={styles.subtitle}>
+              <Text style={[FONTS.textBold8, {color: COLORS.primary}]}>
+                Sayangi dirimu
+              </Text>
+            </View>
+            <View />
+          </View>
+        )}
+        <Text style={[FONTS.text10, {color: COLORS.black}]}>
+          Mari Lakukan Skrining Payudara Sebelum Terlambat.
         </Text>
       </View>
     </TouchableOpacity>
@@ -47,29 +42,31 @@ const VideoItem = ({onPress}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
-    width: SIZES.width3 + 24,
+    width: SIZES.width2,
     borderRadius: 8,
     marginRight: 8,
   },
   img: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: SIZES.width3 + 24,
-    width: SIZES.width3 + 24,
-    borderRadius: 8,
+    height: SIZES.width4,
+    width: SIZES.width2,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
   },
   shadowImg: {
-    height: SIZES.width3 + 24,
-    width: SIZES.width3 + 24,
+    height: SIZES.width4,
+    width: SIZES.width2,
     // backgroundColor: COLORS.shadowPrimary,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
     zIndex: 99,
   },
   bookmark: {position: 'absolute', top: 0, right: 0, padding: 8},
-  body: {paddingHorizontal: 4, paddingVertical: 8},
+  body: {paddingHorizontal: 8, paddingVertical: 10},
   spaceBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -84,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VideoItem;
+export default ArticleItem;

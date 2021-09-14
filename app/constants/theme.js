@@ -7,6 +7,7 @@ export const COLORS = {
   shadowPrimary: 'rgba(112, 30, 112,0.2)',
   secondary: '#D21988',
   white: '#ffffff',
+  shadowWhite: 'rgba(255, 255, 255,0.3)',
   darkWhite: '#FBFBFB',
   gray: '#b2b2b2',
   lightGray: '#F5F5F5',
@@ -18,6 +19,7 @@ export const COLORS = {
   yellow: '#F9E186',
   lightYellow: '#FDF3CF',
   red: '#ED4A4A',
+  darkRed: '#C32020',
   lightRed: '#FFECEC',
   lightBlue: '#2963E0',
   blue: '#7097EA',
@@ -35,6 +37,7 @@ export const SIZES = {
   width2: width / 2,
   width3: width / 3,
   width4: width / 4,
+  width5: width / 5,
   width6: width / 6,
   shadow: {
     elevation: 2,

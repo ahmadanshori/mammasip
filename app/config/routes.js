@@ -34,6 +34,7 @@ import {
   CancerQuestionScreen,
   MenuPackageScreen,
 } from '../screens/alathitung';
+import VideoDetailScreen from '../screens/VideoDetailScreen';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -227,6 +228,8 @@ export default function App() {
             component={ChangePasswordScreen}
             name="ChangePassword"
           />
+          <Stack.Screen component={VideoDetailScreen} name="VideoDetail" />
+
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />
           <Stack.Screen

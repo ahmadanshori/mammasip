@@ -5,41 +5,47 @@ import {MainButton} from '../Buttons';
 import Reminder from '../Reminder';
 import {FONTS, COLORS} from '../../constants';
 
-const Sadanis = ({time}) => {
+const Sadanis = ({time, data}) => {
   return (
     <View>
-      <>
-        <View style={styles.box}>
-          <View>
-            <Text style={FONTS.text12}>Kondisi</Text>
-            <Text style={[FONTS.textBold14, {color: COLORS.primary}]}>
-              Rutin Menstruasi
+      {data ? (
+        <>
+          <View style={styles.box}>
+            <View>
+              <Text style={FONTS.text12}>Kondisi</Text>
+              <Text style={[FONTS.textBold14, {color: COLORS.primary}]}>
+                Rutin Menstruasi
+              </Text>
+            </View>
+            <View style={styles.changeButton}>
+              <Text style={[FONTS.textBold12, {color: COLORS.lightBlue}]}>
+                Ganti
+              </Text>
+            </View>
+          </View>
+          <Reminder time={time} title="Reminder Aktif" />
+        </>
+      ) : (
+        <>
+          <View style={styles.warning}>
+            <View style={styles.row}>
+              <Ionicons name="alert-circle" size={20} color={COLORS.red} />
+              <Text
+                style={[FONTS.textBold12, {color: COLORS.red, marginLeft: 6}]}>
+                Kapan anda terakhir kali SADANIS?
+              </Text>
+            </View>
+            <Text style={[FONTS.text12, {color: COLORS.black, marginTop: 8}]}>
+              Anda belum mengatur tanggal terakhir kali melakukan pemeriksaan
+              payudara ke dokter.
             </Text>
           </View>
-          <View style={styles.changeButton}>
-            <Text style={[FONTS.textBold12, {color: COLORS.lightBlue}]}>
-              Ganti
-            </Text>
-          </View>
-        </View>
-        <Reminder time={time} title="Reminder Aktif" />
-      </>
-      {/* <View style={styles.warning}>
-        <View style={styles.row}>
-          <Ionicons name="alert-circle" size={20} color={COLORS.red} />
-          <Text style={[FONTS.textBold12, {color: COLORS.red, marginLeft: 6}]}>
-            Kapan anda terakhir kali SADANIS?
-          </Text>
-        </View>
-        <Text style={[FONTS.text12, {color: COLORS.black, marginTop: 8}]}>
-          Anda belum mengatur tanggal terakhir kali melakukan pemeriksaan
-          payudara ke dokter.
-        </Text>
-      </View>
-      <MainButton
-        title="Atur tanggal terakhir SADANIS"
-        backgroundColor={COLORS.secondary}
-      /> */}
+          <MainButton
+            title="Atur tanggal terakhir SADANIS"
+            backgroundColor={COLORS.secondary}
+          />
+        </>
+      )}
     </View>
   );
 };
