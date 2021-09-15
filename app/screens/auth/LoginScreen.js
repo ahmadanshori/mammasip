@@ -99,7 +99,7 @@ const LoginScreen = ({navigation}) => {
         </TouchableOpacity>
         <MainButton
           title="Masuk"
-          style={{backgroundColor: COLORS.secondary}}
+          // style={{backgroundColor: COLORS.secondary}}
           disable={!field.email || !field.password}
         />
         <TouchableOpacity

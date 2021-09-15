@@ -1,60 +1,55 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  Platform,
-  StyleSheet,
-} from 'react-native';
+import {Text, View, TouchableOpacity, Platform, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const HeaderTitle = ({ title, onSharePress}) => {
+const HeaderTitle = ({title, onSharePress, backgroundColor, white}) => {
   const navigation = useNavigation();
+  const containerStyles = [styles.body];
+  if (backgroundColor) {
+    containerStyles.push({backgroundColor});
+  }
   return (
-    <SafeAreaView style={styles.header}>
-      <View style={styles.body}>
-        <View style={styles.wrapper}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              navigation.goBack();
-            }}
-            activeOpacity={SIZES.opacity}>
-            <Icon
-              name={Platform.OS === 'ios' ? 'chevron-left' : 'arrowleft'}
-              size={18}
-            />
-          </TouchableOpacity>
-          <Text
-            style={[FONTS.textBold14, {color: COLORS.black, flex: 1}]}
-            numberOfLines={1}>
-            {title}
-          </Text>
-        </View>
-        {onSharePress ? (
-          <TouchableOpacity style={styles.shareButton} onPress={onSharePress}>
-            <Icon name="sharealt" size={18} />
-          </TouchableOpacity>
-        ) : null}
+    <View style={containerStyles}>
+      <View style={styles.wrapper}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.goBack();
+          }}
+          activeOpacity={SIZES.opacity}>
+          <Icon
+            name={'arrowleft'}
+            size={18}
+            color={white ? COLORS.white : COLORS.black}
+          />
+        </TouchableOpacity>
+        <Text
+          style={[
+            FONTS.textBold14,
+            {color: white ? COLORS.white : COLORS.black, flex: 1},
+          ]}
+          numberOfLines={1}>
+          {title}
+        </Text>
       </View>
-    </SafeAreaView>
+      {onSharePress ? (
+        <TouchableOpacity style={styles.shareButton} onPress={onSharePress}>
+          <Icon name="sharealt" size={18} />
+        </TouchableOpacity>
+      ) : null}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    width: '100%',
-    backgroundColor: COLORS.white,
-    zIndex: 99,
-  },
   body: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
+    backgroundColor: COLORS.white,
   },
   wrapper: {
     flexDirection: 'row',

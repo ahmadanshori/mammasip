@@ -18,6 +18,7 @@ import Divider from '../../components/Divider';
 import Accordion from '../../components/Accordion';
 import {COLORS, FONTS} from '../../constants';
 import formatDate from '../../libs/formatDate';
+import QuizIcon from '../../assets/icons/quiz.svg';
 
 const SkriningJournalScreen = () => {
   const [sadari, setSadari] = useState(null);
@@ -118,7 +119,7 @@ const SkriningJournalScreen = () => {
           <AskButton />
           <View style={styles.margin}>
             <CalculatorItem
-              source={require('../../assets/images/woman.png')}
+              image={<QuizIcon height={60} width={60} />}
               // onPress={() => handleNavigation('WeightCalculator')}
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"

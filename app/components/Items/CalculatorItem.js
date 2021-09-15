@@ -15,6 +15,7 @@ const CalculatorItem = ({
   source,
   backgroundColor,
   onPress,
+  image,
 }) => {
   const containerStyles = [styles.wrapper];
   if (backgroundColor) {
@@ -23,7 +24,8 @@ const CalculatorItem = ({
   return (
     <TouchableNativeFeedback onPress={onPress}>
       <View style={containerStyles}>
-        <Image source={source} style={styles.img} />
+        {image}
+        {/* <Image source={source} style={styles.img} /> */}
         <View style={styles.textWrapper}>
           <Text style={[FONTS.textBold12, {color: COLORS.white}]}>{title}</Text>
           <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>

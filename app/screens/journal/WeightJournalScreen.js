@@ -20,8 +20,8 @@ import {ActivityModal, ReminderModals} from '../../components/Modals';
 import MealSuggestions from '../../components/MealSuggestions';
 import Reminder from '../../components/Reminder';
 import Divider from '../../components/Divider';
-
 import {COLORS, FONTS, SIZES} from '../../constants';
+import QuizIcon from '../../assets/icons/quiz.svg';
 
 const WeightJournalScreen = ({navigation}) => {
   const [isActivity, setIsActivity] = useState(false);
@@ -192,7 +192,7 @@ const WeightJournalScreen = ({navigation}) => {
           <AskButton />
           <View style={styles.margin}>
             <CalculatorItem
-              source={require('../../assets/images/woman.png')}
+              image={<QuizIcon height={60} width={60} />}
               // onPress={() => handleNavigation('WeightCalculator')}
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"

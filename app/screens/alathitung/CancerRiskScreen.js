@@ -19,6 +19,11 @@ import Accordion from '../../components/Accordion';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
+import WeightIcon from '../../assets/icons/weight.svg';
+import FoodIcon from '../../assets/icons/food.svg';
+import VirusIcon from '../../assets/icons/virus.svg';
+import QuizIcon from '../../assets/icons/quiz.svg';
+
 const CaloriesScreen = ({navigation}) => {
   const [field, setField] = useState({
     age: '',
@@ -46,11 +51,8 @@ const CaloriesScreen = ({navigation}) => {
       />
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.header}>
-          <View>
-            <Image
-              source={require('../../assets/icons/timbangan.png')}
-              style={styles.icon}
-            />
+          <View style={styles.icon}>
+            <VirusIcon width={80} height={80} />
           </View>
           <View style={styles.title}>
             <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
@@ -110,14 +112,14 @@ const CaloriesScreen = ({navigation}) => {
               Alat bantu hitung lain
             </Text>
             <CalculatorItem
-              source={require('../../assets/images/woman.png')}
+              image={<WeightIcon width={60} height={60} />}
               onPress={() => handleNavigation('WeightCalculator')}
               backgroundColor={COLORS.blue}
               title="Massa Tubuh Ideal (BMR)"
               description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
             />
             <CalculatorItem
-              source={require('../../assets/images/woman.png')}
+              image={<FoodIcon width={60} height={60} />}
               onPress={() => handleNavigation('Calories')}
               backgroundColor={COLORS.secondary}
               title="Kebutuhan Kalori Harian (BMI)"
@@ -143,7 +145,7 @@ const CaloriesScreen = ({navigation}) => {
           </View>
           <View style={styles.margin}>
             <CalculatorItem
-              source={require('../../assets/images/woman.png')}
+              image={<QuizIcon width={60} height={60} />}
               onPress={() => handleNavigation('WeightCalculator')}
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingBottom: 52,
   },
-  icon: {height: 70, width: 70, marginRight: 16},
+  icon: {marginRight: 16},
   title: {flex: 1},
   body: {
     backgroundColor: COLORS.white,

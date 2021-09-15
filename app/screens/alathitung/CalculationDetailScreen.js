@@ -17,6 +17,11 @@ import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import Divider from '../../components/Divider';
 
+import WeightIcon from '../../assets/icons/weight.svg';
+import FoodIcon from '../../assets/icons/food.svg';
+import VirusIcon from '../../assets/icons/virus.svg';
+import QuizIcon from '../../assets/icons/quiz.svg';
+
 const CalculationDetailScreen = ({navigation, route}) => {
   const {type} = route.params;
   const [foodSuggestion, setFoodSuggestion] = useState(null);
@@ -139,14 +144,14 @@ const CalculationDetailScreen = ({navigation, route}) => {
             Alat bantu hitung lain
           </Text>
           <CalculatorItem
-            source={require('../../assets/images/woman.png')}
+            image={<FoodIcon height={60} width={60} />}
             onPress={() => handleNavigation('Calories')}
             backgroundColor={COLORS.secondary}
             title="Kebutuhan Kalori Harian (BMI)"
             description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
           />
           <CalculatorItem
-            source={require('../../assets/images/woman.png')}
+            image={<VirusIcon height={60} width={60} />}
             onPress={() => handleNavigation('CancerRisk')}
             backgroundColor={COLORS.red}
             title="Resiko Penyakit Kanker"
@@ -159,10 +164,10 @@ const CalculationDetailScreen = ({navigation, route}) => {
             ]}>
             Butuh informasi lainya?
           </Text>
-          <AskButton />
+          <AskButton onPress={() => navigation.navigate('Faq')} />
           <View style={styles.margin}>
             <CalculatorItem
-              source={require('../../assets/images/woman.png')}
+              image={<QuizIcon height={60} width={60} />}
               // onPress={() => handleNavigation('WeightCalculator')}
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"

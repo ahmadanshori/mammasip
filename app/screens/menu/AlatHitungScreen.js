@@ -4,6 +4,10 @@ import {Container} from '../../components/Container';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS} from '../../constants';
 
+import WeightIcon from '../../assets/icons/weight.svg';
+import FoodIcon from '../../assets/icons/food.svg';
+import VirusIcon from '../../assets/icons/virus.svg';
+
 const AlatHitungScreen = ({navigation}) => {
   const handleNavigation = type => {
     navigation.navigate(type);
@@ -19,14 +23,14 @@ const AlatHitungScreen = ({navigation}) => {
         </Text>
       </View>
       <CalculatorItem
-        source={require('../../assets/images/woman.png')}
+        image={<WeightIcon width={60} height={60} />}
         onPress={() => handleNavigation('WeightCalculator')}
         backgroundColor={COLORS.blue}
         title="Massa Tubuh Ideal (BMR)"
         description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
       />
       <CalculatorItem
-        source={require('../../assets/images/woman.png')}
+        image={<FoodIcon width={60} height={60} />}
         onPress={() => handleNavigation('Calories')}
         backgroundColor={COLORS.secondary}
         title="Kebutuhan Kalori Harian (BMI)"
@@ -34,6 +38,7 @@ const AlatHitungScreen = ({navigation}) => {
       />
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
+        image={<VirusIcon width={60} height={60} />}
         onPress={() => handleNavigation('CancerRisk')}
         backgroundColor={COLORS.red}
         title="Resiko Penyakit Kanker"

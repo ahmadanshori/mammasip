@@ -1,19 +1,25 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {COLORS, FONTS} from '../../constants';
+import Sayangi from '../../assets/icons/sayangi.svg';
 
-const HomeItem = ({title, desc, color, source}) => {
+const HomeItem = ({title, desc, color, source, image, onPress, style = {}}) => {
   const textStyles = [[FONTS.textBold14, styles.text]];
   if (color) {
     textStyles.push({color});
   }
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={1}>
+    <TouchableOpacity
+      style={[styles.container, style]}
+      activeOpacity={1}
+      onPress={onPress}>
       <View>
         <Text style={textStyles}>{title}</Text>
         <Text style={FONTS.text10}>{desc}</Text>
       </View>
-      <Image resizeMode="contain" source={source} style={styles.img} />
+      {image}
+      {/* <Image source={source} style={styles.img} /> */}
+      {/* <Sayangi height={80} width={80} /> */}
     </TouchableOpacity>
   );
 };
@@ -31,9 +37,9 @@ const styles = StyleSheet.create({
   },
   text: {marginBottom: 4},
   img: {
-    height: 75,
-    width: 75,
-    borderBottomRightRadius: 4,
+    height: 80,
+    width: 80,
+    // borderBottomRightRadius: 4,
   },
 });
 

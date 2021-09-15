@@ -4,6 +4,10 @@ import {Container} from '../../components/Container';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS} from '../../constants';
 
+import SportIcon from '../../assets/icons/olahraga.svg';
+import ScalesIcon from '../../assets/icons/timabngan.svg';
+import CalendarIcon from '../../assets/icons/calendar.svg';
+
 const JournalScreen = ({navigation}) => {
   const handleNavigation = type => {
     navigation.navigate(type);
@@ -19,7 +23,7 @@ const JournalScreen = ({navigation}) => {
         </Text>
       </View>
       <CalculatorItem
-        source={require('../../assets/images/woman.png')}
+        image={<SportIcon height={60} width={60} />}
         onPress={() => handleNavigation('SportsJournal')}
         backgroundColor={COLORS.orange}
         title="Jurnal Olahraga"
@@ -27,7 +31,7 @@ const JournalScreen = ({navigation}) => {
         olahragamu sehari-hari"
       />
       <CalculatorItem
-        source={require('../../assets/images/woman.png')}
+        image={<ScalesIcon height={60} width={60} />}
         onPress={() => handleNavigation('WeightJournal')}
         backgroundColor={COLORS.primary}
         title="Jurnal Berat Badan"
@@ -35,7 +39,7 @@ const JournalScreen = ({navigation}) => {
         dengan dirimu."
       />
       <CalculatorItem
-        source={require('../../assets/images/woman.png')}
+        image={<CalendarIcon height={60} width={60} />}
         onPress={() => handleNavigation('SkriningJournal')}
         backgroundColor={COLORS.secondary}
         title="Jurnal Skrining"

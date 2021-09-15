@@ -35,6 +35,7 @@ import {
   MenuPackageScreen,
 } from '../screens/alathitung';
 import VideoDetailScreen from '../screens/VideoDetailScreen';
+import RoomScreen from '../screens/RoomScreen';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -229,7 +230,7 @@ export default function App() {
             name="ChangePassword"
           />
           <Stack.Screen component={VideoDetailScreen} name="VideoDetail" />
-
+          <Stack.Screen component={RoomScreen} name="Room" />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />
           <Stack.Screen
