@@ -7,7 +7,7 @@ import {COLORS, FONTS} from '../../constants';
 
 const data1 = [1, 2, 3, 4];
 
-const ArticleRecomendation = ({onPress}) => {
+const ArticleRecomendation = ({onPress, data}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -27,16 +27,24 @@ const ArticleRecomendation = ({onPress}) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.margin}>
-        <BookItem source={require('../../assets/images/book.png')} />
-        <BookItem source={require('../../assets/images/book.png')} />
-        <BookItem source={require('../../assets/images/book.png')} />
+        {data.map(item => (
+          <BookItem
+            key={item.idBook}
+            title={item.nameBook}
+            desc={item.description}
+            source={{uri: item.urlBanner}}
+            publisher={item.publisherBook}
+            author={item.authorBook}
+            date="2018"
+          />
+        ))}
       </ScrollView>
-      <OutlineButton title="Lihat Semua Buku" />
+      {/* <OutlineButton title="Lihat Semua Buku" /> */}
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {marginTop: 32},
+  container: {marginBottom: 24},
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',

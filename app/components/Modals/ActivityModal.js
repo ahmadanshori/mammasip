@@ -10,7 +10,7 @@ const ActivityModal = ({onClose, onAddPress}) => {
   const [activity, setActivity] = useState('Sedang');
   const [time, setTime] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  console.log(`time`, time);
+
   const handleActivity = value => {
     if (activity !== value) {
       setActivity(value);

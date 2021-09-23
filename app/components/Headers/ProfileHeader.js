@@ -4,8 +4,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
+import formatDate from '../../libs/formatDate';
 
-const ProfileHeader = () => {
+const ProfileHeader = ({data}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -15,22 +16,19 @@ const ProfileHeader = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.imgWrapper}>
-        <Image
-          source={require('../../assets/images/profile.jpg')}
-          style={styles.img}
-        />
+        <Image source={{uri: data?.image_path}} style={styles.img} />
         <Text style={[FONTS.textBold16, {color: COLORS.white}]}>
-          Viora Sukma
+          {data?.first_name} {data?.last_name}
         </Text>
         <View style={styles.row}>
           <Ionicons
-            name="female"
+            name={data?.gender === 1 ? 'male' : 'female'}
             size={14}
             color={COLORS.white}
             style={styles.genderIcon}
           />
           <Text style={[FONTS.text10, {color: COLORS.white}]}>
-            17 Agustus 1945
+            {formatDate(data?.tgl_lahir)}
           </Text>
         </View>
       </View>
@@ -43,7 +41,7 @@ const ProfileHeader = () => {
             style={styles.margin}
           />
           <Text style={[FONTS.text10, {color: COLORS.white}]}>
-            viorasukma@gmail.com
+            {data?.email}
           </Text>
         </View>
         <View style={styles.wrapper}>
@@ -54,7 +52,7 @@ const ProfileHeader = () => {
             style={styles.margin}
           />
           <Text style={[FONTS.text10, {color: COLORS.white}]}>
-            +6281234567890
+            {data?.phone}
           </Text>
         </View>
       </View>

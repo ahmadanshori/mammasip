@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ import Kenali from '../../assets/icons/kenali.svg';
 import Pemenang from '../../assets/icons/pemenang.svg';
 import Gerbang from '../../assets/icons/gerbang.svg';
 import Bunga from '../../assets/icons/bunga.svg';
+import {AppContext} from '../../index';
 
 const roomData = [
   {
@@ -74,12 +75,14 @@ const roomData = [
 ];
 
 const HomeScreen = ({navigation}) => {
+  const {user, token} = useContext(AppContext);
   const handleNavigator = val => {
     navigation.navigate('Room', {data: val});
   };
+
   return (
     <View style={styles.container}>
-      <HomeHeader />
+      <HomeHeader data={user} />
       <ScrollView contentContainerStyle={{paddingBottom: 16}}>
         {/* <View style={styles.padding}>
           <Banner />
@@ -158,30 +161,32 @@ const HomeScreen = ({navigation}) => {
             color={COLORS.primary}
             image={<Bunga height={80} width={80} />}
           />
-          <View style={styles.footer}>
-            <Text style={FONTS.textBold24}>Lindungi diri dari kanker</Text>
-            <Text
-              style={[
-                FONTS.text14,
-                {marginTop: 8, marginBottom: 32, textAlign: 'center'},
-              ]}>
-              Nikmati segala kemudahan & perluas wawasanmu
-            </Text>
-            <MainButton
-              title="Daftar Sekarang"
-              backgroundColor={COLORS.secondary}
-              onPress={() => navigation.navigate('Register')}
-            />
-            <TouchableOpacity
-              style={styles.login}
-              activeOpacity={1}
-              onPress={() => navigation.navigate('Login')}>
-              <Text style={FONTS.text12}>Sudah punya akun? </Text>
-              <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
-                Masuk
+          {!token ? (
+            <View style={styles.footer}>
+              <Text style={FONTS.textBold24}>Lindungi diri dari kanker</Text>
+              <Text
+                style={[
+                  FONTS.text14,
+                  {marginTop: 8, marginBottom: 32, textAlign: 'center'},
+                ]}>
+                Nikmati segala kemudahan & perluas wawasanmu
               </Text>
-            </TouchableOpacity>
-          </View>
+              <MainButton
+                title="Daftar Sekarang"
+                backgroundColor={COLORS.secondary}
+                onPress={() => navigation.navigate('Register')}
+              />
+              <TouchableOpacity
+                style={styles.login}
+                activeOpacity={1}
+                onPress={() => navigation.navigate('Login', {nav: 'Home'})}>
+                <Text style={FONTS.text12}>Sudah punya akun? </Text>
+                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
+                  Masuk
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : null}
         </View>
       </ScrollView>
     </View>

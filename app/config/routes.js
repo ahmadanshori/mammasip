@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -7,6 +7,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import SplashScreen from '../screens/SplashScreen';
+import VideoDetailScreen from '../screens/VideoDetailScreen';
+import ArticleDetailScreen from '../screens/ArticleDetailScreen';
+import RoomScreen from '../screens/RoomScreen';
 import {
   HomeScreen,
   AlatHitungScreen,
@@ -34,16 +38,15 @@ import {
   CancerQuestionScreen,
   MenuPackageScreen,
 } from '../screens/alathitung';
-import VideoDetailScreen from '../screens/VideoDetailScreen';
-import RoomScreen from '../screens/RoomScreen';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
 import {COLORS, FONTS} from '../constants';
-// import {AppContext} from '../index';
+import {AppContext} from '../index';
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
+  const {token} = useContext(AppContext);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -152,13 +155,13 @@ const TabNavigator = () => {
             e.preventDefault();
             const validation = async () => {
               navigationRef.current.navigate('JournalTab');
-              // if (token) {
-              //   navigationRef.current.navigate('JournalTab');
-              // } else {
-              //   navigationRef.current.navigate('Login', {
-              //     nav: 'JournalTab',
-              //   });
-              // }
+              if (token) {
+                navigationRef.current.navigate('JournalTab');
+              } else {
+                navigationRef.current.navigate('Login', {
+                  nav: 'JournalTab',
+                });
+              }
             };
             validation();
           },
@@ -184,13 +187,13 @@ const TabNavigator = () => {
             e.preventDefault();
             const validation = async () => {
               navigationRef.current.navigate('ProfileTab');
-              // if (token) {
-              //   navigationRef.current.navigate('ProfileTab');
-              // } else {
-              //   navigationRef.current.navigate('Login', {
-              //     nav: 'ProfileTab',
-              //   });
-              // }
+              if (token) {
+                navigationRef.current.navigate('ProfileTab');
+              } else {
+                navigationRef.current.navigate('Login', {
+                  nav: 'ProfileTab',
+                });
+              }
             };
             validation();
           },
@@ -204,16 +207,16 @@ const Stack = createStackNavigator();
 
 export default function App() {
   //   const {token, background, photo} = useContext(AppContext);
-  //   const [isLoading, setIsLoading] = useState(true);
-  //   useEffect(() => {
-  //     setTimeout(() => {
-  //       setIsLoading(false);
-  //     }, 1000);
-  //     return () => (isMountedRef.current = false);
-  //   }, []);
-  //   if (isLoading) {
-  //     return <SplashScreen />;
-  //   }
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => (isMountedRef.current = false);
+  }, []);
+  if (isLoading) {
+    return <SplashScreen />;
+  }
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -230,6 +233,7 @@ export default function App() {
             name="ChangePassword"
           />
           <Stack.Screen component={VideoDetailScreen} name="VideoDetail" />
+          <Stack.Screen component={ArticleDetailScreen} name="ArticleDetail" />
           <Stack.Screen component={RoomScreen} name="Room" />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />

@@ -4,28 +4,30 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const ArticleDetailItem = ({onPress, bookmark}) => {
+const ArticleDetailItem = ({
+  onPress,
+  bookmark,
+  source,
+  title,
+  date,
+  category,
+}) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
       <View>
-        <Image
-          source={{uri: 'https://www.w3schools.com/w3css/img_snowtops.jpg'}}
-          style={styles.img}
-        />
+        <Image source={source} style={styles.img} />
         {/* <View style={styles.shadowImg} /> */}
       </View>
       <View style={styles.body}>
-        <Text style={FONTS.textBold14}>
-          Mari Lakukan Skrining Payudara Sebelum Terlambat.
-        </Text>
+        <Text style={FONTS.textBold14}>{title}</Text>
         <View style={styles.row}>
-          <Text style={[FONTS.text10, {color: COLORS.gray}]}>12 Sep 2021</Text>
+          <Text style={[FONTS.text10, {color: COLORS.gray}]}>{date}</Text>
           <View style={styles.category}>
             <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
-              Olahraga
+              {category}
             </Text>
           </View>
         </View>

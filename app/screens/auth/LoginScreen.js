@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -9,18 +9,43 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
-import {COLORS, FONTS, SIZES} from '../../constants';
 
-const LoginScreen = ({navigation}) => {
-  const [field, setField] = useState({email: '', password: ''});
+import {loginAPI} from '../../api/auth';
+import {COLORS, FONTS, SIZES} from '../../constants';
+import {AppContext} from '../../index';
+
+const LoginScreen = ({navigation, route}) => {
+  const {setLoading, setUser, setToken} = useContext(AppContext);
+  const {nav} = route.params;
+  const [field, setField] = useState({
+    username: 'hanifalbaaits@gmail.com',
+    password: '12345',
+    device: 'mobile',
+    ip_address: '-',
+  });
   const [error, setError] = useState(true);
 
   const handleInput = (val, type) => {
     setField(state => ({...state, [type]: val}));
+  };
+
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      const res = await loginAPI(field);
+      await AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+      setToken(res.data.data.token);
+      setUser(res.data.data.user);
+      navigation.navigate(nav);
+    } catch (e) {
+      console.log('e', e, {...e});
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <Container>
@@ -72,35 +97,38 @@ const LoginScreen = ({navigation}) => {
           title="Email"
           placeholder="Email"
           keyboardType="email-address"
-          onChangeText={val => handleInput(val, 'email')}
-          value={field.email}
+          autoCapitalize="none"
+          onChangeText={val => handleInput(val, 'username')}
+          value={field.username}
           maxLength={24}
         />
         <TitleInput
           title="Password"
           placeholder="Password"
           pass
+          autoCapitalize="none"
           style={styles.pass}
           onChangeText={val => handleInput(val, 'password')}
           value={field.password}
           //   onSubmitEditing={handleLogin}
           maxLength={24}
         />
-        {error ? (
+        {/* {error ? (
           <View style={styles.error}>
             <Icon name="alert-circle" style={styles.errorIcon} size={16} />
             <Text style={[FONTS.text10, styles.errorIcon]}>
               Kombinasi email & password yang dimasukan salah!
             </Text>
           </View>
-        ) : null}
+        ) : null} */}
         <TouchableOpacity style={styles.forgot} activeOpacity={1}>
           <Text style={[FONTS.text12, styles.secondary]}>Lupa Password?</Text>
         </TouchableOpacity>
         <MainButton
           title="Masuk"
           // style={{backgroundColor: COLORS.secondary}}
-          disable={!field.email || !field.password}
+          disable={!field.username || !field.password}
+          onPress={handleLogin}
         />
         <TouchableOpacity
           style={styles.register}

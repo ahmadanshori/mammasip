@@ -4,16 +4,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const ArticleItem = ({category, video, onPress}) => {
+const ArticleItem = ({category, video, onPress, title, source}) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
-      <Image
-        source={{uri: 'https://www.w3schools.com/w3css/img_snowtops.jpg'}}
-        style={styles.img}
-      />
+      <Image source={source} style={styles.img} />
       <View style={styles.shadowImg}>
         <TouchableOpacity style={styles.bookmark}>
           <Icon name="bookmark-outline" size={20} color={COLORS.white} />
@@ -25,15 +22,13 @@ const ArticleItem = ({category, video, onPress}) => {
           <View style={styles.spaceBetween}>
             <View style={styles.subtitle}>
               <Text style={[FONTS.textBold8, {color: COLORS.primary}]}>
-                Sayangi dirimu
+                {category}
               </Text>
             </View>
             <View />
           </View>
         )}
-        <Text style={[FONTS.text10, {color: COLORS.black}]}>
-          Mari Lakukan Skrining Payudara Sebelum Terlambat.
-        </Text>
+        <Text style={[FONTS.text10, {color: COLORS.black}]}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -42,21 +37,21 @@ const ArticleItem = ({category, video, onPress}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
-    width: SIZES.width2,
+    width: SIZES.width3,
     borderRadius: 8,
     marginRight: 8,
   },
   img: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: SIZES.width4,
-    width: SIZES.width2,
+    height: SIZES.width3,
+    width: SIZES.width3,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },
   shadowImg: {
-    height: SIZES.width4,
-    width: SIZES.width2,
+    height: SIZES.width3,
+    width: SIZES.width3,
     // backgroundColor: COLORS.shadowPrimary,
     position: 'absolute',
     justifyContent: 'center',

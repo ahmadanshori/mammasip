@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -9,16 +9,20 @@ import {ProfileItem} from '../../components/Items';
 import Point from '../../components/Point';
 import Divider from '../../components/Divider';
 import {FONTS, COLORS} from '../../constants';
+import {AppContext} from '../../index';
 
 const ProfileScreen = ({navigation}) => {
+  const {user, token} = useContext(AppContext);
   const [isOn, setIsOn] = useState(true);
+
+  console.log(`user`, user);
   const handleNavigate = type => {
     navigation.navigate(`${type}`);
   };
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ProfileHeader />
+        <ProfileHeader data={user} />
         <View style={styles.wrapper}>
           <Point />
           <ProfileItem

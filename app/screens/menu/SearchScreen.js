@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container} from '../../components/Container';
@@ -12,6 +12,10 @@ import {
   ImportanLink,
 } from '../../components/Search';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import {getTopArticle} from '../../api/article';
+import {getTopBook} from '../../api/book';
+import {AppContext} from '../../index';
+import {LoadingComponent} from '../../components/Loadings';
 const dataCategory = [
   {id: 1, name: 'Sayangi dirimu'},
   {id: 2, name: 'Anda pemenang'},
@@ -19,33 +23,62 @@ const dataCategory = [
   {id: 4, name: 'Gerbang Dokter'},
 ];
 const SearchScreen = ({navigation}) => {
-  const [selectedCategory, setSelectedCategory] = useState({
-    id: 1,
-    name: 'Sayangi dirimu',
-  });
+  const {user, token} = useContext(AppContext);
+  const [articleRecomended, setArticleRecomended] = useState([]);
+  const [bookRecomended, setBookRecomended] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  useEffect(() => {
+    getInitialData();
+  }, []);
+
+  const getInitialData = async () => {
+    try {
+      const resTopArticle = await getTopArticle(token);
+      const resTopBook = await getTopBook(token);
+      console.log(`resTopBook`, resTopBook);
+      setArticleRecomended(resTopArticle.data.data);
+      setBookRecomended(resTopBook.data.data);
+    } catch (e) {
+      console.log(`e`, e, {...e});
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleCategory = value => {
     setSelectedCategory(value);
   };
+  const handleArticle = () => {
+    navigation.navigate('ArticleDetail');
+  };
+
   return (
     <Container>
       <SearchHeader
         data={dataCategory}
+        loading={loading}
         selected={selectedCategory}
         onCategory={handleCategory}
       />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingHorizontal: 16, paddingBottom: 16}}>
-        <VideoRecomendation
+      {loading ? (
+        <LoadingComponent />
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingHorizontal: 16, paddingBottom: 16}}>
+          {/* <VideoRecomendation
           onPress={() => navigation.navigate('VideoDetail')}
-        />
-        <ArticleRecomendation />
-        <BookRekomendation />
-        <ImportanLink />
+        /> */}
+          <ArticleRecomendation
+            data={articleRecomended}
+            onPress={handleArticle}
+          />
+          <BookRekomendation data={bookRecomended} />
+          {/* <ImportanLink /> */}
 
-        {/* ======== VIDEO ======== */}
-        {/* <View>
+          {/* ======== VIDEO ======== */}
+          {/* <View>
           <View style={styles.header}>
             <View style={styles.row}>
               <MaterialCommunityIcons
@@ -63,15 +96,19 @@ const SearchScreen = ({navigation}) => {
           <VideoDetailItem />
           <VideoDetailItem />
         </View> */}
-        {/* ======== ARTICLE ======== */}
-        <View style={styles.footer}>
-          <Text
-            style={[FONTS.textBold16, {textAlign: 'center', marginBottom: 16}]}>
-            Butuh informasi lainnya?
-          </Text>
-          <AskButton onPress={() => navigation.navigate('Faq')} />
-        </View>
-      </ScrollView>
+          {/* ======== ARTICLE ======== */}
+          <View style={styles.footer}>
+            <Text
+              style={[
+                FONTS.textBold16,
+                {textAlign: 'center', marginBottom: 16},
+              ]}>
+              Butuh informasi lainnya?
+            </Text>
+            <AskButton onPress={() => navigation.navigate('Faq')} />
+          </View>
+        </ScrollView>
+      )}
     </Container>
   );
 };

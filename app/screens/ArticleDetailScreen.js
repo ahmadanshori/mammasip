@@ -6,11 +6,11 @@ import {VideoItem, ArticleItem} from '../components/Items';
 import {VideoHeader} from '../components/Headers';
 import {COLORS, FONTS, SIZES} from '../constants';
 
-const VideoDetailScreen = () => {
+const ArticleDetailScreen = () => {
   return (
     <Container>
       <VideoHeader />
-      <Text>VideoDetailScreen</Text>
+      <Text>ArticleDetailScreen</Text>
       {/* <View style={styles.wrapper}>
         <View style={styles.header}>
           <Text style={FONTS.textBold14}>Artikel lain yang terkait</Text>
@@ -44,7 +44,7 @@ const VideoDetailScreen = () => {
   );
 };
 
-export default VideoDetailScreen;
+export default ArticleDetailScreen;
 
 const styles = StyleSheet.create({
   wrapper: {paddingTop: 24},

@@ -21,6 +21,7 @@ const TitleInput = ({
   keyboardType,
   style = {},
   onSubmitEditing,
+  autoCapitalize,
   maxLength = 25,
 }) => {
   const [show, setShow] = useState(true);
@@ -49,6 +50,7 @@ const TitleInput = ({
           onBlur={handleBlur}
           value={value}
           autoFocus={autoFocus}
+          autoCapitalize={autoCapitalize}
           onSubmitEditing={onSubmitEditing}
           maxLength={maxLength}
         />

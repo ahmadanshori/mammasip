@@ -1,7 +1,7 @@
 import {format, parseISO} from 'date-fns';
 import {id} from 'date-fns/locale';
 
-export default (date, formatString) => {
+export default (date, formatString = 'dd MMMM yyyy') => {
   try {
     if (typeof date === 'string') {
       return format(parseISO(date), formatString, {

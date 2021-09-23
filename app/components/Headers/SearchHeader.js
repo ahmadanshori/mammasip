@@ -10,47 +10,59 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const SearchHeader = ({onChange, value, data, selected, onCategory}) => {
+const SearchHeader = ({
+  onChange,
+  value,
+  data,
+  selected,
+  onCategory,
+  loading,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.justify}>
         <Text style={FONTS.textBold20}>Telusuri</Text>
         <Icon name="bookmark-outline" size={20} />
       </View>
-      <View style={styles.search}>
-        <TextInput
-          onChange={onChange}
-          value={value}
-          style={styles.input}
-          placeholder="Cari judul artikel, video atau buku"
-        />
-        <Icon name="search" size={18} color={COLORS.gray} />
-      </View>
-      <ScrollView
-        horizontal
-        contentContainerStyle={styles.categoryWrapper}
-        showsHorizontalScrollIndicator={false}>
-        {data.map(item => (
-          <TouchableOpacity
-            activeOpacity={SIZES.opacity}
-            onPress={() => onCategory(item)}
-            key={item.id}
-            style={[
-              styles.category,
-              item.id === selected.id ? styles.active : styles.inActive,
-            ]}>
-            <Text
-              style={[
-                FONTS.text10,
-                {
-                  color: item.id === selected.id ? COLORS.white : COLORS.black,
-                },
-              ]}>
-              {item.name}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {!loading ? (
+        <>
+          <View style={styles.search}>
+            <TextInput
+              onChange={onChange}
+              value={value}
+              style={styles.input}
+              placeholder="Cari judul artikel, video atau buku"
+            />
+            <Icon name="search" size={18} color={COLORS.gray} />
+          </View>
+          <ScrollView
+            horizontal
+            contentContainerStyle={styles.categoryWrapper}
+            showsHorizontalScrollIndicator={false}>
+            {data.map(item => (
+              <TouchableOpacity
+                activeOpacity={SIZES.opacity}
+                onPress={() => onCategory(item)}
+                key={item.id}
+                style={[
+                  styles.category,
+                  item.id === selected?.id ? styles.active : styles.inActive,
+                ]}>
+                <Text
+                  style={[
+                    FONTS.text10,
+                    {
+                      color:
+                        item.id === selected?.id ? COLORS.white : COLORS.black,
+                    },
+                  ]}>
+                  {item.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </>
+      ) : null}
     </View>
   );
 };
