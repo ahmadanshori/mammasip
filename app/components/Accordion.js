@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS} from '../constants';
 
-const Accordion = ({title}) => {
+const Accordion = ({title, desc}) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handleButton = () => {
@@ -15,7 +15,7 @@ const Accordion = ({title}) => {
         style={styles.button}
         onPress={handleButton}
         activeOpacity={1}>
-        <Text style={[FONTS.text12, styles.title]}>{title}</Text>
+        <Text style={[FONTS.textBold12, styles.title]}>{title}</Text>
         <Icon
           name={isSelected ? 'up' : 'down'}
           size={14}
@@ -25,25 +25,7 @@ const Accordion = ({title}) => {
       </TouchableOpacity>
       {isSelected ? (
         <View style={styles.answerWrapper}>
-          <Text
-            style={[FONTS.textBold12, {color: COLORS.black, marginBottom: 16}]}>
-            {title}
-          </Text>
-          <Text style={[FONTS.text12, {color: COLORS.black}]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus
-            mattis dictumst ac nisl, tincidunt consequat, est purus in. Facilisi
-            ridiculus sed enim morbi pretium cum eget quisque. At at auctor
-            nulla felis. Arcu in quis pulvinar dui. Diam neque lorem mattis et
-            facilisis sed nisi, pellentesque eget. Senectus eleifend morbi ipsum
-            eget consectetur viverra facilisi. Tristique id quis nulla in
-            sapien, neque. Mauris erat non integer sit eu, dignissim orci diam
-            commodo. Leo nunc, mi est ut felis, nibh integer tortor lorem.
-            Mauris amet. Vitae vivamus nulla malesuada morbi est nulla pharetra
-            lorem aenean. Euismod ligula euismod vehicula amet, sed id mauris
-            aliquet purus. Amet, sed massa blandit sit tellus convallis semper
-            at tortor. Blandit mauris fames fames ornare. Nulla massa praesent
-            faucibus viverra aliquet scelerisque gravida blandit.
-          </Text>
+          <Text style={[FONTS.text12, {color: COLORS.black}]}>{desc}</Text>
         </View>
       ) : null}
     </View>

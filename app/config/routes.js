@@ -11,6 +11,7 @@ import SplashScreen from '../screens/SplashScreen';
 import VideoDetailScreen from '../screens/VideoDetailScreen';
 import ArticleDetailScreen from '../screens/ArticleDetailScreen';
 import RoomScreen from '../screens/RoomScreen';
+import FaqScreen from '../screens/FaqScreen';
 import {
   HomeScreen,
   AlatHitungScreen,
@@ -24,11 +25,7 @@ import {
   WeightJournalScreen,
   SkriningJournalScreen,
 } from '../screens/journal';
-import {
-  ChangePasswordScreen,
-  EditProfileScreen,
-  FaqScreen,
-} from '../screens/profile';
+import {ChangePasswordScreen, EditProfileScreen} from '../screens/profile';
 import {
   WeightCalculatorScreen,
   CalculationDetailScreen,

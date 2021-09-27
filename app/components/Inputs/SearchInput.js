@@ -44,7 +44,7 @@ const TitleInput = ({
       />
 
       <TouchableOpacity style={styles.buttonShow} onPress={handleShowButton}>
-        <Icon name={'search'} size={24} color={COLORS.lightGray} />
+        <Icon name={'search'} size={24} color={COLORS.primary} />
       </TouchableOpacity>
     </View>
   );
