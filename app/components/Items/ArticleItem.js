@@ -10,7 +10,13 @@ const ArticleItem = ({category, video, onPress, title, source}) => {
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
-      <Image source={source} style={styles.img} />
+      {source ? (
+        <Image source={{uri: source}} style={styles.img} />
+      ) : (
+        <View style={[styles.img, {backgroundColor: COLORS.lightGray}]}>
+          <Icon name="image-outline" size={SIZES.width5} color={COLORS.gray} />
+        </View>
+      )}
       <View style={styles.shadowImg}>
         <TouchableOpacity style={styles.bookmark}>
           <Icon name="bookmark-outline" size={20} color={COLORS.white} />

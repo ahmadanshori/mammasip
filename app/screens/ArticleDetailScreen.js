@@ -1,20 +1,45 @@
-import React from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 
 import {Container} from '../components/Container';
 import {VideoItem, ArticleItem} from '../components/Items';
 import {VideoHeader} from '../components/Headers';
 import {COLORS, FONTS, SIZES} from '../constants';
+import {getArticleByRoomAPI} from '../api/room';
 
-const ArticleDetailScreen = () => {
+const ArticleDetailScreen = ({navigation, route}) => {
+  const {id, typeRuang, token} = route.params;
+  const [page, setPage] = useState(2);
+  const [articleData, setArticleData] = useState(null);
+  const [loading, setloading] = useState({get: false, refresh: false});
+
+  console.log(`typeRuang`, typeRuang, id);
+  useEffect(() => {
+    getInitialData();
+  }, []);
+
+  const getInitialData = useCallback(async () => {
+    try {
+      const res = await getArticleByRoomAPI(token, typeRuang, page);
+      console.log(`res`, res);
+      setArticleData(res.data.data.content[0]);
+      setPage(res.data.data.number);
+    } catch (err) {
+      console.log(`err`, {...err});
+    } finally {
+      setloading({get: false, refresh: false});
+    }
+  }, [token, typeRuang, page]);
   return (
     <Container>
       <VideoHeader />
-      <Text>ArticleDetailScreen</Text>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Text>ArticleDetailScreen</Text>
+      </ScrollView>
+
       {/* <View style={styles.wrapper}>
         <View style={styles.header}>
           <Text style={FONTS.textBold14}>Artikel lain yang terkait</Text>
-        
         </View>
         <ScrollView
           horizontal

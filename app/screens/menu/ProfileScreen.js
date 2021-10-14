@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ToggleSwitch from 'toggle-switch-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {Container} from '../../components/Container';
 import {ProfileHeader} from '../../components/Headers';
@@ -12,12 +13,18 @@ import {FONTS, COLORS} from '../../constants';
 import {AppContext} from '../../index';
 
 const ProfileScreen = ({navigation}) => {
-  const {user, token} = useContext(AppContext);
+  const {user, setToken, setUser} = useContext(AppContext);
   const [isOn, setIsOn] = useState(true);
 
   console.log(`user`, user);
   const handleNavigate = type => {
     navigation.navigate(`${type}`);
+  };
+  const handleLogout = async () => {
+    await AsyncStorage.clear();
+    setToken(null);
+    setUser(null);
+    navigation.navigate('HomeTab');
   };
   return (
     <Container>
@@ -76,7 +83,11 @@ const ProfileScreen = ({navigation}) => {
             onPress={() => handleNavigate('Faq')}
           />
           <ProfileItem iconName="ballot-outline" title="Syarat & Ketentuan" />
-          <ProfileItem iconName="exit-to-app" title="Keluar" />
+          <ProfileItem
+            iconName="exit-to-app"
+            title="Keluar"
+            onPress={handleLogout}
+          />
         </View>
       </ScrollView>
     </Container>

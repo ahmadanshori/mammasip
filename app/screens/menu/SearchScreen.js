@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container} from '../../components/Container';
@@ -36,7 +36,7 @@ const SearchScreen = ({navigation}) => {
     try {
       const resTopArticle = await getTopArticle(token);
       const resTopBook = await getTopBook(token);
-      console.log(`resTopBook`, resTopBook);
+      console.log(`resTopArticle`, resTopArticle);
       setArticleRecomended(resTopArticle.data.data);
       setBookRecomended(resTopBook.data.data);
     } catch (e) {
@@ -46,12 +46,16 @@ const SearchScreen = ({navigation}) => {
     }
   };
 
-  const handleCategory = value => {
+  const handleCategory = useCallback(value => {
     setSelectedCategory(value);
-  };
-  const handleArticle = () => {
-    navigation.navigate('ArticleDetail');
-  };
+  }, []);
+
+  const handleArticle = useCallback(
+    (id, typeRuang) => {
+      navigation.navigate('ArticleDetail', {id, typeRuang});
+    },
+    [navigation],
+  );
 
   return (
     <Container>

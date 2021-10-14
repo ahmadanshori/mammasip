@@ -71,7 +71,7 @@ const CaloriesScreen = ({navigation}) => {
           </View>
 
           <ActivityLevelButton
-            title="Tingkat Aktivitas"
+            title="Jenis Kelamin"
             onPress={handleRadioButton}
             radio1="Perempuan"
             radio2="Laki-laki"

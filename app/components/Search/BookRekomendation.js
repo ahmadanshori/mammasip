@@ -32,7 +32,7 @@ const ArticleRecomendation = ({onPress, data}) => {
             key={item.idBook}
             title={item.nameBook}
             desc={item.description}
-            source={{uri: item.urlBanner}}
+            source={item.urlBanner}
             publisher={item.publisherBook}
             author={item.authorBook}
             date="2018"

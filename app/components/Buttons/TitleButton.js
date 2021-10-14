@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const InputButton = ({title, placeholder, data, onPress}) => {
+  console.log(`data`, data);
   return (
     <View style={styles.container}>
       <Text style={[FONTS.textBold12, {color: COLORS.black}]}>{title}</Text>
@@ -12,7 +13,11 @@ const InputButton = ({title, placeholder, data, onPress}) => {
         onPress={onPress}
         activeOpacity={SIZES.opacity}>
         <Text
-          style={data ? FONTS.text14 : [FONTS.text14, {color: COLORS.gray}]}>
+          style={
+            data
+              ? [FONTS.text14, {color: COLORS.black}]
+              : [FONTS.text14, {color: COLORS.gray}]
+          }>
           {data || placeholder}
         </Text>
 

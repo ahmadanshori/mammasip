@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const BookItem = ({onPress, source, title, desc, date, publisher, author}) => {
   return (
@@ -8,7 +9,13 @@ const BookItem = ({onPress, source, title, desc, date, publisher, author}) => {
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
-      <Image source={source} style={styles.img} />
+      {source ? (
+        <Image source={{uri: source}} style={styles.img} />
+      ) : (
+        <View style={[styles.img, {backgroundColor: COLORS.lightGray}]}>
+          <Icon name="image-outline" size={SIZES.width5} color={COLORS.gray} />
+        </View>
+      )}
       <View style={styles.body}>
         <Text
           style={[FONTS.textBold10, {color: COLORS.black}]}

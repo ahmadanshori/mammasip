@@ -1,14 +1,14 @@
-import WeightCalculatorScreen from './WeightCalculatorScreen';
+import BmrScreen from './BmrScreen';
 import CalculationDetailScreen from './CalculationDetailScreen';
-import CaloriesScreen from './CaloriesScreen';
+import BmiScreen from './BmiScreen';
 import CancerRiskScreen from './CancerRiskScreen';
 import FoodSuggestionScreen from './FoodSuggestionScreen';
 import MenuPackageScreen from './MenuPackageScreen';
 import CancerQuestionScreen from './CancerQuestionScreen';
 export {
-  WeightCalculatorScreen,
+  BmrScreen,
   CalculationDetailScreen,
-  CaloriesScreen,
+  BmiScreen,
   CancerRiskScreen,
   FoodSuggestionScreen,
   MenuPackageScreen,

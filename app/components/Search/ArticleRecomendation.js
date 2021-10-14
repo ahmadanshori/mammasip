@@ -14,6 +14,7 @@ import formatDate from '../../libs/formatDate';
 // ];
 
 const ArticleRecomendation = ({data, onPress}) => {
+  console.log(`data`, data);
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -33,11 +34,11 @@ const ArticleRecomendation = ({data, onPress}) => {
         {data.map(item => (
           <ArticleItem
             key={item.idArticle}
-            onPress={() => onPress(item)}
+            onPress={() => onPress(item.idArticle, item.typeRuang)}
             title={item.nameArticle}
             category={item.hastag[0]?.nameCategory}
             date={formatDate(item.createdDate)}
-            source={{uri: item.media[0]?.url}}
+            source={item.media[0]?.url}
           />
         ))}
       </ScrollView>

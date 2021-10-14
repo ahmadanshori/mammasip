@@ -9,6 +9,8 @@ const ActivityLevelButton = ({
   onPress,
   radio1,
   radio2,
+  value1,
+  value2,
   style = {},
 }) => {
   return (
@@ -17,38 +19,38 @@ const ActivityLevelButton = ({
       <View style={styles.wrapper}>
         <TouchableOpacity
           style={styles.row}
-          onPress={() => onPress(radio1)}
+          onPress={() => onPress(value1)}
           activeOpacity={SIZES.opacity}>
           <View
             style={[
               styles.circleWrapper,
-              selected === radio1 ? styles.active : styles.inActive,
+              selected === value1 ? styles.active : styles.inActive,
             ]}>
-            {selected === radio1 ? <View style={styles.circle} /> : null}
+            {selected === value1 ? <View style={styles.circle} /> : null}
           </View>
           <Text
             style={[
               FONTS.text14,
-              {color: selected === radio1 ? COLORS.black : COLORS.gray},
+              {color: selected === value1 ? COLORS.black : COLORS.gray},
             ]}>
             {radio1}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.row}
-          onPress={() => onPress(radio2)}
+          onPress={() => onPress(value2)}
           activeOpacity={SIZES.opacity}>
           <View
             style={[
               styles.circleWrapper,
-              selected === radio1 ? styles.inActive : styles.active,
+              selected === value1 ? styles.inActive : styles.active,
             ]}>
-            {selected === radio2 ? <View style={styles.circle} /> : null}
+            {selected === value2 ? <View style={styles.circle} /> : null}
           </View>
           <Text
             style={[
               FONTS.text14,
-              {color: selected === radio1 ? COLORS.gray : COLORS.black},
+              {color: selected === value1 ? COLORS.gray : COLORS.black},
             ]}>
             {radio2}
           </Text>

@@ -14,13 +14,7 @@ import Banner from '../../components/Banner';
 import {HomeItem} from '../../components/Items';
 import {MainButton} from '../../components/Buttons';
 import {FONTS, COLORS} from '../../constants';
-import Sayangi from '../../assets/icons/sayangi.svg';
-import Cinta from '../../assets/icons/cinta.svg';
-import Berbagi from '../../assets/icons/berbagi.svg';
-import Kenali from '../../assets/icons/kenali.svg';
-import Pemenang from '../../assets/icons/pemenang.svg';
-import Gerbang from '../../assets/icons/gerbang.svg';
-import Bunga from '../../assets/icons/bunga.svg';
+import {ICON} from '../../constants';
 import {AppContext} from '../../index';
 
 const roomData = [
@@ -30,7 +24,7 @@ const roomData = [
     title: 'Ruang Umum',
     desc: 'Jaga kesehatan diri dari kanker payudara',
     color: COLORS.darkBlue,
-    image: <Sayangi height={80} width={80} />,
+    image: <ICON.sayangi height={80} width={80} />,
   },
   {
     id: 2,
@@ -38,7 +32,7 @@ const roomData = [
     title: 'Cinta',
     desc: 'Hadapi kanker payudara bersama mammaSIP',
     color: COLORS.red,
-    image: <Cinta height={80} width={80} />,
+    image: <ICON.cinta height={80} width={80} />,
   },
   {
     id: 3,
@@ -46,7 +40,7 @@ const roomData = [
     title: 'Mari Berbagi',
     desc: 'Lebih tahu tentang payudara & kanker payudara',
     color: COLORS.secondary,
-    image: <Berbagi height={80} width={80} />,
+    image: <ICON.berbagi height={80} width={80} />,
   },
   {
     id: 4,
@@ -54,7 +48,7 @@ const roomData = [
     title: 'Ruang Bantu Hitung',
     desc: 'Hadapi kanker payudara bersama mammaSIP',
     color: COLORS.darkRed,
-    image: <Kenali height={80} width={80} />,
+    image: <ICON.kenali height={80} width={80} />,
   },
   {
     id: 5,
@@ -62,7 +56,7 @@ const roomData = [
     title: 'Ruang Pasien & Penyitas',
     desc: 'Hadapi kanker payudara bersama mammaSIP',
     color: COLORS.orange,
-    image: <Pemenang height={80} width={80} />,
+    image: <ICON.pemenang height={80} width={80} />,
   },
   {
     id: 6,
@@ -70,7 +64,7 @@ const roomData = [
     title: 'Ruang Tenaga Medis',
     desc: 'Pengobatan, terapi dan skrining kanker payudara',
     color: COLORS.green,
-    image: <Gerbang height={80} width={80} />,
+    image: <ICON.gerbang height={80} width={80} />,
   },
 ];
 
@@ -159,7 +153,7 @@ const HomeScreen = ({navigation}) => {
             desc="Ruang Perpustakaan"
             // onPress={handleNavigator}
             color={COLORS.primary}
-            image={<Bunga height={80} width={80} />}
+            image={<ICON.bunga height={80} width={80} />}
           />
           {!token ? (
             <View style={styles.footer}>

@@ -4,7 +4,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import SplashScreen from '../screens/SplashScreen';
@@ -27,9 +26,9 @@ import {
 } from '../screens/journal';
 import {ChangePasswordScreen, EditProfileScreen} from '../screens/profile';
 import {
-  WeightCalculatorScreen,
+  BmrScreen,
   CalculationDetailScreen,
-  CaloriesScreen,
+  BmiScreen,
   CancerRiskScreen,
   FoodSuggestionScreen,
   CancerQuestionScreen,
@@ -234,15 +233,12 @@ export default function App() {
           <Stack.Screen component={RoomScreen} name="Room" />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />
-          <Stack.Screen
-            component={WeightCalculatorScreen}
-            name="WeightCalculator"
-          />
+          <Stack.Screen component={BmrScreen} name="Bmr" />
           <Stack.Screen
             component={CalculationDetailScreen}
             name="CalculationDetail"
           />
-          <Stack.Screen component={CaloriesScreen} name="Calories" />
+          <Stack.Screen component={BmiScreen} name="Bmi" />
           <Stack.Screen component={CancerRiskScreen} name="CancerRisk" />
           <Stack.Screen
             component={FoodSuggestionScreen}

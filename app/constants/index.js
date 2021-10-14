@@ -1,4 +1,4 @@
 // import images from './images';
-// import icons from './icons';
+import {ICON} from './icons';
 import {COLORS, SIZES, FONTS} from './theme';
-export {COLORS, SIZES, FONTS};
+export {COLORS, SIZES, FONTS, ICON};

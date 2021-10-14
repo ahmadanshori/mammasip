@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -16,15 +16,42 @@ import MealSuggestions from '../../components/MealSuggestions';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import Divider from '../../components/Divider';
+import {LoadingComponent} from '../../components/Loadings';
 
+import {getBmrAPI, getBmiAPI} from '../../api/calculator';
+import {AppContext} from '../../index';
 import WeightIcon from '../../assets/icons/weight.svg';
 import FoodIcon from '../../assets/icons/food.svg';
 import VirusIcon from '../../assets/icons/virus.svg';
 import QuizIcon from '../../assets/icons/quiz.svg';
 
 const CalculationDetailScreen = ({navigation, route}) => {
-  const {type} = route.params;
+  const {type, field} = route.params;
+  const {user, token} = useContext(AppContext);
   const [foodSuggestion, setFoodSuggestion] = useState(null);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getInitialData();
+  }, []);
+
+  const getInitialData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res =
+        type === 'BMR'
+          ? await getBmrAPI(token, field)
+          : await getBmiAPI(token, field);
+      console.log(`res`, res);
+      setData(res.data.data);
+    } catch (err) {
+      console.log(`err`, {...err});
+    } finally {
+      setLoading(false);
+    }
+  }, [token, field, type]);
+
   const handleShare = () => {};
 
   const handleNavigation = useCallback((val, param) => {
@@ -34,154 +61,166 @@ const CalculationDetailScreen = ({navigation, route}) => {
   const handleFoodSuggestion = value => {
     setFoodSuggestion(value);
   };
+
   return (
     <Container>
       <HeaderTitle
         title={`Hasil Perhitungan ${type} Anda`}
         onSharePress={handleShare}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.titleBmi}>
-          <Text style={FONTS.textBold18}>{type} anda adalah </Text>
-          <Text style={[FONTS.textBold18, {color: COLORS.primary}]}>17.9</Text>
-          <Text style={FONTS.textBold18}> kcal</Text>
-        </View>
-        <View style={styles.padding}>
-          <MainButton title="Bagikan" share />
-          <TouchableOpacity style={styles.refresh} activeOpacity={1}>
-            <MaterialIcons name="refresh" size={20} />
-            <Text
-              style={[FONTS.textBold12, {color: COLORS.black, marginLeft: 4}]}>
-              Hitung Ulang
+      {loading ? (
+        <LoadingComponent />
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.title}>
+            <Text style={FONTS.textBold18}>{type} anda adalah </Text>
+            <Text style={[FONTS.textBold18, {color: COLORS.primary}]}>
+              {type === 'BMR' ? Math.round(data?.bmr) : Math.round(data?.bmi)}
             </Text>
-          </TouchableOpacity>
-          <Text style={[FONTS.text12, {textAlign: 'center'}]}>
-            Hasil analisa perhitungan {type}
-          </Text>
-          <Divider height={2} style={styles.divider} />
-          <Text
-            style={[FONTS.textBold16, {color: COLORS.black, marginBottom: 16}]}>
-            Kondisi
-          </Text>
-          <Text style={[FONTS.text12, {color: COLORS.black}]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus
-            mattis dictumst ac nisl, tincidunt consequat, est purus in. Facilisi
-            ridiculus sed enim morbi pretium cum eget quisque. At at auctor
-            nulla felis. Arcu in quis pulvinar dui. Diam neque lorem mattis et
-            facilisis sed nisi, pellentesque eget. Senectus eleifend morbi ipsum
-            eget consectetur viverra facilisi. Tristique id quis nulla in
-            sapien, neque. Mauris erat non integer sit eu, dignissim orci diam
-            commodo. Leo nunc, mi est ut felis, nibh integer tortor lorem.
-            Mauris amet, quis arcu varius egestas egestas sed pretium ipsum.{' '}
-          </Text>
-        </View>
-        <Divider />
-        <View style={styles.padding}>
-          <View style={styles.justify}>
+            <Text style={FONTS.textBold18}> kcal</Text>
+          </View>
+          <View style={styles.padding}>
+            <MainButton title="Bagikan" share />
+            <TouchableOpacity
+              style={styles.refresh}
+              activeOpacity={1}
+              onPress={() => navigation.goBack()}>
+              <MaterialIcons name="refresh" size={20} />
+              <Text
+                style={[
+                  FONTS.textBold12,
+                  {color: COLORS.black, marginLeft: 4},
+                ]}>
+                Hitung Ulang
+              </Text>
+            </TouchableOpacity>
+            <Text style={[FONTS.text12, {textAlign: 'center'}]}>
+              Hasil analisa perhitungan {type}
+            </Text>
+            <Divider height={2} style={styles.divider} />
             <Text
               style={[
                 FONTS.textBold16,
                 {color: COLORS.black, marginBottom: 16},
               ]}>
-              Saran Menu Makanan
+              Kondisi
             </Text>
-            <TouchableOpacity
-              style={styles.changeButton}
-              onPress={() =>
-                handleNavigation('FoodSuggestion', {
-                  handleFoodSuggestion,
-                })
-              }
-              activeOpacity={SIZES.opacity}>
-              <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
-                Ubah
-              </Text>
-            </TouchableOpacity>
+            <Text style={[FONTS.text12, {color: COLORS.black}]}>
+              {data?.level_cap}
+            </Text>
           </View>
-
-          {foodSuggestion ? (
-            <MealSuggestions />
-          ) : (
-            <>
-              <View style={styles.warning}>
-                <View style={styles.row}>
-                  <Ionicons name="alert-circle" size={20} color={COLORS.red} />
-                  <Text
-                    style={[
-                      FONTS.textBold12,
-                      {color: COLORS.red, marginLeft: 6},
-                    ]}>
-                    Anda belum mengatur jumlah kalori harian
-                  </Text>
-                </View>
-                <Text
-                  style={[FONTS.text12, {color: COLORS.black, marginTop: 8}]}>
-                  Yuk tentukan jumlah kalori harian biar sehat dan berat badanmu
-                  jadi lebih ideal.
-                </Text>
-              </View>
-              <View style={styles.foodWrapper}>
-                <Image
-                  resizeMode="contain"
-                  source={require('../../assets/icons/food.png')}
-                  style={styles.foodImg}
-                />
-              </View>
-              <MainButton
-                title="Pilih Menu Makanan"
+          <Divider />
+          <View style={styles.padding}>
+            <View style={styles.justify}>
+              <Text
+                style={[
+                  FONTS.textBold16,
+                  {color: COLORS.black, marginBottom: 16},
+                ]}>
+                Saran Menu Makanan
+              </Text>
+              <TouchableOpacity
+                style={styles.changeButton}
                 onPress={() =>
                   handleNavigation('FoodSuggestion', {
                     handleFoodSuggestion,
                   })
                 }
-              />
-            </>
-          )}
-        </View>
-        <Divider />
-        <View style={styles.padding}>
-          <Text style={[FONTS.textBold16, styles.titleFooter]}>
-            Alat bantu hitung lain
-          </Text>
-          <CalculatorItem
-            image={<FoodIcon height={60} width={60} />}
-            onPress={() => handleNavigation('Calories')}
-            backgroundColor={COLORS.secondary}
-            title="Kebutuhan Kalori Harian (BMI)"
-            description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
-          />
-          <CalculatorItem
-            image={<VirusIcon height={60} width={60} />}
-            onPress={() => handleNavigation('CancerRisk')}
-            backgroundColor={COLORS.red}
-            title="Resiko Penyakit Kanker"
-            description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
-          />
-          <Text
-            style={[
-              FONTS.textBold16,
-              {color: COLORS.black, marginVertical: 16, textAlign: 'center'},
-            ]}>
-            Butuh informasi lainya?
-          </Text>
-          <AskButton onPress={() => navigation.navigate('Faq')} />
-          <View style={styles.margin}>
-            <CalculatorItem
-              image={<QuizIcon height={60} width={60} />}
-              // onPress={() => handleNavigation('WeightCalculator')}
-              backgroundColor={COLORS.primary}
-              title="Ayo ikutan Quiz!"
-              description="Uji pengetahuanmu dengan quiz
-              kesehatan dari mammaSIP."
-            />
+                activeOpacity={SIZES.opacity}>
+                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
+                  Ubah
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {foodSuggestion ? (
+              <MealSuggestions />
+            ) : (
+              <>
+                <View style={styles.warning}>
+                  <View style={styles.row}>
+                    <Ionicons
+                      name="alert-circle"
+                      size={20}
+                      color={COLORS.red}
+                    />
+                    <Text
+                      style={[
+                        FONTS.textBold12,
+                        {color: COLORS.red, marginLeft: 6},
+                      ]}>
+                      Anda belum mengatur jumlah kalori harian
+                    </Text>
+                  </View>
+                  <Text
+                    style={[FONTS.text12, {color: COLORS.black, marginTop: 8}]}>
+                    Yuk tentukan jumlah kalori harian biar sehat dan berat
+                    badanmu jadi lebih ideal.
+                  </Text>
+                </View>
+                <View style={styles.foodWrapper}>
+                  <Image
+                    resizeMode="contain"
+                    source={require('../../assets/icons/food.png')}
+                    style={styles.foodImg}
+                  />
+                </View>
+                <MainButton
+                  title="Pilih Menu Makanan"
+                  onPress={() =>
+                    handleNavigation('FoodSuggestion', {
+                      handleFoodSuggestion,
+                    })
+                  }
+                />
+              </>
+            )}
           </View>
-        </View>
-      </ScrollView>
+          <Divider />
+          <View style={styles.padding}>
+            <Text style={[FONTS.textBold16, styles.titleFooter]}>
+              Alat bantu hitung lain
+            </Text>
+            <CalculatorItem
+              image={<FoodIcon height={60} width={60} />}
+              onPress={() => handleNavigation(type === 'BMR' ? 'Bmr' : 'Bmi')}
+              backgroundColor={COLORS.secondary}
+              title="Kebutuhan Kalori Harian (BMI)"
+              description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
+            />
+            <CalculatorItem
+              image={<VirusIcon height={60} width={60} />}
+              onPress={() => handleNavigation('CancerRisk')}
+              backgroundColor={COLORS.red}
+              title="Resiko Penyakit Kanker"
+              description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
+            />
+            <Text
+              style={[
+                FONTS.textBold16,
+                {color: COLORS.black, marginVertical: 16, textAlign: 'center'},
+              ]}>
+              Butuh informasi lainya?
+            </Text>
+            <AskButton onPress={() => navigation.navigate('Faq')} />
+            <View style={styles.margin}>
+              <CalculatorItem
+                image={<QuizIcon height={60} width={60} />}
+                // onPress={() => handleNavigation('WeightCalculator')}
+                backgroundColor={COLORS.primary}
+                title="Ayo ikutan Quiz!"
+                description="Uji pengetahuanmu dengan quiz
+              kesehatan dari mammaSIP."
+              />
+            </View>
+          </View>
+        </ScrollView>
+      )}
     </Container>
   );
 };
 const styles = StyleSheet.create({
-  titleBmi: {
+  title: {
     flexDirection: 'row',
     justifyContent: 'center',
     paddingVertical: 32,

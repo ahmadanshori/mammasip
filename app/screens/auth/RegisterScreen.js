@@ -9,24 +9,28 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
 import {MainButton, TitleButton} from '../../components/Buttons';
 import {Gender} from '../../components/RadioButton';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import formatDate from '../../libs/formatDate';
 
 const RegisterScreen = ({navigation}) => {
   const [field, setField] = useState({
     email: '',
     fullname: '',
     gender: 'female',
-    date: '',
+    date: null,
     password: '',
     confirmPassword: '',
   });
   const [error, setError] = useState(true);
   const [isCheck, setIsCheck] = useState(false);
+  const [isDate, setIsDate] = useState(false);
+  const [date, setDate] = useState(null);
 
   const handleInput = (val, type) => {
     setField(state => ({...state, [type]: val}));
@@ -35,6 +39,11 @@ const RegisterScreen = ({navigation}) => {
   const handleCheck = useCallback(() => {
     setIsCheck(state => !state);
   }, []);
+
+  const onChange = (event, selectedDate) => {
+    setIsDate(false);
+    setField(state => ({...state, date: selectedDate}));
+  };
   return (
     <Container>
       <ScrollView contentContainerStyle={styles.container}>
@@ -69,7 +78,12 @@ const RegisterScreen = ({navigation}) => {
           style={styles.pass}
           maxLength={50}
         />
-        <TitleButton title="Tanggal Lahir" placeholder="1 Januari 2000" />
+        <TitleButton
+          title="Tanggal Lahir"
+          placeholder="1 Januari 2000"
+          onPress={() => setIsDate(true)}
+          data={field?.date ? formatDate(field?.date) : null}
+        />
         <Gender />
         <TitleInput
           title="Password"
@@ -132,6 +146,17 @@ const RegisterScreen = ({navigation}) => {
           <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>Masuk</Text>
         </TouchableOpacity>
       </ScrollView>
+      {isDate ? (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={field?.date || new Date()}
+          mode={'date'}
+          is24Hour={true}
+          display="default"
+          maximumDate={new Date()}
+          onChange={onChange}
+        />
+      ) : null}
     </Container>
   );
 };
