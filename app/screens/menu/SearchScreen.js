@@ -16,6 +16,7 @@ import {getTopArticle} from '../../api/article';
 import {getTopBook} from '../../api/book';
 import {AppContext} from '../../index';
 import {LoadingComponent} from '../../components/Loadings';
+
 const dataCategory = [
   {id: 1, name: 'Sayangi dirimu'},
   {id: 2, name: 'Anda pemenang'},
@@ -23,11 +24,12 @@ const dataCategory = [
   {id: 4, name: 'Gerbang Dokter'},
 ];
 const SearchScreen = ({navigation}) => {
-  const {user, token} = useContext(AppContext);
+  const {token} = useContext(AppContext);
   const [articleRecomended, setArticleRecomended] = useState([]);
   const [bookRecomended, setBookRecomended] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
   useEffect(() => {
     getInitialData();
   }, []);
