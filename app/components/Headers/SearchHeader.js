@@ -26,7 +26,7 @@ const SearchHeader = ({
       </View>
       {!loading ? (
         <>
-          <View style={styles.search}>
+          {/* <View style={styles.search}>
             <TextInput
               onChange={onChange}
               value={value}
@@ -34,7 +34,7 @@ const SearchHeader = ({
               placeholder="Cari judul artikel, video atau buku"
             />
             <Icon name="search" size={18} color={COLORS.gray} />
-          </View>
+          </View> */}
           <ScrollView
             horizontal
             contentContainerStyle={styles.categoryWrapper}

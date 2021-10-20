@@ -7,6 +7,7 @@ import {
   TouchableNativeFeedback,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -14,20 +15,31 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
 import {MainButton, TitleButton} from '../../components/Buttons';
-import {Gender} from '../../components/RadioButton';
+import {ActivityLevelButton} from '../../components/RadioButton';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
 const RegisterScreen = ({navigation}) => {
   const [field, setField] = useState({
     email: '',
-    fullname: '',
-    gender: 'female',
-    date: null,
+    gateway_registered: '1',
+    created_by: '1',
+    username: '',
     password: '',
     confirmPassword: '',
+    phone: '',
+    role_id: '',
+    status_member: '',
+    tokenFCM: '',
+    first_name: '',
+    last_name: '',
+    gender: 1,
+    relegion: '',
+    address: '',
+    image_path: '',
+    tgl_lahir: '',
   });
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(null);
   const [isCheck, setIsCheck] = useState(false);
   const [isDate, setIsDate] = useState(false);
   const [date, setDate] = useState(null);
@@ -42,7 +54,7 @@ const RegisterScreen = ({navigation}) => {
 
   const onChange = (event, selectedDate) => {
     setIsDate(false);
-    setField(state => ({...state, date: selectedDate}));
+    setField(state => ({...state, tgl_lahir: selectedDate}));
   };
   return (
     <Container>
@@ -63,6 +75,7 @@ const RegisterScreen = ({navigation}) => {
             </Text>
           </View>
         </View>
+        <Button title="OTP" onPress={() => navigation.navigate('Otp')} />
         <TitleInput
           title="Email"
           placeholder="Email"
@@ -71,20 +84,54 @@ const RegisterScreen = ({navigation}) => {
           value={field.email}
         />
         <TitleInput
-          title="Nama Lengkap"
-          placeholder="Syifa Hadju"
-          onChangeText={val => handleInput(val, 'fullname')}
-          value={field.fullname}
+          title="Username"
+          placeholder="Username anda"
+          onChangeText={val => handleInput(val, 'username')}
+          value={field.username}
           style={styles.pass}
           maxLength={50}
+        />
+        <TitleInput
+          title="Nama Depan"
+          placeholder="Syifa"
+          onChangeText={val => handleInput(val, 'first_name')}
+          value={field.first_name}
+          style={styles.pass}
+          maxLength={20}
+        />
+        <TitleInput
+          title="Nama Belakang"
+          placeholder="Hadju"
+          onChangeText={val => handleInput(val, 'last_name')}
+          value={field.last_name}
+          style={styles.pass}
+          maxLength={20}
+        />
+
+        <TitleInput
+          title="Nomer HP"
+          placeholder="081234567890"
+          onChangeText={val => handleInput(val, 'phone')}
+          value={field.phone}
+          style={styles.pass}
+          maxLength={13}
         />
         <TitleButton
           title="Tanggal Lahir"
           placeholder="1 Januari 2000"
           onPress={() => setIsDate(true)}
-          data={field?.date ? formatDate(field?.date) : null}
+          data={field?.tgl_lahir ? formatDate(field?.tgl_lahir) : null}
         />
-        <Gender />
+        <ActivityLevelButton
+          title="Jenis Kelamin"
+          onPress={val => handleInput(val, 'gender')}
+          radio1="Laki-laki"
+          radio2="Perempuan"
+          value1={1}
+          value2={2}
+          selected={field.gender}
+          style={styles.pass}
+        />
         <TitleInput
           title="Password"
           placeholder="8-16 Karakter"
@@ -131,8 +178,10 @@ const RegisterScreen = ({navigation}) => {
             !field.password ||
             !field.confirmPassword ||
             !field.email ||
-            !field.fullname ||
-            !field.date ||
+            !field.username ||
+            !field.first_name ||
+            !field.tgl_lahir ||
+            !field.phone ||
             !isCheck
           }
         />
@@ -149,7 +198,7 @@ const RegisterScreen = ({navigation}) => {
       {isDate ? (
         <DateTimePicker
           testID="dateTimePicker"
-          value={field?.date || new Date()}
+          value={field?.tgl_lahir || new Date()}
           mode={'date'}
           is24Hour={true}
           display="default"

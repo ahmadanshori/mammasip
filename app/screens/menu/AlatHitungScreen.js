@@ -2,11 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Container} from '../../components/Container';
 import {CalculatorItem} from '../../components/Items';
-import {COLORS, FONTS} from '../../constants';
-
-import WeightIcon from '../../assets/icons/weight.svg';
-import FoodIcon from '../../assets/icons/food.svg';
-import VirusIcon from '../../assets/icons/virus.svg';
+import {COLORS, FONTS, ICON} from '../../constants';
 
 const AlatHitungScreen = ({navigation}) => {
   const handleNavigation = type => {
@@ -23,14 +19,14 @@ const AlatHitungScreen = ({navigation}) => {
         </Text>
       </View>
       <CalculatorItem
-        image={<WeightIcon width={60} height={60} />}
+        image={<ICON.bmr width={60} height={60} />}
         onPress={() => handleNavigation('Bmr')}
         backgroundColor={COLORS.blue}
         title="Massa Tubuh Ideal (BMR)"
         description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
       />
       <CalculatorItem
-        image={<FoodIcon width={60} height={60} />}
+        image={<ICON.bmi width={60} height={60} />}
         onPress={() => handleNavigation('Bmi')}
         backgroundColor={COLORS.secondary}
         title="Kebutuhan Kalori Harian (BMI)"
@@ -38,7 +34,7 @@ const AlatHitungScreen = ({navigation}) => {
       />
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
-        image={<VirusIcon width={60} height={60} />}
+        image={<ICON.virus width={60} height={60} />}
         onPress={() => handleNavigation('CancerRisk')}
         backgroundColor={COLORS.red}
         title="Resiko Penyakit Kanker"

@@ -9,7 +9,7 @@ import {TitleInput} from '../../components/Inputs';
 import {ImageModal} from '../../components/Modals';
 import {MainButton, TitleButton} from '../../components/Buttons';
 import PhotoProfile from '../../components/PhotoProfile';
-import {Gender} from '../../components/RadioButton';
+// import {Gender} from '../../components/RadioButton';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const options = {
@@ -82,7 +82,7 @@ const EditProfileScreen = ({navigation}) => {
           maxLength={50}
         />
         <TitleButton title="Tanggal Lahir" placeholder="30 November 2000" />
-        <Gender />
+        {/* <Gender /> */}
         <TitleInput
           title="Email"
           placeholder="mammasip@gmail.com"

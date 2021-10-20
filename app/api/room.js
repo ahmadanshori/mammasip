@@ -6,3 +6,7 @@ export const getArticleByRoomAPI = (token, idRuang, page) => {
     createHeader(token),
   );
 };
+
+export const getRoomTypeByIdAPI = (token, idRuang) => {
+  return client.get(`/ruang-master/${idRuang}`, createHeader(token));
+};
