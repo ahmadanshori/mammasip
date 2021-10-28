@@ -44,7 +44,7 @@ const ListSearchScreen = ({navigation, route}) => {
         })
       }
       title={item.nameArticle}
-      category={item.hastag[0]?.nameCategory}
+      //   category={item.hastag[0]?.nameCategory}
       date={formatDate(item.createdDate)}
       source={item.media[0]?.url}
     />
