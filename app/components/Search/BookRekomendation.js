@@ -7,7 +7,7 @@ import {COLORS, FONTS} from '../../constants';
 
 const data1 = [1, 2, 3, 4];
 
-const ArticleRecomendation = ({onPress, data}) => {
+const ArticleRecomendation = ({seeAllOnPress, data}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -19,7 +19,8 @@ const ArticleRecomendation = ({onPress, data}) => {
           style={[
             FONTS.text12,
             {color: COLORS.primary, paddingVertical: 6, paddingLeft: 8},
-          ]}>
+          ]}
+          onPress={seeAllOnPress}>
           Lihat Semua
         </Text>
       </View>

@@ -79,7 +79,12 @@ const SearchScreen = ({navigation}) => {
             data={articleRecomended}
             onPress={handleArticle}
           />
-          <BookRekomendation data={bookRecomended} />
+          <BookRekomendation
+            data={bookRecomended}
+            seeAllOnPress={() =>
+              navigation.navigate('ListSearch', {title: 'Book'})
+            }
+          />
           {/* <ImportanLink /> */}
 
           {/* ======== VIDEO ======== */}

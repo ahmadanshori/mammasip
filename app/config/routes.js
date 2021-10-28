@@ -11,6 +11,7 @@ import VideoDetailScreen from '../screens/VideoDetailScreen';
 import ArticleDetailScreen from '../screens/ArticleDetailScreen';
 import RoomScreen from '../screens/RoomScreen';
 import FaqScreen from '../screens/FaqScreen';
+import ListSearchScreen from '../screens/ListSearchScreen';
 import {
   HomeScreen,
   AlatHitungScreen,
@@ -232,6 +233,7 @@ export default function App() {
           <Stack.Screen component={RoomScreen} name="Room" />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />
+          <Stack.Screen component={ListSearchScreen} name="ListSearch" />
           <Stack.Screen component={BmrScreen} name="Bmr" />
           <Stack.Screen
             component={CalculationDetailScreen}
