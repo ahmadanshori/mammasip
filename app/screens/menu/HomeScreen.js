@@ -97,10 +97,7 @@ const HomeScreen = ({navigation}) => {
                   styles.categoryWrapper,
                   {backgroundColor: COLORS.secondary},
                 ]}>
-                <Image
-                  source={require('../../assets/images/1.png')}
-                  style={styles.img}
-                />
+                <ICON.messagePeople width={40} height={40} style={styles.img} />
                 <View>
                   <Text style={[FONTS.textBold10, {color: COLORS.white}]}>
                     Pesan Penting
@@ -117,10 +114,7 @@ const HomeScreen = ({navigation}) => {
                   styles.categoryWrapper,
                   {backgroundColor: COLORS.primary},
                 ]}>
-                <Image
-                  source={require('../../assets/images/2.png')}
-                  style={styles.img}
-                />
+                <ICON.girl width={40} height={40} style={styles.img} />
                 <View>
                   <Text style={[FONTS.textBold10, {color: COLORS.white}]}>
                     Tanya Jawab
@@ -212,7 +206,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     borderRadius: 8,
   },
-  img: {height: 40, width: 40, marginRight: 8},
+  img: {marginRight: 8},
   footer: {marginTop: 52, alignItems: 'center'},
   login: {flexDirection: 'row', alignItems: 'center', padding: 16},
 });

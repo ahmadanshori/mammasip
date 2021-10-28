@@ -31,7 +31,7 @@ const VideoRecomendation = ({onPress}) => {
           <VideoDetailItem key={item} />
         ))}
       </View>
-      <OutlineButton title="Lihat Semua Video" />
+      {/* <OutlineButton title="Lihat Semua Video" /> */}
     </View>
   );
 };

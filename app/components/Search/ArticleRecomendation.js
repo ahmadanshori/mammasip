@@ -14,7 +14,6 @@ import formatDate from '../../libs/formatDate';
 // ];
 
 const ArticleRecomendation = ({data, onPress}) => {
-  console.log(`data`, data);
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>

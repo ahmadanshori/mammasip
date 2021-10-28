@@ -150,7 +150,6 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('JournalTab');
               if (token) {
                 navigationRef.current.navigate('JournalTab');
               } else {
@@ -182,7 +181,6 @@ const TabNavigator = () => {
           tabPress: async e => {
             e.preventDefault();
             const validation = async () => {
-              navigationRef.current.navigate('ProfileTab');
               if (token) {
                 navigationRef.current.navigate('ProfileTab');
               } else {

@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const InputButton = ({title, placeholder, data, onPress}) => {
-  console.log(`data`, data);
   return (
     <View style={styles.container}>
       <Text style={[FONTS.textBold12, {color: COLORS.black}]}>{title}</Text>

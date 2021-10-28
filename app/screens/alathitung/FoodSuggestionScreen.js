@@ -51,7 +51,6 @@ const FoodSuggestionScreen = ({navigation, route}) => {
   const getInitialData = async () => {
     try {
       const resHealtyCalories = await getHealtyCaloriesAPI(token);
-      console.log('resHealtyCalories', resHealtyCalories);
       setTotalCaloriesData(resHealtyCalories.data.data);
     } catch (err) {
       console.log('er', {...err});

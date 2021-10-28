@@ -28,7 +28,6 @@ const FaqScreen = ({navigation}) => {
       const formData = new FormData();
       formData.append('search', text);
       const resFaq = await searchFaqAPI(formData);
-      console.log(`resFaq`, resFaq);
       setData(resFaq.data.data);
     } catch (err) {
       console.log(`err`, {...err});

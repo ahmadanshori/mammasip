@@ -62,7 +62,7 @@ const TitleInput = ({
               <Icon
                 name={show ? 'md-eye' : 'md-eye-off'}
                 size={24}
-                color={COLORS.lightGray}
+                color={COLORS.gray}
               />
             </TouchableOpacity>
           </>

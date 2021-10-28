@@ -28,7 +28,7 @@ const BmiScreen = ({navigation}) => {
     age: '',
     weight: '',
     height: '',
-    gender: 0,
+    gender: 1,
   });
 
   const handleNavigation = useCallback(
@@ -105,10 +105,10 @@ const BmiScreen = ({navigation}) => {
           <ActivityLevelButton
             title="Jenis Kelamin"
             onPress={handleRadioButton}
-            radio1="Perempuan"
-            radio2="Laki-laki"
-            value1={0}
-            value2={1}
+            radio1="Laki-laki"
+            radio2="Perempuan"
+            value1={1}
+            value2={2}
             selected={field.gender}
           />
           <MainButton

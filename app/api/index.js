@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const client = axios.create({
   //   baseURL: `${Config.API_HOST}`,
-  baseURL: 'http://mammasip.com:8200/core-mammasip',
+  baseURL: 'http://103.31.38.171:8200/core-mammasip',
   timeout: 10000,
 });
 export const headerOptions = {

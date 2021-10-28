@@ -43,7 +43,6 @@ const CalculationDetailScreen = ({navigation, route}) => {
         type === 'BMR'
           ? await getBmrAPI(token, field)
           : await getBmiAPI(token, field);
-      console.log(`res`, res);
       setData(res.data.data);
     } catch (err) {
       console.log(`err`, {...err});

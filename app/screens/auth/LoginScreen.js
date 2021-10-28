@@ -27,7 +27,7 @@ const LoginScreen = ({navigation, route}) => {
     device: 'mobile',
     ip_address: '-',
   });
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(null);
 
   const handleInput = (val, type) => {
     setField(state => ({...state, [type]: val}));
@@ -35,14 +35,20 @@ const LoginScreen = ({navigation, route}) => {
 
   const handleLogin = async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await loginAPI(field);
-      await AsyncStorage.setItem('user', JSON.stringify(res.data.data));
-      setToken(res.data.data.token);
-      setUser(res.data.data.user);
-      navigation.navigate(nav);
+      if (res.data.status === '2') {
+        setError(res.data.message);
+      } else {
+        await AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+        setToken(res.data.data.token);
+        setUser(res.data.data.user);
+        navigation.navigate(nav);
+      }
     } catch (e) {
       console.log('e', e, {...e});
+      setError(e.message);
     } finally {
       setLoading(false);
     }
@@ -110,17 +116,15 @@ const LoginScreen = ({navigation, route}) => {
           style={styles.pass}
           onChangeText={val => handleInput(val, 'password')}
           value={field.password}
-          //   onSubmitEditing={handleLogin}
+          onSubmitEditing={handleLogin}
           maxLength={24}
         />
-        {/* {error ? (
+        {error ? (
           <View style={styles.error}>
             <Icon name="alert-circle" style={styles.errorIcon} size={16} />
-            <Text style={[FONTS.text10, styles.errorIcon]}>
-              Kombinasi email & password yang dimasukan salah!
-            </Text>
+            <Text style={[FONTS.text10, styles.errorIcon]}>{error}</Text>
           </View>
-        ) : null} */}
+        ) : null}
         <TouchableOpacity style={styles.forgot} activeOpacity={1}>
           <Text style={[FONTS.text12, styles.secondary]}>Lupa Password?</Text>
         </TouchableOpacity>

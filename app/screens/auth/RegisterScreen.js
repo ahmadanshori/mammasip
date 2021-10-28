@@ -1,10 +1,8 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Image,
-  TouchableNativeFeedback,
   ScrollView,
   TouchableOpacity,
   Button,
@@ -16,10 +14,13 @@ import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
 import {MainButton, TitleButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
+import {registerAPI} from '../../api/auth';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import formatDate from '../../libs/formatDate';
+import {AppContext} from '../../index';
 
 const RegisterScreen = ({navigation}) => {
+  const {user, setLoading} = useContext(AppContext);
   const [field, setField] = useState({
     email: '',
     gateway_registered: '1',
@@ -48,13 +49,34 @@ const RegisterScreen = ({navigation}) => {
     setField(state => ({...state, [type]: val}));
   };
 
-  const handleCheck = useCallback(() => {
+  const handleCheck = () => {
     setIsCheck(state => !state);
-  }, []);
+  };
 
   const onChange = (event, selectedDate) => {
     setIsDate(false);
     setField(state => ({...state, tgl_lahir: selectedDate}));
+  };
+
+  const handleRegister = async () => {
+    setError(null);
+    if (field.password !== field.confirmPassword) {
+      setError('Password tidak sama');
+    } else {
+      setLoading(true);
+      try {
+        const newData = {
+          ...field,
+          tgl_lahir: formatDate(field.tgl_lahir, 'yyyy-MM-dd'),
+        };
+
+        const res = await registerAPI(newData);
+      } catch (e) {
+        console.log(`e`, e, {...e});
+      } finally {
+        setLoading(false);
+      }
+    }
   };
   return (
     <Container>
@@ -75,7 +97,6 @@ const RegisterScreen = ({navigation}) => {
             </Text>
           </View>
         </View>
-        <Button title="OTP" onPress={() => navigation.navigate('Otp')} />
         <TitleInput
           title="Email"
           placeholder="Email"
@@ -107,7 +128,6 @@ const RegisterScreen = ({navigation}) => {
           style={styles.pass}
           maxLength={20}
         />
-
         <TitleInput
           title="Nomer HP"
           placeholder="081234567890"
@@ -155,9 +175,7 @@ const RegisterScreen = ({navigation}) => {
         {error ? (
           <View style={styles.error}>
             <Icon name="alert-circle" style={styles.errorIcon} size={16} />
-            <Text style={[FONTS.text10, styles.errorIcon]}>
-              Kombinasi email & password yang dimasukan salah!
-            </Text>
+            <Text style={[FONTS.text10, styles.errorIcon]}>{error}</Text>
           </View>
         ) : null}
         <View style={styles.check}>
@@ -184,6 +202,7 @@ const RegisterScreen = ({navigation}) => {
             !field.phone ||
             !isCheck
           }
+          onPress={handleRegister}
         />
         <TouchableOpacity
           style={styles.register}
@@ -194,6 +213,7 @@ const RegisterScreen = ({navigation}) => {
           </Text>
           <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>Masuk</Text>
         </TouchableOpacity>
+        <Button title="test OTP" onPress={() => navigation.navigate('Otp')} />
       </ScrollView>
       {isDate ? (
         <DateTimePicker

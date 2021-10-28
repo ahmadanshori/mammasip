@@ -16,7 +16,6 @@ const ProfileScreen = ({navigation}) => {
   const {user, setToken, setUser} = useContext(AppContext);
   const [isOn, setIsOn] = useState(true);
 
-  console.log(`user`, user);
   const handleNavigate = type => {
     navigation.navigate(`${type}`);
   };
@@ -31,7 +30,7 @@ const ProfileScreen = ({navigation}) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProfileHeader data={user} />
         <View style={styles.wrapper}>
-          <Point />
+          {/* <Point /> */}
           <ProfileItem
             iconName="bookmark-outline"
             title="Bookmark"

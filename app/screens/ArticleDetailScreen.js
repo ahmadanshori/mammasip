@@ -36,7 +36,6 @@ const ArticleDetailScreen = ({navigation, route}) => {
     try {
       const res = await getArticleByRoomAPI(token, typeRuang, page);
       const resVideo = await getRoomTypeByIdAPI(token, typeRuang);
-      console.log(`res`, res);
       setArticleData(res.data.data.content[0]);
       setVideoData(resVideo.data.data[0].media);
       setSelecVideo(resVideo.data.data[0]?.media[0]);

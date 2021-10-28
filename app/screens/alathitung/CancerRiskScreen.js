@@ -27,7 +27,7 @@ import QuizIcon from '../../assets/icons/quiz.svg';
 const CaloriesScreen = ({navigation}) => {
   const [field, setField] = useState({
     age: '',
-    gender: 'Perempuan',
+    gender: 1,
   });
 
   const handleNavigation = type => {
@@ -69,14 +69,16 @@ const CaloriesScreen = ({navigation}) => {
           <View style={styles.dividerWrapper}>
             <View style={styles.divider} />
           </View>
-
           <ActivityLevelButton
             title="Jenis Kelamin"
             onPress={handleRadioButton}
-            radio1="Perempuan"
-            radio2="Laki-laki"
+            radio1="Laki-laki"
+            radio2="Perempuan"
+            value1={1}
+            value2={2}
             selected={field.gender}
           />
+
           <CalculatorInput
             title="Usia Anda"
             type="Tahun"

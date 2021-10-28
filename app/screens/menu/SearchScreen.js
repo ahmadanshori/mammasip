@@ -38,7 +38,6 @@ const SearchScreen = ({navigation}) => {
     try {
       const resTopArticle = await getTopArticle(token);
       const resTopBook = await getTopBook(token);
-      console.log(`resTopArticle`, resTopArticle);
       setArticleRecomended(resTopArticle.data.data);
       setBookRecomended(resTopBook.data.data);
     } catch (e) {
