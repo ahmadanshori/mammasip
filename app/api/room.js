@@ -7,6 +7,10 @@ export const getArticleByRoomAPI = (token, idRuang, page) => {
   );
 };
 
+export const getRoomAPI = () => {
+  return client.get('/ruang-master');
+};
+
 export const getRoomTypeByIdAPI = (token, idRuang) => {
   return client.get(`/ruang-master/${idRuang}`, createHeader(token));
 };

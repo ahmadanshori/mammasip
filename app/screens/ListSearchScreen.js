@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
 import _ from 'lodash';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
-import {ArticleItem} from '../components/Items';
+import {ArticleDetailItem} from '../components/Items';
 import Accordion from '../components/Accordion';
 import {getArticleAPI} from '../api/article';
 import formatDate from '../libs/formatDate';
@@ -36,18 +36,7 @@ const ListSearchScreen = ({navigation, route}) => {
   };
 
   const renderItem = ({item}) => (
-    <ArticleItem
-      onPress={() =>
-        navigation.navigate('ArticleDetail', {
-          id: item.idArticle,
-          typeRuang: item.typeRuang,
-        })
-      }
-      title={item.nameArticle}
-      //   category={item.hastag[0]?.nameCategory}
-      date={formatDate(item.createdDate)}
-      source={item.media[0]?.url}
-    />
+    <ArticleDetailItem key={item} title={item.nameArticle} />
   );
 
   return (

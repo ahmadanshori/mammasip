@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {COLORS, FONTS} from '../../constants';
-import Sayangi from '../../assets/icons/sayangi.svg';
+import {COLORS, FONTS, ICON} from '../../constants';
 
 const HomeItem = ({title, desc, color, source, image, onPress, style = {}}) => {
   const textStyles = [[FONTS.textBold14, styles.text]];
@@ -13,13 +12,12 @@ const HomeItem = ({title, desc, color, source, image, onPress, style = {}}) => {
       style={[styles.container, style]}
       activeOpacity={1}
       onPress={onPress}>
-      <View>
+      <View style={{flex: 1}}>
         <Text style={textStyles}>{title}</Text>
         <Text style={FONTS.text10}>{desc}</Text>
       </View>
-      {image}
-      {/* <Image source={source} style={styles.img} /> */}
-      {/* <Sayangi height={80} width={80} /> */}
+      {/* {image} */}
+      <ICON.sayangi height={80} width={80} />
     </TouchableOpacity>
   );
 };
@@ -35,7 +33,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     overflow: 'hidden',
   },
-  text: {marginBottom: 4},
+  text: {marginBottom: 4, color: COLORS.black},
   img: {
     height: 80,
     width: 80,

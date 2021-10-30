@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
   img: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: SIZES.width4 + 8,
-    width: SIZES.width4 + 8,
+    height: SIZES.width5,
+    width: SIZES.width5,
     borderRadius: 8,
   },
   shadowImg: {
-    height: SIZES.width4 + 8,
-    width: SIZES.width4 + 8,
+    height: SIZES.width5,
+    width: SIZES.width5,
     // backgroundColor: COLORS.shadowPrimary,
     position: 'absolute',
     justifyContent: 'center',
