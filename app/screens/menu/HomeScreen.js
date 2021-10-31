@@ -80,7 +80,6 @@ const HomeScreen = ({navigation}) => {
   const getInititalData = async () => {
     try {
       const res = await getRoomAPI();
-      console.log(`res`, res);
       setRoomData(res.data.data);
     } catch (e) {
       console.log(`e`, e);
@@ -89,8 +88,8 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const handleNavigator = val => {
-    navigation.navigate('Room', {data: val});
+  const handleNavigator = id => {
+    navigation.navigate('Room', {idRuang: id});
   };
 
   return (
@@ -167,7 +166,7 @@ const HomeScreen = ({navigation}) => {
                 key={item.id_ruang}
                 title={item.nama_ruang}
                 desc={item.parent_ruang}
-                // onPress={() => handleNavigator(item)}
+                onPress={() => handleNavigator(item.id_ruang)}
                 // color={item.color}
                 // image={item.image}
               />

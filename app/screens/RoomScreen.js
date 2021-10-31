@@ -3,14 +3,15 @@ import {StyleSheet, Text, View, StatusBar, ScrollView} from 'react-native';
 import {HeaderTitle} from '../components/Headers';
 import {HomeItem} from '../components/Items';
 import {VideoRecomendation} from '../components/Search';
-import {getTopPenyuluhanAPI} from '../api/penyuluhan';
+import {LoadingComponent} from '../components/Loadings';
+import {getRoomTypeByIdAPI} from '../api/room';
 import {COLORS} from '../constants';
 import {AppContext} from '../index';
 
 const RoomScreen = ({navigation, route}) => {
-  const {data} = route.params;
+  const {idRuang} = route.params;
   const {user, token} = useContext(AppContext);
-  const [penyuluhanData, setPenyuluhanData] = useState([]);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
 
   useEffect(() => {
@@ -19,41 +20,53 @@ const RoomScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      const resPenyuluhan = await getTopPenyuluhanAPI(token);
-      console.log('resPenyuluhan', resPenyuluhan);
-      setPenyuluhanData(resPenyuluhan.data.data);
+      const res = await getRoomTypeByIdAPI(token, idRuang);
+      console.log(`res`, res);
+      setData(res.data.data[0]);
     } catch (e) {
       console.log('e', {...e});
+    } finally {
+      setLoading({get: false, refresh: false});
     }
   };
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={data.color} barStyle={'light-content'} />
-      <HeaderTitle title={data.title} backgroundColor={data.color} white />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View
-          style={[
-            styles.header,
-            {
-              backgroundColor: data.color,
-            },
-          ]}>
-          <HomeItem
-            title={data.name}
-            desc={data.desc}
-            color={data.color}
-            style={styles.category}
-            source={data.source}
-            image={data.image}
+      <StatusBar backgroundColor={COLORS.primary} barStyle={'light-content'} />
+      {loading.get ? (
+        <LoadingComponent />
+      ) : (
+        <>
+          <HeaderTitle
+            title={data?.parent_ruang}
+            backgroundColor={COLORS.primary}
+            white
           />
-        </View>
-        <View style={styles.padding}>
-          <VideoRecomendation
-            onPress={() => navigation.navigate('VideoDetail')}
-          />
-        </View>
-      </ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View
+              style={[
+                styles.header,
+                {
+                  backgroundColor: COLORS.primary,
+                },
+              ]}>
+              <HomeItem
+                title={data?.nama_ruang}
+                desc={data?.description}
+                // color={data.color}
+                style={styles.category}
+                // source={data.source}
+                // image={data.image}
+              />
+            </View>
+            <View style={styles.padding}>
+              <VideoRecomendation
+                onPress={() => navigation.navigate('VideoDetail')}
+              />
+            </View>
+          </ScrollView>
+        </>
+      )}
     </View>
   );
 };
