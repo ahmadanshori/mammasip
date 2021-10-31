@@ -12,21 +12,21 @@ import {MealItem} from './Items';
 
 import {COLORS, FONTS, SIZES} from '../constants';
 const dayData = [
-  {id: 1, name: 'Senin'},
-  {id: 2, name: 'Selasa'},
-  {id: 3, name: 'Rabu'},
-  {id: 4, name: 'Kamis'},
-  {id: 5, name: 'Jumat'},
-  {id: 6, name: 'Sabtu'},
-  {id: 7, name: 'Minggu'},
+  {id: 1, name: 'Senin', field: 'hariSenin'},
+  {id: 2, name: 'Selasa', field: 'hariSelasa'},
+  {id: 3, name: 'Rabu', field: 'hariRabu'},
+  {id: 4, name: 'Kamis', field: 'hariKamis'},
+  {id: 5, name: 'Jumat', field: 'hariJumat'},
+  {id: 6, name: 'Sabtu', field: 'hariSabtu'},
+  {id: 7, name: 'Minggu', field: 'hariMinggu'},
 ];
 
-const MealSuggestions = () => {
-  const [day, setDay] = useState(null);
-
+const MealSuggestions = ({data}) => {
+  const [day, setDay] = useState({id: 1, name: 'Senin', field: 'hariSenin'});
   const handleDay = useCallback(event => {
     setDay(event);
   }, []);
+  console.log('data', data);
   return (
     <>
       <ScrollView
@@ -67,8 +67,22 @@ const MealSuggestions = () => {
           </Text>
         </View>
       </View>
-      <MealItem icon name="Sandwich Ayam" calories="320" />
-      <MealItem name="Melon" calories="50" />
+      {data[day.field]?.makanPagi?.map(item => (
+        <MealItem
+          key={item.id_makanan}
+          name={item.nama_makanan}
+          ingredients={item.bahan}
+          calories="320"
+        />
+      ))}
+      {data[day.field]?.selinganPagi?.map(item => (
+        <MealItem
+          key={item.id_makanan}
+          name={item.nama_makanan}
+          ingredients={item.bahan}
+          calories="320"
+        />
+      ))}
       <View style={styles.wrapper}>
         <View style={styles.row}>
           <Feather name="sun" size={16} color={COLORS.darkYellow} />
@@ -84,9 +98,22 @@ const MealSuggestions = () => {
           </Text>
         </View>
       </View>
-      <MealItem icon name="Nasi Goreng Ayam" calories="500" />
-      <MealItem name="Susu FC" calories="50" />
-      <MealItem name="Pisang" calories="50" />
+      {data[day.field]?.makanSiang?.map(item => (
+        <MealItem
+          key={item.id_makanan}
+          name={item.nama_makanan}
+          ingredients={item.bahan}
+          calories="320"
+        />
+      ))}
+      {data[day.field]?.selinganSiang?.map(item => (
+        <MealItem
+          key={item.id_makanan}
+          name={item.nama_makanan}
+          ingredients={item.bahan}
+          calories="320"
+        />
+      ))}
       <View style={styles.wrapper}>
         <View style={styles.row}>
           <Feather name="moon" size={16} color={COLORS.primary} />
@@ -102,8 +129,22 @@ const MealSuggestions = () => {
           </Text>
         </View>
       </View>
-      <MealItem icon name="Nasi Sop Ikan" calories="420" />
-      <MealItem name="Pisang" calories="50" />
+      {data[day.field]?.makanMalam?.map(item => (
+        <MealItem
+          key={item.id_makanan}
+          name={item.nama_makanan}
+          ingredients={item.bahan}
+          calories="320"
+        />
+      ))}
+      {data[day.field]?.selinganMalam?.map(item => (
+        <MealItem
+          key={item.id_makanan}
+          name={item.nama_makanan}
+          ingredients={item.bahan}
+          calories="320"
+        />
+      ))}
       <View style={styles.justify}>
         <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
           Total Kalori
@@ -121,7 +162,7 @@ const MealSuggestions = () => {
 
 const styles = StyleSheet.create({
   container: {borderBottomWidth: 1, borderColor: COLORS.border},
-  dayWrapper: {marginTop: 24},
+  dayWrapper: {marginTop: 8},
   caloriesItem: {
     paddingHorizontal: 10,
     paddingVertical: 4,
@@ -138,7 +179,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 8,
-    marginTop: 32,
+    marginTop: 24,
   },
   justify: {
     flexDirection: 'row',

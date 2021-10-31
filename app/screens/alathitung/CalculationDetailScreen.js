@@ -53,9 +53,9 @@ const CalculationDetailScreen = ({navigation, route}) => {
 
   const handleShare = () => {};
 
-  const handleNavigation = useCallback((val, param) => {
+  const handleNavigation = (val, param) => {
     navigation.navigate(val, param);
-  }, []);
+  };
 
   const handleFoodSuggestion = value => {
     setFoodSuggestion(value);
@@ -118,22 +118,24 @@ const CalculationDetailScreen = ({navigation, route}) => {
                 ]}>
                 Saran Menu Makanan
               </Text>
-              <TouchableOpacity
-                style={styles.changeButton}
-                onPress={() =>
-                  handleNavigation('FoodSuggestion', {
-                    handleFoodSuggestion,
-                  })
-                }
-                activeOpacity={SIZES.opacity}>
-                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
-                  Ubah
-                </Text>
-              </TouchableOpacity>
+              {foodSuggestion ? (
+                <TouchableOpacity
+                  style={styles.changeButton}
+                  onPress={() =>
+                    handleNavigation('FoodSuggestion', {
+                      handleFoodSuggestion,
+                      caloriesData: foodSuggestion.caloriesData,
+                    })
+                  }
+                  activeOpacity={SIZES.opacity}>
+                  <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
+                    Ubah
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
-
             {foodSuggestion ? (
-              <MealSuggestions />
+              <MealSuggestions data={foodSuggestion} />
             ) : (
               <>
                 <View style={styles.warning}>
