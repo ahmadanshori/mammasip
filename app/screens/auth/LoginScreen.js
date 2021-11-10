@@ -23,7 +23,7 @@ const LoginScreen = ({navigation, route}) => {
   const {nav} = route.params;
   const [field, setField] = useState({
     username: 'hanifalbaaits@gmail.com',
-    password: '12345',
+    password: '123455',
     device: 'mobile',
     ip_address: '-',
   });
@@ -83,17 +83,17 @@ const LoginScreen = ({navigation, route}) => {
             </Text>
           </View>
         </TouchableNativeFeedback>
-        <TouchableNativeFeedback>
+        {/* <TouchableNativeFeedback>
           <View style={styles.authButton}>
             <Image
               source={require('../../assets/icons/apple.png')}
               style={styles.img}
             />
             <Text style={[FONTS.text14, styles.authText]}>
-              Masuk dengan Google
+              Masuk dengan Apple
             </Text>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeFeedback> */}
         <View style={styles.separatorWrapper}>
           <View style={styles.separator} />
           <Text style={[FONTS.text12, styles.or]}>Atau</Text>

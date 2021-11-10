@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useMemo} from 'react';
 import {
   StyleSheet,
   Text,
@@ -26,7 +26,14 @@ const MealSuggestions = ({data}) => {
   const handleDay = useCallback(event => {
     setDay(event);
   }, []);
-  console.log('data', data);
+  const totalCalories = useMemo(() => {
+    let total =
+      data[day.field]?.totalKkal?.pagi +
+      data[day.field]?.totalKkal?.siang +
+      data[day.field]?.totalKkal?.malam;
+    return total;
+  }, [data, day.field]);
+
   return (
     <>
       <ScrollView
@@ -61,7 +68,9 @@ const MealSuggestions = ({data}) => {
           </Text>
         </View>
         <View style={styles.row}>
-          <Text style={[FONTS.textBold16, {color: COLORS.black}]}>275</Text>
+          <Text style={[FONTS.textBold16, {color: COLORS.black}]}>
+            {data[day.field]?.totalKkal?.pagi}
+          </Text>
           <Text style={[FONTS.text12, {color: COLORS.black, marginLeft: 4}]}>
             KKal
           </Text>
@@ -92,7 +101,10 @@ const MealSuggestions = ({data}) => {
           </Text>
         </View>
         <View style={styles.row}>
-          <Text style={[FONTS.textBold16, {color: COLORS.black}]}>620</Text>
+          <Text style={[FONTS.textBold16, {color: COLORS.black}]}>
+            {' '}
+            {data[day.field]?.totalKkal?.siang}
+          </Text>
           <Text style={[FONTS.text12, {color: COLORS.black, marginLeft: 4}]}>
             KKal
           </Text>
@@ -123,7 +135,10 @@ const MealSuggestions = ({data}) => {
           </Text>
         </View>
         <View style={styles.row}>
-          <Text style={[FONTS.textBold16, {color: COLORS.black}]}>420</Text>
+          <Text style={[FONTS.textBold16, {color: COLORS.black}]}>
+            {' '}
+            {data[day.field]?.totalKkal?.malam}
+          </Text>
           <Text style={[FONTS.text12, {color: COLORS.black, marginLeft: 4}]}>
             KKal
           </Text>
@@ -150,7 +165,9 @@ const MealSuggestions = ({data}) => {
           Total Kalori
         </Text>
         <View style={styles.row}>
-          <Text style={[FONTS.textBold20, {color: COLORS.primary}]}>1.500</Text>
+          <Text style={[FONTS.textBold20, {color: COLORS.primary}]}>
+            {totalCalories}
+          </Text>
           <Text style={[FONTS.text12, {color: COLORS.primary, marginLeft: 4}]}>
             Kkal
           </Text>

@@ -17,8 +17,9 @@ import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import Divider from '../../components/Divider';
 import {LoadingComponent} from '../../components/Loadings';
-
+import {getHealtyCaloriesByIdAPI} from '../../api/healtyMenu';
 import {getBmrAPI, getBmiAPI} from '../../api/calculator';
+import caloriesCalculation from '../../libs/caloriesCalculation';
 import {AppContext} from '../../index';
 import WeightIcon from '../../assets/icons/weight.svg';
 import FoodIcon from '../../assets/icons/food.svg';
@@ -27,17 +28,44 @@ import QuizIcon from '../../assets/icons/quiz.svg';
 
 const CalculationDetailScreen = ({navigation, route}) => {
   const {type, field} = route.params;
+  // const calculationId = route.params.calculationId || null;
   const {user, token} = useContext(AppContext);
   const [foodSuggestion, setFoodSuggestion] = useState(null);
+  const [calculationId, setCalculationId] = useState(null);
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState({
+    get: true,
+    refresh: false,
+    menu: false,
+  });
 
   useEffect(() => {
     getInitialData();
   }, []);
 
+  // useEffect(() => {
+  //   if (calculationId) {
+  //     const getSetMenu = async () => {
+  //       try {
+  //         const resMenu = await getHealtyCaloriesByIdAPI(
+  //           token,
+  //           calculationId.calorieId,
+  //           calculationId.pekanId,
+  //         );
+  //         const calculation = caloriesCalculation(
+  //           resMenu.data.data[0].menuPekan[0],
+  //         );
+  //         setFoodSuggestion(calculation);
+  //       } catch (e) {
+  //         console.log(`e`, e);
+  //       }
+  //     };
+  //     getSetMenu();
+  //   }
+  // }, [calculationId, token]);
+
+  console.log(`calculationId`, calculationId);
   const getInitialData = useCallback(async () => {
-    setLoading(true);
     try {
       const res =
         type === 'BMR'
@@ -47,7 +75,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
     } catch (err) {
       console.log(`err`, {...err});
     } finally {
-      setLoading(false);
+      setLoading({get: false, refresh: false, menu: false});
     }
   }, [token, field, type]);
 
@@ -57,8 +85,24 @@ const CalculationDetailScreen = ({navigation, route}) => {
     navigation.navigate(val, param);
   };
 
-  const handleFoodSuggestion = value => {
-    setFoodSuggestion(value);
+  const handleCalculationId = async value => {
+    setLoading(state => ({...state, menu: true}));
+    try {
+      setCalculationId(value);
+      const resMenu = await getHealtyCaloriesByIdAPI(
+        token,
+        value.calorieId,
+        value.pekanId,
+      );
+      const calculation = caloriesCalculation(
+        resMenu.data.data[0].menuPekan[0],
+      );
+      setFoodSuggestion(calculation);
+    } catch (e) {
+      console.log(`e`, e);
+    } finally {
+      setLoading(state => ({...state, menu: false}));
+    }
   };
 
   return (
@@ -67,7 +111,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
         title={`Hasil Perhitungan ${type} Anda`}
         onSharePress={handleShare}
       />
-      {loading ? (
+      {loading.get ? (
         <LoadingComponent />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -123,8 +167,9 @@ const CalculationDetailScreen = ({navigation, route}) => {
                   style={styles.changeButton}
                   onPress={() =>
                     handleNavigation('FoodSuggestion', {
-                      handleFoodSuggestion,
-                      caloriesData: foodSuggestion.caloriesData,
+                      handleCalculationId,
+                      nav: 'CalculationDetail',
+                      calculationId,
                     })
                   }
                   activeOpacity={SIZES.opacity}>
@@ -134,46 +179,59 @@ const CalculationDetailScreen = ({navigation, route}) => {
                 </TouchableOpacity>
               ) : null}
             </View>
-            {foodSuggestion ? (
-              <MealSuggestions data={foodSuggestion} />
+            {loading.menu ? (
+              <View style={styles.mVertical}>
+                <LoadingComponent />
+              </View>
             ) : (
               <>
-                <View style={styles.warning}>
-                  <View style={styles.row}>
-                    <Ionicons
-                      name="alert-circle"
-                      size={20}
-                      color={COLORS.red}
+                {foodSuggestion ? (
+                  <MealSuggestions data={foodSuggestion} />
+                ) : (
+                  <>
+                    <View style={styles.warning}>
+                      <View style={styles.row}>
+                        <Ionicons
+                          name="alert-circle"
+                          size={20}
+                          color={COLORS.red}
+                        />
+                        <Text
+                          style={[
+                            FONTS.textBold12,
+                            {color: COLORS.red, marginLeft: 6},
+                          ]}>
+                          Anda belum mengatur jumlah kalori harian
+                        </Text>
+                      </View>
+                      <Text
+                        style={[
+                          FONTS.text12,
+                          {color: COLORS.black, marginTop: 8},
+                        ]}>
+                        Yuk tentukan jumlah kalori harian biar sehat dan berat
+                        badanmu jadi lebih ideal.
+                      </Text>
+                    </View>
+                    <View style={styles.foodWrapper}>
+                      <Image
+                        resizeMode="contain"
+                        source={require('../../assets/icons/food.png')}
+                        style={styles.foodImg}
+                      />
+                    </View>
+                    <MainButton
+                      title="Pilih Menu Makanan"
+                      onPress={() =>
+                        handleNavigation('FoodSuggestion', {
+                          handleCalculationId,
+                          nav: 'CalculationDetail',
+                          calculationId,
+                        })
+                      }
                     />
-                    <Text
-                      style={[
-                        FONTS.textBold12,
-                        {color: COLORS.red, marginLeft: 6},
-                      ]}>
-                      Anda belum mengatur jumlah kalori harian
-                    </Text>
-                  </View>
-                  <Text
-                    style={[FONTS.text12, {color: COLORS.black, marginTop: 8}]}>
-                    Yuk tentukan jumlah kalori harian biar sehat dan berat
-                    badanmu jadi lebih ideal.
-                  </Text>
-                </View>
-                <View style={styles.foodWrapper}>
-                  <Image
-                    resizeMode="contain"
-                    source={require('../../assets/icons/food.png')}
-                    style={styles.foodImg}
-                  />
-                </View>
-                <MainButton
-                  title="Pilih Menu Makanan"
-                  onPress={() =>
-                    handleNavigation('FoodSuggestion', {
-                      handleFoodSuggestion,
-                    })
-                  }
-                />
+                  </>
+                )}
               </>
             )}
           </View>
@@ -235,6 +293,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   divider: {marginVertical: 16},
+  mVertical: {marginVertical: 24},
   warning: {backgroundColor: COLORS.lightRed, padding: 16, borderRadius: 6},
   row: {flexDirection: 'row', alignItems: 'center'},
   foodWrapper: {

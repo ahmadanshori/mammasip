@@ -13,7 +13,7 @@ import formatDate from '../../libs/formatDate';
 //   {id: 3, active: false},
 // ];
 
-const ArticleRecomendation = ({data, onPress}) => {
+const ArticleRecomendation = ({data, onPress, seeAllOnPress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -25,7 +25,8 @@ const ArticleRecomendation = ({data, onPress}) => {
           style={[
             FONTS.text12,
             {color: COLORS.primary, paddingVertical: 6, paddingLeft: 8},
-          ]}>
+          ]}
+          onPress={seeAllOnPress}>
           Lihat Semua
         </Text>
       </View>
@@ -57,13 +58,12 @@ const ArticleRecomendation = ({data, onPress}) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {marginBottom: 24},
+  container: {marginBottom: 8},
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 16,
-    marginTop: 8,
   },
   row: {flexDirection: 'row', alignItems: 'center'},
   icon: {marginRight: 8},

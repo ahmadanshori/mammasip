@@ -2,9 +2,16 @@ import React from 'react';
 import {Text, View, TouchableOpacity, Platform, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const HeaderTitle = ({title, onSharePress, backgroundColor, white}) => {
+const HeaderTitle = ({
+  title,
+  onSharePress,
+  onDownloadPress,
+  backgroundColor,
+  white,
+}) => {
   const navigation = useNavigation();
   const containerStyles = [styles.body];
   if (backgroundColor) {
@@ -37,6 +44,11 @@ const HeaderTitle = ({title, onSharePress, backgroundColor, white}) => {
       {onSharePress ? (
         <TouchableOpacity style={styles.shareButton} onPress={onSharePress}>
           <Icon name="sharealt" size={18} />
+        </TouchableOpacity>
+      ) : null}
+      {onDownloadPress ? (
+        <TouchableOpacity style={styles.shareButton} onPress={onDownloadPress}>
+          <MaterialIcons name="file-download" size={18} />
         </TouchableOpacity>
       ) : null}
     </View>

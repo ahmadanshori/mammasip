@@ -1,9 +1,15 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {Container} from '../../components/Container';
 import {AskButton} from '../../components/Buttons';
-import {SearchHeader} from '../../components/Headers';
+
 import {VideoItem, VideoDetailItem} from '../../components/Items';
 import {
   VideoRecomendation,
@@ -14,21 +20,16 @@ import {
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {getTopArticle} from '../../api/article';
 import {getTopBook} from '../../api/book';
+import {getRoomAPI} from '../../api/room';
 import {AppContext} from '../../index';
 import {LoadingComponent} from '../../components/Loadings';
 
-const dataCategory = [
-  {id: 1, name: 'Sayangi dirimu'},
-  {id: 2, name: 'Anda pemenang'},
-  {id: 3, name: 'Cinta'},
-  {id: 4, name: 'Gerbang Dokter'},
-];
 const SearchScreen = ({navigation}) => {
   const {token} = useContext(AppContext);
   const [articleRecomended, setArticleRecomended] = useState([]);
   const [bookRecomended, setBookRecomended] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [loading, setLoading] = useState({get: true, refresh: false});
+  const [roomData, setRoomData] = useState([]);
 
   useEffect(() => {
     getInitialData();
@@ -36,37 +37,48 @@ const SearchScreen = ({navigation}) => {
 
   const getInitialData = async () => {
     try {
+      const resRoom = await getRoomAPI();
       const resTopArticle = await getTopArticle(token);
       const resTopBook = await getTopBook(token);
+      setRoomData(resRoom.data.data);
       setArticleRecomended(resTopArticle.data.data);
       setBookRecomended(resTopBook.data.data);
     } catch (e) {
       console.log(`e`, e, {...e});
     } finally {
-      setLoading(false);
+      setLoading({get: false, refresh: false});
     }
   };
 
-  const handleCategory = useCallback(value => {
-    setSelectedCategory(value);
-  }, []);
-
-  const handleArticle = useCallback(
-    (id, typeRuang) => {
-      navigation.navigate('ArticleDetail', {id, typeRuang});
-    },
-    [navigation],
-  );
+  const handleNavigator = (screen, param) => {
+    navigation.navigate(screen, param);
+  };
 
   return (
     <Container>
-      <SearchHeader
-        data={dataCategory}
-        loading={loading}
-        selected={selectedCategory}
-        onCategory={handleCategory}
-      />
-      {loading ? (
+      <View style={styles.container}>
+        <View style={styles.justify}>
+          <Text style={FONTS.textBold20}>Telusuri</Text>
+          <Icon name="bookmark-outline" size={20} />
+        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{paddingHorizontal: 8}}>
+          {roomData.map(item => (
+            <TouchableOpacity
+              activeOpacity={SIZES.opacity}
+              onPress={() => handleNavigator('Room', {idRuang: item.id_ruang})}
+              key={item.id_ruang}
+              style={styles.category}>
+              <Text style={[FONTS.text10, {color: COLORS.secondary}]}>
+                {item.nama_ruang}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+      {loading.get ? (
         <LoadingComponent />
       ) : (
         <ScrollView
@@ -77,13 +89,16 @@ const SearchScreen = ({navigation}) => {
         /> */}
           <ArticleRecomendation
             data={articleRecomended}
-            onPress={handleArticle}
+            onPress={(id, typeRuang) =>
+              handleNavigator('ArticleDetail', {id, typeRuang})
+            }
+            seeAllOnPress={() =>
+              handleNavigator('ListSearch', {title: 'Artikel'})
+            }
           />
           <BookRekomendation
             data={bookRecomended}
-            seeAllOnPress={() =>
-              navigation.navigate('ListSearch', {title: 'Book'})
-            }
+            seeAllOnPress={() => handleNavigator('ListSearch', {title: 'Buku'})}
           />
           {/* <ImportanLink /> */}
 
@@ -123,6 +138,7 @@ const SearchScreen = ({navigation}) => {
   );
 };
 const styles = StyleSheet.create({
+  container: {paddingBottom: 16},
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -130,8 +146,24 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     marginTop: 8,
   },
+  justify: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 8,
+  },
   row: {flexDirection: 'row', alignItems: 'center', marginTop: 8},
   icon: {marginRight: 8},
+  category: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderWidth: 1,
+    borderRadius: 30,
+    marginRight: 4,
+    borderColor: COLORS.secondary,
+  },
   footer: {marginTop: 44},
 });
 

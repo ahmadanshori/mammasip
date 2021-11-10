@@ -4,22 +4,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const ArticleDetailItem = ({
-  onPress,
-  bookmark,
-  source,
-  title,
-  date,
-  category,
-}) => {
+const BookDetailScreen = ({onPress, data}) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
       <View>
-        {source ? (
-          <Image source={source} style={styles.img} />
+        {!data?.urlBanner ? (
+          <Image source={{uri: data.urlBanner}} style={styles.img} />
         ) : (
           <View style={styles.shadowImg}>
             <Icon name="image-outline" size={30} color={COLORS.gray} />
@@ -27,16 +20,22 @@ const ArticleDetailItem = ({
         )}
       </View>
       <View style={styles.body}>
-        <Text style={FONTS.textBold14}>{title}</Text>
+        <Text style={FONTS.textBold12} numberOfLines={2}>
+          {data?.nameBook}
+        </Text>
+        <Text style={[FONTS.text12, {color: COLORS.primary}]} numberOfLines={1}>
+          {data?.description}
+        </Text>
         <View style={styles.row}>
-          <Text style={[FONTS.text10, {color: COLORS.gray}]}>{date}</Text>
-          {category && (
-            <View style={styles.category}>
-              <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
-                {category}
-              </Text>
-            </View>
-          )}
+          <Text style={[FONTS.text10, {color: COLORS.secondary}]}>
+            {data?.year}{' '}
+          </Text>
+          <Text style={[FONTS.text10, {color: COLORS.gray}]}>
+            {data?.authorBook},{' '}
+          </Text>
+          <Text style={[FONTS.text10, {color: COLORS.gray}]}>
+            {data?.publisherBook}
+          </Text>
         </View>
       </View>
       {/* <TouchableOpacity style={{paddingHorizontal: 4}}>
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
   },
   bookmark: {position: 'absolute', top: 0, right: 0, padding: 8},
   body: {paddingHorizontal: 8, flex: 1},
-  row: {flexDirection: 'row', alignItems: 'center', marginTop: 10},
+  row: {flexDirection: 'row', alignItems: 'center', marginTop: 2},
   category: {
     paddingHorizontal: 6,
     paddingVertical: 2,
@@ -91,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ArticleDetailItem;
+export default BookDetailScreen;

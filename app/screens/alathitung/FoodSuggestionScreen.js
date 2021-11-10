@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {MainButton} from '../../components/Buttons';
@@ -20,6 +21,7 @@ import {
   getHealtyCaloriesByIdAPI,
 } from '../../api/healtyMenu';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import caloriesCalculation from '../../libs/caloriesCalculation';
 import {AppContext} from '../../index';
 
 const pekanData = [
@@ -30,18 +32,21 @@ const pekanData = [
 ];
 
 const FoodSuggestionScreen = ({navigation, route}) => {
-  const {handleFoodSuggestion} = route.params;
-  const caloriesData = route.params.caloriesData || null;
+  const calculationId = route.params.calculationId || null;
+  const handleCalculationId = route.params.handleCalculationId || null;
   const {token} = useContext(AppContext);
-  const [calories, setCalories] = useState(caloriesData);
+  const [calories, setCalories] = useState(
+    calculationId ? {tipe_menu_sehat: calculationId?.calorieId} : null,
+  );
   const [totalCaloriesData, setTotalCaloriesData] = useState([]);
-  const [pekan, setPekan] = useState({id: 1, name: 'Pekan 1'});
+  const [pekan, setPekan] = useState(
+    calculationId
+      ? {id: calculationId.pekanId, name: calculationId.name}
+      : {id: 1, name: 'Pekan 1'},
+  );
   const [foodMenuData, setFoodMenuData] = useState(null);
   const [isSelect, setIsSelect] = useState(false);
-  //   const [selectedMenu, setSelectedMenu] = useState({
-  //     id: 1,
-  //     name: 'Paket Menu 1',
-  //   });
+
   const [loading, setLoading] = useState({
     get: true,
     menu: false,
@@ -57,16 +62,20 @@ const FoodSuggestionScreen = ({navigation, route}) => {
     try {
       const resHealtyCalories = await getHealtyCaloriesAPI(token);
       setTotalCaloriesData(resHealtyCalories.data.data);
-      if (caloriesData) {
+
+      if (calculationId) {
         const resMenu = await getHealtyCaloriesByIdAPI(
           token,
           calories.tipe_menu_sehat,
           pekan.id,
         );
-        setFoodMenuData(resMenu.data.data[0].menuPekan[0]);
+        const calculation = caloriesCalculation(
+          resMenu.data.data[0].menuPekan[0],
+        );
+        setFoodMenuData(calculation);
       }
     } catch (err) {
-      console.log('er', {...err});
+      console.log('er', err, {...err});
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -78,7 +87,6 @@ const FoodSuggestionScreen = ({navigation, route}) => {
       setFoodMenuData(null);
       const oldData = calories;
       try {
-        console.log('item', item);
         setIsSelect(true);
         setCalories(item);
         const resMenu = await getHealtyCaloriesByIdAPI(
@@ -86,8 +94,11 @@ const FoodSuggestionScreen = ({navigation, route}) => {
           item.tipe_menu_sehat,
           pekan.id,
         );
-        console.log('resMenu', resMenu);
-        setFoodMenuData(resMenu.data.data[0].menuPekan[0]);
+
+        const calculation = caloriesCalculation(
+          resMenu.data.data[0].menuPekan[0],
+        );
+        setFoodMenuData(calculation);
       } catch (e) {
         // setCalories(oldData);
       } finally {
@@ -108,7 +119,10 @@ const FoodSuggestionScreen = ({navigation, route}) => {
           calories?.tipe_menu_sehat,
           event.id,
         );
-        setFoodMenuData(resMenu.data.data[0].menuPekan[0]);
+        const calculation = caloriesCalculation(
+          resMenu.data.data[0].menuPekan[0],
+        );
+        setFoodMenuData(calculation);
       } catch (e) {
         console.log('e', e);
         setPekan(oldData);
@@ -120,11 +134,14 @@ const FoodSuggestionScreen = ({navigation, route}) => {
   );
 
   const handleSave = () => {
-    const newData = {...foodMenuData, caloriesData: calories};
-    handleFoodSuggestion(newData);
+    handleCalculationId({
+      calorieId: calories.tipe_menu_sehat,
+      pekanId: pekan.id,
+      name: pekan.name,
+    });
     navigation.goBack();
   };
-  console.log('foodMenuData', foodMenuData);
+
   return (
     <Container>
       <HeaderTitle title="Atur menu makanan" />

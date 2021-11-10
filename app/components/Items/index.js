@@ -7,6 +7,7 @@ import VideoDetailItem from './VideoDetailItem';
 import ArticleItem from './ArticleItem';
 import ArticleDetailItem from './ArticleDetailItem';
 import BookItem from './BookItem';
+import BookDetailItem from './BookDetailItem';
 export {
   HomeItem,
   ProfileItem,
@@ -17,4 +18,5 @@ export {
   ArticleItem,
   ArticleDetailItem,
   BookItem,
+  BookDetailItem,
 };

@@ -16,9 +16,9 @@ const MealItem = ({name, calories, ingredients}) => {
         onPress={handleSelect}>
         <View style={styles.row}>
           <Text style={[FONTS.text14, {color: COLORS.black}]}>{name}</Text>
-          <Text style={[FONTS.text12, {color: COLORS.gray, marginLeft: 6}]}>
+          {/* <Text style={[FONTS.text12, {color: COLORS.gray, marginLeft: 6}]}>
             {calories} Kkal
-          </Text>
+          </Text> */}
         </View>
         <Icon name={isSelect ? 'chevron-up' : 'chevron-down'} size={20} />
       </TouchableOpacity>

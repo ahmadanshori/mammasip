@@ -13,11 +13,15 @@ const HomeItem = ({title, desc, color, source, image, onPress, style = {}}) => {
       activeOpacity={1}
       onPress={onPress}>
       <View style={{flex: 1}}>
-        <Text style={textStyles}>{title}</Text>
-        <Text style={FONTS.text10}>{desc}</Text>
+        <Text style={textStyles} numberOfLines={3}>
+          {title}
+        </Text>
+        <Text style={FONTS.text10} numberOfLines={2}>
+          {desc}
+        </Text>
       </View>
       {/* {image} */}
-      <ICON.sayangi height={80} width={80} />
+      <ICON.sayangi height={90} width={90} />
     </TouchableOpacity>
   );
 };
@@ -35,8 +39,8 @@ const styles = StyleSheet.create({
   },
   text: {marginBottom: 4, color: COLORS.black},
   img: {
-    height: 80,
-    width: 80,
+    height: 90,
+    width: 90,
     // borderBottomRightRadius: 4,
   },
 });
