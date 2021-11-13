@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const MainButton = ({
@@ -8,6 +9,7 @@ const MainButton = ({
   onPress,
   disable = false,
   borderColor,
+  right,
 }) => {
   const containerStyles = [
     [styles.button, disable ? styles.inactive : styles.active, style],
@@ -28,6 +30,14 @@ const MainButton = ({
           ]}>
           {title}
         </Text>
+        {right ? (
+          <Icon
+            name="arrow-forward"
+            size={20}
+            color={COLORS.primary}
+            style={styles.icon}
+          />
+        ) : null}
       </View>
     </TouchableOpacity>
   );
@@ -48,7 +58,7 @@ const styles = StyleSheet.create({
   },
   inactive: {borderColor: COLORS.lightGray},
   wrapper: {flexDirection: 'row', alignItems: 'center'},
-  icon: {marginRight: 8},
+  icon: {marginLeft: 8},
 });
 
 export default MainButton;

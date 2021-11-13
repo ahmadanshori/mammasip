@@ -11,6 +11,8 @@ const MainButton = ({
   disable = false,
   share,
   backgroundColor,
+  left,
+  right,
 }) => {
   const containerStyles = [
     [styles.button, disable ? styles.inactive : styles.active, style],
@@ -32,6 +34,14 @@ const MainButton = ({
             style={styles.icon}
           />
         ) : null}
+        {left ? (
+          <Icon
+            name="arrow-back"
+            size={20}
+            color={COLORS.white}
+            style={styles.icon}
+          />
+        ) : null}
         <Text
           style={[
             FONTS.textBold14,
@@ -39,6 +49,14 @@ const MainButton = ({
           ]}>
           {title}
         </Text>
+        {right ? (
+          <Icon
+            name="arrow-forward"
+            size={20}
+            color={COLORS.white}
+            style={styles.margin}
+          />
+        ) : null}
       </View>
     </TouchableOpacity>
   );
@@ -58,6 +76,7 @@ const styles = StyleSheet.create({
   inactive: {backgroundColor: COLORS.lightGray},
   wrapper: {flexDirection: 'row', alignItems: 'center'},
   icon: {marginRight: 8},
+  margin: {marginLeft: 8},
 });
 
 export default MainButton;

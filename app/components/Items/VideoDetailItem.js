@@ -4,44 +4,48 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const VideoDetailItem = ({onPress}) => {
+const VideoDetailItem = ({onPress, title, category = [], source}) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
-      <View>
-        <Image
-          source={{uri: 'https://www.w3schools.com/w3css/img_snowtops.jpg'}}
-          style={styles.img}
-        />
-        <View style={styles.shadowImg}>
-          <View style={styles.circleIcon}>
-            <Icon
-              name="play-circle"
-              size={35}
-              color={COLORS.white}
-              style={{marginLeft: 2}}
-            />
+      {source ? (
+        <View>
+          <Image source={source} style={styles.img} />
+          <View style={styles.shadowImg}>
+            <View style={styles.circleIcon}>
+              <Icon
+                name="play-circle"
+                size={35}
+                color={COLORS.white}
+                style={{marginLeft: 2}}
+              />
+            </View>
           </View>
         </View>
-      </View>
+      ) : (
+        <View style={styles.notfoundImg}>
+          <Icon name="image-outline" size={30} color={COLORS.gray} />
+        </View>
+      )}
+
       <View style={styles.body}>
-        <Text style={FONTS.textBold14}>
-          Jenis dan Stadium penyakit Kanker Payudara.
-        </Text>
+        <Text style={FONTS.textBold14}>{title}</Text>
         <View style={styles.row}>
-          <Text style={[FONTS.text10, {color: COLORS.gray}]}>12 Sep 2021</Text>
-          <View style={styles.category}>
-            <Text style={[FONTS.textBold10, {color: COLORS.gray}]}>
-              Olahraga
-            </Text>
-          </View>
+          {/* <Text style={[FONTS.text10, {color: COLORS.gray}]}>12 Sep 2021</Text> */}
+          {category?.length ? (
+            <View style={styles.category}>
+              <Text style={[FONTS.textBold10, {color: COLORS.gray}]}>
+                {category[0]?.nameCategory}
+              </Text>
+            </View>
+          ) : null}
         </View>
       </View>
-      <TouchableOpacity style={{paddingHorizontal: 4}}>
+      {/* <TouchableOpacity style={{paddingHorizontal: 4}}>
         <Icon name="bookmark-outline" size={20} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </TouchableOpacity>
   );
 };
@@ -55,19 +59,27 @@ const styles = StyleSheet.create({
   img: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: SIZES.width5,
-    width: SIZES.width5,
+    height: SIZES.width5 - 8,
+    width: SIZES.width5 - 8,
     borderRadius: 8,
   },
   shadowImg: {
-    height: SIZES.width5,
-    width: SIZES.width5,
+    height: SIZES.width5 - 8,
+    width: SIZES.width5 - 8,
     // backgroundColor: COLORS.shadowPrimary,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
     zIndex: 99,
+  },
+  notfoundImg: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: SIZES.width5 - 8,
+    width: SIZES.width5 - 8,
+    borderRadius: 8,
+    backgroundColor: COLORS.separator,
   },
   circleIcon: {
     backgroundColor: COLORS.shadowWhite,
@@ -85,7 +97,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     borderRadius: 12,
     backgroundColor: COLORS.lightGray,
-    marginLeft: 8,
+    // marginLeft: 8,
   },
 });
 

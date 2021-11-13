@@ -10,7 +10,7 @@ const data2 = [1, 2, 3];
 const VideoRecomendation = ({onPress}) => {
   return (
     <View>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <View style={styles.row}>
           <MaterialCommunityIcons
             name="television-play"
@@ -25,7 +25,7 @@ const VideoRecomendation = ({onPress}) => {
         {data1.map(item => (
           <VideoItem key={item} onPress={onPress} />
         ))}
-      </ScrollView>
+      </ScrollView> */}
       <View style={styles.body}>
         {data2.map(item => (
           <VideoDetailItem key={item} />
