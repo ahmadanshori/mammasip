@@ -80,6 +80,7 @@ const HomeScreen = ({navigation}) => {
   const getInititalData = async () => {
     try {
       const res = await getRoomAPI();
+      console.log(`res`, res);
       setRoomData(res.data.data);
     } catch (e) {
       console.log(`e`, e);

@@ -7,7 +7,7 @@ export const getArticleByRoomAPI = (idRuang, page) => {
 };
 
 export const getRoomAPI = () => {
-  return client.get('/ruang-master');
+  return client.get('/ruang-master/utama');
 };
 
 export const getRoomTypeByIdAPI = idRuang => {
