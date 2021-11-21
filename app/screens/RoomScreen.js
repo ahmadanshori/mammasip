@@ -11,17 +11,17 @@ import {HeaderTitle} from '../components/Headers';
 import {HomeItem} from '../components/Items';
 import {VideoRecomendation} from '../components/Search';
 import {LoadingComponent} from '../components/Loadings';
-import {VideoDetailItem} from '../components/Items';
-import {getRoomTypeByIdAPI} from '../api/room';
+// import {VideoDetailItem} from '../components/Items';
+import {getRoomByParentAPI} from '../api/room';
 import {getArticleByRuangAPI} from '../api/article';
 import {COLORS} from '../constants';
 import {AppContext} from '../index';
 
 const RoomScreen = ({navigation, route}) => {
-  const {idRuang} = route.params;
+  const {idRuang, title} = route.params;
   const {user, token} = useContext(AppContext);
-  const [data, setData] = useState(null);
-  const [articleData, setArticleData] = useState([]);
+  const [data, setData] = useState([]);
+  // const [articleData, setArticleData] = useState([]);
   const [loading, setLoading] = useState({get: true, refresh: false});
 
   useEffect(() => {
@@ -30,12 +30,10 @@ const RoomScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getRoomTypeByIdAPI(idRuang);
-      const resArticle = await getArticleByRuangAPI(idRuang);
+      const res = await getRoomByParentAPI(idRuang);
+      // const resArticle = await getArticleByRuangAPI(idRuang);
       console.log(`res`, res);
-      console.log(`resArticle`, resArticle);
-      setData(res.data.data[0]);
-      setArticleData(resArticle.data.data.content);
+      setData(res.data.data);
     } catch (e) {
       console.log('e', {...e});
     } finally {
@@ -43,21 +41,14 @@ const RoomScreen = ({navigation, route}) => {
     }
   };
 
-  const renderItem = ({item, index}) => {
-    console.log(`item`, item);
-    return (
-      <VideoDetailItem
-        title={item.nameArticle}
-        category={item.hastag}
-        onPress={() =>
-          navigation.navigate('ArticleDetail', {
-            number: index,
-            typeRuang: item.typeRuang,
-          })
-        }
-      />
-    );
-  };
+  const renderItem = ({item, index}) => (
+    <HomeItem
+      data={item}
+      key={item.id_ruang}
+      onPress={() => navigation.navigate('ArticleDetail', {typeRuang: 9})}
+      colorId={item.flag_mobile_color}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -66,12 +57,8 @@ const RoomScreen = ({navigation, route}) => {
         <LoadingComponent />
       ) : (
         <>
-          <HeaderTitle
-            title={data?.parent_ruang}
-            backgroundColor={COLORS.primary}
-            white
-          />
-          <View>
+          <HeaderTitle title={title} backgroundColor={COLORS.primary} white />
+          {/* <View>
             <View style={styles.header} />
             <View style={{marginTop: -40, paddingHorizontal: 16}}>
               <HomeItem
@@ -83,14 +70,14 @@ const RoomScreen = ({navigation, route}) => {
                 // image={data.image}
               />
             </View>
-          </View>
+          </View> */}
           <FlatList
             // onEndReached={nextPage}
             // onEndReachedThreshold={0.5}
             // refreshing={loading}
             // onRefresh={handleRefresh}
-            data={articleData}
-            keyExtractor={item => item.idArticle.toString()}
+            data={data}
+            keyExtractor={item => item.id_ruang.toString()}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.padding}
@@ -104,7 +91,7 @@ const RoomScreen = ({navigation, route}) => {
 export default RoomScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: COLORS.white},
+  container: {flex: 1},
   header: {height: 40, backgroundColor: COLORS.primary},
   category: {elevation: 8},
   padding: {padding: 16},

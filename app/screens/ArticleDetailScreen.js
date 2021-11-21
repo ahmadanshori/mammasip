@@ -20,11 +20,11 @@ import {getArticleByRoomAPI, getRoomTypeByIdAPI} from '../api/room';
 import QuizIcon from '../assets/icons/quiz.svg';
 
 const ArticleDetailScreen = ({navigation, route}) => {
-  const {number, typeRuang} = route.params;
+  const {typeRuang} = route.params;
   const {token, setLoading} = useContext(AppContext);
-  const [query, setQuery] = useState({page: number, totalPages: 0});
+  const [query, setQuery] = useState({page: 1, totalPages: 0});
   const [articleData, setArticleData] = useState(null);
-  const [videoData, setVideoData] = useState([]);
+  const [data, setData] = useState(null);
   const [selectVideo, setSelecVideo] = useState(null);
   const [load, setLoad] = useState({get: false, refresh: false});
   const [isArticle, setIsArticle] = useState(false);
@@ -32,21 +32,20 @@ const ArticleDetailScreen = ({navigation, route}) => {
   useEffect(() => {
     getInitialData();
   }, []);
-  console.log(`query`, query);
+
   const getInitialData = async () => {
     try {
-      console.log(`number`, number);
-      const res = await getArticleByRoomAPI(typeRuang, query?.page);
-      console.log(`res`, res);
-      const resVideo = await getRoomTypeByIdAPI(typeRuang);
-      console.log(`resVideo`, resVideo);
-      setArticleData(res.data.data.content[0]);
-      setVideoData(resVideo.data.data[0].media);
-      setSelecVideo(resVideo.data.data[0]?.media[0]);
-      setQuery({
-        page: res.data.data.number,
-        totalPages: res.data.data.totalPages - 1,
-      });
+      // const res = await getArticleByRoomAPI(typeRuang, query?.page);
+      // console.log(`res`, res);
+      const resRoom = await getRoomTypeByIdAPI(typeRuang);
+      console.log(`resRoom`, resRoom);
+      // setArticleData(res.data.data.content[0]);
+      setData(resRoom.data.data);
+      setSelecVideo(resRoom.data.data);
+      // setQuery({
+      //   page: res.data.data.number,
+      //   totalPages: res.data.data.totalPages - 1,
+      // });
     } catch (err) {
       console.log(`err`, {...err});
     } finally {
@@ -95,7 +94,13 @@ const ArticleDetailScreen = ({navigation, route}) => {
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.wrapper}>
-            <View style={styles.row}>
+            <Text style={[FONTS.textBold16, {color: COLORS.black}]}>
+              {data?.nama_ruang}
+            </Text>
+            <Text style={[FONTS.text12, {color: COLORS.black}]}>
+              {data?.description}
+            </Text>
+            {/* <View style={styles.row}>
               <View style={styles.category}>
                 <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
                   Sayangi dirimu
@@ -104,34 +109,28 @@ const ArticleDetailScreen = ({navigation, route}) => {
               <Text style={[FONTS.textBold10, {color: COLORS.gray}]}>
                 12 Januari 2021 29:30
               </Text>
-            </View>
+            </View> */}
             <Text style={[FONTS.textBold16, {color: COLORS.black}]}>
               {articleData?.nameArticle}
             </Text>
           </View>
-          <View>
+          {/* <View>
             <Image source={{uri: selectVideo?.url}} style={styles.img} />
             <ScrollView
               contentContainerStyle={styles.listItem}
               horizontal
               showsHorizontalScrollIndicator={false}>
-              {videoData.map(item => (
+              {data.map(item => (
                 <TouchableOpacity
                   key={item.idMedia}
                   activeOpacity={1}
                   onPress={() => selectedVideo(item)}
                   style={styles.imgWrapper}>
                   <Image source={{uri: item.url}} style={styles.imgList} />
-                  {/* <View
-                    style={[
-                      styles.imgList,
-                      item.idMedia !== selectVideo?.idMedia && styles.imgShadow,
-                    ]}
-                  /> */}
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          </View>
+          </View> */}
           <View style={styles.wrapper}>
             <RenderHtml
               contentWidth={SIZES.width}
@@ -260,14 +259,14 @@ export default ArticleDetailScreen;
 
 const styles = StyleSheet.create({
   wrapper: {padding: 16},
-  row: {flexDirection: 'row', alignItems: 'center', marginBottom: 10},
-  category: {
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    backgroundColor: COLORS.lightPrimary,
-    borderRadius: 40,
-    marginRight: 16,
-  },
+  // row: {flexDirection: 'row', alignItems: 'center', marginBottom: 10},
+  // category: {
+  //   paddingVertical: 4,
+  //   paddingHorizontal: 10,
+  //   backgroundColor: COLORS.lightPrimary,
+  //   borderRadius: 40,
+  //   marginRight: 16,
+  // },
   img: {height: SIZES.width2, width: SIZES.width},
   imgWrapper: {marginRight: 10},
   imgList: {

@@ -89,8 +89,8 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const handleNavigator = id => {
-    navigation.navigate('Room', {idRuang: id});
+  const handleNavigator = route => {
+    navigation.navigate('Room', route);
   };
 
   return (
@@ -164,10 +164,15 @@ const HomeScreen = ({navigation}) => {
             </Text>
             {roomData.map(item => (
               <HomeItem
+                data={item}
                 key={item.id_ruang}
-                title={item.nama_ruang}
-                desc={item.parent_ruang}
-                onPress={() => handleNavigator(item.id_ruang)}
+                onPress={() =>
+                  handleNavigator({
+                    idRuang: item.id_ruang,
+                    title: item.nama_ruang,
+                  })
+                }
+                colorId={item.flag_mobile_color}
                 // color={item.color}
                 // image={item.image}
               />

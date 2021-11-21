@@ -21,19 +21,19 @@ const VideoHeader = ({onSharePress, onDownload, onBookmark, onFavorite}) => {
         />
       </TouchableOpacity>
       <View style={styles.row}>
-        <TouchableOpacity style={styles.heartIcon} onPress={onFavorite}>
+        {/* <TouchableOpacity style={styles.heartIcon} onPress={onFavorite}>
           <Icon name="heart" size={16} style={styles.margin} />
           <Text style={FONTS.text12}>100</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.wrapper} onPress={onSharePress}>
           <Icon name="sharealt" size={16} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.wrapper} onPress={onDownload}>
           <MaterialIcons name="file-download" size={18} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.wrapper} onPress={onBookmark}>
+        {/* <TouchableOpacity style={styles.wrapper} onPress={onBookmark}>
           <MaterialIcons name="bookmark-outline" size={18} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

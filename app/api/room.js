@@ -13,3 +13,7 @@ export const getRoomAPI = () => {
 export const getRoomTypeByIdAPI = idRuang => {
   return client.get(`/ruang-master/${idRuang}`);
 };
+
+export const getRoomByParentAPI = idRuang => {
+  return client.get(`/ruang-master/child/${idRuang}`);
+};

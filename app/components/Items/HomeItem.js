@@ -1,27 +1,30 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {COLORS, FONTS, ICON} from '../../constants';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {COLORS, FONTS} from '../../constants';
+import iconValidation from '../../libs/iconValidation';
+import colorValidation from '../../libs/colorValidation';
 
-const HomeItem = ({title, desc, color, source, image, onPress, style = {}}) => {
-  const textStyles = [[FONTS.textBold14, styles.text]];
-  if (color) {
-    textStyles.push({color});
-  }
+const HomeItem = ({data, colorId, onPress, style = {}}) => {
   return (
     <TouchableOpacity
       style={[styles.container, style]}
       activeOpacity={1}
       onPress={onPress}>
       <View style={{flex: 1}}>
-        <Text style={textStyles} numberOfLines={3}>
-          {title}
+        <Text
+          style={[
+            FONTS.textBold14,
+            styles.text,
+            {color: colorValidation(colorId)},
+          ]}
+          numberOfLines={3}>
+          {data?.nama_ruang}
         </Text>
         <Text style={FONTS.text10} numberOfLines={2}>
-          {desc}
+          {data?.description}
         </Text>
       </View>
-      {/* {image} */}
-      <ICON.sayangi height={90} width={90} />
+      {colorId ? iconValidation(colorId) : null}
     </TouchableOpacity>
   );
 };
@@ -41,7 +44,6 @@ const styles = StyleSheet.create({
   img: {
     height: 90,
     width: 90,
-    // borderBottomRightRadius: 4,
   },
 });
 
