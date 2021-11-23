@@ -7,9 +7,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import SplashScreen from '../screens/SplashScreen';
-import VideoDetailScreen from '../screens/VideoDetailScreen';
-import ArticleDetailScreen from '../screens/ArticleDetailScreen';
+import VideoScreen from '../screens/VideoScreen';
 import RoomScreen from '../screens/RoomScreen';
+import ListRoomScreen from '../screens/ListRoomScreen';
 import FaqScreen from '../screens/FaqScreen';
 import ListSearchScreen from '../screens/ListSearchScreen';
 import PdfScreen from '../screens/PdfScreen';
@@ -229,9 +229,9 @@ export default function App() {
             component={ChangePasswordScreen}
             name="ChangePassword"
           />
-          <Stack.Screen component={VideoDetailScreen} name="VideoDetail" />
-          <Stack.Screen component={ArticleDetailScreen} name="ArticleDetail" />
+          <Stack.Screen component={VideoScreen} name="Video" />
           <Stack.Screen component={RoomScreen} name="Room" />
+          <Stack.Screen component={ListRoomScreen} name="ListRoom" />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />
           <Stack.Screen component={ListSearchScreen} name="ListSearch" />

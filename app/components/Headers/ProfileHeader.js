@@ -6,12 +6,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
-const ProfileHeader = ({data}) => {
+const ProfileHeader = ({data, onEdit}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <View />
-        <TouchableOpacity style={styles.edit}>
+        <TouchableOpacity style={styles.edit} onPress={onEdit}>
           <MaterialIcons name="edit" size={18} color={COLORS.white} />
         </TouchableOpacity>
       </View>
@@ -52,7 +52,7 @@ const ProfileHeader = ({data}) => {
             style={styles.margin}
           />
           <Text style={[FONTS.text10, {color: COLORS.white}]}>
-            {data?.phone}
+            {data?.phone || '--'}
           </Text>
         </View>
       </View>

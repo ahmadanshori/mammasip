@@ -64,7 +64,6 @@ const CalculationDetailScreen = ({navigation, route}) => {
   //   }
   // }, [calculationId, token]);
 
-  console.log(`calculationId`, calculationId);
   const getInitialData = useCallback(async () => {
     try {
       const res =

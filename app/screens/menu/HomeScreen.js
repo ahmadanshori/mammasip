@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableNativeFeedback,
   TouchableOpacity,
   ScrollView,
@@ -17,6 +16,7 @@ import {LoadingComponent} from '../../components/Loadings';
 import {getRoomAPI} from '../../api/room';
 import {FONTS, COLORS, ICON} from '../../constants';
 import {AppContext} from '../../index';
+import {Container} from '../../components/Container';
 
 // const roomData = [
 //   {
@@ -90,16 +90,18 @@ const HomeScreen = ({navigation}) => {
   };
 
   const handleNavigator = route => {
-    navigation.navigate('Room', route);
+    navigation.navigate('ListRoom', route);
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1}}>
       <HomeHeader data={user} />
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView contentContainerStyle={{paddingBottom: 16}}>
+        <ScrollView
+          contentContainerStyle={{paddingBottom: 16}}
+          showsVerticalScrollIndicator={false}>
           {/* <View style={styles.padding}>
           <Banner />
         </View> */}
@@ -218,7 +220,6 @@ const HomeScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
   box: {paddingHorizontal: 16, paddingTop: 24},
   seeAll: {color: COLORS.primary, paddingVertical: 4, paddingLeft: 32},
   welcome: {justifyContent: 'center', alignItems: 'center', marginTop: 16},

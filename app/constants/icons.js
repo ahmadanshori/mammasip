@@ -1,31 +1,33 @@
-import SayangiIcon from '../assets/icons/sayangi.svg';
-import CintaIcon from '../assets/icons/cinta.svg';
-import BerbagiIcon from '../assets/icons/berbagi.svg';
-import KenaliIcon from '../assets/icons/kenali.svg';
-import PemenangIcon from '../assets/icons/pemenang.svg';
-import GerbangIcon from '../assets/icons/gerbang.svg';
-import BungaIcon from '../assets/icons/bunga.svg';
-import BmrIcon from '../assets/icons/weight.svg';
-import BmiIcon from '../assets/icons/food.svg';
-import VirusIcon from '../assets/icons/virus.svg';
-import GirlIcon from '../assets/icons/girl.svg';
-import MessagePeopleIcon from '../assets/icons/messagePeople.svg';
-import successIcon from '../assets/icons/success.svg';
+import sayangi from '../assets/icons/sayangi.svg';
+import cinta from '../assets/icons/cinta.svg';
+import berbagi from '../assets/icons/berbagi.svg';
+import kenali from '../assets/icons/kenali.svg';
+import pemenang from '../assets/icons/pemenang.svg';
+import gerbang from '../assets/icons/gerbang.svg';
+import bunga from '../assets/icons/bunga.svg';
+import bmr from '../assets/icons/weight.svg';
+import bmi from '../assets/icons/food.svg';
+import virus from '../assets/icons/virus.svg';
+import girl from '../assets/icons/girl.svg';
+import messagePeople from '../assets/icons/messagePeople.svg';
+import success from '../assets/icons/success.svg';
+import people1 from '../assets/icons/people1.svg';
 
 export const ICON = {
-  sayangi: SayangiIcon,
-  cinta: CintaIcon,
-  berbagi: BerbagiIcon,
-  kenali: KenaliIcon,
-  pemenang: PemenangIcon,
-  gerbang: GerbangIcon,
-  bunga: BungaIcon,
-  bmr: BmrIcon,
-  bmi: BmiIcon,
-  virus: VirusIcon,
-  girl: GirlIcon,
-  messagePeople: MessagePeopleIcon,
-  success: successIcon,
+  sayangi,
+  cinta,
+  berbagi,
+  kenali,
+  pemenang,
+  gerbang,
+  bunga,
+  bmr,
+  bmi,
+  virus,
+  girl,
+  messagePeople,
+  success,
+  people1,
 };
 
 const appIcons = {ICON};

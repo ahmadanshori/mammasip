@@ -34,7 +34,7 @@ const ListSearchScreen = ({navigation, route}) => {
     try {
       if (title === 'Buku') {
         const resBook = await getBookAPI();
-        console.log('resBook', resBook);
+
         setData(resBook.data.data.content);
         setQuery({
           totalPages: resBook.data.data.totalPages - 1,
@@ -78,7 +78,7 @@ const ListSearchScreen = ({navigation, route}) => {
       setLoading(state => ({...state, nextPage: true}));
       try {
         const resArticle = await getArticleAPI(query.page + 1);
-        console.log('1', resArticle);
+
         setData([...data, ...resArticle.data.data.content]);
         setQuery({
           totalPages: resArticle.data.data.totalPages - 1,
@@ -91,7 +91,7 @@ const ListSearchScreen = ({navigation, route}) => {
       }
     }
   };
-  console.log(`query`, query);
+
   return (
     <Container>
       <HeaderTitle back title={title} />

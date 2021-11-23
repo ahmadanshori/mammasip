@@ -1,8 +1,6 @@
 import React from 'react';
 import {ICON} from '../constants';
-
 export default id => {
-  console.log(`id`, id);
   if (id === 1) {
     return <ICON.sayangi height={90} width={90} />;
   } else if (id === 2) {

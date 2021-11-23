@@ -68,7 +68,9 @@ const SearchScreen = ({navigation}) => {
           {roomData.map(item => (
             <TouchableOpacity
               activeOpacity={SIZES.opacity}
-              onPress={() => handleNavigator('Room', {idRuang: item.id_ruang})}
+              onPress={() =>
+                handleNavigator('ListRoom', {idRuang: item.id_ruang})
+              }
               key={item.id_ruang}
               style={styles.category}>
               <Text style={[FONTS.text10, {color: COLORS.secondary}]}>
@@ -90,7 +92,7 @@ const SearchScreen = ({navigation}) => {
           <ArticleRecomendation
             data={articleRecomended}
             onPress={(id, typeRuang) =>
-              handleNavigator('ArticleDetail', {id, typeRuang})
+              handleNavigator('Room', {id, typeRuang})
             }
             seeAllOnPress={() =>
               handleNavigator('ListSearch', {title: 'Artikel'})

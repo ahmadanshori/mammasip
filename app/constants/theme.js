@@ -41,6 +41,9 @@ export const SIZES = {
   width6: width / 6,
   shadow: {
     elevation: 2,
+    shadowOffset: {height: 0, width: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
   },
 };
 

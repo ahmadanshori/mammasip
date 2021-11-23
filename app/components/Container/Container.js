@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, SafeAreaView} from 'react-native';
 import {COLORS} from '../../constants';
 
 const Container = ({children, backgroundColor, style = {}}) => {
@@ -7,14 +7,22 @@ const Container = ({children, backgroundColor, style = {}}) => {
   if (backgroundColor) {
     containerStyles.push({backgroundColor});
   }
-  return <View style={containerStyles}>{children}</View>;
+  return (
+    <>
+      <SafeAreaView style={styles.safearea} />
+      <View style={containerStyles}>{children}</View>
+      <SafeAreaView style={styles.footer} />
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
+  safearea: {backgroundColor: COLORS.primary},
   container: {
     backgroundColor: COLORS.white,
     flex: 1,
   },
+  footer: {backgroundColor: COLORS.white},
 });
 
 export default Container;

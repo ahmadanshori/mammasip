@@ -1,7 +1,8 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
@@ -11,6 +12,8 @@ import {MainButton, TitleButton} from '../../components/Buttons';
 import PhotoProfile from '../../components/PhotoProfile';
 // import {Gender} from '../../components/RadioButton';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import {AppContext} from '../../index';
+import formatDate from '../../libs/formatDate';
 
 const options = {
   width: SIZES.width,
@@ -21,13 +24,16 @@ const options = {
 };
 
 const EditProfileScreen = ({navigation}) => {
+  const {user} = useContext(AppContext);
   const [field, setField] = useState({
-    name: '',
+    first_name: user?.first_name,
+    last_name: user?.last_name,
     email: '',
-    date: '',
+    tgl_lahir: '',
     phone: '',
     gender: '',
   });
+  const [isDate, setIsDate] = useState(false);
   const [error, setError] = useState(null);
   const [isPicture, setIsPicture] = useState(false);
   const [picture, setPicture] = useState(null);
@@ -48,7 +54,7 @@ const EditProfileScreen = ({navigation}) => {
       //   const newData = {
       //     uri: res.path,
       //     type: res.mime,
-      //     name: `mammasip${Math.floor(Math.random() * 1000001)}`,
+      //     first_name: `mammasip${Math.floor(Math.random() * 1000001)}`,
       //   };
     } catch (err) {
       //   setError(err);
@@ -62,13 +68,18 @@ const EditProfileScreen = ({navigation}) => {
       //   const newData = {
       //     uri: res.path,
       //     type: res.mime,
-      //     name: `bnb${Math.floor(Math.random() * 1000001)}`,
+      //     first_name: `bnb${Math.floor(Math.random() * 1000001)}`,
       //   };
       setPicture(res);
     } catch (err) {}
   };
   const handleOpenPhoto = () => setIsPicture(true);
-
+  const onChange = (event, selectedDate) => {
+    setIsDate(false);
+    console.log(`event`, event);
+    console.log(`selectedDate`, selectedDate);
+    // setField(state => ({...state, tgl_lahir: selectedDate}));
+  };
   return (
     <Container>
       <HeaderTitle back title="Edit data diri" />
@@ -76,12 +87,25 @@ const EditProfileScreen = ({navigation}) => {
         <PhotoProfile source={picture} onPress={handleOpenPhoto} />
         <TitleInput
           title="Nama Lengkap"
-          placeholder="Syifa Hadju"
-          onChangeText={val => handleInput(val, 'name')}
-          value={field.name}
+          placeholder="Syifa"
+          onChangeText={val => handleInput(val, 'first_name')}
+          value={field.first_name}
           maxLength={50}
         />
-        <TitleButton title="Tanggal Lahir" placeholder="30 November 2000" />
+        <TitleInput
+          title="Nama Lengkap"
+          placeholder="Hadju"
+          onChangeText={val => handleInput(val, 'last_name')}
+          style={styles.pass}
+          value={field.last_name}
+          maxLength={50}
+        />
+        <TitleButton
+          title="Tanggal Lahir"
+          placeholder="30 November 2000"
+          data={field.tgl_lahir}
+          onPress={() => setIsDate(true)}
+        />
         {/* <Gender /> */}
         <TitleInput
           title="Email"
@@ -110,7 +134,13 @@ const EditProfileScreen = ({navigation}) => {
       <View style={styles.wrapper}>
         <MainButton
           title="Simpan"
-          disable={!field.email || !field.phone || !field.name || !field.date}
+          disable={
+            !field.email ||
+            !field.phone ||
+            !field.first_name ||
+            !field.last_name ||
+            !field.tgl_lahir
+          }
           onPress={handleEditProfile}
         />
       </View>
@@ -120,6 +150,17 @@ const EditProfileScreen = ({navigation}) => {
         galeryPress={pictureWithGalery}
         onPresBack={() => setIsPicture(false)}
       />
+      {isDate && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={field?.tgl_lahir ? new Date(field?.tgl_lahir) : new Date()}
+          mode="date"
+          maximumDate={new Date()}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
     </Container>
   );
 };

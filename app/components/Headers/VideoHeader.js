@@ -15,22 +15,23 @@ const VideoHeader = ({onSharePress, onDownload, onBookmark, onFavorite}) => {
           navigation.goBack();
         }}
         activeOpacity={SIZES.opacity}>
-        <Icon
-          name={Platform.OS === 'ios' ? 'chevron-left' : 'arrowleft'}
-          size={18}
-        />
+        <Icon name={Platform.OS === 'ios' ? 'left' : 'arrowleft'} size={18} />
       </TouchableOpacity>
       <View style={styles.row}>
         {/* <TouchableOpacity style={styles.heartIcon} onPress={onFavorite}>
           <Icon name="heart" size={16} style={styles.margin} />
           <Text style={FONTS.text12}>100</Text>
         </TouchableOpacity> */}
-        <TouchableOpacity style={styles.wrapper} onPress={onSharePress}>
-          <Icon name="sharealt" size={16} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.wrapper} onPress={onDownload}>
-          <MaterialIcons name="file-download" size={18} />
-        </TouchableOpacity>
+        {onSharePress && (
+          <TouchableOpacity style={styles.wrapper} onPress={onSharePress}>
+            <Icon name="sharealt" size={16} />
+          </TouchableOpacity>
+        )}
+        {onDownload && (
+          <TouchableOpacity style={styles.wrapper} onPress={onDownload}>
+            <MaterialIcons name="file-download" size={18} />
+          </TouchableOpacity>
+        )}
         {/* <TouchableOpacity style={styles.wrapper} onPress={onBookmark}>
           <MaterialIcons name="bookmark-outline" size={18} />
         </TouchableOpacity> */}

@@ -1,28 +1,42 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useCallback, useContext} from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  StatusBar,
   ScrollView,
+  Image,
+  TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {HeaderTitle} from '../components/Headers';
-import {HomeItem} from '../components/Items';
-import {VideoRecomendation} from '../components/Search';
+
+import {Container} from '../components/Container';
 import {LoadingComponent} from '../components/Loadings';
-// import {VideoDetailItem} from '../components/Items';
-import {getRoomByParentAPI} from '../api/room';
-import {getArticleByRuangAPI} from '../api/article';
-import {COLORS} from '../constants';
+import {OutlineButton, MainButton} from '../components/Buttons';
+import {VideoItem, ArticleItem, CalculatorItem} from '../components/Items';
+import {
+  DestinationContent,
+  VideoContent,
+  ImageContent,
+  ButtonContent,
+  GKSContent,
+  ArticleContent,
+} from '../components/Contents';
+
+import {VideoHeader} from '../components/Headers';
 import {AppContext} from '../index';
+import {COLORS, FONTS, SIZES} from '../constants';
+import {getArticleByRoomAPI, getRoomTypeByIdAPI} from '../api/room';
+import QuizIcon from '../assets/icons/quiz.svg';
 
 const RoomScreen = ({navigation, route}) => {
-  const {idRuang, title} = route.params;
-  const {user, token} = useContext(AppContext);
-  const [data, setData] = useState([]);
-  // const [articleData, setArticleData] = useState([]);
-  const [loading, setLoading] = useState({get: true, refresh: false});
+  const {typeRuang} = route.params;
+  const {token, setLoading} = useContext(AppContext);
+  // const [query, setQuery] = useState({page: 1, totalPages: 0});
+  // const [articleData, setArticleData] = useState(null);
+  const [data, setData] = useState(null);
+  // const [selectVideo, setSelecVideo] = useState(null);
+  const [load, setLoad] = useState({get: true, refresh: false});
+  // const [isArticle, setIsArticle] = useState(false);
 
   useEffect(() => {
     getInitialData();
@@ -30,69 +44,280 @@ const RoomScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getRoomByParentAPI(idRuang);
-      // const resArticle = await getArticleByRuangAPI(idRuang);
-      console.log(`res`, res);
-      setData(res.data.data);
-    } catch (e) {
-      console.log('e', {...e});
+      // const res = await getArticleByRoomAPI(typeRuang, query?.page);
+      // console.log(`res`, res);
+      const resRoom = await getRoomTypeByIdAPI(typeRuang);
+      console.log(`resRoom`, resRoom);
+      // setArticleData(res.data.data.content[0]);
+      setData(resRoom.data.data);
+      // setSelecVideo(resRoom.data.data);
+      // setQuery({
+      //   page: res.data.data.number,
+      //   totalPages: res.data.data.totalPages - 1,
+      // });
+    } catch (err) {
+      console.log(`err`, {...err});
     } finally {
-      setLoading({get: false, refresh: false});
+      setLoad({get: false, refresh: false});
     }
   };
 
-  const renderItem = ({item, index}) => (
-    <HomeItem
-      data={item}
-      key={item.id_ruang}
-      onPress={() => navigation.navigate('ArticleDetail', {typeRuang: 9})}
-      colorId={item.flag_mobile_color}
-    />
+  // const handleArticleButton = useCallback(() => {
+  //   setIsArticle(state => !state);
+  // }, []);
+
+  // const selectedVideo = useCallback(val => {
+  //   setSelecVideo(val);
+  // }, []);
+
+  // const handleNextArticle = async val => {
+  //   setLoading(true);
+  //   const oldQuery = query;
+  //   console.log(`test`, val, token, oldQuery, typeRuang);
+
+  //   try {
+  //     console.log('1');
+  //     const res = await getArticleByRoomAPI(
+  //       typeRuang,
+  //       val ? query.page + 1 : query.page - 1,
+  //     );
+  //     console.log(`res1`, res);
+  //     setArticleData(res.data.data.content[0]);
+  //     setQuery({
+  //       page: res.data.data.number,
+  //       totalPages: res.data.data.totalPages - 1,
+  //     });
+  //   } catch (e) {
+  //     console.log(`e`, e, {...e});
+  //     setQuery(oldQuery);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const headerComponent = () => (
+    <View style={styles.wrapper}>
+      <Text style={[FONTS.textBold16, {color: COLORS.black}]}>
+        {data?.nama_ruang}
+      </Text>
+      <Text style={[FONTS.text12, {color: COLORS.black}]}>
+        {data?.description}
+      </Text>
+    </View>
   );
 
+  const renderItem = ({item}) => {
+    if (item.typeContent === 1) {
+      return <DestinationContent data={item} />;
+    } else if (item.typeContent === 2) {
+      return <ImageContent data={item} />;
+    } else if (item.typeContent === 3) {
+      return <GKSContent data={item} />;
+    } else if (item.typeContent === 4) {
+      return <ImageContent data={item} />;
+    } else if (item.typeContent === 5) {
+      return (
+        <VideoContent
+          data={item}
+          onPress={() => navigation.navigate('Video', {url: item.url_frame})}
+        />
+      );
+    } else if (item.typeContent === 6) {
+      return <ButtonContent data={item} />;
+    } else {
+      return <ArticleContent data={item} />;
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor={COLORS.primary} barStyle={'light-content'} />
-      {loading.get ? (
+    <Container>
+      <VideoHeader />
+      {load.get ? (
         <LoadingComponent />
       ) : (
-        <>
-          <HeaderTitle title={title} backgroundColor={COLORS.primary} white />
-          {/* <View>
-            <View style={styles.header} />
-            <View style={{marginTop: -40, paddingHorizontal: 16}}>
-              <HomeItem
-                title={data?.nama_ruang}
-                desc={data?.description}
-                // color={data.color}
-                style={styles.category}
-                // source={data.source}
-                // image={data.image}
-              />
-            </View>
-          </View> */}
+        <View>
+          {/* <View style={styles.row}>
+              <View style={styles.category}>
+                <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
+                  Sayangi dirimu
+                </Text>
+              </View>
+              <Text style={[FONTS.textBold10, {color: COLORS.gray}]}>
+                12 Januari 2021 29:30
+              </Text>
+            </View> */}
+
+          {/* <Image source={{uri: selectVideo?.url}} style={styles.img} /> */}
           <FlatList
-            // onEndReached={nextPage}
-            // onEndReachedThreshold={0.5}
-            // refreshing={loading}
-            // onRefresh={handleRefresh}
-            data={data}
-            keyExtractor={item => item.id_ruang.toString()}
+            data={data.media}
+            keyExtractor={item => item.idMedia.toString()}
             renderItem={renderItem}
+            ListHeaderComponent={headerComponent}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.padding}
           />
-        </>
+
+          {/* <View style={styles.wrapper}>
+            <RenderHtml
+              contentWidth={SIZES.width}
+              source={{
+                html: isArticle
+                  ? articleData?.bodyArticle
+                  : articleData?.abstractArticle,
+              }}
+            />
+            <OutlineButton
+              title={isArticle ? 'Lihat Lebih Sedikit' : 'Lihat Selengkapnya'}
+              onPress={handleArticleButton}
+              style={styles.button}
+            />
+            {query.page === 0 ? (
+              <>
+                {query?.totalPages > 0 ? (
+                  <>
+                    <MainButton
+                      title={'Chapter Selanjutnya'}
+                      onPress={() => handleNextArticle(true)}
+                      style={styles.button}
+                      right
+                    />
+                  </>
+                ) : null}
+              </>
+            ) : (
+              <>
+                {query?.page === query?.totalPages ? (
+                  <MainButton
+                    title={'Chapter Selanjutnya'}
+                    onPress={() => handleNextArticle(false)}
+                    style={styles.button}
+                    left
+                  />
+                ) : (
+                  <>
+                    {query?.page > 0 && query?.page < query?.totalPages ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          marginTop: 16,
+                        }}>
+                        <OutlineButton
+                          title={'Selanjutnya'}
+                          onPress={() => handleNextArticle(true)}
+                          style={{width: '48%'}}
+                          right
+                        />
+                        <MainButton
+                          title={'Kembali'}
+                          onPress={() => handleNextArticle(false)}
+                          style={{width: '48%'}}
+                          left
+                        />
+                      </View>
+                    ) : null}
+                  </>
+                )}
+              </>
+            )}
+
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 16,
+                flexWrap: 'wrap',
+              }}>
+              {articleData?.hastag?.map(item => (
+                <View style={styles.room} key={item.idHastag}>
+                  <Text style={[FONTS.text10, {color: COLORS.black}]}>
+                    {item.nameCategory}
+                  </Text>
+                </View>
+              ))}
+            </View>
+            <CalculatorItem
+              image={<QuizIcon width={60} height={60} />}
+              // onPress={() => handleNavigation('WeightCalculator')}
+              backgroundColor={COLORS.primary}
+              title="Ayo ikutan Quiz!"
+              description="Uji pengetahuanmu dengan quiz
+              kesehatan dari mammaSIP."
+            />
+          </View> */}
+        </View>
       )}
-    </View>
+
+      {/* <View style={styles.wrapper}>
+        <View style={styles.header}>
+          <Text style={FONTS.textBold14}>Artikel lain yang terkait</Text>
+        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.horizontal}>
+          <ArticleItem category />
+          <ArticleItem category />
+          <ArticleItem category />
+          <ArticleItem category />
+        </ScrollView>
+      </View> */}
+      {/* <View style={styles.wrapper}>
+        <View style={styles.header}>
+          <Text style={FONTS.textBold14}>Video yang mungkin anda suka</Text>
+        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.horizontal}>
+          <ArticleItem video />
+          <ArticleItem video />
+          <ArticleItem video />
+          <ArticleItem video />
+        </ScrollView>
+      </View> */}
+    </Container>
   );
 };
 
 export default RoomScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
-  header: {height: 40, backgroundColor: COLORS.primary},
-  category: {elevation: 8},
-  padding: {padding: 16},
+  wrapper: {paddingHorizontal: 16, marginBottom: 16},
+  // row: {flexDirection: 'row', alignItems: 'center', marginBottom: 10},
+  // category: {
+  //   paddingVertical: 4,
+  //   paddingHorizontal: 10,
+  //   backgroundColor: COLORS.lightPrimary,
+  //   borderRadius: 40,
+  //   marginRight: 16,
+  // },
+  img: {height: SIZES.width2, width: SIZES.width},
+  imgWrapper: {marginRight: 10},
+  imgList: {
+    height: 50,
+    width: 80,
+    borderRadius: 6,
+    // marginBottom: 16,
+  },
+  imgShadow: {
+    height: 50,
+    width: 80,
+    marginTop: -50,
+    backgroundColor: COLORS.red,
+    // position: 'absolute',
+    // zIndex: 99,
+    borderRadius: 6,
+    // top: 0,
+  },
+  listItem: {paddingVertical: 16, paddingLeft: 16},
+  button: {marginTop: 16},
+  room: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    backgroundColor: COLORS.separator,
+    borderRadius: 40,
+    marginRight: 10,
+    marginTop: 8,
+  },
 });

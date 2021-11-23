@@ -28,14 +28,17 @@ const ProfileScreen = ({navigation}) => {
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ProfileHeader data={user} />
+        <ProfileHeader
+          data={user}
+          onEdit={() => handleNavigate('EditProfile')}
+        />
         <View style={styles.wrapper}>
           {/* <Point /> */}
-          <ProfileItem
+          {/* <ProfileItem
             iconName="bookmark-outline"
             title="Bookmark"
             number={100}
-          />
+          /> */}
           <ProfileItem
             iconName="account-outline"
             title="Edit data diri"
@@ -47,7 +50,7 @@ const ProfileScreen = ({navigation}) => {
             onPress={() => handleNavigate('ChangePassword')}
           />
         </View>
-        <Divider />
+        {/* <Divider />
         <View style={styles.wrapper}>
           <View style={styles.reminder}>
             <Icon name="bell-ring" size={20} />
@@ -73,7 +76,7 @@ const ProfileScreen = ({navigation}) => {
               />
             </View>
           </View>
-        </View>
+        </View> */}
         <Divider />
         <View style={styles.wrapper}>
           <ProfileItem

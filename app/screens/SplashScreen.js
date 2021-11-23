@@ -1,9 +1,10 @@
 import React, {useEffect, useContext} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Container} from '../components/Container';
-import {FONTS} from '../constants';
+import {COLORS, SIZES} from '../constants';
 import {AppContext} from '../index';
+import LogoIcon from '../assets/icons/logo.svg';
 
 const SplashScreen = () => {
   const {setUser, setToken} = useContext(AppContext);
@@ -23,12 +24,16 @@ const SplashScreen = () => {
   }, []);
   return (
     <Container style={styles.container}>
-      <Text style={FONTS.textBold20}>MammaSIP</Text>
+      <LogoIcon height={SIZES.width2 + 16} width={SIZES.width2 + 16} />
     </Container>
   );
 };
 const styles = StyleSheet.create({
-  container: {justifyContent: 'center', alignItems: 'center'},
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.primary,
+  },
 });
 
 export default SplashScreen;

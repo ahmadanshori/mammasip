@@ -24,6 +24,7 @@ const HomeItem = ({data, colorId, onPress, style = {}}) => {
           {data?.description}
         </Text>
       </View>
+
       {colorId ? iconValidation(colorId) : null}
     </TouchableOpacity>
   );
@@ -31,13 +32,13 @@ const HomeItem = ({data, colorId, onPress, style = {}}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.white,
     borderRadius: 8,
     paddingLeft: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 8,
+    backgroundColor: COLORS.white,
     overflow: 'hidden',
   },
   text: {marginBottom: 4, color: COLORS.black},
