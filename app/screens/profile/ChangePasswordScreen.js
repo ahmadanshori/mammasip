@@ -62,6 +62,7 @@ const ChangePasswordScreen = ({navigation}) => {
             <TitleInput
               title="Password Lama"
               placeholder="8-16 Karakter"
+              autoCapitalize="none"
               pass
               autoFocus={true}
               onChangeText={val => handleInput(val, 'password_old')}
@@ -71,6 +72,7 @@ const ChangePasswordScreen = ({navigation}) => {
             <TitleInput
               title="Password Baru"
               placeholder="8-16 Karakter"
+              autoCapitalize="none"
               pass
               style={styles.pass}
               onChangeText={val => handleInput(val, 'password_new')}
@@ -81,6 +83,7 @@ const ChangePasswordScreen = ({navigation}) => {
             <TitleInput
               title="Ulangi Password Baru"
               placeholder="8-16 Karakter"
+              autoCapitalize="none"
               pass
               style={styles.pass}
               onChangeText={val => handleInput(val, 'password_confirm')}

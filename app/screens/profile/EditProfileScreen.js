@@ -1,8 +1,9 @@
 import React, {useState, useCallback, useContext} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Keyboard} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
@@ -13,6 +14,7 @@ import PhotoProfile from '../../components/PhotoProfile';
 import {ActivityLevelButton} from '../../components/RadioButton';
 // import {Gender} from '../../components/RadioButton';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import {uploaddFileAPI, updateUserAPI} from '../../api/auth';
 import {AppContext} from '../../index';
 import formatDate from '../../libs/formatDate';
 
@@ -25,7 +27,7 @@ const options = {
 };
 
 const EditProfileScreen = ({navigation}) => {
-  const {user} = useContext(AppContext);
+  const {user, token, setLoading, setUser} = useContext(AppContext);
   const [field, setField] = useState({
     first_name: user?.first_name,
     last_name: user?.last_name,
@@ -38,43 +40,61 @@ const EditProfileScreen = ({navigation}) => {
   const [error, setError] = useState(null);
   const [isPicture, setIsPicture] = useState(false);
   const [picture, setPicture] = useState(null);
+  const [isLocal, setIsLocal] = useState(false);
 
-  console.log(`user`, user);
   const handleInput = useCallback((val, type) => {
     setField(state => ({...state, [type]: val}));
   }, []);
-
-  const handleEditProfile = useCallback(() => {
+  console.log('user', user);
+  const handleEditProfile = useCallback(async () => {
+    Keyboard.dismiss();
     setError(null);
-  }, []);
+    setLoading(true);
+    try {
+      if (isLocal) {
+        const formData = new FormData();
+        formData.append('type', 'profile');
+        formData.append('file', {
+          uri: picture.path,
+          type: picture.mime,
+          name: `mammasip${Math.floor(Math.random() * 1000001)}`,
+        });
+        const resUpload = await uploaddFileAPI(token, formData);
+        const newData = {...field, image_path: resUpload.data.message};
+        const resUpdate = await updateUserAPI(token, user?.id_user, newData);
+        setUser(resUpdate.data.data);
+        await AsyncStorage.setItem('user', JSON.stringify(resUpdate.data.data));
+      } else {
+        const resUpdate = await updateUserAPI(token, user?.id_user, field);
+        setUser(resUpdate.data.data);
+        await AsyncStorage.setItem('user', JSON.stringify(resUpdate.data.data));
+      }
+    } catch (e) {
+      console.log('e', e, {...e});
+    } finally {
+      setLoading(false);
+    }
+  }, [token, isLocal, picture, field, user.id_user, setLoading, setUser]);
 
-  const pictureWithCamera = async () => {
+  const pictureWithCamera = useCallback(async () => {
     setIsPicture(false);
     try {
       const res = await ImagePicker.openCamera(options);
+      setIsLocal(true);
       setPicture(res);
-      //   const newData = {
-      //     uri: res.path,
-      //     type: res.mime,
-      //     first_name: `mammasip${Math.floor(Math.random() * 1000001)}`,
-      //   };
     } catch (err) {
       //   setError(err);
     }
-  };
+  }, []);
 
-  const pictureWithGalery = async () => {
+  const pictureWithGalery = useCallback(async () => {
     setIsPicture(false);
     try {
       const res = await ImagePicker.openPicker(options);
-      //   const newData = {
-      //     uri: res.path,
-      //     type: res.mime,
-      //     first_name: `bnb${Math.floor(Math.random() * 1000001)}`,
-      //   };
+      setIsLocal(true);
       setPicture(res);
     } catch (err) {}
-  };
+  }, []);
   const handleOpenPhoto = () => setIsPicture(true);
 
   const onChange = (event, selectedDate) => {

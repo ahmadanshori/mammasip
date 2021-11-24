@@ -1,4 +1,4 @@
-import {client, createHeader} from './';
+import {client, createHeader, createHeaderForm} from './';
 
 export const loginAPI = data => {
   return client.post('/auth', data);
@@ -10,4 +10,12 @@ export const registerAPI = data => {
 
 export const changePasswordAPI = (token, data) => {
   return client.post('/change_password', data, createHeader(token));
+};
+
+export const uploaddFileAPI = (token, data) => {
+  return client.post('/upload_file', data, createHeaderForm(token));
+};
+
+export const updateUserAPI = (token, id, data) => {
+  return client.put(`/user/${id}`, data, createHeader(token));
 };
