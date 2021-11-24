@@ -27,7 +27,7 @@ const HeaderTitle = ({
           }}
           activeOpacity={SIZES.opacity}>
           <Icon
-            name={'arrowleft'}
+            name={Platform.OS === 'ios' ? 'left' : 'arrowleft'}
             size={18}
             color={white ? COLORS.white : COLORS.black}
           />

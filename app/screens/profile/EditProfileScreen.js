@@ -10,6 +10,7 @@ import {TitleInput} from '../../components/Inputs';
 import {ImageModal} from '../../components/Modals';
 import {MainButton, TitleButton} from '../../components/Buttons';
 import PhotoProfile from '../../components/PhotoProfile';
+import {ActivityLevelButton} from '../../components/RadioButton';
 // import {Gender} from '../../components/RadioButton';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {AppContext} from '../../index';
@@ -28,16 +29,17 @@ const EditProfileScreen = ({navigation}) => {
   const [field, setField] = useState({
     first_name: user?.first_name,
     last_name: user?.last_name,
-    email: '',
+    email: user?.email,
     tgl_lahir: '',
-    phone: '',
-    gender: '',
+    phone: user?.phone,
+    gender: user?.gender,
   });
   const [isDate, setIsDate] = useState(false);
   const [error, setError] = useState(null);
   const [isPicture, setIsPicture] = useState(false);
   const [picture, setPicture] = useState(null);
 
+  console.log(`user`, user);
   const handleInput = useCallback((val, type) => {
     setField(state => ({...state, [type]: val}));
   }, []);
@@ -74,16 +76,18 @@ const EditProfileScreen = ({navigation}) => {
     } catch (err) {}
   };
   const handleOpenPhoto = () => setIsPicture(true);
+
   const onChange = (event, selectedDate) => {
     setIsDate(false);
-    console.log(`event`, event);
     console.log(`selectedDate`, selectedDate);
-    // setField(state => ({...state, tgl_lahir: selectedDate}));
+    setField(state => ({...state, tgl_lahir: selectedDate}));
   };
   return (
     <Container>
       <HeaderTitle back title="Edit data diri" />
-      <ScrollView contentContainerStyle={styles.wrapper}>
+      <ScrollView
+        contentContainerStyle={styles.wrapper}
+        showsVerticalScrollIndicator={false}>
         <PhotoProfile source={picture} onPress={handleOpenPhoto} />
         <TitleInput
           title="Nama Lengkap"
@@ -103,7 +107,7 @@ const EditProfileScreen = ({navigation}) => {
         <TitleButton
           title="Tanggal Lahir"
           placeholder="30 November 2000"
-          data={field.tgl_lahir}
+          data={field?.tgl_lahir ? formatDate(field?.tgl_lahir) : null}
           onPress={() => setIsDate(true)}
         />
         {/* <Gender /> */}
@@ -114,6 +118,16 @@ const EditProfileScreen = ({navigation}) => {
           style={styles.pass}
           onChangeText={val => handleInput(val, 'email')}
           value={field.email}
+        />
+        <ActivityLevelButton
+          title="Jenis Kelamin"
+          onPress={val => handleInput(val, 'gender')}
+          radio1="Laki-laki"
+          radio2="Perempuan"
+          value1={1}
+          value2={2}
+          selected={field.gender}
+          style={styles.pass}
         />
         <TitleInput
           title="No Handphone"
@@ -150,17 +164,18 @@ const EditProfileScreen = ({navigation}) => {
         galeryPress={pictureWithGalery}
         onPresBack={() => setIsPicture(false)}
       />
-      {isDate && (
+
+      {isDate ? (
         <DateTimePicker
           testID="dateTimePicker"
-          value={field?.tgl_lahir ? new Date(field?.tgl_lahir) : new Date()}
-          mode="date"
-          maximumDate={new Date()}
+          value={field?.tgl_lahir || new Date()}
+          mode={'date'}
           is24Hour={true}
           display="default"
+          maximumDate={new Date()}
           onChange={onChange}
         />
-      )}
+      ) : null}
     </Container>
   );
 };

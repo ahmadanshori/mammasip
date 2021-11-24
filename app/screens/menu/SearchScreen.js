@@ -69,7 +69,10 @@ const SearchScreen = ({navigation}) => {
             <TouchableOpacity
               activeOpacity={SIZES.opacity}
               onPress={() =>
-                handleNavigator('ListRoom', {idRuang: item.id_ruang})
+                handleNavigator('ListRoom', {
+                  idRuang: item.id_ruang,
+                  title: item.nama_ruang,
+                })
               }
               key={item.id_ruang}
               style={styles.category}>
@@ -89,19 +92,28 @@ const SearchScreen = ({navigation}) => {
           {/* <VideoRecomendation
           onPress={() => navigation.navigate('VideoDetail')}
         /> */}
-          <ArticleRecomendation
-            data={articleRecomended}
-            onPress={(id, typeRuang) =>
-              handleNavigator('Room', {id, typeRuang})
-            }
-            seeAllOnPress={() =>
-              handleNavigator('ListSearch', {title: 'Artikel'})
-            }
-          />
-          <BookRekomendation
-            data={bookRecomended}
-            seeAllOnPress={() => handleNavigator('ListSearch', {title: 'Buku'})}
-          />
+
+          {articleRecomended.length ? (
+            <ArticleRecomendation
+              data={articleRecomended}
+              onPress={(id, typeRuang) =>
+                handleNavigator('Room', {id, typeRuang})
+              }
+              seeAllOnPress={() =>
+                handleNavigator('ListSearch', {title: 'Artikel'})
+              }
+            />
+          ) : null}
+
+          {bookRecomended.length ? (
+            <BookRekomendation
+              data={bookRecomended}
+              seeAllOnPress={() =>
+                handleNavigator('ListSearch', {title: 'Buku'})
+              }
+            />
+          ) : null}
+
           {/* <ImportanLink /> */}
 
           {/* ======== VIDEO ======== */}

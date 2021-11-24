@@ -16,7 +16,7 @@ const WeightCalculatorHeader = ({onPressBack, title, backgroundColor}) => {
           onPress={onPressBack}
           activeOpacity={SIZES.opacity}>
           <AntDesign
-            name={Platform.OS === 'ios' ? 'chevron-left' : 'arrowleft'}
+            name={Platform.OS === 'ios' ? 'left' : 'arrowleft'}
             size={18}
             color={COLORS.white}
           />

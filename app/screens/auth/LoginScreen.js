@@ -23,7 +23,7 @@ const LoginScreen = ({navigation, route}) => {
   const {nav} = route.params;
   const [field, setField] = useState({
     username: 'hanifalbaaits@gmail.com',
-    password: '123455',
+    password: '12345',
     device: 'mobile',
     ip_address: '-',
   });

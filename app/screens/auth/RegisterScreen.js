@@ -24,7 +24,7 @@ const RegisterScreen = ({navigation}) => {
   const [field, setField] = useState({
     email: '',
     gateway_registered: '1',
-    created_by: '1',
+    created_by: '0',
     username: '',
     password: '',
     confirmPassword: '',
@@ -69,8 +69,9 @@ const RegisterScreen = ({navigation}) => {
           ...field,
           tgl_lahir: formatDate(field.tgl_lahir, 'yyyy-MM-dd'),
         };
-
+        console.log(`newData`, newData);
         const res = await registerAPI(newData);
+        console.log(`register`, res);
       } catch (e) {
         console.log(`e`, e, {...e});
       } finally {
@@ -98,19 +99,28 @@ const RegisterScreen = ({navigation}) => {
           </View>
         </View>
         <TitleInput
+          title="Username"
+          placeholder="Username anda"
+          autoCapitalize="none"
+          onChangeText={val => handleInput(val, 'username')}
+          value={field.username}
+          maxLength={50}
+        />
+        <TitleInput
           title="Email"
           placeholder="Email"
           keyboardType="email-address"
+          autoCapitalize="none"
+          style={styles.pass}
           onChangeText={val => handleInput(val, 'email')}
           value={field.email}
         />
         <TitleInput
-          title="Username"
-          placeholder="Username anda"
-          onChangeText={val => handleInput(val, 'username')}
-          value={field.username}
+          title="Alamat"
+          placeholder="jln. Senopati"
           style={styles.pass}
-          maxLength={50}
+          onChangeText={val => handleInput(val, 'address')}
+          value={field.address}
         />
         <TitleInput
           title="Nama Depan"
@@ -155,6 +165,7 @@ const RegisterScreen = ({navigation}) => {
         <TitleInput
           title="Password"
           placeholder="8-16 Karakter"
+          autoCapitalize="none"
           pass
           style={styles.pass}
           onChangeText={val => handleInput(val, 'password')}
@@ -165,6 +176,7 @@ const RegisterScreen = ({navigation}) => {
         <TitleInput
           title="Ulangi Password"
           placeholder="8-16 Karakter"
+          autoCapitalize="none"
           pass
           style={styles.pass}
           onChangeText={val => handleInput(val, 'confirmPassword')}
@@ -213,7 +225,7 @@ const RegisterScreen = ({navigation}) => {
           </Text>
           <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>Masuk</Text>
         </TouchableOpacity>
-        <Button title="test OTP" onPress={() => navigation.navigate('Otp')} />
+        {/* <Button title="test OTP" onPress={() => navigation.navigate('Otp')} /> */}
       </ScrollView>
       {isDate ? (
         <DateTimePicker

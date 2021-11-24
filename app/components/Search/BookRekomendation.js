@@ -5,8 +5,6 @@ import {ArticleItem, BookItem} from '../Items';
 import {OutlineButton} from '../Buttons';
 import {COLORS, FONTS} from '../../constants';
 
-const data1 = [1, 2, 3, 4];
-
 const ArticleRecomendation = ({seeAllOnPress, data}) => {
   return (
     <View style={styles.container}>
