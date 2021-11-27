@@ -6,6 +6,13 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
 const ArticleContent = ({data}) => {
+  const html = `<html>
+    <head>
+    </head>
+    <body>
+    ${data.article.bodyArticle}
+    </body>
+    </html>`;
   return (
     <View style={styles.container}>
       {data?.kata_pengantar && (
@@ -32,7 +39,7 @@ const ArticleContent = ({data}) => {
       <RenderHtml
         contentWidth={SIZES.width}
         source={{
-          html: data.article.bodyArticle,
+          html: html,
         }}
       />
     </View>
@@ -44,9 +51,9 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     marginBottom: 16,
-    elevation: 6,
     backgroundColor: COLORS.white,
-    ...SIZES.shadow,
+    borderWidth: 1,
+    borderColor: COLORS.separator,
     marginHorizontal: 16,
   },
   wrapper: {

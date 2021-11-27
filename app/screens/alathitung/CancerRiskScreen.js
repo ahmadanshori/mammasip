@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import {dropdownalert} from '../../components/AlertProvider';
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
@@ -97,7 +97,14 @@ const CaloriesScreen = ({navigation}) => {
           <MainButton
             title="Hitung"
             style={styles.countButton}
-            onPress={() => handleNavigation('CancerQuestion')}
+            onPress={() =>
+              dropdownalert.alertWithType(
+                'warn',
+                '',
+                'Belum bisa, Masih Diproses!!',
+              )
+            }
+            // onPress={() => handleNavigation('CancerQuestion')}
             disable={!field.gender || !field.age}
           />
           <View style={styles.margin}>
@@ -115,14 +122,14 @@ const CaloriesScreen = ({navigation}) => {
             </Text>
             <CalculatorItem
               image={<WeightIcon width={60} height={60} />}
-              onPress={() => handleNavigation('WeightCalculator')}
+              onPress={() => handleNavigation('Bmr')}
               backgroundColor={COLORS.blue}
               title="Massa Tubuh Ideal (BMR)"
               description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
             />
             <CalculatorItem
               image={<FoodIcon width={60} height={60} />}
-              onPress={() => handleNavigation('Calories')}
+              onPress={() => handleNavigation('Bmi')}
               backgroundColor={COLORS.secondary}
               title="Kebutuhan Kalori Harian (BMI)"
               description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
@@ -148,7 +155,14 @@ const CaloriesScreen = ({navigation}) => {
           <View style={styles.margin}>
             <CalculatorItem
               image={<QuizIcon width={60} height={60} />}
-              onPress={() => handleNavigation('WeightCalculator')}
+              //   onPress={() => handleNavigation('WeightCalculator')}
+              onPress={() =>
+                dropdownalert.alertWithType(
+                  'warn',
+                  '',
+                  'Belum bisa, Masih Diproses!!',
+                )
+              }
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"
               description="Uji pengetahuanmu dengan quiz

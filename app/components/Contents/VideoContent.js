@@ -48,9 +48,9 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     marginBottom: 16,
-    elevation: 6,
     backgroundColor: COLORS.white,
-    ...SIZES.shadow,
+    borderWidth: 1,
+    borderColor: COLORS.separator,
     marginHorizontal: 16,
   },
   wrapper: {

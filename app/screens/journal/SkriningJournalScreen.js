@@ -14,6 +14,7 @@ import {HeaderTitle} from '../../components/Headers';
 import {VideoItem, CalculatorItem} from '../../components/Items';
 import {AskButton} from '../../components/Buttons';
 import {Sadari, Sadanis} from '../../components/Journal';
+import {dropdownalert} from '../../components/AlertProvider';
 import Divider from '../../components/Divider';
 import Accordion from '../../components/Accordion';
 import {COLORS, FONTS} from '../../constants';
@@ -44,7 +45,7 @@ const SkriningJournalScreen = () => {
               current={formatDate(new Date(), 'yyyy-MM-dd')}
               // Handler which gets executed on day press. Default = undefined
               onDayPress={day => {
-                console.log('selected day', day);
+                // console.log('selected day', day);
               }}
               // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
               monthFormat={'MMMM yyyy'}
@@ -121,6 +122,13 @@ const SkriningJournalScreen = () => {
             <CalculatorItem
               image={<QuizIcon height={60} width={60} />}
               // onPress={() => handleNavigation('WeightCalculator')}
+              onPress={() =>
+                dropdownalert.alertWithType(
+                  'warn',
+                  '',
+                  'Belum bisa, Masih Diproses!!',
+                )
+              }
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"
               description="Uji pengetahuanmu dengan quiz

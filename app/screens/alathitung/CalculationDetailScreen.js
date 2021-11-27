@@ -14,6 +14,7 @@ import {HeaderTitle} from '../../components/Headers';
 import {MainButton, AskButton} from '../../components/Buttons';
 import MealSuggestions from '../../components/MealSuggestions';
 import {CalculatorItem} from '../../components/Items';
+import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import Divider from '../../components/Divider';
 import {LoadingComponent} from '../../components/Loadings';
@@ -72,7 +73,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
           : await getBmiAPI(token, field);
       setData(res.data.data);
     } catch (err) {
-      console.log(`err`, {...err});
+      //   console.log(`err`, {...err});
     } finally {
       setLoading({get: false, refresh: false, menu: false});
     }
@@ -98,7 +99,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
       );
       setFoodSuggestion(calculation);
     } catch (e) {
-      console.log(`e`, e);
+      //   console.log(`e`, e);
     } finally {
       setLoading(state => ({...state, menu: false}));
     }
@@ -265,6 +266,13 @@ const CalculationDetailScreen = ({navigation, route}) => {
               <CalculatorItem
                 image={<QuizIcon height={60} width={60} />}
                 // onPress={() => handleNavigation('WeightCalculator')}
+                onPress={() =>
+                  dropdownalert.alertWithType(
+                    'warn',
+                    '',
+                    'Belum bisa, Masih Diproses!!',
+                  )
+                }
                 backgroundColor={COLORS.primary}
                 title="Ayo ikutan Quiz!"
                 description="Uji pengetahuanmu dengan quiz

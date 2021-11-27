@@ -11,6 +11,7 @@ import {
 
 import {Container} from '../components/Container';
 import {LoadingComponent} from '../components/Loadings';
+import {dropdownalert} from '../components/AlertProvider';
 import {OutlineButton, MainButton} from '../components/Buttons';
 import {VideoItem, ArticleItem, CalculatorItem} from '../components/Items';
 import {
@@ -47,7 +48,7 @@ const RoomScreen = ({navigation, route}) => {
       // const res = await getArticleByRoomAPI(typeRuang, query?.page);
       // console.log(`res`, res);
       const resRoom = await getRoomTypeByIdAPI(typeRuang);
-      console.log(`resRoom`, resRoom);
+      //   console.log(`resRoom`, resRoom);
       // setArticleData(res.data.data.content[0]);
       setData(resRoom.data.data);
       // setSelecVideo(resRoom.data.data);
@@ -106,6 +107,10 @@ const RoomScreen = ({navigation, route}) => {
     </View>
   );
 
+  const onQuiz = () => {
+    dropdownalert.alertWithType('warn', '', 'Belum bisa, Masih Diproses!!');
+  };
+
   const renderItem = ({item}) => {
     if (item.typeContent === 1) {
       return <DestinationContent data={item} />;
@@ -123,7 +128,7 @@ const RoomScreen = ({navigation, route}) => {
         />
       );
     } else if (item.typeContent === 6) {
-      return <ButtonContent data={item} />;
+      return <ButtonContent data={item} onPress={onQuiz} />;
     } else {
       return <ArticleContent data={item} />;
     }
@@ -154,6 +159,7 @@ const RoomScreen = ({navigation, route}) => {
             renderItem={renderItem}
             ListHeaderComponent={headerComponent}
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={{paddingBottom: 50}}
           />
 
           {/* <View style={styles.wrapper}>

@@ -24,8 +24,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
     backgroundColor: COLORS.white,
-    ...SIZES.shadow,
     marginHorizontal: 16,
+    borderWidth: 1,
+    borderColor: COLORS.separator,
   },
   wrapper: {
     justifyContent: 'center',

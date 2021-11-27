@@ -68,6 +68,10 @@ import {Container} from '../../components/Container';
 //     image: <ICON.gerbang height={80} width={80} />,
 //   },
 // ];
+const penyuluhan = {
+  nama_ruang: 'Penyuluhan',
+  description: 'Lebih tahu tentang payudara & kanker payudara',
+};
 
 const HomeScreen = ({navigation}) => {
   const {user, token} = useContext(AppContext);
@@ -80,10 +84,9 @@ const HomeScreen = ({navigation}) => {
   const getInititalData = async () => {
     try {
       const res = await getRoomAPI();
-      console.log(`res`, res);
       setRoomData(res.data.data);
     } catch (e) {
-      console.log(`e`, e);
+      //   console.log(`e`, e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -115,7 +118,8 @@ const HomeScreen = ({navigation}) => {
               dirimu!
             </Text>
             <View style={styles.row}>
-              <TouchableNativeFeedback>
+              <TouchableNativeFeedback
+                onPress={() => navigation.navigate('ImportantMessage')}>
                 <View
                   style={[
                     styles.categoryWrapper,
@@ -164,6 +168,11 @@ const HomeScreen = ({navigation}) => {
               ]}>
               Ruang mammaSIP
             </Text>
+            <HomeItem
+              data={penyuluhan}
+              onPress={() => navigation.navigate('Counseling')}
+              colorId={'penyuluhan'}
+            />
             {roomData.map(item => (
               <HomeItem
                 data={item}

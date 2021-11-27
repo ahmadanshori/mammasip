@@ -5,13 +5,13 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
+import {dropdownalert} from '../../components/AlertProvider';
 import {MainButton, TitleButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
 import {registerAPI} from '../../api/auth';
@@ -59,25 +59,26 @@ const RegisterScreen = ({navigation}) => {
   };
 
   const handleRegister = async () => {
-    setError(null);
-    if (field.password !== field.confirmPassword) {
-      setError('Password tidak sama');
-    } else {
-      setLoading(true);
-      try {
-        const newData = {
-          ...field,
-          tgl_lahir: formatDate(field.tgl_lahir, 'yyyy-MM-dd'),
-        };
-        console.log(`newData`, newData);
-        const res = await registerAPI(newData);
-        console.log(`register`, res);
-      } catch (e) {
-        console.log(`e`, e, {...e});
-      } finally {
-        setLoading(false);
-      }
-    }
+    dropdownalert.alertWithType('warn', '', 'Belum bisa, Masih Diproses!!');
+    // setError(null);
+    // if (field.password !== field.confirmPassword) {
+    //   setError('Password tidak sama');
+    // } else {
+    //   setLoading(true);
+    //   try {
+    //     const newData = {
+    //       ...field,
+    //       tgl_lahir: formatDate(field.tgl_lahir, 'yyyy-MM-dd'),
+    //     };
+    //     console.log(`newData`, newData);
+    //     const res = await registerAPI(newData);
+    //     console.log(`register`, res);
+    //   } catch (e) {
+    //     console.log(`e`, e, {...e});
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // }
   };
   return (
     <Container>

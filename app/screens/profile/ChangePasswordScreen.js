@@ -38,7 +38,7 @@ const ChangePasswordScreen = ({navigation}) => {
           setIsChange(true);
         }
       } catch (e) {
-        console.log(`e`, e, {...e});
+        // console.log(`e`, e, {...e});
       } finally {
         setLoading(false);
       }

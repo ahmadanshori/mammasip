@@ -17,7 +17,7 @@ const SplashScreen = () => {
         setToken(userObject?.token);
         setUser(userObject?.user);
       } catch (e) {
-        console.log(`e`, e, {...e});
+        // console.log(`e`, e, {...e});
       }
     };
     loadData();

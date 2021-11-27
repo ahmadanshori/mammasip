@@ -75,7 +75,7 @@ const FoodSuggestionScreen = ({navigation, route}) => {
         setFoodMenuData(calculation);
       }
     } catch (err) {
-      console.log('er', err, {...err});
+      //   console.log('er', err, {...err});
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -124,7 +124,7 @@ const FoodSuggestionScreen = ({navigation, route}) => {
         );
         setFoodMenuData(calculation);
       } catch (e) {
-        console.log('e', e);
+        // console.log('e', e);
         setPekan(oldData);
       } finally {
         setLoading(state => ({...state, pekan: false}));

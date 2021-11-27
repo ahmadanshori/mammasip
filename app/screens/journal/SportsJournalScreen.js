@@ -14,6 +14,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {Container} from '../../components/Container';
 import {AskButton} from '../../components/Buttons';
 import {HeaderTitle} from '../../components/Headers';
+import {dropdownalert} from '../../components/AlertProvider';
 import {VideoItem, CalculatorItem} from '../../components/Items';
 import {ActivityModal, ReminderModals} from '../../components/Modals';
 import Reminder from '../../components/Reminder';
@@ -158,6 +159,13 @@ const SportsJournalScreen = () => {
             <CalculatorItem
               image={<QuizIcon height={60} width={60} />}
               // onPress={() => handleNavigation('WeightCalculator')}
+              onPress={() =>
+                dropdownalert.alertWithType(
+                  'warn',
+                  '',
+                  'Belum bisa, Masih Diproses!!',
+                )
+              }
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"
               description="Uji pengetahuanmu dengan quiz

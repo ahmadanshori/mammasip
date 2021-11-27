@@ -30,7 +30,7 @@ const FaqScreen = ({navigation}) => {
       const resFaq = await searchFaqAPI(formData);
       setData(resFaq.data.data);
     } catch (err) {
-      console.log(`err`, {...err});
+      //   console.log(`err`, {...err});
     } finally {
       setLoading(false);
     }

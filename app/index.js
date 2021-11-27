@@ -3,6 +3,7 @@ import {StatusBar} from 'react-native';
 // import OneSignal from 'react-native-onesignal';
 import SplashScreen from 'react-native-splash-screen';
 import {LoadingView} from './components/Loadings';
+import AlertProvider from './components/AlertProvider';
 import AppNavigator from './config/routes';
 import {COLORS} from './constants';
 
@@ -47,17 +48,24 @@ export default () => {
     // OneSignalDevice();
   }, []);
   return (
-    <AppContext.Provider
-      value={{
-        setLoading,
-        setToken,
-        token,
-        setUser,
-        user,
-      }}>
-      <StatusBar backgroundColor={COLORS.primary} barStyle={'light-content'} />
-      <AppNavigator />
-      {loading ? <LoadingView /> : null}
-    </AppContext.Provider>
+    <>
+      <AlertProvider>
+        <AppContext.Provider
+          value={{
+            setLoading,
+            setToken,
+            token,
+            setUser,
+            user,
+          }}>
+          <StatusBar
+            backgroundColor={COLORS.primary}
+            barStyle={'light-content'}
+          />
+          <AppNavigator />
+          {loading ? <LoadingView /> : null}
+        </AppContext.Provider>
+      </AlertProvider>
+    </>
   );
 };

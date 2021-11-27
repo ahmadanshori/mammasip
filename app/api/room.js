@@ -17,3 +17,8 @@ export const getRoomTypeByIdAPI = idRuang => {
 export const getRoomByParentAPI = idRuang => {
   return client.get(`/ruang-master/child/${idRuang}`);
 };
+
+export const getImportantMessageAPI = () =>
+  client.get('/ruang-master/pesan-penting');
+
+export const getTestimoniAPI = () => client.get('/testimoni');

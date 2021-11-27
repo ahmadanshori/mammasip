@@ -4,7 +4,7 @@ import IconCamera from 'react-native-vector-icons/FontAwesome';
 
 import {COLORS, SIZES, FONTS} from '../constants';
 
-const PhotoProfile = ({source, onPress}) => {
+const PhotoProfile = ({source, onPress, isLocal}) => {
   return (
     <View style={styles.wrapper}>
       <TouchableOpacity
@@ -15,13 +15,27 @@ const PhotoProfile = ({source, onPress}) => {
           <View style={styles.iconWrapper}>
             <IconCamera name="camera" size={30} color={COLORS.gray} />
           </View>
-          {source?.path ? (
-            <Image
-              resizeMode="contain"
-              source={{uri: source.path}}
-              style={styles.img}
-            />
-          ) : null}
+          {isLocal ? (
+            <>
+              {source?.path ? (
+                <Image
+                  resizeMode="contain"
+                  source={{uri: source.path}}
+                  style={styles.img}
+                />
+              ) : null}
+            </>
+          ) : (
+            <>
+              {source ? (
+                <Image
+                  resizeMode="contain"
+                  source={{uri: source}}
+                  style={styles.img}
+                />
+              ) : null}
+            </>
+          )}
         </View>
       </TouchableOpacity>
       <Text style={[FONTS.text10, styles.text]}>Foto Profil</Text>

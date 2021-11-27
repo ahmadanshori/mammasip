@@ -44,7 +44,7 @@ const SearchScreen = ({navigation}) => {
       setArticleRecomended(resTopArticle.data.data);
       setBookRecomended(resTopBook.data.data);
     } catch (e) {
-      console.log(`e`, e, {...e});
+      //   console.log(`e`, e, {...e});
     } finally {
       setLoading({get: false, refresh: false});
     }

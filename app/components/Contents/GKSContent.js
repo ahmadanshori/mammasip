@@ -1,9 +1,16 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import RenderHtml from 'react-native-render-html';
-import {COLORS, FONTS, ICON, SIZES} from '../../constants';
+import {COLORS, SIZES} from '../../constants';
 
 const GKSContent = ({data}) => {
+  const html = `<html>
+    <head>
+    </head>
+    <body>
+    ${data.gks_text}
+    </body>
+    </html>`;
   return (
     <View
       style={[
@@ -12,29 +19,29 @@ const GKSContent = ({data}) => {
       ]}>
       {data.gks_text_position === 'left' ? (
         <>
-          <View style={styles.wrapper}>
+          <View style={styles.w60}>
             <RenderHtml
-              contentWidth={'100%'}
+              contentWidth={SIZES.width}
               source={{
-                html: data.gks_text,
+                html: html,
               }}
             />
           </View>
-          <View style={styles.wrapper}>
+          <View style={styles.w40}>
             {data.gks_media_list.map(item => (
               <Image
                 key={item.idMedia}
                 source={{
                   uri: item.url,
                 }}
-                style={styles.img}
+                style={[styles.img, {marginLeft: 6}]}
               />
             ))}
           </View>
         </>
       ) : (
         <>
-          <View style={styles.wrapper}>
+          <View style={styles.w40}>
             {data.gks_media_list.map(item => (
               <Image
                 key={item.idMedia}
@@ -45,11 +52,11 @@ const GKSContent = ({data}) => {
               />
             ))}
           </View>
-          <View style={styles.wrapper}>
+          <View style={styles.w60}>
             <RenderHtml
               contentWidth={SIZES.width}
               source={{
-                html: data.gks_text,
+                html: html,
               }}
             />
           </View>
@@ -67,12 +74,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: COLORS.red,
   },
-  wrapper: {
-    width: '50%',
-  },
+  w60: {width: '60%'},
+  w40: {width: '40%'},
   img: {
-    height: SIZES.width3 + 8,
-    width: SIZES.width3 + 8,
+    height: SIZES.width3,
+    width: SIZES.width3,
     borderRadius: SIZES.width2,
     marginBottom: 16,
   },

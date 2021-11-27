@@ -20,6 +20,7 @@ import {ActivityModal, ReminderModals} from '../../components/Modals';
 import MealSuggestions from '../../components/MealSuggestions';
 import Reminder from '../../components/Reminder';
 import Divider from '../../components/Divider';
+import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import QuizIcon from '../../assets/icons/quiz.svg';
 
@@ -194,6 +195,13 @@ const WeightJournalScreen = ({navigation}) => {
             <CalculatorItem
               image={<QuizIcon height={60} width={60} />}
               // onPress={() => handleNavigation('WeightCalculator')}
+              onPress={() =>
+                dropdownalert.alertWithType(
+                  'warn',
+                  '',
+                  'Belum bisa, Masih Diproses!!',
+                )
+              }
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"
               description="Uji pengetahuanmu dengan quiz

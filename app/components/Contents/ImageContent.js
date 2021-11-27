@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {COLORS, FONTS, ICON, SIZES} from '../../constants';
+import {COLORS, FONTS, SIZES} from '../../constants';
 
-const ImageContent = ({}) => {
+const ImageContent = ({data}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -14,14 +14,14 @@ const ImageContent = ({}) => {
           style={styles.margin}
         />
         <Text style={[FONTS.text10, {color: COLORS.black, flex: 1}]}>
-          Bagaimana pemahaman masyarakat kebanyakan mengenai deteksi dini kanker
-          payudara?
+          {data.kata_pengantar}
         </Text>
       </View>
 
       <Image
-        source={require('../../assets/images/aa.jpeg')}
+        source={{uri: data?.url}}
         style={styles.img}
+        resizeMode="contain"
       />
     </View>
   );
@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     marginBottom: 16,
-    elevation: 6,
+    borderWidth: 1,
+    borderColor: COLORS.separator,
     backgroundColor: COLORS.white,
-    ...SIZES.shadow,
     marginHorizontal: 16,
   },
   wrapper: {
@@ -48,8 +48,11 @@ const styles = StyleSheet.create({
   margin: {
     marginRight: 6,
   },
-
-  img: {height: SIZES.width, width: SIZES.width - 56, borderRadius: 6},
+  img: {
+    height: SIZES.width + 56,
+    width: SIZES.width - 56,
+    borderRadius: 6,
+  },
   iconPlay: {
     padding: 14,
     backgroundColor: COLORS.white,

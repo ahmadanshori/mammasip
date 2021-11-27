@@ -12,6 +12,7 @@ import {ImageModal} from '../../components/Modals';
 import {MainButton, TitleButton} from '../../components/Buttons';
 import PhotoProfile from '../../components/PhotoProfile';
 import {ActivityLevelButton} from '../../components/RadioButton';
+import {dropdownalert} from '../../components/AlertProvider';
 // import {Gender} from '../../components/RadioButton';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {uploaddFileAPI, updateUserAPI} from '../../api/auth';
@@ -31,21 +32,21 @@ const EditProfileScreen = ({navigation}) => {
   const [field, setField] = useState({
     first_name: user?.first_name,
     last_name: user?.last_name,
-    email: user?.email,
-    tgl_lahir: '',
+    // email: user?.email,
+    tgl_lahir: new Date(user?.tgl_lahir),
     phone: user?.phone,
     gender: user?.gender,
   });
   const [isDate, setIsDate] = useState(false);
   const [error, setError] = useState(null);
   const [isPicture, setIsPicture] = useState(false);
-  const [picture, setPicture] = useState(null);
+  const [picture, setPicture] = useState(user?.image_path || null);
   const [isLocal, setIsLocal] = useState(false);
 
   const handleInput = useCallback((val, type) => {
     setField(state => ({...state, [type]: val}));
   }, []);
-  console.log('user', user);
+
   const handleEditProfile = useCallback(async () => {
     Keyboard.dismiss();
     setError(null);
@@ -69,8 +70,13 @@ const EditProfileScreen = ({navigation}) => {
         setUser(resUpdate.data.data);
         await AsyncStorage.setItem('user', JSON.stringify(resUpdate.data.data));
       }
+      dropdownalert.alertWithType(
+        'success',
+        '',
+        'Berhasil merubah data diri..',
+      );
     } catch (e) {
-      console.log('e', e, {...e});
+      //   console.log('e', e, {...e});
     } finally {
       setLoading(false);
     }
@@ -99,16 +105,20 @@ const EditProfileScreen = ({navigation}) => {
 
   const onChange = (event, selectedDate) => {
     setIsDate(false);
-    console.log(`selectedDate`, selectedDate);
     setField(state => ({...state, tgl_lahir: selectedDate}));
   };
+
   return (
     <Container>
       <HeaderTitle back title="Edit data diri" />
       <ScrollView
         contentContainerStyle={styles.wrapper}
         showsVerticalScrollIndicator={false}>
-        <PhotoProfile source={picture} onPress={handleOpenPhoto} />
+        <PhotoProfile
+          source={picture}
+          onPress={handleOpenPhoto}
+          isLocal={isLocal}
+        />
         <TitleInput
           title="Nama Lengkap"
           placeholder="Syifa"
@@ -131,14 +141,14 @@ const EditProfileScreen = ({navigation}) => {
           onPress={() => setIsDate(true)}
         />
         {/* <Gender /> */}
-        <TitleInput
+        {/* <TitleInput
           title="Email"
           placeholder="mammasip@gmail.com"
           keyboardType="email-address"
           style={styles.pass}
           onChangeText={val => handleInput(val, 'email')}
           value={field.email}
-        />
+        /> */}
         <ActivityLevelButton
           title="Jenis Kelamin"
           onPress={val => handleInput(val, 'gender')}
@@ -169,11 +179,11 @@ const EditProfileScreen = ({navigation}) => {
         <MainButton
           title="Simpan"
           disable={
-            !field.email ||
             !field.phone ||
             !field.first_name ||
             !field.last_name ||
-            !field.tgl_lahir
+            !field.tgl_lahir ||
+            !field.gender
           }
           onPress={handleEditProfile}
         />
@@ -184,7 +194,6 @@ const EditProfileScreen = ({navigation}) => {
         galeryPress={pictureWithGalery}
         onPresBack={() => setIsPicture(false)}
       />
-
       {isDate ? (
         <DateTimePicker
           testID="dateTimePicker"

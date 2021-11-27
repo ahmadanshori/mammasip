@@ -37,7 +37,7 @@ const ListRoomScreen = ({navigation, route}) => {
 
       setData(res.data.data);
     } catch (e) {
-      console.log('e', {...e});
+      //   console.log('e', {...e});
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -47,7 +47,7 @@ const ListRoomScreen = ({navigation, route}) => {
     <HomeItem
       data={item}
       key={item.id_ruang}
-      onPress={() => navigation.navigate('Room', {typeRuang: 9})}
+      onPress={() => navigation.navigate('Room', {typeRuang: item.id_ruang})}
       colorId={item.flag_mobile_color}
     />
   );

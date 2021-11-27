@@ -14,6 +14,7 @@ import {MainButton, AskButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
 import Accordion from '../../components/Accordion';
 import {CalculatorItem} from '../../components/Items';
+import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 import {getBmrAPI} from '../../api/calculator';
@@ -156,6 +157,13 @@ const WeightCalculatorScreen = ({navigation}) => {
             <CalculatorItem
               image={<QuizIcon width={60} height={60} />}
               // onPress={() => handleNavigation('WeightCalculator')}
+              onPress={() =>
+                dropdownalert.alertWithType(
+                  'warn',
+                  '',
+                  'Belum bisa, Masih Diproses!!',
+                )
+              }
               backgroundColor={COLORS.primary}
               title="Ayo ikutan Quiz!"
               description="Uji pengetahuanmu dengan quiz
