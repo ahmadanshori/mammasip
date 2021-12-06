@@ -38,6 +38,7 @@ import {
   CancerQuestionScreen,
   MenuPackageScreen,
 } from '../screens/alathitung';
+import {ListQuizScreen, QuizScreen} from '../screens/quiz';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -265,6 +266,8 @@ export default function App() {
             component={SkriningJournalScreen}
             name="SkriningJournal"
           />
+          <Stack.Screen component={ListQuizScreen} name="ListQuiz" />
+          <Stack.Screen component={QuizScreen} name="Quiz" />
         </>
       </Stack.Navigator>
     </NavigationContainer>

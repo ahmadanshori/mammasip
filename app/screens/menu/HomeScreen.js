@@ -6,6 +6,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   ScrollView,
+  Button,
 } from 'react-native';
 
 import {HomeHeader} from '../../components/Headers';
@@ -16,60 +17,14 @@ import {LoadingComponent} from '../../components/Loadings';
 import {getRoomAPI} from '../../api/room';
 import {FONTS, COLORS, ICON} from '../../constants';
 import {AppContext} from '../../index';
-import {Container} from '../../components/Container';
+// import {Container} from '../../components/Container';
 
-// const roomData = [
-//   {
-//     id: 1,
-//     name: 'Sayangi Dirimu',
-//     title: 'Ruang Umum',
-//     desc: 'Jaga kesehatan diri dari kanker payudara',
-//     color: COLORS.darkBlue,
-//     image: <ICON.sayangi height={80} width={80} />,
-//   },
-//   {
-//     id: 2,
-//     name: 'Ruang Pendukung',
-//     title: 'Cinta',
-//     desc: 'Hadapi kanker payudara bersama mammaSIP',
-//     color: COLORS.red,
-//     image: <ICON.cinta height={80} width={80} />,
-//   },
-//   {
-//     id: 3,
-//     name: 'Ruang Penyuluh',
-//     title: 'Mari Berbagi',
-//     desc: 'Lebih tahu tentang payudara & kanker payudara',
-//     color: COLORS.secondary,
-//     image: <ICON.berbagi height={80} width={80} />,
-//   },
-//   {
-//     id: 4,
-//     name: 'Kenali Diri',
-//     title: 'Ruang Bantu Hitung',
-//     desc: 'Hadapi kanker payudara bersama mammaSIP',
-//     color: COLORS.darkRed,
-//     image: <ICON.kenali height={80} width={80} />,
-//   },
-//   {
-//     id: 5,
-//     name: 'Anda Pemenang',
-//     title: 'Ruang Pasien & Penyitas',
-//     desc: 'Hadapi kanker payudara bersama mammaSIP',
-//     color: COLORS.orange,
-//     image: <ICON.pemenang height={80} width={80} />,
-//   },
-//   {
-//     id: 6,
-//     name: 'Gerbang Dokter',
-//     title: 'Ruang Tenaga Medis',
-//     desc: 'Pengobatan, terapi dan skrining kanker payudara',
-//     color: COLORS.green,
-//     image: <ICON.gerbang height={80} width={80} />,
-//   },
-// ];
 const penyuluhan = {
   nama_ruang: 'Penyuluhan',
+  description: 'Lebih tahu tentang payudara & kanker payudara',
+};
+const perpustakaan = {
+  nama_ruang: 'Bunga Rampai',
   description: 'Lebih tahu tentang payudara & kanker payudara',
 };
 
@@ -168,10 +123,19 @@ const HomeScreen = ({navigation}) => {
               ]}>
               Ruang mammaSIP
             </Text>
+            <Button
+              title="aaaaaa"
+              onPress={() => navigation.navigate('ListQuiz')}
+            />
             <HomeItem
               data={penyuluhan}
               onPress={() => navigation.navigate('Counseling')}
               colorId={'penyuluhan'}
+            />
+            <HomeItem
+              data={perpustakaan}
+              onPress={() => navigation.navigate('Counseling')}
+              colorId={7}
             />
             {roomData.map(item => (
               <HomeItem
