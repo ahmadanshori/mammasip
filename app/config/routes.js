@@ -39,6 +39,7 @@ import {
   MenuPackageScreen,
 } from '../screens/alathitung';
 import {ListQuizScreen, QuizScreen} from '../screens/quiz';
+import {DoctorRoomScreen, KnowYourSelfScreen} from '../screens/room';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -268,6 +269,8 @@ export default function App() {
           />
           <Stack.Screen component={ListQuizScreen} name="ListQuiz" />
           <Stack.Screen component={QuizScreen} name="Quiz" />
+          <Stack.Screen component={DoctorRoomScreen} name="DoctorRoom" />
+          <Stack.Screen component={KnowYourSelfScreen} name="KnowYourSelf" />
         </>
       </Stack.Navigator>
     </NavigationContainer>

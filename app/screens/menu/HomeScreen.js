@@ -6,7 +6,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   ScrollView,
-  Button,
+  Image,
 } from 'react-native';
 
 import {HomeHeader} from '../../components/Headers';
@@ -15,18 +15,19 @@ import {HomeItem} from '../../components/Items';
 import {MainButton} from '../../components/Buttons';
 import {LoadingComponent} from '../../components/Loadings';
 import {getRoomAPI} from '../../api/room';
-import {FONTS, COLORS, ICON} from '../../constants';
+import {FONTS, COLORS, ICON, SIZES} from '../../constants';
 import {AppContext} from '../../index';
+// import WelcomeIcon from '../../assets/images/welcome.svg';
 // import {Container} from '../../components/Container';
 
-const penyuluhan = {
-  nama_ruang: 'Penyuluhan',
-  description: 'Lebih tahu tentang payudara & kanker payudara',
-};
-const perpustakaan = {
-  nama_ruang: 'Bunga Rampai',
-  description: 'Lebih tahu tentang payudara & kanker payudara',
-};
+// const penyuluhan = {
+//   nama_ruang: 'Penyuluhan',
+//   description: 'Lebih tahu tentang payudara & kanker payudara',
+// };
+// const perpustakaan = {
+//   nama_ruang: 'Bunga Rampai',
+//   description: 'Lebih tahu tentang payudara & kanker payudara',
+// };
 
 const HomeScreen = ({navigation}) => {
   const {user, token} = useContext(AppContext);
@@ -39,6 +40,7 @@ const HomeScreen = ({navigation}) => {
   const getInititalData = async () => {
     try {
       const res = await getRoomAPI();
+      console.log('res', res);
       setRoomData(res.data.data);
     } catch (e) {
       //   console.log(`e`, e);
@@ -47,8 +49,19 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const handleNavigator = route => {
-    navigation.navigate('ListRoom', route);
+  const handleNavigator = event => {
+    const {id_ruang, nama_ruang} = event;
+    if (id_ruang === 4) {
+      navigation.navigate('KnowYourSelf', {id: id_ruang});
+    } else if (id_ruang === 5) {
+      navigation.navigate('DoctorRoom', {id: id_ruang});
+    } else if (id_ruang === 6 || id_ruang === 7) {
+      navigation.navigate('Counseling', {id: id_ruang});
+    } else if (id_ruang === 8) {
+      navigation.navigate('Faq');
+    } else {
+      navigation.navigate('ListRoom', {idRuang: id_ruang, title: nama_ruang});
+    }
   };
 
   return (
@@ -60,60 +73,36 @@ const HomeScreen = ({navigation}) => {
         <ScrollView
           contentContainerStyle={{paddingBottom: 16}}
           showsVerticalScrollIndicator={false}>
-          {/* <View style={styles.padding}>
           <Banner />
-        </View> */}
-          <Banner />
-          <View style={styles.welcome}>
-            <Text style={[FONTS.textBold14, {color: COLORS.primary}]}>
-              Selamat datang di MammaSIP
-            </Text>
-            <Text style={[FONTS.text10, styles.desc]}>
-              Sudahkah mengenali payudaramu? Jaga kesehatan payudaramu sayangi
-              dirimu!
-            </Text>
-            <View style={styles.row}>
-              <TouchableNativeFeedback
-                onPress={() => navigation.navigate('ImportantMessage')}>
-                <View
+          <TouchableNativeFeedback
+            onPress={() => navigation.navigate('ImportantMessage')}>
+            <View style={styles.message}>
+              <ICON.lula height={60} width={60} />
+              <View>
+                <Text
                   style={[
-                    styles.categoryWrapper,
-                    {backgroundColor: COLORS.secondary},
+                    FONTS.textBold16,
+                    {color: COLORS.white, textAlign: 'center'},
                   ]}>
-                  <ICON.messagePeople
-                    width={40}
-                    height={40}
-                    style={styles.img}
-                  />
-                  <View>
-                    <Text style={[FONTS.textBold10, {color: COLORS.white}]}>
-                      Pesan Penting
-                    </Text>
-                    <Text style={[FONTS.text8, {color: COLORS.white}]}>
-                      Dr. Lula Kamal M.Sc
-                    </Text>
-                  </View>
-                </View>
-              </TouchableNativeFeedback>
-              <TouchableNativeFeedback
-                onPress={() => navigation.navigate('Faq')}>
-                <View
+                  PESAN PENTING
+                </Text>
+                <Text
                   style={[
-                    styles.categoryWrapper,
-                    {backgroundColor: COLORS.primary},
+                    FONTS.text12,
+                    {color: COLORS.white, textAlign: 'center'},
                   ]}>
-                  <ICON.girl width={40} height={40} style={styles.img} />
-                  <View>
-                    <Text style={[FONTS.textBold10, {color: COLORS.white}]}>
-                      Tanya Jawab
-                    </Text>
-                    <Text style={[FONTS.text8, {color: COLORS.white}]}>
-                      Seputar kesehatan
-                    </Text>
-                  </View>
-                </View>
-              </TouchableNativeFeedback>
+                  Lihat Video
+                </Text>
+              </View>
+              <ICON.deddy height={60} width={60} />
             </View>
+          </TouchableNativeFeedback>
+          <View style={{backgroundColor: 'red', marginTop: 16}}>
+            {/* <WelcomeIcon height={SIZES.width1} width={SIZES.width} /> */}
+            <Image
+              source={require('../../assets/images/welcome.png')}
+              style={{height: SIZES.width2, width: SIZES.width}}
+            />
           </View>
           <View style={styles.box}>
             <Text
@@ -123,11 +112,8 @@ const HomeScreen = ({navigation}) => {
               ]}>
               Ruang mammaSIP
             </Text>
-            <Button
-              title="aaaaaa"
-              onPress={() => navigation.navigate('ListQuiz')}
-            />
-            <HomeItem
+
+            {/* <HomeItem
               data={penyuluhan}
               onPress={() => navigation.navigate('Counseling')}
               colorId={'penyuluhan'}
@@ -136,29 +122,18 @@ const HomeScreen = ({navigation}) => {
               data={perpustakaan}
               onPress={() => navigation.navigate('Counseling')}
               colorId={7}
-            />
+            /> */}
             {roomData.map(item => (
               <HomeItem
                 data={item}
                 key={item.id_ruang}
-                onPress={() =>
-                  handleNavigator({
-                    idRuang: item.id_ruang,
-                    title: item.nama_ruang,
-                  })
-                }
+                onPress={() => handleNavigator(item)}
                 colorId={item.flag_mobile_color}
                 // color={item.color}
                 // image={item.image}
               />
             ))}
-            {/* <HomeItem
-            title="Bunga Rampai"
-            desc="Ruang Perpustakaan"
-            // onPress={handleNavigator}
-            color={COLORS.primary}
-            image={<ICON.bunga height={80} width={80} />}
-          /> */}
+
             {!token ? (
               <View style={styles.footer}>
                 <Text style={FONTS.textBold24}>Lindungi diri dari kanker</Text>
@@ -193,30 +168,39 @@ const HomeScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  box: {paddingHorizontal: 16, paddingTop: 24},
-  seeAll: {color: COLORS.primary, paddingVertical: 4, paddingLeft: 32},
-  welcome: {justifyContent: 'center', alignItems: 'center', marginTop: 16},
-  desc: {
-    color: COLORS.black,
-    textAlign: 'center',
-    marginHorizontal: 24,
-    marginTop: 4,
-  },
-  row: {
+  message: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 8,
-    marginTop: 24,
-  },
-  categoryWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    width: '45%',
-    marginHorizontal: 8,
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.secondary,
+    marginHorizontal: 16,
+    padding: 12,
     borderRadius: 8,
   },
-  img: {marginRight: 8},
+  box: {paddingHorizontal: 16, paddingTop: 24},
+  //   seeAll: {color: COLORS.primary, paddingVertical: 4, paddingLeft: 32},
+  //   welcome: {justifyContent: 'center', alignItems: 'center', marginTop: 16},
+  //   desc: {
+  //     color: COLORS.black,
+  //     textAlign: 'center',
+  //     marginHorizontal: 24,
+  //     marginTop: 4,
+  //   },
+  //   row: {
+  //     flexDirection: 'row',
+  //     alignItems: 'center',
+  //     paddingHorizontal: 8,
+  //     marginTop: 24,
+  //   },
+  //   categoryWrapper: {
+  //     flexDirection: 'row',
+  //     alignItems: 'center',
+  //     padding: 16,
+  //     width: '45%',
+  //     marginHorizontal: 8,
+  //     borderRadius: 8,
+  //   },
+  //   img: {marginRight: 8},
   footer: {marginTop: 52, alignItems: 'center'},
   login: {flexDirection: 'row', alignItems: 'center', padding: 16},
 });

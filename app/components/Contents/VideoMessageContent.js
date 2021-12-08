@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   text: {marginLeft: 12, justifyContent: 'center', flex: 1},
-  img: {height: 60, width: 60, borderRadius: 60, backgroundColor: 'red'},
+  img: {height: 60, width: 60, borderRadius: 60, backgroundColor: COLORS.gray},
   margin: {
     marginRight: 6,
   },

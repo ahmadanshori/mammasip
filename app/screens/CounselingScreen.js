@@ -31,6 +31,9 @@ const CounselingScreen = ({navigation}) => {
   };
 
   const handleMedia = val => {
+    //   type_file
+    //  1 foto, 2 video, 3 pdf, 4 pptx
+    // 1,2,3 bisa di view baru download, 4 langsung download
     if (val.idType === 2) {
       navigation.navigate('Video', {url: val.url});
     } else if (val.idType === 3) {
