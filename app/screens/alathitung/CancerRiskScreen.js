@@ -139,7 +139,7 @@ const CaloriesScreen = ({navigation}) => {
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain
             </Text>
-            <TouchableNativeFeedback>
+            <TouchableNativeFeedback onPress={() => handleNavigation('Faq')}>
               <View style={styles.askButton}>
                 <Icon name="questioncircleo" size={20} color={COLORS.primary} />
                 <Text
@@ -152,7 +152,7 @@ const CaloriesScreen = ({navigation}) => {
               </View>
             </TouchableNativeFeedback>
           </View>
-          <View style={styles.margin}>
+          {/* <View style={styles.margin}>
             <CalculatorItem
               image={<QuizIcon width={60} height={60} />}
               //   onPress={() => handleNavigation('WeightCalculator')}
@@ -168,7 +168,7 @@ const CaloriesScreen = ({navigation}) => {
               description="Uji pengetahuanmu dengan quiz
               kesehatan dari mammaSIP."
             />
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </View>

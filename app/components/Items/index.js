@@ -9,7 +9,8 @@ import ArticleDetailItem from './ArticleDetailItem';
 import BookItem from './BookItem';
 import BookDetailItem from './BookDetailItem';
 import TestimonialItem from './TestimonialItem';
-import CounselingItem from './CounselingItem';
+import CalorieItem from './CalorieItem';
+import RoomItem from './RoomItem';
 export {
   HomeItem,
   ProfileItem,
@@ -22,5 +23,6 @@ export {
   BookItem,
   BookDetailItem,
   TestimonialItem,
-  CounselingItem,
+  CalorieItem,
+  RoomItem,
 };

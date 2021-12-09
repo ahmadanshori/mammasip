@@ -37,7 +37,7 @@ const HeaderTitle = ({
             FONTS.textBold14,
             {color: white ? COLORS.white : COLORS.black, flex: 1},
           ]}
-          numberOfLines={1}>
+          numberOfLines={2}>
           {title}
         </Text>
       </View>

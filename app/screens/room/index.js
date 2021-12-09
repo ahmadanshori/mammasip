@@ -1,3 +1,5 @@
 import DoctorRoomScreen from './DoctorRoomScreen';
 import KnowYourSelfScreen from './KnowYourSelfScreen';
-export {DoctorRoomScreen, KnowYourSelfScreen};
+import ListRoomScreen from './ListRoomScreen';
+import CounselingScreen from './CounselingScreen';
+export {DoctorRoomScreen, KnowYourSelfScreen, ListRoomScreen, CounselingScreen};

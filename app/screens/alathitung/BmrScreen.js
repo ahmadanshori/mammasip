@@ -153,7 +153,7 @@ const WeightCalculatorScreen = ({navigation}) => {
             </Text>
             <AskButton onPress={() => navigation.navigate('Faq')} />
           </View>
-          <View style={styles.margin}>
+          {/* <View style={styles.margin}>
             <CalculatorItem
               image={<QuizIcon width={60} height={60} />}
               // onPress={() => handleNavigation('WeightCalculator')}
@@ -169,7 +169,7 @@ const WeightCalculatorScreen = ({navigation}) => {
               description="Uji pengetahuanmu dengan quiz
               kesehatan dari mammaSIP."
             />
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </View>

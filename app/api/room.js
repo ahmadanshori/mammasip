@@ -1,4 +1,4 @@
-import {client, createHeader} from './';
+import {client} from './';
 
 export const getArticleByRoomAPI = (idRuang, page) => {
   return client.get(
@@ -22,3 +22,6 @@ export const getImportantMessageAPI = () =>
   client.get('/ruang-master/pesan-penting');
 
 export const getTestimoniAPI = () => client.get('/testimoni');
+
+export const getVideoAPI = id =>
+  client.get(`/ruang-master/video-olahraga/${id}`);

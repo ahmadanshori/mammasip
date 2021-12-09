@@ -1,34 +1,113 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {DoctorHeader} from '../../components/Headers';
+import React, {useEffect, useState, useCallback} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableNativeFeedback,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {BackgroundHeader} from '../../components/Headers';
+import {LoadingComponent} from '../../components/Loadings';
+import {Container} from '../../components/Container';
+import {RoomItem} from '../../components/Items';
+import ImportantMessage from '../../components/ImportantMessage';
 import {getRoomTypeByIdAPI} from '../../api/room';
+import {COLORS, FONTS} from '../../constants';
 
-const DoctorRooomScreen = ({route}) => {
+const DoctorRooomScreen = ({route, navigation}) => {
   const {id} = route.params;
-  const [doctorRoomData, setDoctorRoomData] = useState(null);
+  const [doctorData, setDoctorData] = useState(null);
+  const [loading, setLoading] = useState({get: true, refresh: false});
 
   useEffect(() => {
     getInitialData();
   }, []);
-
   const getInitialData = async () => {
     try {
       const res = await getRoomTypeByIdAPI(id);
-      console.log('res', res);
-      setDoctorRoomData(res.data.data);
+      console.log(`res`, res);
+      setDoctorData(res.data.data);
     } catch (e) {
       console.log('e', e);
+    } finally {
+      setLoading({get: false, refresh: false});
     }
   };
+  const onRoom = useCallback(
+    roomId => {
+      navigation.navigate('Room', {roomId});
+    },
+    [navigation],
+  );
 
   return (
-    <View>
-      <DoctorHeader />
-      <Text>aaaa</Text>
-    </View>
+    <Container>
+      {loading.get ? (
+        <LoadingComponent />
+      ) : (
+        <ScrollView>
+          <BackgroundHeader
+            title={doctorData?.nama_ruang}
+            desc={doctorData?.description}
+            source={{uri: doctorData?.url_picture_bg}}
+          />
+          <View style={styles.padding}>
+            <ImportantMessage
+              title={doctorData?.kata_pengantar}
+              style={styles.mBottom}
+            />
+            {doctorData.child_ruang.map((item, index) => {
+              if (index !== 0) {
+                return (
+                  <RoomItem
+                    key={item.id_ruang}
+                    title={item.nama_ruang}
+                    onPress={() => onRoom(item.id_ruang)}
+                  />
+                );
+              }
+            })}
+            <TouchableNativeFeedback
+              onPress={() => onRoom(doctorData.child_ruang[0].id_ruang)}>
+              <View style={styles.message}>
+                <View style={styles.flex}>
+                  <View style={styles.row}>
+                    <Icon name="message-text" size={25} color={COLORS.white} />
+                    <Text style={[FONTS.textBold16, styles.messageText]}>
+                      Pesan Pengingat
+                    </Text>
+                  </View>
+                  <Text style={[FONTS.text12, {color: COLORS.white}]}>
+                    Video senior akademisi mengenai mengemban amanah sebagai
+                    orang berilmu (Prof. Quraish Shihab)
+                  </Text>
+                </View>
+                <Icon name="play-circle" size={60} color={COLORS.white} />
+              </View>
+            </TouchableNativeFeedback>
+          </View>
+        </ScrollView>
+      )}
+    </Container>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  padding: {padding: 16},
+  mBottom: {marginBottom: 16},
+  message: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.darkBlue,
+    padding: 16,
+    borderRadius: 8,
+    marginTop: 24,
+  },
+  flex: {flex: 1},
+  row: {flexDirection: 'row', alignItems: 'center', marginBottom: 8},
+  messageText: {color: COLORS.white, marginLeft: 6},
+});
 
 export default DoctorRooomScreen;

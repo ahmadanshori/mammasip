@@ -9,12 +9,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SplashScreen from '../screens/SplashScreen';
 import VideoScreen from '../screens/VideoScreen';
 import RoomScreen from '../screens/RoomScreen';
-import ListRoomScreen from '../screens/ListRoomScreen';
+
 import FaqScreen from '../screens/FaqScreen';
 import ListSearchScreen from '../screens/ListSearchScreen';
 import PdfScreen from '../screens/PdfScreen';
 import ImportantMessageScreen from '../screens/ImportantMessageScreen';
-import CounselingScreen from '../screens/CounselingScreen';
 import {
   HomeScreen,
   AlatHitungScreen,
@@ -39,7 +38,13 @@ import {
   MenuPackageScreen,
 } from '../screens/alathitung';
 import {ListQuizScreen, QuizScreen} from '../screens/quiz';
-import {DoctorRoomScreen, KnowYourSelfScreen} from '../screens/room';
+import {
+  DoctorRoomScreen,
+  KnowYourSelfScreen,
+  ListRoomScreen,
+  CounselingScreen,
+} from '../screens/room';
+import CaloriesDetailScreen from '../screens/CaloriesDetailScreen';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -271,6 +276,10 @@ export default function App() {
           <Stack.Screen component={QuizScreen} name="Quiz" />
           <Stack.Screen component={DoctorRoomScreen} name="DoctorRoom" />
           <Stack.Screen component={KnowYourSelfScreen} name="KnowYourSelf" />
+          <Stack.Screen
+            component={CaloriesDetailScreen}
+            name="CaloriesDetail"
+          />
         </>
       </Stack.Navigator>
     </NavigationContainer>

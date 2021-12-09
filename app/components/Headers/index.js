@@ -3,8 +3,6 @@ import ProfileHeader from './ProfileHeader';
 import HeaderTitle from './HeaderTitle';
 import WeightCalculatorHeader from './WeightCalculatorHeader';
 import BackgroundHeader from './BackgroundHeader';
-import DoctorHeader from './DoctorHeader';
-
 import VideoHeader from './VideoHeader';
 export {
   HomeHeader,
@@ -13,5 +11,4 @@ export {
   WeightCalculatorHeader,
   VideoHeader,
   BackgroundHeader,
-  DoctorHeader,
 };

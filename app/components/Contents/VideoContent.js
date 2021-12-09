@@ -1,44 +1,56 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {WebView} from 'react-native-webview';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const VideoContent = ({data, onPress}) => {
+  console.log(`data`, data);
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <Ionicons
           name="alert-circle-outline"
           size={20}
-          color={COLORS.darkBlue}
+          color={COLORS.white}
           style={styles.margin}
         />
-        <Text style={[FONTS.text10, {color: COLORS.black, flex: 1}]}>
+        <Text style={[FONTS.text10, {color: COLORS.white, flex: 1}]}>
           {data?.kata_pengantar}
         </Text>
       </View>
-      <View style={styles.imgWrapper}>
+      {/* <View style={styles.imgWrapper}>
         <WebView
           source={{uri: data?.url}}
           mediaPlaybackRequiresUserAction={true}
           automaticallyAdjustContentInsets={false}
-          //   userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"
         />
-        {/* <VideoPlayer
-          source={{uri: 'https://vjs.zencdn.net/v/oceans.mp4'}}
-          seekColor={COLORS.primary}
-        /> */}
-        {/* <Image
-          source={require('../../assets/images/aa.jpeg')}
-          style={styles.img}
-        /> */}
         <TouchableOpacity style={styles.shadow} onPress={onPress} />
-        {/* <View style={styles.iconPlay}>
-          <Ionicons name="play" size={30} color={COLORS.primary} />
-        </View> */}
-      </View>
+      </View> */}
+      {/* <View style={styles.imgWrapper}>
+        <Text>aaa</Text>
+      </View> */}
+      {data.url ? (
+        <TouchableOpacity activeOpacity={SIZES.opacity} onPress={onPress}>
+          <Image source={{uri: data.url}} style={styles.image} />
+          <View style={styles.shadow}>
+            <MaterialCommunityIcons
+              name="youtube"
+              size={60}
+              color={COLORS.red}
+            />
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.notfound}>
+          <MaterialCommunityIcons
+            name="video-off-outline"
+            size={60}
+            color={COLORS.gray}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -56,7 +68,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     marginBottom: 12,
-    backgroundColor: '#F2F6FF',
+    backgroundColor: COLORS.primary,
     padding: 6,
     borderRadius: 6,
     width: '100%',
@@ -67,8 +79,6 @@ const styles = StyleSheet.create({
   imgWrapper: {
     height: SIZES.width2,
     width: SIZES.width - 56,
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   img: {
     height: SIZES.width2,
@@ -89,8 +99,19 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
     zIndex: 999,
     backgroundColor: COLORS.shadowWhite,
+  },
+  image: {height: SIZES.width2, width: SIZES.width - 56, borderRadius: 6},
+  notfound: {
+    backgroundColor: COLORS.lightGray,
+    height: SIZES.width2,
+    width: SIZES.width - 56,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 6,
   },
 });
 

@@ -17,17 +17,6 @@ import {LoadingComponent} from '../../components/Loadings';
 import {getRoomAPI} from '../../api/room';
 import {FONTS, COLORS, ICON, SIZES} from '../../constants';
 import {AppContext} from '../../index';
-// import WelcomeIcon from '../../assets/images/welcome.svg';
-// import {Container} from '../../components/Container';
-
-// const penyuluhan = {
-//   nama_ruang: 'Penyuluhan',
-//   description: 'Lebih tahu tentang payudara & kanker payudara',
-// };
-// const perpustakaan = {
-//   nama_ruang: 'Bunga Rampai',
-//   description: 'Lebih tahu tentang payudara & kanker payudara',
-// };
 
 const HomeScreen = ({navigation}) => {
   const {user, token} = useContext(AppContext);
@@ -50,7 +39,7 @@ const HomeScreen = ({navigation}) => {
   };
 
   const handleNavigator = event => {
-    const {id_ruang, nama_ruang} = event;
+    const {id_ruang} = event;
     if (id_ruang === 4) {
       navigation.navigate('KnowYourSelf', {id: id_ruang});
     } else if (id_ruang === 5) {
@@ -60,7 +49,7 @@ const HomeScreen = ({navigation}) => {
     } else if (id_ruang === 8) {
       navigation.navigate('Faq');
     } else {
-      navigation.navigate('ListRoom', {idRuang: id_ruang, title: nama_ruang});
+      navigation.navigate('ListRoom', {id: id_ruang});
     }
   };
 
@@ -97,11 +86,10 @@ const HomeScreen = ({navigation}) => {
               <ICON.deddy height={60} width={60} />
             </View>
           </TouchableNativeFeedback>
-          <View style={{backgroundColor: 'red', marginTop: 16}}>
-            {/* <WelcomeIcon height={SIZES.width1} width={SIZES.width} /> */}
+          <View style={styles.box}>
             <Image
               source={require('../../assets/images/welcome.png')}
-              style={{height: SIZES.width2, width: SIZES.width}}
+              style={styles.img}
             />
           </View>
           <View style={styles.box}>
@@ -112,17 +100,6 @@ const HomeScreen = ({navigation}) => {
               ]}>
               Ruang mammaSIP
             </Text>
-
-            {/* <HomeItem
-              data={penyuluhan}
-              onPress={() => navigation.navigate('Counseling')}
-              colorId={'penyuluhan'}
-            />
-            <HomeItem
-              data={perpustakaan}
-              onPress={() => navigation.navigate('Counseling')}
-              colorId={7}
-            /> */}
             {roomData.map(item => (
               <HomeItem
                 data={item}
@@ -177,30 +154,13 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
   },
-  box: {paddingHorizontal: 16, paddingTop: 24},
-  //   seeAll: {color: COLORS.primary, paddingVertical: 4, paddingLeft: 32},
-  //   welcome: {justifyContent: 'center', alignItems: 'center', marginTop: 16},
-  //   desc: {
-  //     color: COLORS.black,
-  //     textAlign: 'center',
-  //     marginHorizontal: 24,
-  //     marginTop: 4,
-  //   },
-  //   row: {
-  //     flexDirection: 'row',
-  //     alignItems: 'center',
-  //     paddingHorizontal: 8,
-  //     marginTop: 24,
-  //   },
-  //   categoryWrapper: {
-  //     flexDirection: 'row',
-  //     alignItems: 'center',
-  //     padding: 16,
-  //     width: '45%',
-  //     marginHorizontal: 8,
-  //     borderRadius: 8,
-  //   },
-  //   img: {marginRight: 8},
+  box: {paddingHorizontal: 16},
+  img: {
+    height: SIZES.width2,
+    width: '100%',
+    borderRadius: 8,
+    marginVertical: 16,
+  },
   footer: {marginTop: 52, alignItems: 'center'},
   login: {flexDirection: 'row', alignItems: 'center', padding: 16},
 });

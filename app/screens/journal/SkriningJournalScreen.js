@@ -118,7 +118,7 @@ const SkriningJournalScreen = () => {
             Butuh informasi lainya?
           </Text>
           <AskButton />
-          <View style={styles.margin}>
+          {/* <View style={styles.margin}>
             <CalculatorItem
               image={<QuizIcon height={60} width={60} />}
               // onPress={() => handleNavigation('WeightCalculator')}
@@ -134,7 +134,7 @@ const SkriningJournalScreen = () => {
               description="Uji pengetahuanmu dengan quiz
               kesehatan dari mammaSIP."
             />
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </Container>

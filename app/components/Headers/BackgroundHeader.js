@@ -1,16 +1,22 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, Platform, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  StyleSheet,
+  ImageBackground,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const BackgroundHeader = ({
   title,
-  onSharePress,
-  onDownloadPress,
+  desc,
+  source,
   backgroundColor,
-  white,
+  white = false,
 }) => {
   const navigation = useNavigation();
   const containerStyles = [styles.body];
@@ -18,8 +24,8 @@ const BackgroundHeader = ({
     containerStyles.push({backgroundColor});
   }
   return (
-    <View style={containerStyles}>
-      <View style={styles.wrapper}>
+    <ImageBackground source={source} style={styles.background}>
+      <View style={containerStyles}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -32,26 +38,25 @@ const BackgroundHeader = ({
             color={white ? COLORS.white : COLORS.black}
           />
         </TouchableOpacity>
+        <View style={styles.w15} />
+      </View>
+      <View style={styles.textWrapper}>
         <Text
           style={[
-            FONTS.textBold14,
-            {color: white ? COLORS.white : COLORS.black, flex: 1},
-          ]}
-          numberOfLines={1}>
+            FONTS.textBold18,
+            {color: white ? COLORS.white : COLORS.black, textAlign: 'center'},
+          ]}>
           {title}
         </Text>
+        <Text
+          style={[
+            FONTS.text14,
+            {color: white ? COLORS.white : COLORS.black, textAlign: 'center'},
+          ]}>
+          {desc}
+        </Text>
       </View>
-      {onSharePress ? (
-        <TouchableOpacity style={styles.shareButton} onPress={onSharePress}>
-          <Icon name="sharealt" size={18} />
-        </TouchableOpacity>
-      ) : null}
-      {onDownloadPress ? (
-        <TouchableOpacity style={styles.shareButton} onPress={onDownloadPress}>
-          <MaterialIcons name="file-download" size={18} />
-        </TouchableOpacity>
-      ) : null}
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -61,26 +66,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    backgroundColor: COLORS.white,
   },
-  wrapper: {
-    flexDirection: 'row',
+  background: {height: SIZES.width2 - 34, width: SIZES.width},
+  textWrapper: {
+    justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    marginTop: 24,
+    paddingHorizontal: 16,
   },
   button: {
+    width: '15%',
     paddingVertical: 16,
-    paddingHorizontal: 24,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
-  iconBack: {
-    height: 30,
-    width: 30,
-  },
-  settingButton: {padding: 8},
-  shareButton: {paddingVertical: 16, paddingHorizontal: 24},
+  w15: {width: '15%'},
 });
 
 export default BackgroundHeader;

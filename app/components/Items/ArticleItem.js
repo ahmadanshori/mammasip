@@ -3,8 +3,9 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
+import formatDate from '../../libs/formatDate';
 
-const ArticleItem = ({category, video, onPress, title, source}) => {
+const ArticleItem = ({category, video, onPress, date, title, source}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -18,9 +19,6 @@ const ArticleItem = ({category, video, onPress, title, source}) => {
         </View>
       )}
       <View style={styles.shadowImg}>
-        <TouchableOpacity style={styles.bookmark}>
-          <Icon name="bookmark-outline" size={20} color={COLORS.white} />
-        </TouchableOpacity>
         {video && <Icon name="play-circle" size={30} color={COLORS.white} />}
       </View>
       <View style={styles.body}>
@@ -34,7 +32,15 @@ const ArticleItem = ({category, video, onPress, title, source}) => {
             <View />
           </View>
         )}
-        <Text style={[FONTS.text10, {color: COLORS.black}]}>{title}</Text>
+        <Text
+          style={[FONTS.textBold12, {color: COLORS.black}]}
+          numberOfLines={2}>
+          {title}
+        </Text>
+
+        <Text style={[FONTS.text10, {color: COLORS.gray}]}>
+          Diupload {formatDate(date)}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -52,8 +58,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: SIZES.width3,
     width: SIZES.width3,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    borderRadius: 8,
   },
   shadowImg: {
     height: SIZES.width3,
@@ -62,12 +67,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    borderRadius: 8,
     zIndex: 99,
   },
   bookmark: {position: 'absolute', top: 0, right: 0, padding: 8},
-  body: {paddingHorizontal: 8, paddingVertical: 10},
+  body: {paddingVertical: 10},
   spaceBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -3,15 +3,9 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
+import formatDate from '../../libs/formatDate';
 
-const ArticleDetailItem = ({
-  onPress,
-  bookmark,
-  source,
-  title,
-  date,
-  category,
-}) => {
+const ArticleDetailItem = ({onPress, source, title, date, category}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -19,7 +13,7 @@ const ArticleDetailItem = ({
       onPress={onPress}>
       <View>
         {source ? (
-          <Image source={source} style={styles.img} />
+          <Image source={{uri: source}} style={styles.img} />
         ) : (
           <View style={styles.shadowImg}>
             <Icon name="image-outline" size={30} color={COLORS.gray} />
@@ -28,8 +22,10 @@ const ArticleDetailItem = ({
       </View>
       <View style={styles.body}>
         <Text style={FONTS.textBold14}>{title}</Text>
+        <Text style={[FONTS.text10, {color: COLORS.gray}]}>
+          Diupload {formatDate(date)}
+        </Text>
         <View style={styles.row}>
-          <Text style={[FONTS.text10, {color: COLORS.gray}]}>{date}</Text>
           {category && (
             <View style={styles.category}>
               <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
@@ -87,7 +83,6 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     borderRadius: 12,
     backgroundColor: COLORS.shadowPrimary,
-    marginLeft: 8,
   },
 });
 

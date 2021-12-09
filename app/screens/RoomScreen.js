@@ -23,14 +23,14 @@ import {
   ArticleContent,
 } from '../components/Contents';
 
-import {VideoHeader} from '../components/Headers';
+import {HeaderTitle} from '../components/Headers';
 import {AppContext} from '../index';
 import {COLORS, FONTS, SIZES} from '../constants';
 import {getArticleByRoomAPI, getRoomTypeByIdAPI} from '../api/room';
 import QuizIcon from '../assets/icons/quiz.svg';
 
 const RoomScreen = ({navigation, route}) => {
-  const {typeRuang} = route.params;
+  const {roomId} = route.params;
   const {token, setLoading} = useContext(AppContext);
   // const [query, setQuery] = useState({page: 1, totalPages: 0});
   // const [articleData, setArticleData] = useState(null);
@@ -45,9 +45,9 @@ const RoomScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      // const res = await getArticleByRoomAPI(typeRuang, query?.page);
+      // const res = await getArticleByRoomAPI(roomId, query?.page);
       // console.log(`res`, res);
-      const resRoom = await getRoomTypeByIdAPI(typeRuang);
+      const resRoom = await getRoomTypeByIdAPI(roomId);
       console.log(`resRoom`, resRoom);
       // setArticleData(res.data.data.content[0]);
       setData(resRoom.data.data);
@@ -74,12 +74,12 @@ const RoomScreen = ({navigation, route}) => {
   // const handleNextArticle = async val => {
   //   setLoading(true);
   //   const oldQuery = query;
-  //   console.log(`test`, val, token, oldQuery, typeRuang);
+  //   console.log(`test`, val, token, oldQuery, roomId);
 
   //   try {
   //     console.log('1');
   //     const res = await getArticleByRoomAPI(
-  //       typeRuang,
+  //       roomId,
   //       val ? query.page + 1 : query.page - 1,
   //     );
   //     console.log(`res1`, res);
@@ -95,17 +95,6 @@ const RoomScreen = ({navigation, route}) => {
   //     setLoading(false);
   //   }
   // };
-
-  const headerComponent = () => (
-    <View style={styles.wrapper}>
-      <Text style={[FONTS.textBold16, {color: COLORS.black}]}>
-        {data?.nama_ruang}
-      </Text>
-      <Text style={[FONTS.text12, {color: COLORS.black}]}>
-        {data?.description}
-      </Text>
-    </View>
-  );
 
   const onQuiz = id => {
     navigation.navigate('Quiz', {id});
@@ -136,7 +125,7 @@ const RoomScreen = ({navigation, route}) => {
 
   return (
     <Container>
-      <VideoHeader />
+      <HeaderTitle title={data?.nama_ruang} />
       {load.get ? (
         <LoadingComponent />
       ) : (
@@ -157,100 +146,9 @@ const RoomScreen = ({navigation, route}) => {
             data={data.media}
             keyExtractor={item => item.idMedia.toString()}
             renderItem={renderItem}
-            ListHeaderComponent={headerComponent}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{paddingBottom: 50}}
+            contentContainerStyle={{paddingBottom: 50, paddingTop: 16}}
           />
-
-          {/* <View style={styles.wrapper}>
-            <RenderHtml
-              contentWidth={SIZES.width}
-              source={{
-                html: isArticle
-                  ? articleData?.bodyArticle
-                  : articleData?.abstractArticle,
-              }}
-            />
-            <OutlineButton
-              title={isArticle ? 'Lihat Lebih Sedikit' : 'Lihat Selengkapnya'}
-              onPress={handleArticleButton}
-              style={styles.button}
-            />
-            {query.page === 0 ? (
-              <>
-                {query?.totalPages > 0 ? (
-                  <>
-                    <MainButton
-                      title={'Chapter Selanjutnya'}
-                      onPress={() => handleNextArticle(true)}
-                      style={styles.button}
-                      right
-                    />
-                  </>
-                ) : null}
-              </>
-            ) : (
-              <>
-                {query?.page === query?.totalPages ? (
-                  <MainButton
-                    title={'Chapter Selanjutnya'}
-                    onPress={() => handleNextArticle(false)}
-                    style={styles.button}
-                    left
-                  />
-                ) : (
-                  <>
-                    {query?.page > 0 && query?.page < query?.totalPages ? (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          marginTop: 16,
-                        }}>
-                        <OutlineButton
-                          title={'Selanjutnya'}
-                          onPress={() => handleNextArticle(true)}
-                          style={{width: '48%'}}
-                          right
-                        />
-                        <MainButton
-                          title={'Kembali'}
-                          onPress={() => handleNextArticle(false)}
-                          style={{width: '48%'}}
-                          left
-                        />
-                      </View>
-                    ) : null}
-                  </>
-                )}
-              </>
-            )}
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginVertical: 16,
-                flexWrap: 'wrap',
-              }}>
-              {articleData?.hastag?.map(item => (
-                <View style={styles.room} key={item.idHastag}>
-                  <Text style={[FONTS.text10, {color: COLORS.black}]}>
-                    {item.nameCategory}
-                  </Text>
-                </View>
-              ))}
-            </View>
-            <CalculatorItem
-              image={<QuizIcon width={60} height={60} />}
-              // onPress={() => handleNavigation('WeightCalculator')}
-              backgroundColor={COLORS.primary}
-              title="Ayo ikutan Quiz!"
-              description="Uji pengetahuanmu dengan quiz
-              kesehatan dari mammaSIP."
-            />
-          </View> */}
         </View>
       )}
 
@@ -267,8 +165,8 @@ const RoomScreen = ({navigation, route}) => {
           <ArticleItem category />
           <ArticleItem category />
         </ScrollView>
-      </View> */}
-      {/* <View style={styles.wrapper}>
+      </View>
+      <View style={styles.wrapper}>
         <View style={styles.header}>
           <Text style={FONTS.textBold14}>Video yang mungkin anda suka</Text>
         </View>

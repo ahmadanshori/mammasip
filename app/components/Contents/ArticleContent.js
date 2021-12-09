@@ -20,10 +20,10 @@ const ArticleContent = ({data}) => {
           <Ionicons
             name="alert-circle-outline"
             size={16}
-            color={COLORS.darkBlue}
+            color={COLORS.white}
             style={styles.margin}
           />
-          <Text style={[FONTS.text10, {color: COLORS.black, flex: 1}]}>
+          <Text style={[FONTS.text10, {color: COLORS.white, flex: 1}]}>
             {data.kata_pengantar}
           </Text>
         </View>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     marginBottom: 12,
-    backgroundColor: '#F2F6FF',
+    backgroundColor: COLORS.primary,
     padding: 6,
     borderRadius: 6,
     width: '100%',

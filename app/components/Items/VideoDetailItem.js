@@ -3,16 +3,17 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
+import formatDate from '../../libs/formatDate';
 
-const VideoDetailItem = ({onPress, title, category = [], source}) => {
+const VideoDetailItem = ({onPress, category = [], data}) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
-      {source ? (
+      {data?.url ? (
         <View>
-          <Image source={source} style={styles.img} />
+          <Image source={{uri: data?.url}} style={styles.img} />
           <View style={styles.shadowImg}>
             <View style={styles.circleIcon}>
               <Icon
@@ -29,11 +30,12 @@ const VideoDetailItem = ({onPress, title, category = [], source}) => {
           <Icon name="image-outline" size={30} color={COLORS.gray} />
         </View>
       )}
-
       <View style={styles.body}>
-        <Text style={FONTS.textBold14}>{title}</Text>
+        <Text style={FONTS.textBold14}>{data?.kata_pengantar}</Text>
         <View style={styles.row}>
-          {/* <Text style={[FONTS.text10, {color: COLORS.gray}]}>12 Sep 2021</Text> */}
+          <Text style={[FONTS.text10, {color: COLORS.gray}]}>
+            {formatDate(data.createdDate)}
+          </Text>
           {category?.length ? (
             <View style={styles.category}>
               <Text style={[FONTS.textBold10, {color: COLORS.gray}]}>
@@ -43,9 +45,6 @@ const VideoDetailItem = ({onPress, title, category = [], source}) => {
           ) : null}
         </View>
       </View>
-      {/* <TouchableOpacity style={{paddingHorizontal: 4}}>
-        <Icon name="bookmark-outline" size={20} />
-      </TouchableOpacity> */}
     </TouchableOpacity>
   );
 };
