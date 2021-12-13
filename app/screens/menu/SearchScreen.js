@@ -4,32 +4,36 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
+  Keyboard,
+  Linking,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Container} from '../../components/Container';
 import {AskButton} from '../../components/Buttons';
 
-import {VideoItem, VideoDetailItem} from '../../components/Items';
 import {
-  VideoRecomendation,
+  // VideoRecomendation,
   ArticleRecomendation,
   BookRekomendation,
-  ImportanLink,
+  SearchDataComponent,
 } from '../../components/Search';
-import {COLORS, FONTS, SIZES} from '../../constants';
+import {dropdownalert} from '../../components/AlertProvider';
+import {LoadingComponent} from '../../components/Loadings';
+import {SearchInput} from '../../components/Inputs';
+import {FONTS} from '../../constants';
 import {getTopArticle} from '../../api/article';
 import {getTopBook} from '../../api/book';
-import {getRoomAPI} from '../../api/room';
+import {searchAllDataAPI} from '../../api/faq';
 import {AppContext} from '../../index';
-import {LoadingComponent} from '../../components/Loadings';
 
 const SearchScreen = ({navigation}) => {
   const {token} = useContext(AppContext);
   const [articleRecomended, setArticleRecomended] = useState([]);
   const [bookRecomended, setBookRecomended] = useState([]);
   const [loading, setLoading] = useState({get: true, refresh: false});
-  const [roomData, setRoomData] = useState([]);
+  const [search, setSearch] = useState('');
+  const [searchData, setSearchData] = useState(null);
+  const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
     getInitialData();
@@ -37,10 +41,8 @@ const SearchScreen = ({navigation}) => {
 
   const getInitialData = async () => {
     try {
-      const resRoom = await getRoomAPI();
       const resTopArticle = await getTopArticle(token);
       const resTopBook = await getTopBook(token);
-      setRoomData(resRoom.data.data);
       setArticleRecomended(resTopArticle.data.data);
       setBookRecomended(resTopBook.data.data);
     } catch (e) {
@@ -50,8 +52,70 @@ const SearchScreen = ({navigation}) => {
     }
   };
 
-  const handleNavigator = (screen, param) => {
-    navigation.navigate(screen, param);
+  const handleNavigator = useCallback(
+    (screen, param) => {
+      navigation.navigate(screen, param);
+    },
+    [navigation],
+  );
+  const handleSearch = text => {
+    setSearch(text);
+  };
+
+  const onSubmit = useCallback(async () => {
+    Keyboard.dismiss();
+    if (!isSearch) {
+      setIsSearch(true);
+    }
+    setLoading({get: true, refresh: false});
+    try {
+      const formData = new FormData();
+      formData.append('search', search);
+      const resSearch = await searchAllDataAPI(formData);
+      setSearchData(resSearch.data.data);
+    } catch (err) {
+      // console.log(`err`, {...err});
+    } finally {
+      setLoading({get: false, refresh: false});
+    }
+  }, [search, isSearch]);
+
+  // const handleMedia = val => {
+  //   if (val.typeFile === 2) {
+  //     navigation.navigate('Video', {url: val.url_frame});
+  //   } else if (val.typeFile === 3) {
+  //     navigation.navigate('Pdf', {
+  //       link: val.url,
+  //     });
+  //   } else {
+  //     setSelected(val);
+  //     setIsDownload(true);
+  //   }
+  //   //   type_file
+  //   //  1 foto, 2 video, 3 pdf, 4 pptx
+  //   // 1,2,3 bisa di view baru download, 4 langsung download
+  // };
+
+  const handleNavigatorSearch = async (event, type) => {
+    if (type === 1) {
+      if (event.isUrl === 0) {
+        navigation.navigate('Article', {articleId: event.idArticle});
+      } else {
+        const supported = await Linking.canOpenURL(event?.urlArticle);
+        if (supported) {
+          await Linking.openURL(event?.urlArticle);
+        } else {
+          dropdownalert.alertWithType(
+            'warn',
+            '',
+            'link sedang dalam perbaikan!!',
+          );
+        }
+      }
+    } else if (type === 2) {
+      navigation.navigate('Pdf', {link: event.urlBook});
+    } else {
+    }
   };
 
   return (
@@ -61,27 +125,15 @@ const SearchScreen = ({navigation}) => {
           <Text style={FONTS.textBold20}>Telusuri</Text>
           <Icon name="bookmark-outline" size={20} />
         </View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{paddingHorizontal: 8}}>
-          {roomData.map(item => (
-            <TouchableOpacity
-              activeOpacity={SIZES.opacity}
-              onPress={() =>
-                handleNavigator('ListRoom', {
-                  idRuang: item.id_ruang,
-                  title: item.nama_ruang,
-                })
-              }
-              key={item.id_ruang}
-              style={styles.category}>
-              <Text style={[FONTS.text10, {color: COLORS.secondary}]}>
-                {item.nama_ruang}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <View style={{paddingHorizontal: 16}}>
+          <SearchInput
+            placeholder={'Cari judul artikel, video atau buku'}
+            value={search}
+            onChangeText={handleSearch}
+            onSubmitEditing={onSubmit}
+            on
+          />
+        </View>
       </View>
       {loading.get ? (
         <LoadingComponent />
@@ -89,53 +141,42 @@ const SearchScreen = ({navigation}) => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingHorizontal: 16, paddingBottom: 16}}>
+          {isSearch ? (
+            <SearchDataComponent
+              data={searchData}
+              onPress={handleNavigatorSearch}
+            />
+          ) : (
+            <>
+              {articleRecomended.length ? (
+                <ArticleRecomendation
+                  data={articleRecomended}
+                  onPress={articleId => handleNavigator('Article', {articleId})}
+                  seeAllOnPress={() =>
+                    handleNavigator('BungaRampaiList', {
+                      type: 4,
+                      title: 'Artikel',
+                    })
+                  }
+                />
+              ) : null}
+              {bookRecomended.length ? (
+                <BookRekomendation
+                  data={bookRecomended}
+                  onPress={url => handleNavigator('Pdf', {link: url})}
+                  seeAllOnPress={() =>
+                    handleNavigator('BungaRampaiList', {type: 1, title: 'Buku'})
+                  }
+                />
+              ) : null}
+            </>
+          )}
+
           {/* <VideoRecomendation
           onPress={() => navigation.navigate('VideoDetail')}
-        /> */}
+        />
+          <ImportanLink /> */}
 
-          {articleRecomended.length ? (
-            <ArticleRecomendation
-              data={articleRecomended}
-              onPress={(id, typeRuang) =>
-                handleNavigator('Room', {id, typeRuang})
-              }
-              seeAllOnPress={() =>
-                handleNavigator('ListSearch', {title: 'Artikel'})
-              }
-            />
-          ) : null}
-
-          {bookRecomended.length ? (
-            <BookRekomendation
-              data={bookRecomended}
-              seeAllOnPress={() =>
-                handleNavigator('ListSearch', {title: 'Buku'})
-              }
-            />
-          ) : null}
-
-          {/* <ImportanLink /> */}
-
-          {/* ======== VIDEO ======== */}
-          {/* <View>
-          <View style={styles.header}>
-            <View style={styles.row}>
-              <MaterialCommunityIcons
-                name="television-play"
-                size={18}
-                style={styles.icon}
-              />
-              <Text style={FONTS.textBold14}>Video</Text>
-            </View>
-            <Text style={[FONTS.text12, {color: COLORS.primary}]}>
-              Lihat Semua
-            </Text>
-          </View>
-          <VideoDetailItem />
-          <VideoDetailItem />
-          <VideoDetailItem />
-        </View> */}
-          {/* ======== ARTICLE ======== */}
           <View style={styles.footer}>
             <Text
               style={[
@@ -153,13 +194,6 @@ const SearchScreen = ({navigation}) => {
 };
 const styles = StyleSheet.create({
   container: {paddingBottom: 16},
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 24,
-    marginTop: 8,
-  },
   justify: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -167,16 +201,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 8,
-  },
-  row: {flexDirection: 'row', alignItems: 'center', marginTop: 8},
-  icon: {marginRight: 8},
-  category: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderWidth: 1,
-    borderRadius: 30,
-    marginRight: 4,
-    borderColor: COLORS.secondary,
   },
   footer: {marginTop: 44},
 });

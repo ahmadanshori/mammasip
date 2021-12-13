@@ -50,7 +50,7 @@ const ListSearchScreen = ({navigation, route}) => {
         });
       }
     } catch (e) {
-      console.log('e', e);
+      // console.log('e', e);
     } finally {
       setLoading({get: false, refresh: false, nextPage: false});
     }

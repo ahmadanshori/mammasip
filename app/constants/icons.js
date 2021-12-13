@@ -14,6 +14,7 @@ import success from '../assets/icons/success.svg';
 import people1 from '../assets/icons/people1.svg';
 import lula from '../assets/icons/lula.svg';
 import deddy from '../assets/icons/deddy.svg';
+import aboutus from '../assets/icons/aboutus.svg';
 
 export const ICON = {
   sayangi,
@@ -32,6 +33,7 @@ export const ICON = {
   people1,
   lula,
   deddy,
+  aboutus,
 };
 
 const appIcons = {ICON};

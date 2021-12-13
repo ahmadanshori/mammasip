@@ -15,9 +15,9 @@ const VideoItem = ({onPress}) => {
         style={styles.img}
       />
       <View style={styles.shadowImg}>
-        <TouchableOpacity style={styles.bookmark}>
+        {/* <TouchableOpacity style={styles.bookmark}>
           <Icon name="bookmark-outline" size={20} color={COLORS.white} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View
           style={{
             backgroundColor: COLORS.shadowWhite,

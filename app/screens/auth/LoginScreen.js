@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
+import {dropdownalert} from '../../components/AlertProvider';
 
 import {loginAPI} from '../../api/auth';
 import {COLORS, FONTS, SIZES} from '../../constants';
@@ -72,7 +73,14 @@ const LoginScreen = ({navigation, route}) => {
             </Text>
           </View>
         </View>
-        <TouchableNativeFeedback>
+        <TouchableNativeFeedback
+          onPress={() =>
+            dropdownalert.alertWithType(
+              'warn',
+              '',
+              'Belum bisa, Masih Diproses!!',
+            )
+          }>
           <View style={styles.authButton}>
             <Image
               source={require('../../assets/icons/google.png')}

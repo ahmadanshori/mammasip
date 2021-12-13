@@ -33,7 +33,7 @@ const QuizScreen = ({route}) => {
       const res = await getQuizByIdAPI(id);
       setData(res.data.data);
     } catch (e) {
-      console.log('e', e);
+      // console.log('e', e);
     } finally {
       setLoading({get: false, refresh: false});
     }

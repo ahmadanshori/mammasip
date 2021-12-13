@@ -56,29 +56,39 @@ const ImportantMessageScreen = ({route, navigation}) => {
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <FlatList
-          data={data}
-          keyExtractor={item => item.idMedia.toString()}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.container}
-          ListFooterComponent={
-            <View style={styles.padding}>
-              <View style={styles.wrapper}>
-                <Icon name="message-processing" size={20} style={styles.icon} />
-                <Text style={[FONTS.textBold14]}>Apa Kata Mereka?</Text>
-              </View>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.scroll}>
-                {testimonial.map(item => (
-                  <TestimonialItem data={item} key={item.id_testimoni} />
-                ))}
-              </ScrollView>
-            </View>
-          }
-        />
+        <>
+          {data?.length && testimonial?.length ? (
+            <>
+              <FlatList
+                data={data}
+                keyExtractor={item => item.idMedia.toString()}
+                renderItem={renderItem}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.container}
+                ListFooterComponent={
+                  <View style={styles.padding}>
+                    <View style={styles.wrapper}>
+                      <Icon
+                        name="message-processing"
+                        size={20}
+                        style={styles.icon}
+                      />
+                      <Text style={[FONTS.textBold14]}>Apa Kata Mereka?</Text>
+                    </View>
+                    <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={styles.scroll}>
+                      {testimonial.map(item => (
+                        <TestimonialItem data={item} key={item.id_testimoni} />
+                      ))}
+                    </ScrollView>
+                  </View>
+                }
+              />
+            </>
+          ) : null}
+        </>
       )}
     </Container>
   );

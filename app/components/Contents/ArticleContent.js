@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RenderHtml from 'react-native-render-html';
 import {COLORS, FONTS, SIZES} from '../../constants';
@@ -26,6 +26,13 @@ const ArticleContent = ({data}) => {
           <Text style={[FONTS.text10, {color: COLORS.white, flex: 1}]}>
             {data.kata_pengantar}
           </Text>
+          {data.flag_important === 1 && (
+            <Image
+              resizeMode="contain"
+              source={require('../../assets/icons/logo.gif')}
+              style={styles.logo}
+            />
+          )}
         </View>
       )}
 
@@ -58,6 +65,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 12,
     backgroundColor: COLORS.primary,
     padding: 6,
@@ -67,6 +75,7 @@ const styles = StyleSheet.create({
   margin: {
     marginRight: 6,
   },
+  logo: {height: 50, width: 50},
 });
 
 export default ArticleContent;

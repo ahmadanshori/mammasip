@@ -17,6 +17,15 @@ const GKSContent = ({data}) => {
         styles.container,
         {backgroundColor: data.gks_color_bg || COLORS.primary},
       ]}>
+      {data.flag_important === 1 && (
+        <View style={styles.logoWrapper}>
+          <Image
+            resizeMode="contain"
+            source={require('../../assets/icons/logo.gif')}
+            style={styles.logo}
+          />
+        </View>
+      )}
       <View style={styles.imageWrapper}>
         <Image
           source={{
@@ -45,6 +54,8 @@ const styles = StyleSheet.create({
     elevation: 6,
     backgroundColor: COLORS.red,
   },
+  logoWrapper: {alignItems: 'flex-end'},
+  logo: {height: 50, width: 50},
   imageWrapper: {alignItems: 'center'},
   img: {
     height: SIZES.width2 - 16,

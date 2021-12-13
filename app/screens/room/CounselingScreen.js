@@ -1,28 +1,34 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container} from '../../components/Container';
 import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import {ArticleDetailItem, ArticleItem} from '../../components/Items';
 import ImportantMessage from '../../components/ImportantMessage';
-
 import {getCounselingByIdAPI} from '../../api/penyuluhan';
 import {getRoomTypeByIdAPI} from '../../api/room';
-import {COLORS, FONTS, SIZES} from '../../constants';
+import {COLORS, FONTS} from '../../constants';
+import DownloadModal from '../../components/Modals/DownloadModal';
 
 const CounselingScreen = ({navigation, route}) => {
   const {id} = route.params;
-  const [select, setSelect] = useState(1);
   const [roomData, setRoomData] = useState(null);
   const [browserData, setBrowserData] = useState([]);
   const [powerpointData, setPowerpointData] = useState([]);
   const [posterData, setPosterData] = useState([]);
+  const [isDownload, setIsDownload] = useState(false);
+  const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
 
   useEffect(() => {
-    getInitialData(select);
+    getInitialData();
   }, []);
 
   const getInitialData = async () => {
@@ -36,9 +42,6 @@ const CounselingScreen = ({navigation, route}) => {
       setBrowserData(resBrowser.data.data.content);
       setPowerpointData(resPowerpoint.data.data.content);
       setPosterData(resPoster.data.data.content);
-      console.log(`resBrowser`, resBrowser);
-      console.log(`resPowerpoint`, resPowerpoint);
-      console.log(`resPoster`, resPoster);
     } catch (e) {
       //   console.log('e', e);
     } finally {
@@ -46,8 +49,8 @@ const CounselingScreen = ({navigation, route}) => {
     }
   };
 
-  const handleDownload = (link, type) => {
-    setLoading(true);
+  const handleDownload = useCallback((link, type) => {
+    // setLoading({get: true, refresh: false});
     ReactNativeBlobUtil.config({
       addAndroidDownloads: {
         useDownloadManager: true,
@@ -60,48 +63,56 @@ const CounselingScreen = ({navigation, route}) => {
         Accept: 'application/json',
       })
       .then(res => {
-        setLoading(false);
+        // setLoading({get: false, refresh: false});
       })
       .then(data => {
-        setLoading(false);
+        // setLoading({get: false, refresh: false});
       })
       .catch(e => {
-        setLoading(false);
+        // setLoading({get: false, refresh: false});
       });
-  };
+  }, []);
 
   const handleMedia = val => {
-    //   type_file
-    //  1 foto, 2 video, 3 pdf, 4 pptx
-    // 1,2,3 bisa di view baru download, 4 langsung download
-    if (val.typeFile === 1) {
-      // image/png
-      handleDownload(val.url, 'image/png');
-    } else if (val.typeFile === 2) {
+    if (val.typeFile === 2) {
       navigation.navigate('Video', {url: val.url_frame});
     } else if (val.typeFile === 3) {
       navigation.navigate('Pdf', {
         link: val.url,
       });
-    } else if (val.typeFile === 4) {
+    } else {
+      setSelected(val);
+      setIsDownload(true);
+    }
+    //   type_file
+    //  1 foto, 2 video, 3 pdf, 4 pptx
+    // 1,2,3 bisa di view baru download, 4 langsung download
+  };
+  const onDownload = useCallback(() => {
+    setIsDownload(false);
+    if (selected.typeFile === 1) {
+      handleDownload(selected.url, 'image/png');
+    } else if (selected.typeFile === 4) {
       handleDownload(
-        val.url,
-        ' application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        selected.url,
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
       );
     } else {
       return null;
     }
+  }, [selected, handleDownload]);
+
+  const onSeeAll = counselingId => {
+    navigation.navigate('CounselingList', {
+      counselingId,
+      title: roomData?.nama_ruang,
+    });
   };
 
   //   const handleRefresh = () => {
   //     setLoading(true);
   //     handleCustomerSearch(search);
   //   };
-
-  const handleTopBar = async val => {
-    setSelect(val);
-    getInitialData(val);
-  };
 
   return (
     <Container>
@@ -119,12 +130,15 @@ const CounselingScreen = ({navigation, route}) => {
           <View style={styles.margin}>
             <ImportantMessage title={roomData?.kata_pengantar} />
             <View style={styles.body}>
-              <View style={styles.header}>
+              <TouchableOpacity
+                style={styles.header}
+                onPress={() => onSeeAll(1)}
+                activeOpacity={1}>
                 <Text style={FONTS.textBold14}>Browser/Flyer</Text>
                 <Text style={[FONTS.text12, {color: COLORS.primary}]}>
                   Lihat Semua
                 </Text>
-              </View>
+              </TouchableOpacity>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {browserData.map(item => (
                   <ArticleItem
@@ -137,28 +151,34 @@ const CounselingScreen = ({navigation, route}) => {
                   />
                 ))}
               </ScrollView>
-              <View style={styles.header}>
+              <TouchableOpacity
+                style={styles.header}
+                onPress={() => onSeeAll(2)}
+                activeOpacity={1}>
                 <Text style={FONTS.textBold14}>Powerpoint</Text>
                 <Text style={[FONTS.text12, {color: COLORS.primary}]}>
                   Lihat Semua
                 </Text>
-              </View>
+              </TouchableOpacity>
               {powerpointData.map(item => (
                 <ArticleDetailItem
                   key={item.idPenyuluhan}
                   title={item.tittle}
-                  category={item.hastag[0].nameCategory}
+                  category={item.hastag}
                   source={item.urlBanner}
                   date={item.createdDate}
                   onPress={() => handleMedia(item.media[0])}
                 />
               ))}
-              <View style={styles.header}>
+              <TouchableOpacity
+                style={styles.header}
+                onPress={() => onSeeAll(3)}
+                activeOpacity={1}>
                 <Text style={FONTS.textBold14}>Poster</Text>
                 <Text style={[FONTS.text12, {color: COLORS.primary}]}>
                   Lihat Semua
                 </Text>
-              </View>
+              </TouchableOpacity>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {posterData.map(item => (
                   <ArticleItem
@@ -174,6 +194,12 @@ const CounselingScreen = ({navigation, route}) => {
             </View>
           </View>
         </ScrollView>
+      )}
+      {isDownload && (
+        <DownloadModal
+          onClose={() => setIsDownload(false)}
+          onDownload={onDownload}
+        />
       )}
     </Container>
   );

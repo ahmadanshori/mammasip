@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     backgroundColor: COLORS.white,
+    borderBottomWidth: 1,
+    borderColor: COLORS.separator,
   },
   wrapper: {
     flexDirection: 'row',

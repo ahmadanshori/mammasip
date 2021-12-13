@@ -43,8 +43,14 @@ import {
   KnowYourSelfScreen,
   ListRoomScreen,
   CounselingScreen,
+  CounselingListScreen,
+  BungaRampaiScreen,
+  BungaRampaiListScreen,
+  ListVideoScreen,
 } from '../screens/room';
 import CaloriesDetailScreen from '../screens/CaloriesDetailScreen';
+import ArticleScreen from '../screens/ArticleScreen';
+import AboutUsScreen from '../screens/AboutUsScreen';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -250,6 +256,16 @@ export default function App() {
             name="ImportantMessage"
           />
           <Stack.Screen component={CounselingScreen} name="Counseling" />
+          <Stack.Screen
+            component={CounselingListScreen}
+            name="CounselingList"
+          />
+          <Stack.Screen component={BungaRampaiScreen} name="BungaRampai" />
+          <Stack.Screen
+            component={BungaRampaiListScreen}
+            name="BungaRampaiList"
+          />
+          <Stack.Screen component={ListVideoScreen} name="ListVideo" />
           <Stack.Screen component={BmrScreen} name="Bmr" />
           <Stack.Screen
             component={CalculationDetailScreen}
@@ -280,6 +296,8 @@ export default function App() {
             component={CaloriesDetailScreen}
             name="CaloriesDetail"
           />
+          <Stack.Screen component={ArticleScreen} name="Article" />
+          <Stack.Screen component={AboutUsScreen} name="AboutUs" />
         </>
       </Stack.Navigator>
     </NavigationContainer>

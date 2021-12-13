@@ -2,8 +2,18 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
+import formatDate from '../../libs/formatDate';
 
-const BookItem = ({onPress, source, title, desc, date, publisher, author}) => {
+const BookItem = ({
+  onPress,
+  source,
+  title,
+  desc,
+  date,
+  publisher,
+  author,
+  uploadDate,
+}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -22,20 +32,26 @@ const BookItem = ({onPress, source, title, desc, date, publisher, author}) => {
           numberOfLines={2}>
           {title}
         </Text>
-        <Text style={[FONTS.text10, {color: COLORS.primary}]} numberOfLines={1}>
-          {desc}
-        </Text>
+        {desc && (
+          <Text
+            style={[FONTS.text10, {color: COLORS.primary}]}
+            numberOfLines={1}>
+            {desc}
+          </Text>
+        )}
         <View style={styles.row}>
-          <Text style={[FONTS.textBold8, {color: COLORS.secondary}]}>
-            {date}
-            {'  '}
+          <Text style={[FONTS.textBold8, {color: COLORS.black}]}>
+            {formatDate(date, 'yyyy')},{' '}
           </Text>
           <Text
-            style={[FONTS.textBold8, {color: COLORS.gray, flex: 1}]}
+            style={[FONTS.textBold8, {color: COLORS.secondary, flex: 1}]}
             numberOfLines={1}>
             {publisher}, {author}
           </Text>
         </View>
+        <Text style={[FONTS.text8, {color: COLORS.gray}]}>
+          Diupload {formatDate(uploadDate)}
+        </Text>
       </View>
     </TouchableOpacity>
   );

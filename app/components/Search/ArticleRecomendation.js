@@ -1,17 +1,9 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {ArticleItem, ArticleDetailItem} from '../Items';
-import {OutlineButton} from '../Buttons';
+import {ArticleItem} from '../Items';
 import {COLORS, FONTS} from '../../constants';
 import formatDate from '../../libs/formatDate';
-
-// const data1 = [1, 2, 3, 4];
-// const data2 = [
-//   {id: 1, active: true},
-//   {id: 2, active: false},
-//   {id: 3, active: false},
-// ];
 
 const ArticleRecomendation = ({data, onPress, seeAllOnPress}) => {
   return (
@@ -34,7 +26,7 @@ const ArticleRecomendation = ({data, onPress, seeAllOnPress}) => {
         {data.map(item => (
           <ArticleItem
             key={item.idArticle}
-            onPress={() => onPress(item.idArticle, item.typeRuang)}
+            onPress={() => onPress(item.idArticle)}
             title={item.nameArticle}
             category={item.hastag[0]?.nameCategory}
             date={formatDate(item.createdDate)}
@@ -42,18 +34,6 @@ const ArticleRecomendation = ({data, onPress, seeAllOnPress}) => {
           />
         ))}
       </ScrollView>
-      {/* <View style={styles.body}>
-        {data.map(item => (
-          <ArticleDetailItem
-            key={item.idArticle}
-            title={item.nameArticle}
-            category={item.hastag[0]?.nameCategory}
-            date={formatDate(item.createdDate)}
-            source={{uri: item.media[0]?.url}}
-          />
-        ))}
-      </View> */}
-      {/* <OutlineButton title="Lihat Semua Artikel" /> */}
     </View>
   );
 };
@@ -67,6 +47,5 @@ const styles = StyleSheet.create({
   },
   row: {flexDirection: 'row', alignItems: 'center'},
   icon: {marginRight: 8},
-  body: {marginTop: 24, marginBottom: 8},
 });
 export default ArticleRecomendation;

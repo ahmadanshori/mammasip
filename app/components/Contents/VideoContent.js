@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {WebView} from 'react-native-webview';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const VideoContent = ({data, onPress}) => {
-  console.log(`data`, data);
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -19,19 +18,26 @@ const VideoContent = ({data, onPress}) => {
         <Text style={[FONTS.text10, {color: COLORS.white, flex: 1}]}>
           {data?.kata_pengantar}
         </Text>
+        {data.flag_important === 1 && (
+          <Image
+            resizeMode="contain"
+            source={require('../../assets/icons/logo.gif')}
+            style={styles.logo}
+          />
+        )}
       </View>
-      {/* <View style={styles.imgWrapper}>
+      <View style={styles.imgWrapper}>
         <WebView
           source={{uri: data?.url}}
           mediaPlaybackRequiresUserAction={true}
           automaticallyAdjustContentInsets={false}
         />
-        <TouchableOpacity style={styles.shadow} onPress={onPress} />
-      </View> */}
+        {/* <TouchableOpacity style={styles.shadow} onPress={onPress} /> */}
+      </View>
       {/* <View style={styles.imgWrapper}>
         <Text>aaa</Text>
       </View> */}
-      {data.url ? (
+      {/* {data.url ? (
         <TouchableOpacity activeOpacity={SIZES.opacity} onPress={onPress}>
           <Image source={{uri: data.url}} style={styles.image} />
           <View style={styles.shadow}>
@@ -50,7 +56,7 @@ const VideoContent = ({data, onPress}) => {
             color={COLORS.gray}
           />
         </View>
-      )}
+      )} */}
     </View>
   );
 };
@@ -67,12 +73,14 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 12,
     backgroundColor: COLORS.primary,
     padding: 6,
     borderRadius: 6,
     width: '100%',
   },
+  logo: {height: 50, width: 50},
   margin: {
     marginRight: 6,
   },

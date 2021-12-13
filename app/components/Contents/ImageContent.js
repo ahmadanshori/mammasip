@@ -16,6 +16,13 @@ const ImageContent = ({data}) => {
         <Text style={[FONTS.text10, {color: COLORS.black, flex: 1}]}>
           {data.kata_pengantar}
         </Text>
+        {data.flag_important === 1 && (
+          <Image
+            resizeMode="contain"
+            source={require('../../assets/icons/logo.gif')}
+            style={styles.logo}
+          />
+        )}
       </View>
 
       <Image
@@ -39,6 +46,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 12,
     backgroundColor: '#F2F6FF',
     padding: 6,
@@ -48,6 +56,7 @@ const styles = StyleSheet.create({
   margin: {
     marginRight: 6,
   },
+  logo: {height: 50, width: 50},
   img: {
     height: SIZES.width + 56,
     width: SIZES.width - 56,

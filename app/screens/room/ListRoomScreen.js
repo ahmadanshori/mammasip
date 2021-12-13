@@ -1,11 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableNativeFeedback,
-} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import {Container} from '../../components/Container';
@@ -23,10 +17,9 @@ const ListRoomScreen = ({route, navigation}) => {
   const getInitialData = async () => {
     try {
       const res = await getRoomTypeByIdAPI(id);
-      console.log(`res`, res);
       setData(res.data.data);
     } catch (e) {
-      console.log('e', e);
+      // console.log('e', e);
     } finally {
       setLoading({get: false, refresh: false});
     }

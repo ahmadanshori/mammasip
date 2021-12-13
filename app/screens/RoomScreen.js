@@ -1,19 +1,9 @@
-import React, {useState, useEffect, useCallback, useContext} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {View, FlatList} from 'react-native';
 
 import {Container} from '../components/Container';
 import {LoadingComponent} from '../components/Loadings';
-import {dropdownalert} from '../components/AlertProvider';
-import {OutlineButton, MainButton} from '../components/Buttons';
-import {VideoItem, ArticleItem, CalculatorItem} from '../components/Items';
+// import {VideoItem, ArticleItem, CalculatorItem} from '../components/Items';
 import {
   DestinationContent,
   VideoContent,
@@ -24,20 +14,15 @@ import {
 } from '../components/Contents';
 
 import {HeaderTitle} from '../components/Headers';
-import {AppContext} from '../index';
-import {COLORS, FONTS, SIZES} from '../constants';
-import {getArticleByRoomAPI, getRoomTypeByIdAPI} from '../api/room';
-import QuizIcon from '../assets/icons/quiz.svg';
+// import {AppContext} from '../index';
+// import {COLORS, SIZES} from '../constants';
+import {getRoomTypeByIdAPI} from '../api/room';
 
 const RoomScreen = ({navigation, route}) => {
   const {roomId} = route.params;
-  const {token, setLoading} = useContext(AppContext);
-  // const [query, setQuery] = useState({page: 1, totalPages: 0});
-  // const [articleData, setArticleData] = useState(null);
+  // const {token, setLoading} = useContext(AppContext);
   const [data, setData] = useState(null);
-  // const [selectVideo, setSelecVideo] = useState(null);
   const [load, setLoad] = useState({get: true, refresh: false});
-  // const [isArticle, setIsArticle] = useState(false);
 
   useEffect(() => {
     getInitialData();
@@ -45,19 +30,10 @@ const RoomScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      // const res = await getArticleByRoomAPI(roomId, query?.page);
-      // console.log(`res`, res);
       const resRoom = await getRoomTypeByIdAPI(roomId);
-      console.log(`resRoom`, resRoom);
-      // setArticleData(res.data.data.content[0]);
       setData(resRoom.data.data);
-      // setSelecVideo(resRoom.data.data);
-      // setQuery({
-      //   page: res.data.data.number,
-      //   totalPages: res.data.data.totalPages - 1,
-      // });
     } catch (err) {
-      console.log(`err`, {...err});
+      // console.log(`err`, {...err});
     } finally {
       setLoad({get: false, refresh: false});
     }
@@ -96,9 +72,12 @@ const RoomScreen = ({navigation, route}) => {
   //   }
   // };
 
-  const onQuiz = id => {
-    navigation.navigate('Quiz', {id});
-  };
+  const onQuiz = useCallback(
+    id => {
+      navigation.navigate('Quiz', {id});
+    },
+    [navigation],
+  );
 
   const renderItem = ({item}) => {
     if (item.typeContent === 1) {
@@ -130,18 +109,6 @@ const RoomScreen = ({navigation, route}) => {
         <LoadingComponent />
       ) : (
         <View>
-          {/* <View style={styles.row}>
-              <View style={styles.category}>
-                <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
-                  Sayangi dirimu
-                </Text>
-              </View>
-              <Text style={[FONTS.textBold10, {color: COLORS.gray}]}>
-                12 Januari 2021 29:30
-              </Text>
-            </View> */}
-
-          {/* <Image source={{uri: selectVideo?.url}} style={styles.img} /> */}
           <FlatList
             data={data.media}
             keyExtractor={item => item.idMedia.toString()}
@@ -186,42 +153,42 @@ const RoomScreen = ({navigation, route}) => {
 
 export default RoomScreen;
 
-const styles = StyleSheet.create({
-  wrapper: {paddingHorizontal: 16, marginBottom: 16},
-  // row: {flexDirection: 'row', alignItems: 'center', marginBottom: 10},
-  // category: {
-  //   paddingVertical: 4,
-  //   paddingHorizontal: 10,
-  //   backgroundColor: COLORS.lightPrimary,
-  //   borderRadius: 40,
-  //   marginRight: 16,
-  // },
-  img: {height: SIZES.width2, width: SIZES.width},
-  imgWrapper: {marginRight: 10},
-  imgList: {
-    height: 50,
-    width: 80,
-    borderRadius: 6,
-    // marginBottom: 16,
-  },
-  imgShadow: {
-    height: 50,
-    width: 80,
-    marginTop: -50,
-    backgroundColor: COLORS.red,
-    // position: 'absolute',
-    // zIndex: 99,
-    borderRadius: 6,
-    // top: 0,
-  },
-  listItem: {paddingVertical: 16, paddingLeft: 16},
-  button: {marginTop: 16},
-  room: {
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    backgroundColor: COLORS.separator,
-    borderRadius: 40,
-    marginRight: 10,
-    marginTop: 8,
-  },
-});
+// const styles = StyleSheet.create({
+//   wrapper: {paddingHorizontal: 16, marginBottom: 16},
+//   // row: {flexDirection: 'row', alignItems: 'center', marginBottom: 10},
+//   // category: {
+//   //   paddingVertical: 4,
+//   //   paddingHorizontal: 10,
+//   //   backgroundColor: COLORS.lightPrimary,
+//   //   borderRadius: 40,
+//   //   marginRight: 16,
+//   // },
+//   img: {height: SIZES.width2, width: SIZES.width},
+//   imgWrapper: {marginRight: 10},
+//   imgList: {
+//     height: 50,
+//     width: 80,
+//     borderRadius: 6,
+//     // marginBottom: 16,
+//   },
+//   imgShadow: {
+//     height: 50,
+//     width: 80,
+//     marginTop: -50,
+//     backgroundColor: COLORS.red,
+//     // position: 'absolute',
+//     // zIndex: 99,
+//     borderRadius: 6,
+//     // top: 0,
+//   },
+//   listItem: {paddingVertical: 16, paddingLeft: 16},
+//   button: {marginTop: 16},
+//   room: {
+//     paddingVertical: 4,
+//     paddingHorizontal: 10,
+//     backgroundColor: COLORS.separator,
+//     borderRadius: 40,
+//     marginRight: 10,
+//     marginTop: 8,
+//   },
+// });

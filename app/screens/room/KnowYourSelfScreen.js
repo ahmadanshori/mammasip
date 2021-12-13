@@ -34,13 +34,12 @@ const KnowYourSelfScreen = ({route, navigation}) => {
       const resVideo1 = await getVideoAPI(1);
       const resVideo2 = await getVideoAPI(2);
       const resHealtyCalories = await getHealtyCaloriesAPI();
-      console.log('resHealtyCalories', resHealtyCalories);
       setData(res.data.data);
       setVideo1(resVideo1.data.data.media.slice(0, 4));
       setVideo2(resVideo2.data.data.media.slice(0, 4));
       setCaloriesData(resHealtyCalories.data.data);
     } catch (e) {
-      console.log('e', e);
+      // console.log('e', e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -123,7 +122,10 @@ const KnowYourSelfScreen = ({route, navigation}) => {
                     Durasi 10 - 20 Menit
                   </Text>
                 </View>
-                <TouchableOpacity style={styles.seeAll} activeOpacity={1}>
+                <TouchableOpacity
+                  style={styles.seeAll}
+                  activeOpacity={1}
+                  onPress={() => navigation.navigate('ListVideo', {id: 1})}>
                   <Text
                     style={[
                       FONTS.text12,
@@ -150,10 +152,13 @@ const KnowYourSelfScreen = ({route, navigation}) => {
                     color={COLORS.secondary}
                   />
                   <Text style={[FONTS.textBold12, styles.title]}>
-                    Durasi 10 - 20 Menit
+                    Durasi 30 Menit
                   </Text>
                 </View>
-                <TouchableOpacity style={styles.seeAll} activeOpacity={1}>
+                <TouchableOpacity
+                  style={styles.seeAll}
+                  activeOpacity={1}
+                  onPress={() => navigation.navigate('ListVideo', {id: 2})}>
                   <Text
                     style={[
                       FONTS.text12,

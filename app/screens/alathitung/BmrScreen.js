@@ -1,12 +1,5 @@
 import React, {useState, useCallback, useContext} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  StatusBar,
-  ScrollView,
-  Image,
-} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, ScrollView} from 'react-native';
 
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
@@ -14,15 +7,15 @@ import {MainButton, AskButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
 import Accordion from '../../components/Accordion';
 import {CalculatorItem} from '../../components/Items';
-import {dropdownalert} from '../../components/AlertProvider';
+// import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-import {getBmrAPI} from '../../api/calculator';
+// import {getBmrAPI} from '../../api/calculator';
 import {AppContext} from '../../index';
 import WeightIcon from '../../assets/icons/weight.svg';
 import FoodIcon from '../../assets/icons/food.svg';
 import VirusIcon from '../../assets/icons/virus.svg';
-import QuizIcon from '../../assets/icons/quiz.svg';
+// import QuizIcon from '../../assets/icons/quiz.svg';
 
 const WeightCalculatorScreen = ({navigation}) => {
   const {user, token, setLoading} = useContext(AppContext);

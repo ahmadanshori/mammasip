@@ -1,11 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {ArticleItem, BookItem} from '../Items';
-import {OutlineButton} from '../Buttons';
+import {BookItem} from '../Items';
 import {COLORS, FONTS} from '../../constants';
 
-const ArticleRecomendation = ({seeAllOnPress, data}) => {
+const ArticleRecomendation = ({seeAllOnPress, data, onPress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -34,11 +33,12 @@ const ArticleRecomendation = ({seeAllOnPress, data}) => {
             source={item.urlBanner}
             publisher={item.publisherBook}
             author={item.authorBook}
-            date="2018"
+            date={item.year}
+            uploadDate={item.createdDate}
+            onPress={() => onPress(item.urlBook)}
           />
         ))}
       </ScrollView>
-      {/* <OutlineButton title="Lihat Semua Buku" /> */}
     </View>
   );
 };
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   },
   row: {flexDirection: 'row', alignItems: 'center'},
   icon: {marginRight: 8},
-  body: {marginBottom: 8},
   margin: {marginBottom: 16},
 });
 export default ArticleRecomendation;

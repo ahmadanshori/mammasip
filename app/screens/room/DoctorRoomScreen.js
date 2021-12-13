@@ -26,10 +26,9 @@ const DoctorRooomScreen = ({route, navigation}) => {
   const getInitialData = async () => {
     try {
       const res = await getRoomTypeByIdAPI(id);
-      console.log(`res`, res);
       setDoctorData(res.data.data);
     } catch (e) {
-      console.log('e', e);
+      // console.log('e', e);
     } finally {
       setLoading({get: false, refresh: false});
     }

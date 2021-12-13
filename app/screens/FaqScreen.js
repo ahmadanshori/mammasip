@@ -1,6 +1,6 @@
-import React, {useState, useCallback} from 'react';
-import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
-import _ from 'lodash';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import debounce from 'lodash/debounce';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {SearchInput} from '../components/Inputs';
@@ -23,7 +23,7 @@ const FaqScreen = ({navigation}) => {
     handleCustomerSearch(text);
   };
 
-  const handleCustomerSearch = _.debounce(async text => {
+  const handleCustomerSearch = debounce(async text => {
     try {
       const formData = new FormData();
       formData.append('search', text);

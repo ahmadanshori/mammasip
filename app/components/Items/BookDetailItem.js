@@ -4,14 +4,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const BookDetailScreen = ({onPress, data}) => {
+const BookDetailItem = ({onPress, data}) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
       <View>
-        {!data?.urlBanner ? (
+        {data?.urlBanner ? (
           <Image source={{uri: data.urlBanner}} style={styles.img} />
         ) : (
           <View style={styles.shadowImg}>
@@ -90,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BookDetailScreen;
+export default BookDetailItem;

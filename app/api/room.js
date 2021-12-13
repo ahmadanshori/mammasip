@@ -25,3 +25,9 @@ export const getTestimoniAPI = () => client.get('/testimoni');
 
 export const getVideoAPI = id =>
   client.get(`/ruang-master/video-olahraga/${id}`);
+
+export const getBookAPI = (id, page = 0, per_page = 20) =>
+  client.get(`/book/pagination/type/${id}/${page}/${per_page}/idBook/asc`);
+
+export const getVideoPageAPI = (page = 0, per_page = 20) =>
+  client.get(`/media/pagination/type/2/${page}/${per_page}/idMedia/asc`);

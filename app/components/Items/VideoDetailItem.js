@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
-const VideoDetailItem = ({onPress, category = [], data}) => {
+const VideoDetailItem = ({onPress, category = [], data, narsum, profesi}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -32,6 +32,12 @@ const VideoDetailItem = ({onPress, category = [], data}) => {
       )}
       <View style={styles.body}>
         <Text style={FONTS.textBold14}>{data?.kata_pengantar}</Text>
+        {narsum && (
+          <Text style={[FONTS.text12, {color: COLORS.blue}]}>{narsum}</Text>
+        )}
+        {profesi && (
+          <Text style={[FONTS.text12, {color: COLORS.black}]}>{profesi}</Text>
+        )}
         <View style={styles.row}>
           <Text style={[FONTS.text10, {color: COLORS.gray}]}>
             {formatDate(data.createdDate)}

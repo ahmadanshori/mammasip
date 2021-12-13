@@ -1,11 +1,10 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import {View, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {COLORS} from '../../constants';
 
-const TitleInput = ({
-  pass,
+const SearchInput = ({
   placeholder,
   err,
   autoFocus,
@@ -15,35 +14,30 @@ const TitleInput = ({
   onSubmitEditing,
   maxLength,
 }) => {
-  const [show, setShow] = useState(true);
   const [color, setColor] = useState(COLORS.border);
   const handleFocus = () => {
     setColor(COLORS.primary);
   };
-
   const handleBlur = () => {
     setColor(COLORS.border);
   };
-  const handleShowButton = useCallback(() => {
-    setShow(show ? false : true);
-  }, [show]);
+
   return (
     <View style={[styles.wrapper, err ? styles.error : {borderColor: color}]}>
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        secureTextEntry={pass ? show : false}
         onChangeText={onChangeText}
         keyboardType={keyboardType}
         onFocus={handleFocus}
         onBlur={handleBlur}
         value={value}
         autoFocus={autoFocus}
+        autoCapitalize={'none'}
         onSubmitEditing={onSubmitEditing}
         maxLength={maxLength}
       />
-
-      <TouchableOpacity style={styles.buttonShow} onPress={handleShowButton}>
+      <TouchableOpacity style={styles.buttonShow} onPress={onSubmitEditing}>
         <Icon name={'search'} size={24} color={COLORS.primary} />
       </TouchableOpacity>
     </View>
@@ -62,17 +56,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   error: {borderColor: COLORS.red},
-  //   success: {borderColor: COLORS.border},
-  //   containerError: {
-  //     flexDirection: 'row',
-  //     alignItems: 'center',
-  //     backgroundColor: COLORS.white,
-  //     borderWidth: 1,
-  //     borderColor: COLORS.red,
-  //     paddingHorizontal: 8,
-  //     height: 43,
-  //     marginTop: 8,
-  //   },
 
   input: {
     flex: 1,
@@ -84,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TitleInput;
+export default SearchInput;

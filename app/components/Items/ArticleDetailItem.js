@@ -5,7 +5,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
-const ArticleDetailItem = ({onPress, source, title, date, category}) => {
+const ArticleDetailItem = ({
+  onPress,
+  source,
+  title,
+  date,
+  desc,
+  category = [],
+}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -22,17 +29,22 @@ const ArticleDetailItem = ({onPress, source, title, date, category}) => {
       </View>
       <View style={styles.body}>
         <Text style={FONTS.textBold14}>{title}</Text>
+        {desc && <Text style={FONTS.text12}>{desc}</Text>}
         <Text style={[FONTS.text10, {color: COLORS.gray}]}>
           Diupload {formatDate(date)}
         </Text>
         <View style={styles.row}>
-          {category && (
-            <View style={styles.category}>
-              <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
-                {category}
-              </Text>
-            </View>
-          )}
+          {category?.length ? (
+            <>
+              {category.map(item => (
+                <View style={styles.category} key={item.idHastag}>
+                  <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
+                    {item.nameCategory}
+                  </Text>
+                </View>
+              ))}
+            </>
+          ) : null}
         </View>
       </View>
       {/* <TouchableOpacity style={{paddingHorizontal: 4}}>
@@ -77,12 +89,19 @@ const styles = StyleSheet.create({
   },
   bookmark: {position: 'absolute', top: 0, right: 0, padding: 8},
   body: {paddingHorizontal: 8, flex: 1},
-  row: {flexDirection: 'row', alignItems: 'center', marginTop: 10},
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+    flexWrap: 'wrap',
+  },
   category: {
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 12,
     backgroundColor: COLORS.shadowPrimary,
+    marginRight: 6,
+    marginTop: 6,
   },
 });
 

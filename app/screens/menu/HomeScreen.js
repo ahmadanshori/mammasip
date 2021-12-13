@@ -29,7 +29,6 @@ const HomeScreen = ({navigation}) => {
   const getInititalData = async () => {
     try {
       const res = await getRoomAPI();
-      console.log('res', res);
       setRoomData(res.data.data);
     } catch (e) {
       //   console.log(`e`, e);
@@ -44,8 +43,10 @@ const HomeScreen = ({navigation}) => {
       navigation.navigate('KnowYourSelf', {id: id_ruang});
     } else if (id_ruang === 5) {
       navigation.navigate('DoctorRoom', {id: id_ruang});
-    } else if (id_ruang === 6 || id_ruang === 7) {
+    } else if (id_ruang === 6) {
       navigation.navigate('Counseling', {id: id_ruang});
+    } else if (id_ruang === 7) {
+      navigation.navigate('BungaRampai', {id: id_ruang});
     } else if (id_ruang === 8) {
       navigation.navigate('Faq');
     } else {
@@ -110,6 +111,21 @@ const HomeScreen = ({navigation}) => {
                 // image={item.image}
               />
             ))}
+            <View style={styles.aboutUsWrapper}>
+              <TouchableOpacity
+                style={styles.aboutUs}
+                activeOpacity={1}
+                onPress={() => navigation.navigate('AboutUs')}>
+                {/* <Image
+                  resizeMode="contain"
+                  source={require('../../assets/icons/logo.gif')}
+                  style={styles.logo}
+                /> */}
+                <Text style={[FONTS.textBold18, {color: COLORS.primary}]}>
+                  Tentang Kami
+                </Text>
+              </TouchableOpacity>
+            </View>
 
             {!token ? (
               <View style={styles.footer}>
@@ -163,6 +179,22 @@ const styles = StyleSheet.create({
   },
   footer: {marginTop: 52, alignItems: 'center'},
   login: {flexDirection: 'row', alignItems: 'center', padding: 16},
+  aboutUsWrapper: {
+    marginTop: 24,
+    paddingTop: 32,
+    borderTopWidth: 1,
+    borderColor: COLORS.primary,
+  },
+  aboutUs: {
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: COLORS.primary,
+  },
+  logo: {height: 50, width: 50, marginRight: 8},
 });
 
 export default HomeScreen;
