@@ -4,11 +4,13 @@ import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import {ArticleDetailItem, VideoDetailItem} from '../../components/Items';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import {dropdownalert} from '../../components/AlertProvider';
 
 import {getArticleAPI} from '../../api/article';
 import {getBookAPI, getVideoPageAPI} from '../../api/room';
 import {COLORS} from '../../constants';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const BungaRampaiListScreen = ({navigation, route}) => {
   const {type, title} = route.params;
@@ -18,6 +20,7 @@ const BungaRampaiListScreen = ({navigation, route}) => {
     refresh: false,
     nextPage: false,
   });
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -35,7 +38,7 @@ const BungaRampaiListScreen = ({navigation, route}) => {
       }
       setData(resData.data.data);
     } catch (e) {
-      //   console.log('e', e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false, nextPage: false});
     }
@@ -118,19 +121,19 @@ const BungaRampaiListScreen = ({navigation, route}) => {
           ...resData.data.data,
           content: [...data.content, ...resData.data.data.content],
         });
-      } catch (err) {
-        // console.log(`err`, err);
-        // setError(err);
+      } catch (e) {
+        setError(e);
       } finally {
         setLoading(state => ({...state, nextPage: false}));
       }
     }
   };
 
-  //   const handleRefresh = () => {
-  //     setLoading(true);
-  //     handleCustomerSearch(search);
-  //   };
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
 
   return (
     <Container>
@@ -141,8 +144,8 @@ const BungaRampaiListScreen = ({navigation, route}) => {
         <FlatList
           onEndReached={nextPage}
           onEndReachedThreshold={0.5}
-          // refreshing={loading}
-          // onRefresh={handleRefresh}
+          refreshing={loading.refresh}
+          onRefresh={handleRefresh}
           data={data?.content}
           keyExtractor={item =>
             type === 4
@@ -158,15 +161,19 @@ const BungaRampaiListScreen = ({navigation, route}) => {
               <ActivityIndicator size="large" color={COLORS.primary} />
             )
           }
-          contentContainerStyle={{
-            padding: 16,
-          }}
+          contentContainerStyle={styles.padding}
         />
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };
 
-// const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  padding: {
+    padding: 16,
+  },
+});
 
 export default BungaRampaiListScreen;

@@ -6,9 +6,10 @@ import {HeaderTitle} from '../components/Headers';
 import {TestimonialItem} from '../components/Items';
 import {LoadingComponent} from '../components/Loadings';
 import {DestinationContent, VideoMessageContent} from '../components/Contents';
-import {COLORS, FONTS, SIZES} from '../constants';
+import {NoInternet, ErrorServer} from '../components/Errors';
+import {COLORS, FONTS} from '../constants';
 import {getImportantMessageAPI, getTestimoniAPI} from '../api/room';
-// import {AppContext} from '../index';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 const ImportantMessageScreen = ({route, navigation}) => {
   //   const {setLoading} = useContext(AppContext);
@@ -16,6 +17,7 @@ const ImportantMessageScreen = ({route, navigation}) => {
   const [data, setData] = useState([]);
   const [testimonial, setTestimonial] = useState([]);
   const [loading, setLoading] = useState({get: true, refresh: false});
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -25,11 +27,10 @@ const ImportantMessageScreen = ({route, navigation}) => {
     try {
       const res = await getImportantMessageAPI();
       const resTestimonial = await getTestimoniAPI();
-      //   console.log('resTestimonial', resTestimonial);
       setData(res.data.data.media);
       setTestimonial(resTestimonial.data.data);
     } catch (e) {
-      //   console.log('e', e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -50,6 +51,12 @@ const ImportantMessageScreen = ({route, navigation}) => {
     }
   };
 
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
+
   return (
     <Container>
       <HeaderTitle back title="Pesan Penting" />
@@ -61,6 +68,8 @@ const ImportantMessageScreen = ({route, navigation}) => {
             <>
               <FlatList
                 data={data}
+                refreshing={loading.refresh}
+                onRefresh={handleRefresh}
                 keyExtractor={item => item.idMedia.toString()}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
@@ -90,6 +99,8 @@ const ImportantMessageScreen = ({route, navigation}) => {
           ) : null}
         </>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };
@@ -104,7 +115,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   padding: {
-    // padding: 16,
     borderTopWidth: 6,
     borderColor: COLORS.lightGray,
     marginTop: 8,

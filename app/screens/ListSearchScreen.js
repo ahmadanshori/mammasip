@@ -1,20 +1,13 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  FlatList,
-} from 'react-native';
-import _ from 'lodash';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, ActivityIndicator, FlatList} from 'react-native';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {ArticleDetailItem, BookDetailItem} from '../components/Items';
 import {LoadingComponent} from '../components/Loadings';
-import Accordion from '../components/Accordion';
+import {NoInternet, ErrorServer} from '../components/Errors';
 import {getArticleAPI, getBookAPI} from '../api/article';
-import formatDate from '../libs/formatDate';
-import {COLORS, FONTS} from '../constants';
+import {COLORS} from '../constants';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 const ListSearchScreen = ({navigation, route}) => {
   const {title} = route.params;
@@ -25,6 +18,7 @@ const ListSearchScreen = ({navigation, route}) => {
     nextPage: false,
   });
   const [query, setQuery] = useState({page: 0, totalPages: 1});
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -42,7 +36,6 @@ const ListSearchScreen = ({navigation, route}) => {
         });
       } else {
         const resArticle = await getArticleAPI();
-        // console.log('resArticle', resArticle);
         setData(resArticle.data.data.content);
         setQuery({
           totalPages: resArticle.data.data.totalPages - 1,
@@ -50,7 +43,7 @@ const ListSearchScreen = ({navigation, route}) => {
         });
       }
     } catch (e) {
-      // console.log('e', e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false, nextPage: false});
     }
@@ -78,18 +71,23 @@ const ListSearchScreen = ({navigation, route}) => {
       setLoading(state => ({...state, nextPage: true}));
       try {
         const resArticle = await getArticleAPI(query.page + 1);
-
         setData([...data, ...resArticle.data.data.content]);
         setQuery({
           totalPages: resArticle.data.data.totalPages - 1,
           page: resArticle.data.data.number,
         });
-      } catch (err) {
-        // setError(err);
+      } catch (e) {
+        setError(e);
       } finally {
         setLoading(state => ({...state, nextPage: false}));
       }
     }
+  };
+
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
   };
 
   return (
@@ -101,8 +99,8 @@ const ListSearchScreen = ({navigation, route}) => {
         <FlatList
           onEndReached={nextPage}
           onEndReachedThreshold={0.5}
-          // refreshing={loading}
-          // onRefresh={handleRefresh}
+          refreshing={loading.refresh}
+          onRefresh={handleRefresh}
           data={data}
           keyExtractor={item =>
             title === 'Buku'
@@ -119,6 +117,8 @@ const ListSearchScreen = ({navigation, route}) => {
           }
         />
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

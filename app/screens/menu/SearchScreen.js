@@ -6,6 +6,7 @@ import {
   ScrollView,
   Keyboard,
   Linking,
+  RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Container} from '../../components/Container';
@@ -21,10 +22,12 @@ import {dropdownalert} from '../../components/AlertProvider';
 import {LoadingComponent} from '../../components/Loadings';
 import {SearchInput} from '../../components/Inputs';
 import {FONTS} from '../../constants';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getTopArticle} from '../../api/article';
 import {getTopBook} from '../../api/book';
 import {searchAllDataAPI} from '../../api/faq';
 import {AppContext} from '../../index';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const SearchScreen = ({navigation}) => {
   const {token} = useContext(AppContext);
@@ -34,6 +37,7 @@ const SearchScreen = ({navigation}) => {
   const [search, setSearch] = useState('');
   const [searchData, setSearchData] = useState(null);
   const [isSearch, setIsSearch] = useState(false);
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -46,7 +50,7 @@ const SearchScreen = ({navigation}) => {
       setArticleRecomended(resTopArticle.data.data);
       setBookRecomended(resTopBook.data.data);
     } catch (e) {
-      //   console.log(`e`, e, {...e});
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -73,12 +77,12 @@ const SearchScreen = ({navigation}) => {
       formData.append('search', search);
       const resSearch = await searchAllDataAPI(formData);
       setSearchData(resSearch.data.data);
-    } catch (err) {
-      // console.log(`err`, {...err});
+    } catch (e) {
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
-  }, [search, isSearch]);
+  }, [search, isSearch, setError]);
 
   // const handleMedia = val => {
   //   if (val.typeFile === 2) {
@@ -118,6 +122,12 @@ const SearchScreen = ({navigation}) => {
     }
   };
 
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
+
   return (
     <Container>
       <View style={styles.container}>
@@ -140,7 +150,13 @@ const SearchScreen = ({navigation}) => {
       ) : (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingHorizontal: 16, paddingBottom: 16}}>
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }
+          contentContainerStyle={styles.scroll}>
           {isSearch ? (
             <SearchDataComponent
               data={searchData}
@@ -189,11 +205,14 @@ const SearchScreen = ({navigation}) => {
           </View>
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };
 const styles = StyleSheet.create({
   container: {paddingBottom: 16},
+  scroll: {paddingHorizontal: 16, paddingBottom: 16},
   justify: {
     flexDirection: 'row',
     alignItems: 'center',

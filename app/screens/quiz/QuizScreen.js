@@ -6,15 +6,17 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableNativeFeedback,
+  RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
-
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getQuizByIdAPI} from '../../api/quiz';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {LoadingComponent} from '../../components/Loadings';
 import PeopleIcon from '../../assets/icons/people1.svg';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const QuizScreen = ({route}) => {
   const {id} = route.params;
@@ -23,6 +25,7 @@ const QuizScreen = ({route}) => {
   const [select, setSelect] = useState(0);
   const [count, setCount] = useState(0);
   const [finish, setFinish] = useState(false);
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -33,7 +36,7 @@ const QuizScreen = ({route}) => {
       const res = await getQuizByIdAPI(id);
       setData(res.data.data);
     } catch (e) {
-      // console.log('e', e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -72,6 +75,12 @@ const QuizScreen = ({route}) => {
     setSelect(0);
     setCount(0);
     setFinish(false);
+  };
+
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
   };
 
   return (
@@ -149,6 +158,12 @@ const QuizScreen = ({route}) => {
               </View>
               <ScrollView
                 showsVerticalScrollIndicator={false}
+                refreshControl={
+                  <RefreshControl
+                    onRefresh={handleRefresh}
+                    refreshing={loading.refresh}
+                  />
+                }
                 contentContainerStyle={styles.wrapper}>
                 {data.pertanyaan[select].pilihan.map((item, index) => (
                   <TouchableNativeFeedback
@@ -175,6 +190,8 @@ const QuizScreen = ({route}) => {
           )}
         </>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

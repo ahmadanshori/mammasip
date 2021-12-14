@@ -5,8 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Container} from '../../components/Container';
@@ -15,6 +15,7 @@ import {MainButton} from '../../components/Buttons';
 import {LoadingComponent} from '../../components/Loadings';
 import Divider from '../../components/Divider';
 import MealSuggestions from '../../components/MealSuggestions';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 
 import {
   getHealtyCaloriesAPI,
@@ -23,6 +24,7 @@ import {
 import {COLORS, FONTS, SIZES} from '../../constants';
 import caloriesCalculation from '../../libs/caloriesCalculation';
 import {AppContext} from '../../index';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const pekanData = [
   {id: 1, name: 'Pekan 1'},
@@ -46,13 +48,13 @@ const FoodSuggestionScreen = ({navigation, route}) => {
   );
   const [foodMenuData, setFoodMenuData] = useState(null);
   const [isSelect, setIsSelect] = useState(false);
-
   const [loading, setLoading] = useState({
     get: true,
     menu: false,
     pekan: false,
     refresh: false,
   });
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -74,8 +76,8 @@ const FoodSuggestionScreen = ({navigation, route}) => {
         );
         setFoodMenuData(calculation);
       }
-    } catch (err) {
-      //   console.log('er', err, {...err});
+    } catch (e) {
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -85,7 +87,6 @@ const FoodSuggestionScreen = ({navigation, route}) => {
     async item => {
       setLoading(state => ({...state, menu: true}));
       setFoodMenuData(null);
-      const oldData = calories;
       try {
         setIsSelect(true);
         setCalories(item);
@@ -100,12 +101,12 @@ const FoodSuggestionScreen = ({navigation, route}) => {
         );
         setFoodMenuData(calculation);
       } catch (e) {
-        // setCalories(oldData);
+        setError(e);
       } finally {
         setLoading(state => ({...state, menu: false}));
       }
     },
-    [token, calories, pekan.id],
+    [token, pekan.id, setError],
   );
 
   const handlePekan = useCallback(
@@ -124,13 +125,13 @@ const FoodSuggestionScreen = ({navigation, route}) => {
         );
         setFoodMenuData(calculation);
       } catch (e) {
-        // console.log('e', e);
+        setError(e);
         setPekan(oldData);
       } finally {
         setLoading(state => ({...state, pekan: false}));
       }
     },
-    [pekan, token, calories?.tipe_menu_sehat],
+    [pekan, token, calories?.tipe_menu_sehat, setError],
   );
 
   const handleSave = () => {
@@ -142,13 +143,26 @@ const FoodSuggestionScreen = ({navigation, route}) => {
     navigation.goBack();
   };
 
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
+
   return (
     <Container>
       <HeaderTitle title="Atur menu makanan" />
       {loading?.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }>
           <Text
             style={[
               FONTS.textBold12,
@@ -183,17 +197,6 @@ const FoodSuggestionScreen = ({navigation, route}) => {
               </TouchableOpacity>
             ))}
           </ScrollView>
-          <View style={styles.caloriesRow}>
-            <Icon name="alert-circle" size={16} color={COLORS.primary} />
-            <View>
-              <Text style={[FONTS.text10, styles.suggestion]}>
-                Berdasarkan berat badan anda, direkomendasikan kalori sekitar{' '}
-              </Text>
-              <Text style={[FONTS.textBold10, styles.suggestion]}>
-                1500-1600 Kkal
-              </Text>
-            </View>
-          </View>
           {loading.menu ? (
             <View style={styles.margin}>
               <LoadingComponent />
@@ -253,6 +256,8 @@ const FoodSuggestionScreen = ({navigation, route}) => {
           )}
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };
@@ -268,11 +273,6 @@ const styles = StyleSheet.create({
   inActive: {backgroundColor: COLORS.white, borderColor: COLORS.white},
   textActive: {color: COLORS.primary},
   textInactive: {color: COLORS.black},
-  caloriesRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-  },
   row: {flexDirection: 'row', alignItems: 'center'},
   suggestion: {color: COLORS.primary, flex: 1, marginLeft: 8},
   margin: {marginTop: 80},

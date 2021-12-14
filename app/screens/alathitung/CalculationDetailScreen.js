@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,7 +15,8 @@ import {HeaderTitle} from '../../components/Headers';
 import {MainButton, AskButton} from '../../components/Buttons';
 import MealSuggestions from '../../components/MealSuggestions';
 import {CalculatorItem} from '../../components/Items';
-import {dropdownalert} from '../../components/AlertProvider';
+import {NoInternet, ErrorServer} from '../../components/Errors';
+// import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import Divider from '../../components/Divider';
 import {LoadingComponent} from '../../components/Loadings';
@@ -22,15 +24,16 @@ import {getHealtyCaloriesByIdAPI} from '../../api/healtyMenu';
 import {getBmrAPI, getBmiAPI} from '../../api/calculator';
 import caloriesCalculation from '../../libs/caloriesCalculation';
 import {AppContext} from '../../index';
-import WeightIcon from '../../assets/icons/weight.svg';
+import useErrorHandler from '../../hooks/useErrorHandler';
+// import WeightIcon from '../../assets/icons/weight.svg';
 import FoodIcon from '../../assets/icons/food.svg';
 import VirusIcon from '../../assets/icons/virus.svg';
-import QuizIcon from '../../assets/icons/quiz.svg';
+// import QuizIcon from '../../assets/icons/quiz.svg';
 
 const CalculationDetailScreen = ({navigation, route}) => {
   const {type, field} = route.params;
   // const calculationId = route.params.calculationId || null;
-  const {user, token} = useContext(AppContext);
+  const {token} = useContext(AppContext);
   const [foodSuggestion, setFoodSuggestion] = useState(null);
   const [calculationId, setCalculationId] = useState(null);
   const [data, setData] = useState(null);
@@ -39,6 +42,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
     refresh: false,
     menu: false,
   });
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -65,21 +69,21 @@ const CalculationDetailScreen = ({navigation, route}) => {
   //   }
   // }, [calculationId, token]);
 
-  const getInitialData = useCallback(async () => {
+  const getInitialData = async () => {
     try {
       const res =
         type === 'BMR'
           ? await getBmrAPI(token, field)
           : await getBmiAPI(token, field);
       setData(res.data.data);
-    } catch (err) {
-      //   console.log(`err`, {...err});
+    } catch (e) {
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false, menu: false});
     }
-  }, [token, field, type]);
+  };
 
-  const handleShare = () => {};
+  //   const handleShare = () => {};
 
   const handleNavigation = (val, param) => {
     navigation.navigate(val, param);
@@ -99,22 +103,35 @@ const CalculationDetailScreen = ({navigation, route}) => {
       );
       setFoodSuggestion(calculation);
     } catch (e) {
-      //   console.log(`e`, e);
+      setError(e);
     } finally {
       setLoading(state => ({...state, menu: false}));
     }
+  };
+
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
   };
 
   return (
     <Container>
       <HeaderTitle
         title={`Hasil Perhitungan ${type} Anda`}
-        onSharePress={handleShare}
+        // onSharePress={handleShare}
       />
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }>
           <View style={styles.title}>
             <Text style={FONTS.textBold18}>{type} anda adalah </Text>
             <Text style={[FONTS.textBold18, {color: COLORS.primary}]}>
@@ -282,6 +299,8 @@ const CalculationDetailScreen = ({navigation, route}) => {
           </View>
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {View, FlatList} from 'react-native';
-
 import {Container} from '../components/Container';
 import {LoadingComponent} from '../components/Loadings';
 // import {VideoItem, ArticleItem, CalculatorItem} from '../components/Items';
@@ -12,17 +11,19 @@ import {
   GKSContent,
   ArticleContent,
 } from '../components/Contents';
-
+import {NoInternet, ErrorServer} from '../components/Errors';
 import {HeaderTitle} from '../components/Headers';
 // import {AppContext} from '../index';
 // import {COLORS, SIZES} from '../constants';
 import {getRoomTypeByIdAPI} from '../api/room';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 const RoomScreen = ({navigation, route}) => {
   const {roomId} = route.params;
   // const {token, setLoading} = useContext(AppContext);
   const [data, setData] = useState(null);
   const [load, setLoad] = useState({get: true, refresh: false});
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -32,8 +33,8 @@ const RoomScreen = ({navigation, route}) => {
     try {
       const resRoom = await getRoomTypeByIdAPI(roomId);
       setData(resRoom.data.data);
-    } catch (err) {
-      // console.log(`err`, {...err});
+    } catch (e) {
+      setError(e);
     } finally {
       setLoad({get: false, refresh: false});
     }
@@ -102,6 +103,12 @@ const RoomScreen = ({navigation, route}) => {
     }
   };
 
+  const handleRefresh = () => {
+    setError();
+    setLoad(state => ({...state, refresh: true}));
+    getInitialData();
+  };
+
   return (
     <Container>
       <HeaderTitle title={data?.nama_ruang} />
@@ -111,6 +118,8 @@ const RoomScreen = ({navigation, route}) => {
         <View>
           <FlatList
             data={data.media}
+            refreshing={load.refresh}
+            onRefresh={handleRefresh}
             keyExtractor={item => item.idMedia.toString()}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
@@ -147,6 +156,8 @@ const RoomScreen = ({navigation, route}) => {
           <ArticleItem video />
         </ScrollView>
       </View> */}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

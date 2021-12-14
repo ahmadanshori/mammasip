@@ -1,18 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, ScrollView} from 'react-native';
+import {Text, StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {LoadingComponent} from '../components/Loadings';
+import {NoInternet, ErrorServer} from '../components/Errors';
 // import Accordion from '../components/Accordion';
 import {getArticleByIdAPI} from '../api/article';
 import formatDate from '../libs/formatDate';
 import {COLORS, SIZES, FONTS} from '../constants';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 const ArticleScreen = ({route}) => {
   const {articleId} = route.params;
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -23,10 +26,16 @@ const ArticleScreen = ({route}) => {
       const res = await getArticleByIdAPI(articleId);
       setData(res.data.data[0]);
     } catch (e) {
-      // console.log(`e`, e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
+  };
+
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
   };
 
   return (
@@ -37,6 +46,12 @@ const ArticleScreen = ({route}) => {
       ) : (
         <ScrollView
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }
           contentContainerStyle={styles.container}>
           <Text
             style={[
@@ -57,6 +72,8 @@ const ArticleScreen = ({route}) => {
           />
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

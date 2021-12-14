@@ -12,10 +12,12 @@ import {HeaderTitle} from '../components/Headers';
 import {LoadingComponent} from '../components/Loadings';
 import Divider from '../components/Divider';
 import MealSuggestions from '../components/MealSuggestions';
+import {NoInternet, ErrorServer} from '../components/Errors';
 import {getHealtyCaloriesByIdAPI} from '../api/healtyMenu';
 import {COLORS, FONTS, SIZES} from '../constants';
 import caloriesCalculation from '../libs/caloriesCalculation';
 import {AppContext} from '../index';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 const pekanData = [
   {id: 1, name: 'Pekan 1'},
@@ -29,7 +31,7 @@ const CaloriesDetailScreen = ({route}) => {
   const {token} = useContext(AppContext);
   const [pekan, setPekan] = useState({id: 1, name: 'Pekan 1'});
   const [foodMenuData, setFoodMenuData] = useState(null);
-
+  const [error, setError] = useErrorHandler();
   const [loading, setLoading] = useState({
     get: true,
     menu: false,
@@ -52,8 +54,8 @@ const CaloriesDetailScreen = ({route}) => {
         resMenu.data.data[0].menuPekan[0],
       );
       setFoodMenuData(calculation);
-    } catch (err) {
-      //   console.log('er', err, {...err});
+    } catch (e) {
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -83,6 +85,12 @@ const CaloriesDetailScreen = ({route}) => {
     },
     [pekan, token, caloriesData?.tipe_menu_sehat],
   );
+
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
 
   return (
     <Container>
@@ -142,6 +150,8 @@ const CaloriesDetailScreen = ({route}) => {
           )}
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

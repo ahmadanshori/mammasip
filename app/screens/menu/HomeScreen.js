@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  RefreshControl,
 } from 'react-native';
 
 import {HomeHeader} from '../../components/Headers';
@@ -14,24 +15,28 @@ import Banner from '../../components/Banner';
 import {HomeItem} from '../../components/Items';
 import {MainButton} from '../../components/Buttons';
 import {LoadingComponent} from '../../components/Loadings';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getRoomAPI} from '../../api/room';
 import {FONTS, COLORS, ICON, SIZES} from '../../constants';
 import {AppContext} from '../../index';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const HomeScreen = ({navigation}) => {
   const {user, token} = useContext(AppContext);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [roomData, setRoomData] = useState([]);
+  const [error, setError] = useErrorHandler();
+
   useEffect(() => {
-    getInititalData();
+    getInitialData();
   }, []);
 
-  const getInititalData = async () => {
+  const getInitialData = async () => {
     try {
       const res = await getRoomAPI();
       setRoomData(res.data.data);
     } catch (e) {
-      //   console.log(`e`, e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -54,6 +59,12 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
+  const handleRefresh = () => {
+    setError();
+    setLoading({get: false, refresh: true});
+    getInitialData();
+  };
+
   return (
     <View style={{flex: 1}}>
       <HomeHeader data={user} />
@@ -62,7 +73,13 @@ const HomeScreen = ({navigation}) => {
       ) : (
         <ScrollView
           contentContainerStyle={{paddingBottom: 16}}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }>
           <Banner />
           <TouchableNativeFeedback
             onPress={() => navigation.navigate('ImportantMessage')}>
@@ -156,6 +173,8 @@ const HomeScreen = ({navigation}) => {
           </View>
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </View>
   );
 };
