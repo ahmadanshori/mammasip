@@ -116,7 +116,7 @@ const HomeScreen = ({navigation}) => {
                 FONTS.textBold14,
                 {color: COLORS.black, marginBottom: 16},
               ]}>
-              Ruang mammaSIP
+              Ruang MammaSIP
             </Text>
             {roomData.map(item => (
               <HomeItem

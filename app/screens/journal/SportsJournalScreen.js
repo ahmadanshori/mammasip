@@ -136,7 +136,7 @@ const SportsJournalScreen = () => {
               Lihat Semua
             </Text>
           </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
             <VideoItem />
             <VideoItem />
             <VideoItem />
@@ -155,23 +155,6 @@ const SportsJournalScreen = () => {
             Butuh informasi lainya?
           </Text>
           <AskButton />
-          {/* <View style={styles.margin}>
-            <CalculatorItem
-              image={<QuizIcon height={60} width={60} />}
-              // onPress={() => handleNavigation('WeightCalculator')}
-              onPress={() =>
-                dropdownalert.alertWithType(
-                  'warn',
-                  '',
-                  'Belum bisa, Masih Diproses!!',
-                )
-              }
-              backgroundColor={COLORS.primary}
-              title="Ayo ikutan Quiz!"
-              description="Uji pengetahuanmu dengan quiz
-              kesehatan dari mammaSIP."
-            />
-          </View> */}
         </View>
       </ScrollView>
       {isReminder && (
@@ -215,5 +198,4 @@ const styles = StyleSheet.create({
   row: {flexDirection: 'row', alignItems: 'center', marginTop: 8},
   graphStyle: {backgroundColor: COLORS.white},
   icon: {marginRight: 8},
-  margin: {marginTop: 44},
 });

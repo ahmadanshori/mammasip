@@ -1,19 +1,16 @@
-import React, {useState, useContext, useEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet, ScrollView, FlatList} from 'react-native';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {TestimonialItem} from '../components/Items';
 import {LoadingComponent} from '../components/Loadings';
 import {DestinationContent, VideoMessageContent} from '../components/Contents';
 import {NoInternet, ErrorServer} from '../components/Errors';
-import {COLORS, FONTS} from '../constants';
+import {COLORS} from '../constants';
 import {getImportantMessageAPI, getTestimoniAPI} from '../api/room';
 import useErrorHandler from '../hooks/useErrorHandler';
 
 const ImportantMessageScreen = ({route, navigation}) => {
-  //   const {setLoading} = useContext(AppContext);
-
   const [data, setData] = useState([]);
   const [testimonial, setTestimonial] = useState([]);
   const [loading, setLoading] = useState({get: true, refresh: false});
@@ -76,17 +73,9 @@ const ImportantMessageScreen = ({route, navigation}) => {
                 contentContainerStyle={styles.container}
                 ListFooterComponent={
                   <View style={styles.padding}>
-                    <View style={styles.wrapper}>
-                      <Icon
-                        name="message-processing"
-                        size={20}
-                        style={styles.icon}
-                      />
-                      <Text style={[FONTS.textBold14]}>Apa Kata Mereka?</Text>
-                    </View>
                     <ScrollView
                       horizontal
-                      showsHorizontalScrollIndicator={false}
+                      showsHorizontalScrollIndicator={true}
                       contentContainerStyle={styles.scroll}>
                       {testimonial.map(item => (
                         <TestimonialItem data={item} key={item.id_testimoni} />
@@ -109,17 +98,11 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 16,
   },
-  wrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-  },
   padding: {
     borderTopWidth: 6,
     borderColor: COLORS.lightGray,
-    marginTop: 8,
+    paddingTop: 16,
   },
-  icon: {marginRight: 6},
   scroll: {paddingHorizontal: 16},
 });
 

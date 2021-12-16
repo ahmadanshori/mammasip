@@ -52,6 +52,26 @@ const DoctorRooomScreen = ({route, navigation}) => {
             source={{uri: doctorData?.url_picture_bg}}
           />
           <View style={styles.padding}>
+            <TouchableNativeFeedback
+              onPress={() => onRoom(doctorData.child_ruang[0].id_ruang)}>
+              <View style={styles.message}>
+                <View style={styles.flex}>
+                  <View style={styles.row}>
+                    <Icon name="message-text" size={25} color={COLORS.white} />
+                    <Text style={[FONTS.textBold16, styles.messageText]}>
+                      Pesan Pengingat
+                    </Text>
+                  </View>
+                  <Text style={[FONTS.text12, {color: COLORS.white}]}>
+                    Video senior akademisi mengenai mengemban amanah sebagai
+                    orang berilmu (Prof. Dr. dr. H. Ari Fahrial Syam, SpPD-KGEH,
+                    MMB, FINASIM, FACP dan Dr. dr. Sonar Soni Panigoro,
+                    Sp.B.(K).Onk., M.Epid., MARS)
+                  </Text>
+                </View>
+                <Icon name="play-circle" size={60} color={COLORS.white} />
+              </View>
+            </TouchableNativeFeedback>
             <ImportantMessage
               title={doctorData?.kata_pengantar}
               style={styles.mBottom}
@@ -67,24 +87,6 @@ const DoctorRooomScreen = ({route, navigation}) => {
                 );
               }
             })}
-            <TouchableNativeFeedback
-              onPress={() => onRoom(doctorData.child_ruang[0].id_ruang)}>
-              <View style={styles.message}>
-                <View style={styles.flex}>
-                  <View style={styles.row}>
-                    <Icon name="message-text" size={25} color={COLORS.white} />
-                    <Text style={[FONTS.textBold16, styles.messageText]}>
-                      Pesan Pengingat
-                    </Text>
-                  </View>
-                  <Text style={[FONTS.text12, {color: COLORS.white}]}>
-                    Video senior akademisi mengenai mengemban amanah sebagai
-                    orang berilmu (Prof. Quraish Shihab)
-                  </Text>
-                </View>
-                <Icon name="play-circle" size={60} color={COLORS.white} />
-              </View>
-            </TouchableNativeFeedback>
           </View>
         </ScrollView>
       )}
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.darkBlue,
     padding: 16,
     borderRadius: 8,
-    marginTop: 24,
+    marginVertical: 16,
   },
   flex: {flex: 1},
   row: {flexDirection: 'row', alignItems: 'center', marginBottom: 8},

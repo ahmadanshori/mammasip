@@ -97,6 +97,13 @@ const BungaRampaiListScreen = ({navigation, route}) => {
               ? item.kata_pengantar
               : item.nameBook
           }
+          bookDate={type === 1 || type === 2 || type === 3 ? item.year : null}
+          publisher={
+            type === 1 || type === 2 || type === 3 ? item.publisherBook : null
+          }
+          author={
+            type === 1 || type === 2 || type === 3 ? item.authorBook : null
+          }
           source={type === 5 ? item.url : item.urlBanner}
           date={item.createdDate}
           onPress={() => handleNavigator(item)}

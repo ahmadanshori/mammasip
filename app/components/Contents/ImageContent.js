@@ -1,19 +1,19 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const ImageContent = ({data}) => {
+const ImageContent = ({data, onPress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <Ionicons
           name="alert-circle-outline"
-          size={16}
-          color={COLORS.darkBlue}
+          size={20}
+          color={COLORS.white}
           style={styles.margin}
         />
-        <Text style={[FONTS.text10, {color: COLORS.black, flex: 1}]}>
+        <Text style={[FONTS.text10, {color: COLORS.white, flex: 1}]}>
           {data.kata_pengantar}
         </Text>
         {data.flag_important === 1 && (
@@ -24,12 +24,13 @@ const ImageContent = ({data}) => {
           />
         )}
       </View>
-
-      <Image
-        source={{uri: data?.url}}
-        style={styles.img}
-        resizeMode="contain"
-      />
+      <TouchableOpacity activeOpacity={SIZES.opacity} onPress={onPress}>
+        <Image
+          source={{uri: data?.url}}
+          style={styles.img}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 12,
-    backgroundColor: '#F2F6FF',
+    backgroundColor: COLORS.primary,
     padding: 6,
     borderRadius: 6,
     width: '100%',

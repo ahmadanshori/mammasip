@@ -13,19 +13,29 @@ const BookItem = ({
   publisher,
   author,
   uploadDate,
+  isImage = true,
 }) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
-      {source ? (
-        <Image source={{uri: source}} style={styles.img} />
-      ) : (
-        <View style={[styles.img, {backgroundColor: COLORS.lightGray}]}>
-          <Icon name="image-outline" size={SIZES.width5} color={COLORS.gray} />
-        </View>
-      )}
+      {isImage ? (
+        <>
+          {source ? (
+            <Image source={{uri: source}} style={styles.img} />
+          ) : (
+            <View style={[styles.img, {backgroundColor: COLORS.lightGray}]}>
+              <Icon
+                name="image-outline"
+                size={SIZES.width5}
+                color={COLORS.gray}
+              />
+            </View>
+          )}
+        </>
+      ) : null}
+
       <View style={styles.body}>
         <Text
           style={[FONTS.textBold10, {color: COLORS.black}]}

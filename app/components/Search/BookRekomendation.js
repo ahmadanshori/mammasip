@@ -23,7 +23,7 @@ const ArticleRecomendation = ({seeAllOnPress, data, onPress}) => {
       </View>
       <ScrollView
         horizontal
-        showsHorizontalScrollIndicator={false}
+        showsHorizontalScrollIndicator={true}
         contentContainerStyle={styles.margin}>
         {data.map(item => (
           <BookItem

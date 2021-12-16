@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
+  RefreshControl,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container} from '../../components/Container';
@@ -18,9 +19,11 @@ import {
 } from '../../components/Items';
 import {dropdownalert} from '../../components/AlertProvider';
 import ImportantMessage from '../../components/ImportantMessage';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getArticleAPI} from '../../api/article';
 import {getRoomTypeByIdAPI, getBookAPI, getVideoPageAPI} from '../../api/room';
 import {COLORS, FONTS} from '../../constants';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const BungaRampaiScreen = ({navigation, route}) => {
   const {id} = route.params;
@@ -29,7 +32,8 @@ const BungaRampaiScreen = ({navigation, route}) => {
   const [journal, setJournal] = useState([]);
   const [article, setArticle] = useState([]);
   const [video, setVideo] = useState([]);
-  const [load, setLoad] = useState({get: true, refresh: false});
+  const [loading, setLoading] = useState({get: true, refresh: false});
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -50,9 +54,9 @@ const BungaRampaiScreen = ({navigation, route}) => {
       setVideo(resVideo.data.data.content);
       setBook(resBookRecommendation.data.data.content);
     } catch (e) {
-      //   console.log('e', e);
+      setError(e);
     } finally {
-      setLoad({get: false, refresh: false});
+      setLoading({get: false, refresh: false});
     }
   };
 
@@ -69,7 +73,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
   const handleArticle = useCallback(
     async event => {
       if (event.isUrl === 0) {
-        navigation.navigate('Article', {articleId: event.idArticle});
+        navigation.navigate('Article', {id: event.idArticle});
       } else {
         const supported = await Linking.canOpenURL(event?.urlArticle);
         if (supported) {
@@ -99,17 +103,25 @@ const BungaRampaiScreen = ({navigation, route}) => {
     }
   }, []);
 
-  //   const handleRefresh = () => {
-  //     setLoading(true);
-  //     handleCustomerSearch(search);
-  //   };
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
 
   return (
     <Container>
-      {load.get ? (
+      {loading.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }>
           <BackgroundHeader
             title={roomData?.nama_ruang}
             desc={roomData?.description}
@@ -137,7 +149,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={true}>
                 {book.map(item => (
                   <BookItem
                     key={item.idBook}
@@ -171,7 +183,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={true}>
                 {journal.map(item => (
                   <BookItem
                     key={item.idBook}
@@ -265,12 +277,13 @@ const BungaRampaiScreen = ({navigation, route}) => {
                 Lihat Semua
               </Text>
             </TouchableOpacity>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={true}>
               {book.map(item => (
                 <BookItem
                   key={item.idBook}
                   title={item.nameBook}
-                  source={item.urlBanner}
+                  // source={item.urlBanner}
+                  isImage={false}
                   date={item.year}
                   uploadDate={item.createdDate}
                   publisher={item.publisherBook}
@@ -282,6 +295,8 @@ const BungaRampaiScreen = ({navigation, route}) => {
           </View>
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

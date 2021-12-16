@@ -96,7 +96,7 @@ const SkriningJournalScreen = () => {
               Lihat Semua
             </Text>
           </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
             <VideoItem />
             <VideoItem />
             <VideoItem />
@@ -105,36 +105,11 @@ const SkriningJournalScreen = () => {
             <VideoItem />
           </ScrollView>
         </View>
-        <Divider />
         <View style={styles.wrapper}>
-          <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
-            Info seputar skrining
-          </Text>
-          <Accordion title="Apa itu BMI?" />
-          <Accordion title="Apa itu kalori & fungsinya untuk tubuh?" />
-          <Accordion title="Bagaimana cara menghitung BMR?" />
-          <Accordion title="Apakah BMR penting untuk kesehatan?" />
           <Text style={[FONTS.textBold16, styles.information]}>
             Butuh informasi lainya?
           </Text>
           <AskButton />
-          {/* <View style={styles.margin}>
-            <CalculatorItem
-              image={<QuizIcon height={60} width={60} />}
-              // onPress={() => handleNavigation('WeightCalculator')}
-              onPress={() =>
-                dropdownalert.alertWithType(
-                  'warn',
-                  '',
-                  'Belum bisa, Masih Diproses!!',
-                )
-              }
-              backgroundColor={COLORS.primary}
-              title="Ayo ikutan Quiz!"
-              description="Uji pengetahuanmu dengan quiz
-              kesehatan dari mammaSIP."
-            />
-          </View> */}
         </View>
       </ScrollView>
     </Container>
@@ -163,7 +138,6 @@ const styles = StyleSheet.create({
     marginTop: 32,
     textAlign: 'center',
   },
-  margin: {marginTop: 32},
   margin8: {marginBottom: 8},
 });
 export default SkriningJournalScreen;

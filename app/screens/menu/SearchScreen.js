@@ -8,10 +8,10 @@ import {
   Linking,
   RefreshControl,
 } from 'react-native';
+import ReactNativeBlobUtil from 'react-native-blob-util';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Container} from '../../components/Container';
 import {AskButton} from '../../components/Buttons';
-
 import {
   // VideoRecomendation,
   ArticleRecomendation,
@@ -21,11 +21,12 @@ import {
 import {dropdownalert} from '../../components/AlertProvider';
 import {LoadingComponent} from '../../components/Loadings';
 import {SearchInput} from '../../components/Inputs';
-import {FONTS} from '../../constants';
+import DownloadModal from '../../components/Modals/DownloadModal';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getTopArticle} from '../../api/article';
 import {getTopBook} from '../../api/book';
 import {searchAllDataAPI} from '../../api/faq';
+import {FONTS} from '../../constants';
 import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
 
@@ -37,6 +38,8 @@ const SearchScreen = ({navigation}) => {
   const [search, setSearch] = useState('');
   const [searchData, setSearchData] = useState(null);
   const [isSearch, setIsSearch] = useState(false);
+  const [isDownload, setIsDownload] = useState(false);
+  const [selected, setSelected] = useState(null);
   const [error, setError] = useErrorHandler();
 
   useEffect(() => {
@@ -84,26 +87,10 @@ const SearchScreen = ({navigation}) => {
     }
   }, [search, isSearch, setError]);
 
-  // const handleMedia = val => {
-  //   if (val.typeFile === 2) {
-  //     navigation.navigate('Video', {url: val.url_frame});
-  //   } else if (val.typeFile === 3) {
-  //     navigation.navigate('Pdf', {
-  //       link: val.url,
-  //     });
-  //   } else {
-  //     setSelected(val);
-  //     setIsDownload(true);
-  //   }
-  //   //   type_file
-  //   //  1 foto, 2 video, 3 pdf, 4 pptx
-  //   // 1,2,3 bisa di view baru download, 4 langsung download
-  // };
-
   const handleNavigatorSearch = async (event, type) => {
     if (type === 1) {
       if (event.isUrl === 0) {
-        navigation.navigate('Article', {articleId: event.idArticle});
+        navigation.navigate('Article', {id: event.idArticle});
       } else {
         const supported = await Linking.canOpenURL(event?.urlArticle);
         if (supported) {
@@ -119,8 +106,50 @@ const SearchScreen = ({navigation}) => {
     } else if (type === 2) {
       navigation.navigate('Pdf', {link: event.urlBook});
     } else {
+      const media = event.media[0];
+      if (media.typeFile === 2) {
+        navigation.navigate('Video', {url: media.url_frame});
+      } else if (media.typeFile === 3) {
+        navigation.navigate('Pdf', {
+          link: media.url,
+        });
+      } else {
+        setSelected(media);
+        setIsDownload(true);
+      }
     }
   };
+
+  const handleDownload = useCallback((link, type) => {
+    ReactNativeBlobUtil.config({
+      addAndroidDownloads: {
+        useDownloadManager: true,
+        notification: true,
+        mime: type,
+        description: 'File downloaded by download manager.',
+      },
+    })
+      .fetch('GET', link, {
+        Accept: 'application/json',
+      })
+      .then(res => {})
+      .then(data => {})
+      .catch(e => {});
+  }, []);
+
+  const onDownload = useCallback(() => {
+    setIsDownload(false);
+    if (selected.typeFile === 1) {
+      handleDownload(selected.url, 'image/png');
+    } else if (selected.typeFile === 4) {
+      handleDownload(
+        selected.url,
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      );
+    } else {
+      return null;
+    }
+  }, [selected, handleDownload]);
 
   const handleRefresh = () => {
     setError();
@@ -167,7 +196,9 @@ const SearchScreen = ({navigation}) => {
               {articleRecomended.length ? (
                 <ArticleRecomendation
                   data={articleRecomended}
-                  onPress={articleId => handleNavigator('Article', {articleId})}
+                  onPress={articleId =>
+                    handleNavigator('Article', {id: articleId})
+                  }
                   seeAllOnPress={() =>
                     handleNavigator('BungaRampaiList', {
                       type: 4,
@@ -192,7 +223,6 @@ const SearchScreen = ({navigation}) => {
           onPress={() => navigation.navigate('VideoDetail')}
         />
           <ImportanLink /> */}
-
           <View style={styles.footer}>
             <Text
               style={[
@@ -204,6 +234,12 @@ const SearchScreen = ({navigation}) => {
             <AskButton onPress={() => navigation.navigate('Faq')} />
           </View>
         </ScrollView>
+      )}
+      {isDownload && (
+        <DownloadModal
+          onClose={() => setIsDownload(false)}
+          onDownload={onDownload}
+        />
       )}
       {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}

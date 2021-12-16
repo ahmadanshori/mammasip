@@ -1,9 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import RenderHtml from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {COLORS, FONTS} from '../constants';
+import {COLORS, SIZES} from '../constants';
 
 const ImportantMessage = ({title, style}) => {
+  const html = `<div style="color: #ffffff;">${title}</div>`;
   return (
     <View style={[styles.wrapper, style]}>
       <Icon
@@ -12,9 +14,14 @@ const ImportantMessage = ({title, style}) => {
         color={COLORS.white}
         style={styles.icon}
       />
-      <Text style={[FONTS.text12, {color: COLORS.white, flex: 1}]}>
-        {title}
-      </Text>
+      <View style={{flex: 1}}>
+        <RenderHtml
+          contentWidth={SIZES.width}
+          source={{
+            html: html,
+          }}
+        />
+      </View>
     </View>
   );
 };

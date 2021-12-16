@@ -11,7 +11,9 @@ const ArticleDetailItem = ({
   title,
   date,
   desc,
-  category = [],
+  publisher,
+  author,
+  bookDate,
 }) => {
   return (
     <TouchableOpacity
@@ -30,22 +32,24 @@ const ArticleDetailItem = ({
       <View style={styles.body}>
         <Text style={FONTS.textBold14}>{title}</Text>
         {desc && <Text style={FONTS.text12}>{desc}</Text>}
+        {publisher ? (
+          <View style={styles.row}>
+            <Text style={[FONTS.textBold8, {color: COLORS.black}]}>
+              {formatDate(bookDate, 'yyyy')},{' '}
+            </Text>
+            {publisher || author ? (
+              <Text
+                style={[FONTS.textBold8, {color: COLORS.secondary, flex: 1}]}
+                numberOfLines={1}>
+                {publisher}, {author}
+              </Text>
+            ) : null}
+          </View>
+        ) : null}
+
         <Text style={[FONTS.text10, {color: COLORS.gray}]}>
           Diupload {formatDate(date)}
         </Text>
-        <View style={styles.row}>
-          {category?.length ? (
-            <>
-              {category.map(item => (
-                <View style={styles.category} key={item.idHastag}>
-                  <Text style={[FONTS.textBold10, {color: COLORS.primary}]}>
-                    {item.nameCategory}
-                  </Text>
-                </View>
-              ))}
-            </>
-          ) : null}
-        </View>
       </View>
       {/* <TouchableOpacity style={{paddingHorizontal: 4}}>
         <Icon
@@ -79,30 +83,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: COLORS.separator,
   },
-  circleIcon: {
-    backgroundColor: COLORS.shadowWhite,
-    borderRadius: 50,
-    height: 42,
-    width: 42,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   bookmark: {position: 'absolute', top: 0, right: 0, padding: 8},
   body: {paddingHorizontal: 8, flex: 1},
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 10,
-    flexWrap: 'wrap',
-  },
-  category: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 12,
-    backgroundColor: COLORS.shadowPrimary,
-    marginRight: 6,
-    marginTop: 6,
-  },
+  row: {flexDirection: 'row', alignItems: 'center'},
 });
 
 export default ArticleDetailItem;

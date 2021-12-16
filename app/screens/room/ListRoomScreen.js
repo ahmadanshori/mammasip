@@ -1,15 +1,18 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import {Container} from '../../components/Container';
 import {RoomItem} from '../../components/Items';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getRoomTypeByIdAPI} from '../../api/room';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const ListRoomScreen = ({route, navigation}) => {
   const {id} = route.params;
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -19,7 +22,7 @@ const ListRoomScreen = ({route, navigation}) => {
       const res = await getRoomTypeByIdAPI(id);
       setData(res.data.data);
     } catch (e) {
-      // console.log('e', e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -31,12 +34,24 @@ const ListRoomScreen = ({route, navigation}) => {
     [navigation],
   );
 
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
   return (
     <Container>
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }>
           <BackgroundHeader
             title={data?.nama_ruang}
             desc={data?.description}
@@ -54,6 +69,8 @@ const ListRoomScreen = ({route, navigation}) => {
           </View>
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

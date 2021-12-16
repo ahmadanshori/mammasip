@@ -5,7 +5,7 @@ import {
   StyleSheet,
   StatusBar,
   ScrollView,
-  Image,
+  // Image,
   TouchableNativeFeedback,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -14,15 +14,14 @@ import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
-import Accordion from '../../components/Accordion';
 import {CalculatorItem} from '../../components/Items';
-import {dropdownalert} from '../../components/AlertProvider';
+// import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-import WeightIcon from '../../assets/icons/weight.svg';
+// import WeightIcon from '../../assets/icons/weight.svg';
 import FoodIcon from '../../assets/icons/food.svg';
 import VirusIcon from '../../assets/icons/virus.svg';
-import QuizIcon from '../../assets/icons/quiz.svg';
+// import QuizIcon from '../../assets/icons/quiz.svg';
 
 const BmiScreen = ({navigation}) => {
   const [field, setField] = useState({
@@ -64,7 +63,7 @@ const BmiScreen = ({navigation}) => {
           </View>
           <View style={styles.title}>
             <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
-              Body Mass Index (BMI)
+              Index Massa Tubuh (IMT)
             </Text>
             <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
               Massa tubuh anda sudah ideal? apakah terhitung kurang, cukup atau
@@ -120,15 +119,6 @@ const BmiScreen = ({navigation}) => {
             }
             disable={!field.age || !field.height || !field.weight}
           />
-          <View style={styles.margin}>
-            <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
-              Info seputar kebutuhan kalori
-            </Text>
-            <Accordion title="Apa itu BMI?" />
-            <Accordion title="Apa itu kalori & fungsinya untuk tubuh?" />
-            <Accordion title="Bagaimana cara menghitung BMR?" />
-            <Accordion title="Apakah BMR penting untuk kesehatan?" />
-          </View>
           <View style={styles.marginHeight}>
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain
@@ -137,7 +127,7 @@ const BmiScreen = ({navigation}) => {
               image={<FoodIcon width={60} height={60} />}
               onPress={() => handleNavigation('Bmr')}
               backgroundColor={COLORS.blue}
-              title="Massa Tubuh Ideal (BMR)"
+              title="Kalkulator Indeks Massa Tubuh"
               description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
             />
             <CalculatorItem

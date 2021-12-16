@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {WebView} from 'react-native-webview';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const VideoMessageContent = ({data, onPress}) => {
@@ -20,15 +20,25 @@ const VideoMessageContent = ({data, onPress}) => {
       <Text style={[FONTS.text12, styles.pengantar]}>
         “{data?.kata_pengantar}”
       </Text>
-      <View style={styles.imgWrapper}>
-        <WebView
-          source={{uri: data?.url}}
-          mediaPlaybackRequiresUserAction={true}
-          automaticallyAdjustContentInsets={false}
-          //   userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"
-        />
-        <TouchableOpacity style={styles.shadow} onPress={onPress} />
-      </View>
+      {data?.url ? (
+        <TouchableOpacity onPress={onPress} activeOpacity={1}>
+          <Image source={{uri: data.url}} style={styles.imgVideo} />
+          <View style={styles.shadowImg}>
+            <View style={styles.circleIcon}>
+              <Icon
+                name="play-circle"
+                size={40}
+                color={COLORS.red}
+                style={styles.margin}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.notfoundImg}>
+          <Icon name="image-outline" size={30} color={COLORS.gray} />
+        </View>
+      )}
     </View>
   );
 };
@@ -48,26 +58,45 @@ const styles = StyleSheet.create({
   },
   text: {marginLeft: 12, justifyContent: 'center', flex: 1},
   img: {height: 60, width: 60, borderRadius: 60, backgroundColor: COLORS.gray},
-  margin: {
-    marginRight: 6,
-  },
   pengantar: {
     color: COLORS.black,
     marginVertical: 12,
     textAlign: 'center',
     fontStyle: 'italic',
   },
-  imgWrapper: {
-    height: SIZES.width2,
-    width: SIZES.width - 56,
-  },
-  shadow: {
+  imgVideo: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: SIZES.width2 - 8,
     width: '100%',
-    height: '100%',
-    position: 'absolute',
-    zIndex: 999,
-    backgroundColor: COLORS.shadowWhite,
+    borderRadius: 8,
   },
+  shadowImg: {
+    height: SIZES.width2 - 8,
+    width: '100%',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    zIndex: 99,
+  },
+  notfoundImg: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: SIZES.width5 - 8,
+    width: SIZES.width5 - 8,
+    borderRadius: 8,
+    backgroundColor: COLORS.separator,
+  },
+  circleIcon: {
+    backgroundColor: COLORS.shadowWhite,
+    borderRadius: 50,
+    height: 47,
+    width: 47,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  margin: {marginLeft: 2},
 });
 
 export default VideoMessageContent;

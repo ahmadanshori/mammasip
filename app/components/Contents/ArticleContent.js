@@ -1,18 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RenderHtml from 'react-native-render-html';
 import {COLORS, FONTS, SIZES} from '../../constants';
+import {ArticleItem} from '../Items';
 import formatDate from '../../libs/formatDate';
+import {OutlineButton} from '../Buttons';
 
-const ArticleContent = ({data}) => {
-  const html = `<html>
-    <head>
-    </head>
-    <body>
-    ${data.article.bodyArticle}
-    </body>
-    </html>`;
+const ArticleContent = ({data, onArticle}) => {
+  const html = `${data.article.abstractArticle}`;
   return (
     <View style={styles.container}>
       {data?.kata_pengantar && (
@@ -35,7 +31,6 @@ const ArticleContent = ({data}) => {
           )}
         </View>
       )}
-
       <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
         {data.article?.nameArticle}
       </Text>
@@ -49,6 +44,34 @@ const ArticleContent = ({data}) => {
           html: html,
         }}
       />
+      <OutlineButton
+        title={'Lihat Selengkapnya'}
+        onPress={() => onArticle(data.article.idArticle)}
+      />
+      {data.list_article_relasi.length ? (
+        <>
+          <Text
+            style={[
+              FONTS.textBold14,
+              {color: COLORS.secondary, marginTop: 16},
+            ]}>
+            Artikel Lainnya:
+          </Text>
+          <ScrollView
+            horizontal
+            contentContainerStyle={{paddingHorizontal: 16}}>
+            {data.list_article_relasi.map(item => (
+              <ArticleItem
+                key={item.idArticle}
+                isImage={false}
+                title={item.nameArticle}
+                date={item.createdDate}
+                onPress={() => onArticle(item.idArticle)}
+              />
+            ))}
+          </ScrollView>
+        </>
+      ) : null}
     </View>
   );
 };

@@ -38,7 +38,7 @@ const MealSuggestions = ({data}) => {
     <>
       <ScrollView
         horizontal
-        showsHorizontalScrollIndicator={false}
+        showsHorizontalScrollIndicator={true}
         style={styles.dayWrapper}>
         {dayData.map(item => (
           <TouchableOpacity

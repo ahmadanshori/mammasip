@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {WebView} from 'react-native-webview';
-// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
@@ -26,37 +25,25 @@ const VideoContent = ({data, onPress}) => {
           />
         )}
       </View>
-      <View style={styles.imgWrapper}>
-        <WebView
-          source={{uri: data?.url}}
-          mediaPlaybackRequiresUserAction={true}
-          automaticallyAdjustContentInsets={false}
-        />
-        {/* <TouchableOpacity style={styles.shadow} onPress={onPress} /> */}
-      </View>
-      {/* <View style={styles.imgWrapper}>
-        <Text>aaa</Text>
-      </View> */}
-      {/* {data.url ? (
-        <TouchableOpacity activeOpacity={SIZES.opacity} onPress={onPress}>
-          <Image source={{uri: data.url}} style={styles.image} />
-          <View style={styles.shadow}>
-            <MaterialCommunityIcons
-              name="youtube"
-              size={60}
-              color={COLORS.red}
-            />
+      {data?.url ? (
+        <TouchableOpacity onPress={onPress} activeOpacity={1}>
+          <Image source={{uri: data.url}} style={styles.imgVideo} />
+          <View style={styles.shadowImg}>
+            <View style={styles.circleIcon}>
+              <Icon
+                name="play-circle"
+                size={40}
+                color={COLORS.red}
+                style={styles.circle}
+              />
+            </View>
           </View>
         </TouchableOpacity>
       ) : (
-        <View style={styles.notfound}>
-          <MaterialCommunityIcons
-            name="video-off-outline"
-            size={60}
-            color={COLORS.gray}
-          />
+        <View style={styles.notfoundImg}>
+          <Icon name="image-outline" size={30} color={COLORS.gray} />
         </View>
-      )} */}
+      )}
     </View>
   );
 };
@@ -84,43 +71,39 @@ const styles = StyleSheet.create({
   margin: {
     marginRight: 6,
   },
-  imgWrapper: {
-    height: SIZES.width2,
-    width: SIZES.width - 56,
-  },
-  img: {
-    height: SIZES.width2,
-    width: SIZES.width - 56,
-    borderRadius: 6,
-    backgroundColor: COLORS.shadowWhite,
-  },
-  iconPlay: {
-    padding: 14,
-    backgroundColor: COLORS.red,
+  imgVideo: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50,
-    position: 'absolute',
-    zIndex: 999,
-  },
-  shadow: {
+    height: SIZES.width2,
     width: '100%',
-    height: '100%',
+    borderRadius: 8,
+  },
+  shadowImg: {
+    height: SIZES.width2,
+    width: '100%',
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 999,
-    backgroundColor: COLORS.shadowWhite,
+    borderRadius: 8,
+    zIndex: 99,
   },
-  image: {height: SIZES.width2, width: SIZES.width - 56, borderRadius: 6},
-  notfound: {
-    backgroundColor: COLORS.lightGray,
-    height: SIZES.width2,
-    width: SIZES.width - 56,
+  notfoundImg: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 6,
+    height: SIZES.width5 - 8,
+    width: SIZES.width5 - 8,
+    borderRadius: 8,
+    backgroundColor: COLORS.separator,
   },
+  circleIcon: {
+    backgroundColor: COLORS.shadowWhite,
+    borderRadius: 50,
+    height: 47,
+    width: 47,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  circle: {marginLeft: 2},
 });
 
 export default VideoContent;

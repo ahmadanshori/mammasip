@@ -22,6 +22,7 @@ import {AppContext} from '../../index';
 const LoginScreen = ({navigation, route}) => {
   const {setLoading, setUser, setToken} = useContext(AppContext);
   const {nav} = route.params;
+  const id = route.params.id || null;
   const [field, setField] = useState({
     username: 'hanifalbaaits@gmail.com',
     password: '12345',
@@ -45,10 +46,13 @@ const LoginScreen = ({navigation, route}) => {
         await AsyncStorage.setItem('user', JSON.stringify(res.data.data));
         setToken(res.data.data.token);
         setUser(res.data.data.user);
-        navigation.navigate(nav);
+        if (id) {
+          navigation.navigate(nav, {id});
+        } else {
+          navigation.navigate(nav);
+        }
       }
     } catch (e) {
-      console.log('e', e, {...e});
       setError(e.message);
     } finally {
       setLoading(false);

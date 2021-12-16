@@ -12,10 +12,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {NoInternet, ErrorServer} from '../../components/Errors';
-import {getQuizByIdAPI} from '../../api/quiz';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {LoadingComponent} from '../../components/Loadings';
 import PeopleIcon from '../../assets/icons/people1.svg';
+import {getQuizByIdAPI} from '../../api/quiz';
 import useErrorHandler from '../../hooks/useErrorHandler';
 
 const QuizScreen = ({route}) => {

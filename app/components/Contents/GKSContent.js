@@ -4,13 +4,8 @@ import RenderHtml from 'react-native-render-html';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 const GKSContent = ({data}) => {
-  const html = `<html>
-    <head>
-    </head>
-    <body>
-    ${data.gks_text}
-    </body>
-    </html>`;
+  const html = `${data.gks_text}`;
+  // const INJECTEDJAVASCRIPT = "document.body.style.userSelect = 'none'";
   return (
     <View
       style={[
@@ -37,21 +32,27 @@ const GKSContent = ({data}) => {
       <Text style={[FONTS.textBold16, styles.text]}>
         {data?.kata_pengantar}
       </Text>
-      <RenderHtml
-        contentWidth={SIZES.width}
-        source={{
-          html: html,
-        }}
-      />
+      <View pointerEvents="none">
+        <RenderHtml
+          contentWidth={SIZES.width}
+          source={{
+            html: html,
+          }}
+          // injectedJavaScript={INJECTEDJAVASCRIPT}
+        />
+      </View>
+      <Text style={[FONTS.sayangi, {color: COLORS.black, marginTop: 8}]}>
+        #Sayangi Dirimu!
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 24,
     marginBottom: 16,
-    elevation: 6,
     backgroundColor: COLORS.red,
   },
   logoWrapper: {alignItems: 'flex-end'},
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.width2,
     marginBottom: 16,
   },
-  text: {color: COLORS.black, textAlign: 'center', marginBottom: 16},
+  text: {color: COLORS.black, marginBottom: 8},
 });
 
 export default GKSContent;

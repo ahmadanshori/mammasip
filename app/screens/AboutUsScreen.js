@@ -7,22 +7,26 @@ const data = [
   {
     id: 1,
     name: 'dr. Farida Briani Sobri, SpB(K)Onk',
-    job: 'Spesialis Konsultan Bedah Onkologi Pemilik Hak Cipta MammaSIP',
+    job: 'Spesialis Konsultan Bedah Onkologi',
+    desc: 'Pemilik HAKI MammaSIP',
   },
   {
     id: 2,
     name: 'dr. Adang Bachtiar, MPH., DSc.',
-    job: 'Pakar Ilmu Kesehatan Masyarakat Pembimbing/Promotor',
+    job: 'Pakar Ilmu Kesehatan Masyarakat',
+    desc: 'Pembimbing/Promotor',
   },
   {
     id: 3,
     name: 'Dr. dr. Sonar Soni Panigoro, SpB(K)Onk., M.Epid., MARS.',
-    job: 'Spesialis Konsultan Bedah Onkologi Pembimbing/Ko-Promotor',
+    job: 'Spesialis Konsultan Bedah Onkologi',
+    desc: 'Pembimbing/Ko-Promotor',
   },
   {
     id: 4,
     name: 'Dr. dra. Dumilah Ayuningtyas, MARS.',
-    job: 'Pakar Ilmu Kesehatan Masyarakat Pembimbing/Ko-Promotor',
+    job: 'Pakar Ilmu Kesehatan Masyarakat',
+    desc: 'Pembimbing/Ko-Promotor',
   },
   {
     id: 5,
@@ -36,7 +40,9 @@ const data = [
   },
   {
     id: 7,
-    name: 'Dr. Zulhijrian Noor, dr. Ripandi Yuspa, dr. Shafira Diani Putri',
+    name: 'Dr. Zulhijrian Noor',
+    name2: 'dr. Ripandi Yuspa',
+    name3: 'dr. Shafira Diani Putri',
     job: 'Pakar/Praktisi Kedokteran Umum dan Penyuluhan',
   },
   {
@@ -91,7 +97,8 @@ const data = [
   },
   {
     id: 19,
-    name: 'Kania Indriani Rosep, Faris Nabhan Fahri',
+    name: 'Kania Indriani Rosep',
+    name2: 'Faris Nabhan Fahri',
     job: 'Illustrator',
   },
 ];
@@ -137,11 +144,29 @@ const AboutUsScreen = () => {
             <View style={styles.mBottom} key={item.id}>
               <Text
                 style={[
-                  FONTS.textBold12,
-                  {color: COLORS.white, textAlign: 'center'},
+                  FONTS.textBold14,
+                  {color: COLORS.white, textAlign: 'center', marginBottom: 4},
                 ]}>
                 {item.name}
               </Text>
+              {item?.name2 ? (
+                <Text
+                  style={[
+                    FONTS.textBold14,
+                    {color: COLORS.white, textAlign: 'center', marginBottom: 4},
+                  ]}>
+                  {item.name2}
+                </Text>
+              ) : null}
+              {item?.name3 ? (
+                <Text
+                  style={[
+                    FONTS.textBold14,
+                    {color: COLORS.white, textAlign: 'center', marginBottom: 4},
+                  ]}>
+                  {item.name3}
+                </Text>
+              ) : null}
               <Text
                 style={[
                   FONTS.text12,
@@ -149,6 +174,15 @@ const AboutUsScreen = () => {
                 ]}>
                 {item.job}
               </Text>
+              {item?.desc ? (
+                <Text
+                  style={[
+                    FONTS.text12,
+                    {color: COLORS.gray, textAlign: 'center'},
+                  ]}>
+                  {item.desc}
+                </Text>
+              ) : null}
             </View>
           ))}
           <View style={styles.thanks}>

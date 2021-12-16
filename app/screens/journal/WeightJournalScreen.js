@@ -15,14 +15,14 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {Container} from '../../components/Container';
 import {AskButton, MainButton} from '../../components/Buttons';
 import {HeaderTitle} from '../../components/Headers';
-import {VideoItem, CalculatorItem} from '../../components/Items';
+import {VideoItem} from '../../components/Items';
 import {ActivityModal, ReminderModals} from '../../components/Modals';
 import MealSuggestions from '../../components/MealSuggestions';
 import Reminder from '../../components/Reminder';
 import Divider from '../../components/Divider';
-import {dropdownalert} from '../../components/AlertProvider';
+// import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
-import QuizIcon from '../../assets/icons/quiz.svg';
+// import QuizIcon from '../../assets/icons/quiz.svg';
 
 const WeightJournalScreen = ({navigation}) => {
   const [isActivity, setIsActivity] = useState(false);
@@ -172,7 +172,7 @@ const WeightJournalScreen = ({navigation}) => {
               Lihat Semua
             </Text>
           </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
             <VideoItem />
             <VideoItem />
             <VideoItem />
@@ -191,23 +191,6 @@ const WeightJournalScreen = ({navigation}) => {
             Butuh informasi lainya?
           </Text>
           <AskButton />
-          {/* <View style={styles.margin}>
-            <CalculatorItem
-              image={<QuizIcon height={60} width={60} />}
-              // onPress={() => handleNavigation('WeightCalculator')}
-              onPress={() =>
-                dropdownalert.alertWithType(
-                  'warn',
-                  '',
-                  'Belum bisa, Masih Diproses!!',
-                )
-              }
-              backgroundColor={COLORS.primary}
-              title="Ayo ikutan Quiz!"
-              description="Uji pengetahuanmu dengan quiz
-              kesehatan dari mammaSIP."
-            />
-          </View> */}
         </View>
       </ScrollView>
       {isReminder && (
@@ -270,6 +253,5 @@ const styles = StyleSheet.create({
   row: {flexDirection: 'row', alignItems: 'center', marginTop: 8},
   graphStyle: {backgroundColor: COLORS.white},
   icon: {marginRight: 8},
-  margin: {marginTop: 44},
 });
 export default WeightJournalScreen;

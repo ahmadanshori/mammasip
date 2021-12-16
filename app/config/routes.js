@@ -51,6 +51,7 @@ import {
 import CaloriesDetailScreen from '../screens/CaloriesDetailScreen';
 import ArticleScreen from '../screens/ArticleScreen';
 import AboutUsScreen from '../screens/AboutUsScreen';
+import ImageScreen from '../screens/ImageScreen';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -163,21 +164,21 @@ const TabNavigator = () => {
             );
           },
         }}
-        listeners={{
-          tabPress: async e => {
-            e.preventDefault();
-            const validation = async () => {
-              if (token) {
-                navigationRef.current.navigate('JournalTab');
-              } else {
-                navigationRef.current.navigate('Login', {
-                  nav: 'JournalTab',
-                });
-              }
-            };
-            validation();
-          },
-        }}
+        // listeners={{
+        //   tabPress: async e => {
+        //     e.preventDefault();
+        //     const validation = async () => {
+        //       if (token) {
+        //         navigationRef.current.navigate('JournalTab');
+        //       } else {
+        //         navigationRef.current.navigate('Login', {
+        //           nav: 'JournalTab',
+        //         });
+        //       }
+        //     };
+        //     validation();
+        //   },
+        // }}
       />
       <Tab.Screen
         name="ProfileTab"
@@ -298,6 +299,7 @@ export default function App() {
           />
           <Stack.Screen component={ArticleScreen} name="Article" />
           <Stack.Screen component={AboutUsScreen} name="AboutUs" />
+          <Stack.Screen component={ImageScreen} name="Image" />
         </>
       </Stack.Navigator>
     </NavigationContainer>

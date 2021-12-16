@@ -1,5 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import React, {useEffect, useState, useContext} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {BackgroundHeader} from '../../components/Headers';
@@ -10,19 +17,23 @@ import {
   VideoDetailItem,
 } from '../../components/Items';
 import {LoadingComponent} from '../../components/Loadings';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import ImportantMessage from '../../components/ImportantMessage';
 import {getRoomTypeByIdAPI, getVideoAPI} from '../../api/room';
 import {getHealtyCaloriesAPI} from '../../api/healtyMenu';
 import {COLORS, FONTS, ICON} from '../../constants';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const KnowYourSelfScreen = ({route, navigation}) => {
   const {id} = route.params;
+  const {token} = useContext(AppContext);
   const [data, setData] = useState(null);
   const [video1, setVideo1] = useState([]);
   const [video2, setVideo2] = useState([]);
   const [caloriesData, setCaloriesData] = useState([]);
   const [loading, setLoading] = useState({get: true, refresh: false});
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -39,7 +50,7 @@ const KnowYourSelfScreen = ({route, navigation}) => {
       setVideo2(resVideo2.data.data.media.slice(0, 4));
       setCaloriesData(resHealtyCalories.data.data);
     } catch (e) {
-      // console.log('e', e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -48,12 +59,33 @@ const KnowYourSelfScreen = ({route, navigation}) => {
   const handleNavigation = type => {
     navigation.navigate(type);
   };
+
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
+
+  const onSeeAll = val => {
+    if (token) {
+      navigation.navigate('ListVideo', {id: val});
+    } else {
+      navigation.navigate('Login', {nav: 'KnowYourSelf', id});
+    }
+  };
   return (
     <Container>
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }>
           <BackgroundHeader
             title={data?.nama_ruang}
             desc={data?.description}
@@ -77,14 +109,14 @@ const KnowYourSelfScreen = ({route, navigation}) => {
                 image={<ICON.bmr width={60} height={60} />}
                 onPress={() => handleNavigation('Bmr')}
                 backgroundColor={COLORS.blue}
-                title="Massa Tubuh Ideal (BMR)"
+                title="Kalkulator Indeks Massa Tubuh"
                 description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
               />
               <CalculatorItem
                 image={<ICON.bmi width={60} height={60} />}
                 onPress={() => handleNavigation('Bmi')}
                 backgroundColor={COLORS.secondary}
-                title="Kebutuhan Kalori Harian (BMI)"
+                title="Kalkulator Kebutuhan Kalori"
                 description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
               />
               <CalculatorItem
@@ -125,7 +157,7 @@ const KnowYourSelfScreen = ({route, navigation}) => {
                 <TouchableOpacity
                   style={styles.seeAll}
                   activeOpacity={1}
-                  onPress={() => navigation.navigate('ListVideo', {id: 1})}>
+                  onPress={() => onSeeAll(1)}>
                   <Text
                     style={[
                       FONTS.text12,
@@ -158,7 +190,7 @@ const KnowYourSelfScreen = ({route, navigation}) => {
                 <TouchableOpacity
                   style={styles.seeAll}
                   activeOpacity={1}
-                  onPress={() => navigation.navigate('ListVideo', {id: 2})}>
+                  onPress={() => onSeeAll(2)}>
                   <Text
                     style={[
                       FONTS.text12,
@@ -209,6 +241,8 @@ const KnowYourSelfScreen = ({route, navigation}) => {
           </View>
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

@@ -5,7 +5,6 @@ import {
   StyleSheet,
   StatusBar,
   ScrollView,
-  Image,
   TouchableNativeFeedback,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -15,14 +14,12 @@ import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
-import Accordion from '../../components/Accordion';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 import WeightIcon from '../../assets/icons/weight.svg';
 import FoodIcon from '../../assets/icons/food.svg';
 import VirusIcon from '../../assets/icons/virus.svg';
-import QuizIcon from '../../assets/icons/quiz.svg';
 
 const CaloriesScreen = ({navigation}) => {
   const [field, setField] = useState({
@@ -78,7 +75,6 @@ const CaloriesScreen = ({navigation}) => {
             value2={2}
             selected={field.gender}
           />
-
           <CalculatorInput
             title="Usia Anda"
             type="Tahun"
@@ -107,15 +103,7 @@ const CaloriesScreen = ({navigation}) => {
             // onPress={() => handleNavigation('CancerQuestion')}
             disable={!field.gender || !field.age}
           />
-          <View style={styles.margin}>
-            <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
-              Info seputar kebutuhan kalori
-            </Text>
-            <Accordion title="Apa itu BMI?" />
-            <Accordion title="Apa itu kalori & fungsinya untuk tubuh?" />
-            <Accordion title="Bagaimana cara menghitung BMR?" />
-            <Accordion title="Apakah BMR penting untuk kesehatan?" />
-          </View>
+
           <View style={styles.marginHeight}>
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain
@@ -124,14 +112,14 @@ const CaloriesScreen = ({navigation}) => {
               image={<WeightIcon width={60} height={60} />}
               onPress={() => handleNavigation('Bmr')}
               backgroundColor={COLORS.blue}
-              title="Massa Tubuh Ideal (BMR)"
+              title="Kalkulator Indeks Massa Tubuh"
               description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
             />
             <CalculatorItem
               image={<FoodIcon width={60} height={60} />}
               onPress={() => handleNavigation('Bmi')}
               backgroundColor={COLORS.secondary}
-              title="Kebutuhan Kalori Harian (BMI)"
+              title="Kalkulator Kebutuhan Kalori"
               description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
             />
           </View>
@@ -152,23 +140,6 @@ const CaloriesScreen = ({navigation}) => {
               </View>
             </TouchableNativeFeedback>
           </View>
-          {/* <View style={styles.margin}>
-            <CalculatorItem
-              image={<QuizIcon width={60} height={60} />}
-              //   onPress={() => handleNavigation('WeightCalculator')}
-              onPress={() =>
-                dropdownalert.alertWithType(
-                  'warn',
-                  '',
-                  'Belum bisa, Masih Diproses!!',
-                )
-              }
-              backgroundColor={COLORS.primary}
-              title="Ayo ikutan Quiz!"
-              description="Uji pengetahuanmu dengan quiz
-              kesehatan dari mammaSIP."
-            />
-          </View> */}
         </View>
       </ScrollView>
     </View>

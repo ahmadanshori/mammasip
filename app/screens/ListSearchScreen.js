@@ -28,7 +28,6 @@ const ListSearchScreen = ({navigation, route}) => {
     try {
       if (title === 'Buku') {
         const resBook = await getBookAPI();
-
         setData(resBook.data.data.content);
         setQuery({
           totalPages: resBook.data.data.totalPages - 1,

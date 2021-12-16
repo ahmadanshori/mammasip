@@ -173,7 +173,7 @@ const FoodSuggestionScreen = ({navigation, route}) => {
           <ScrollView
             horizontal
             contentContainerStyle={styles.listCalories}
-            showsHorizontalScrollIndicator={false}>
+            showsHorizontalScrollIndicator={true}>
             {totalCaloriesData.map(item => (
               <TouchableOpacity
                 style={[

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import {Container} from '../../components/Container';
@@ -12,10 +13,12 @@ import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import {ArticleDetailItem, ArticleItem} from '../../components/Items';
 import ImportantMessage from '../../components/ImportantMessage';
+import DownloadModal from '../../components/Modals/DownloadModal';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getCounselingByIdAPI} from '../../api/penyuluhan';
 import {getRoomTypeByIdAPI} from '../../api/room';
 import {COLORS, FONTS} from '../../constants';
-import DownloadModal from '../../components/Modals/DownloadModal';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const CounselingScreen = ({navigation, route}) => {
   const {id} = route.params;
@@ -26,6 +29,7 @@ const CounselingScreen = ({navigation, route}) => {
   const [isDownload, setIsDownload] = useState(false);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
@@ -34,7 +38,6 @@ const CounselingScreen = ({navigation, route}) => {
   const getInitialData = async () => {
     try {
       const res = await getRoomTypeByIdAPI(id);
-
       setRoomData(res.data.data);
       const resBrowser = await getCounselingByIdAPI(1);
       const resPowerpoint = await getCounselingByIdAPI(2);
@@ -43,7 +46,7 @@ const CounselingScreen = ({navigation, route}) => {
       setPowerpointData(resPowerpoint.data.data.content);
       setPosterData(resPoster.data.data.content);
     } catch (e) {
-      //   console.log('e', e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -109,10 +112,11 @@ const CounselingScreen = ({navigation, route}) => {
     });
   };
 
-  //   const handleRefresh = () => {
-  //     setLoading(true);
-  //     handleCustomerSearch(search);
-  //   };
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
 
   return (
     <Container>
@@ -120,7 +124,14 @@ const CounselingScreen = ({navigation, route}) => {
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }>
           <BackgroundHeader
             title={roomData?.nama_ruang}
             desc={roomData?.description}
@@ -139,12 +150,11 @@ const CounselingScreen = ({navigation, route}) => {
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <ScrollView horizontal>
                 {browserData.map(item => (
                   <ArticleItem
                     key={item.idPenyuluhan}
                     title={item.tittle}
-                    category={item.hastag[0].nameCategory}
                     source={item.urlBanner}
                     date={item.createdDate}
                     onPress={() => handleMedia(item.media[0])}
@@ -164,7 +174,6 @@ const CounselingScreen = ({navigation, route}) => {
                 <ArticleDetailItem
                   key={item.idPenyuluhan}
                   title={item.tittle}
-                  category={item.hastag}
                   source={item.urlBanner}
                   date={item.createdDate}
                   onPress={() => handleMedia(item.media[0])}
@@ -179,7 +188,7 @@ const CounselingScreen = ({navigation, route}) => {
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <ScrollView horizontal>
                 {posterData.map(item => (
                   <ArticleItem
                     key={item.idPenyuluhan}
@@ -201,6 +210,8 @@ const CounselingScreen = ({navigation, route}) => {
           onDownload={onDownload}
         />
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

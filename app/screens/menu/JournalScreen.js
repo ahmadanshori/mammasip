@@ -1,16 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Container} from '../../components/Container';
 import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS} from '../../constants';
+import {AppContext} from '../../index';
 
 import SportIcon from '../../assets/icons/olahraga.svg';
 import ScalesIcon from '../../assets/icons/timabngan.svg';
 import CalendarIcon from '../../assets/icons/calendar.svg';
 
 const JournalScreen = ({navigation}) => {
+  const {token} = useContext(AppContext);
   const handleNavigation = type => {
-    navigation.navigate(type);
+    if (token) {
+      navigation.navigate(type);
+    } else {
+      navigation.navigate('Login', {nav: 'JournalTab'});
+    }
   };
   return (
     <Container style={styles.container}>

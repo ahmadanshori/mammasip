@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, FlatList} from 'react-native';
 import {Container} from '../components/Container';
 import {LoadingComponent} from '../components/Loadings';
-// import {VideoItem, ArticleItem, CalculatorItem} from '../components/Items';
+import {VideoItem, ArticleItem, CalculatorItem} from '../components/Items';
 import {
   DestinationContent,
   VideoContent,
@@ -32,6 +32,7 @@ const RoomScreen = ({navigation, route}) => {
   const getInitialData = async () => {
     try {
       const resRoom = await getRoomTypeByIdAPI(roomId);
+      console.log(`resRoom`, resRoom);
       setData(resRoom.data.data);
     } catch (e) {
       setError(e);
@@ -73,9 +74,9 @@ const RoomScreen = ({navigation, route}) => {
   //   }
   // };
 
-  const onQuiz = useCallback(
-    id => {
-      navigation.navigate('Quiz', {id});
+  const handleNavigator = useCallback(
+    (link, param) => {
+      navigation.navigate(link, param);
     },
     [navigation],
   );
@@ -84,22 +85,42 @@ const RoomScreen = ({navigation, route}) => {
     if (item.typeContent === 1) {
       return <DestinationContent data={item} />;
     } else if (item.typeContent === 2) {
-      return <ImageContent data={item} />;
+      return (
+        <ImageContent
+          data={item}
+          onPress={() => handleNavigator('Image', {url: item.url})}
+        />
+      );
     } else if (item.typeContent === 3) {
       return <GKSContent data={item} />;
     } else if (item.typeContent === 4) {
-      return <ImageContent data={item} />;
+      return (
+        <ImageContent
+          data={item}
+          onPress={() => handleNavigator('Image', {url: item.url})}
+        />
+      );
     } else if (item.typeContent === 5) {
       return (
         <VideoContent
           data={item}
-          onPress={() => navigation.navigate('Video', {url: item.url_frame})}
+          onPress={() => handleNavigator('Video', {url: item.url_frame})}
         />
       );
     } else if (item.typeContent === 6) {
-      return <ButtonContent data={item} onPress={() => onQuiz(item.id_kuis)} />;
+      return (
+        <ButtonContent
+          data={item}
+          onPress={() => handleNavigator('Quiz', {id: item.id_kuis})}
+        />
+      );
     } else {
-      return <ArticleContent data={item} />;
+      return (
+        <ArticleContent
+          data={item}
+          onArticle={val => handleNavigator('Article', {id: val})}
+        />
+      );
     }
   };
 

@@ -13,24 +13,18 @@ const ArticleRecomendation = ({data, onPress, seeAllOnPress}) => {
           <MaterialIcons name="library-books" size={16} style={styles.icon} />
           <Text style={FONTS.textBold14}>Rekomendasi Artikel</Text>
         </View>
-        <Text
-          style={[
-            FONTS.text12,
-            {color: COLORS.primary, paddingVertical: 6, paddingLeft: 8},
-          ]}
-          onPress={seeAllOnPress}>
+        <Text style={[FONTS.text12, styles.seeAll]} onPress={seeAllOnPress}>
           Lihat Semua
         </Text>
       </View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={true}>
         {data.map(item => (
           <ArticleItem
             key={item.idArticle}
             onPress={() => onPress(item.idArticle)}
             title={item.nameArticle}
-            category={item.hastag[0]?.nameCategory}
             date={formatDate(item.createdDate)}
-            source={item.media[0]?.url}
+            source={item.urlBanner}
           />
         ))}
       </ScrollView>
@@ -47,5 +41,6 @@ const styles = StyleSheet.create({
   },
   row: {flexDirection: 'row', alignItems: 'center'},
   icon: {marginRight: 8},
+  seeAll: {color: COLORS.primary, paddingVertical: 6, paddingLeft: 8},
 });
 export default ArticleRecomendation;

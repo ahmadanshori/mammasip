@@ -139,8 +139,12 @@ const CalculationDetailScreen = ({navigation, route}) => {
             </Text>
             <Text style={FONTS.textBold18}> kcal</Text>
           </View>
+          <Text style={FONTS.textBold18}>
+            Kebutuhan kalori harian Anda adalah 1940.4 Kcal fieldnya calorie_day
+            cuma ada di BMR
+          </Text>
           <View style={styles.padding}>
-            <MainButton title="Bagikan" share />
+            {/* <MainButton title="Bagikan" share /> */}
             <TouchableOpacity
               style={styles.refresh}
               activeOpacity={1}
@@ -166,10 +170,10 @@ const CalculationDetailScreen = ({navigation, route}) => {
               Kondisi
             </Text>
             <Text style={[FONTS.text12, {color: COLORS.black}]}>
-              {data?.level_cap}
+              {data?.keterangan_kondisi}
             </Text>
           </View>
-          <Divider />
+          {/* <Divider />
           <View style={styles.padding}>
             <View style={styles.justify}>
               <Text
@@ -251,7 +255,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
                 )}
               </>
             )}
-          </View>
+          </View> */}
           <Divider />
           <View style={styles.padding}>
             <Text style={[FONTS.textBold16, styles.titleFooter]}>
@@ -261,8 +265,16 @@ const CalculationDetailScreen = ({navigation, route}) => {
               image={<FoodIcon height={60} width={60} />}
               onPress={() => handleNavigation(type === 'BMR' ? 'Bmr' : 'Bmi')}
               backgroundColor={COLORS.secondary}
-              title="Kebutuhan Kalori Harian (BMI)"
-              description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
+              title={
+                type === 'BMR'
+                  ? 'Kalkulator Kebutuhan Kalori'
+                  : 'Kalkulator Kebutuhan Kalori'
+              }
+              description={
+                type === 'BMR'
+                  ? 'Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?'
+                  : 'Hitung berat badan ideal yang sesuai untuk kesehatan anda.'
+              }
             />
             <CalculatorItem
               image={<VirusIcon height={60} width={60} />}
@@ -279,23 +291,6 @@ const CalculationDetailScreen = ({navigation, route}) => {
               Butuh informasi lainya?
             </Text>
             <AskButton onPress={() => navigation.navigate('Faq')} />
-            {/* <View style={styles.margin}>
-              <CalculatorItem
-                image={<QuizIcon height={60} width={60} />}
-                // onPress={() => handleNavigation('WeightCalculator')}
-                onPress={() =>
-                  dropdownalert.alertWithType(
-                    'warn',
-                    '',
-                    'Belum bisa, Masih Diproses!!',
-                  )
-                }
-                backgroundColor={COLORS.primary}
-                title="Ayo ikutan Quiz!"
-                description="Uji pengetahuanmu dengan quiz
-              kesehatan dari mammaSIP."
-              />
-            </View> */}
           </View>
         </ScrollView>
       )}
@@ -334,7 +329,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 16,
   },
-  margin: {marginTop: 32},
+
   changeButton: {
     paddingBottom: 8,
     paddingRight: 16,

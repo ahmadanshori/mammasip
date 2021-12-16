@@ -77,13 +77,13 @@ const CaloriesDetailScreen = ({route}) => {
         );
         setFoodMenuData(calculation);
       } catch (e) {
-        // console.log('e', e);
+        setError(e);
         setPekan(oldData);
       } finally {
         setLoading(state => ({...state, pekan: false}));
       }
     },
-    [pekan, token, caloriesData?.tipe_menu_sehat],
+    [pekan, token, caloriesData?.tipe_menu_sehat, setError],
   );
 
   const handleRefresh = () => {

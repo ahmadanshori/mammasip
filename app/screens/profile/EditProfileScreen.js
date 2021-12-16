@@ -32,7 +32,6 @@ const EditProfileScreen = ({navigation}) => {
   const [field, setField] = useState({
     first_name: user?.first_name,
     last_name: user?.last_name,
-    // email: user?.email,
     tgl_lahir: new Date(user?.tgl_lahir),
     phone: user?.phone,
     gender: user?.gender,
@@ -120,14 +119,14 @@ const EditProfileScreen = ({navigation}) => {
           isLocal={isLocal}
         />
         <TitleInput
-          title="Nama Lengkap"
+          title="Nama Depan"
           placeholder="Syifa"
           onChangeText={val => handleInput(val, 'first_name')}
           value={field.first_name}
           maxLength={50}
         />
         <TitleInput
-          title="Nama Lengkap"
+          title="Nama Belakang"
           placeholder="Hadju"
           onChangeText={val => handleInput(val, 'last_name')}
           style={styles.pass}
@@ -141,14 +140,7 @@ const EditProfileScreen = ({navigation}) => {
           onPress={() => setIsDate(true)}
         />
         {/* <Gender /> */}
-        {/* <TitleInput
-          title="Email"
-          placeholder="mammasip@gmail.com"
-          keyboardType="email-address"
-          style={styles.pass}
-          onChangeText={val => handleInput(val, 'email')}
-          value={field.email}
-        /> */}
+
         <ActivityLevelButton
           title="Jenis Kelamin"
           onPress={val => handleInput(val, 'gender')}

@@ -5,20 +5,19 @@ import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton, AskButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
-import Accordion from '../../components/Accordion';
 import {CalculatorItem} from '../../components/Items';
 // import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 // import {getBmrAPI} from '../../api/calculator';
-import {AppContext} from '../../index';
+// import {AppContext} from '../../index';
 import WeightIcon from '../../assets/icons/weight.svg';
 import FoodIcon from '../../assets/icons/food.svg';
 import VirusIcon from '../../assets/icons/virus.svg';
 // import QuizIcon from '../../assets/icons/quiz.svg';
 
 const WeightCalculatorScreen = ({navigation}) => {
-  const {user, token, setLoading} = useContext(AppContext);
+  // const {user, token, setLoading} = useContext(AppContext);
   const [field, setField] = useState({
     age: '',
     weight: '',
@@ -112,15 +111,6 @@ const WeightCalculatorScreen = ({navigation}) => {
             onPress={handleCalculation}
             disable={!field.age || !field.height || !field.weight}
           />
-          <View style={styles.margin}>
-            <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
-              Info seputar kebutuhan kalori
-            </Text>
-            <Accordion title="Apa itu BMI?" />
-            <Accordion title="Apa itu kalori & fungsinya untuk tubuh?" />
-            <Accordion title="Bagaimana cara menghitung BMR?" />
-            <Accordion title="Apakah BMR penting untuk kesehatan?" />
-          </View>
           <View style={styles.marginHeight}>
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain
@@ -129,7 +119,7 @@ const WeightCalculatorScreen = ({navigation}) => {
               image={<FoodIcon width={60} height={60} />}
               onPress={() => handleNavigation('Bmi')}
               backgroundColor={COLORS.secondary}
-              title="Kebutuhan Kalori Harian (BMI)"
+              title="Kalkulator Kebutuhan Kalori"
               description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
             />
             <CalculatorItem

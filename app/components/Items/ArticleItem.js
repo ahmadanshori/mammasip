@@ -5,39 +5,36 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
-const ArticleItem = ({category, video, onPress, date, title, source}) => {
+const ArticleItem = ({video, onPress, date, title, source, isImage = true}) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
-      {source ? (
-        <Image source={{uri: source}} style={styles.img} />
-      ) : (
-        <View style={[styles.img, {backgroundColor: COLORS.lightGray}]}>
-          <Icon name="image-outline" size={SIZES.width5} color={COLORS.gray} />
-        </View>
-      )}
+      {isImage ? (
+        <>
+          {source ? (
+            <Image source={{uri: source}} style={styles.img} />
+          ) : (
+            <View style={[styles.img, {backgroundColor: COLORS.lightGray}]}>
+              <Icon
+                name="image-outline"
+                size={SIZES.width5}
+                color={COLORS.gray}
+              />
+            </View>
+          )}
+        </>
+      ) : null}
       <View style={styles.shadowImg}>
         {video && <Icon name="play-circle" size={30} color={COLORS.white} />}
       </View>
       <View style={styles.body}>
-        {category && (
-          <View style={styles.spaceBetween}>
-            <View style={styles.subtitle}>
-              <Text style={[FONTS.textBold8, {color: COLORS.primary}]}>
-                {category}
-              </Text>
-            </View>
-            <View />
-          </View>
-        )}
         <Text
           style={[FONTS.textBold12, {color: COLORS.black}]}
           numberOfLines={2}>
           {title}
         </Text>
-
         <Text style={[FONTS.text10, {color: COLORS.gray}]}>
           Diupload {formatDate(date)}
         </Text>
@@ -63,7 +60,6 @@ const styles = StyleSheet.create({
   shadowImg: {
     height: SIZES.width3,
     width: SIZES.width3,
-    // backgroundColor: COLORS.shadowPrimary,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',

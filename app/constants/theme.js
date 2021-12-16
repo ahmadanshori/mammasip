@@ -80,6 +80,10 @@ export const FONTS = {
     fontFamily: 'Inter-Bold',
     fontSize: 24,
   },
+  sayangi: {
+    fontFamily: 'Homeday',
+    fontSize: 20,
+  },
 };
 
 const appTheme = {COLORS, SIZES, FONTS};

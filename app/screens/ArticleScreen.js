@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {Text, StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import {Container} from '../components/Container';
@@ -12,10 +12,20 @@ import {COLORS, SIZES, FONTS} from '../constants';
 import useErrorHandler from '../hooks/useErrorHandler';
 
 const ArticleScreen = ({route}) => {
-  const {articleId} = route.params;
+  const {id} = route.params;
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [error, setError] = useErrorHandler();
+
+  const html = useMemo(() => {
+    return `<html>
+  <head>
+  </head>
+  <body>
+  ${data?.bodyArticle}
+  </body>
+</html>`;
+  }, [data?.bodyArticle]);
 
   useEffect(() => {
     getInitialData();
@@ -23,7 +33,8 @@ const ArticleScreen = ({route}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getArticleByIdAPI(articleId);
+      const res = await getArticleByIdAPI(id);
+      console.log(`res`, res);
       setData(res.data.data[0]);
     } catch (e) {
       setError(e);
@@ -67,7 +78,7 @@ const ArticleScreen = ({route}) => {
           <RenderHtml
             contentWidth={SIZES.width}
             source={{
-              html: `${data?.bodyArticle}`,
+              html: html,
             }}
           />
         </ScrollView>
