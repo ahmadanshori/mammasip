@@ -9,16 +9,16 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {dropdownalert} from '../../components/AlertProvider';
+// import {dropdownalert} from '../../components/AlertProvider';
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
-import {CalculatorItem} from '../../components/Items';
+// import {CalculatorItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-import WeightIcon from '../../assets/icons/weight.svg';
-import FoodIcon from '../../assets/icons/food.svg';
+// import WeightIcon from '../../assets/icons/weight.svg';
+// import FoodIcon from '../../assets/icons/food.svg';
 import VirusIcon from '../../assets/icons/virus.svg';
 
 const CaloriesScreen = ({navigation}) => {
@@ -27,8 +27,8 @@ const CaloriesScreen = ({navigation}) => {
     gender: 1,
   });
 
-  const handleNavigation = type => {
-    navigation.navigate(type);
+  const handleNavigation = (type, param) => {
+    navigation.navigate(type, param);
   };
 
   const handleInput = useCallback((type, value) => {
@@ -38,6 +38,13 @@ const CaloriesScreen = ({navigation}) => {
   const handleRadioButton = val => {
     setField(state => ({...state, gender: val}));
   };
+
+  const handleCancer = () => {
+    if (field.age) {
+      navigation.navigate('CancerQuestion', field);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.red} barStyle={'light-content'} />
@@ -93,18 +100,18 @@ const CaloriesScreen = ({navigation}) => {
           <MainButton
             title="Hitung"
             style={styles.countButton}
-            onPress={() =>
-              dropdownalert.alertWithType(
-                'warn',
-                '',
-                'Belum bisa, Masih Diproses!!',
-              )
-            }
-            // onPress={() => handleNavigation('CancerQuestion')}
+            // onPress={() =>
+            //   dropdownalert.alertWithType(
+            //     'warn',
+            //     '',
+            //     'Belum bisa, Masih Diproses!!',
+            //   )
+            // }
+            onPress={handleCancer}
             disable={!field.gender || !field.age}
           />
 
-          <View style={styles.marginHeight}>
+          {/* <View style={styles.marginHeight}>
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain
             </Text>
@@ -122,7 +129,7 @@ const CaloriesScreen = ({navigation}) => {
               title="Kalkulator Kebutuhan Kalori"
               description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
             />
-          </View>
+          </View> */}
           <View style={styles.margin}>
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain

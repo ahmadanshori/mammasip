@@ -34,7 +34,7 @@ const MainButton = ({
           <Icon
             name="arrow-forward"
             size={20}
-            color={COLORS.primary}
+            color={disable ? COLORS.gray : COLORS.primary}
             style={styles.icon}
           />
         ) : null}

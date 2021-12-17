@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, FlatList} from 'react-native';
 import {Container} from '../components/Container';
 import {LoadingComponent} from '../components/Loadings';
-import {VideoItem, ArticleItem, CalculatorItem} from '../components/Items';
+// import {VideoItem, ArticleItem, CalculatorItem} from '../components/Items';
 import {
   DestinationContent,
   VideoContent,
@@ -32,7 +32,6 @@ const RoomScreen = ({navigation, route}) => {
   const getInitialData = async () => {
     try {
       const resRoom = await getRoomTypeByIdAPI(roomId);
-      console.log(`resRoom`, resRoom);
       setData(resRoom.data.data);
     } catch (e) {
       setError(e);

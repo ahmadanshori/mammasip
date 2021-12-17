@@ -34,7 +34,6 @@ const ArticleScreen = ({route}) => {
   const getInitialData = async () => {
     try {
       const res = await getArticleByIdAPI(id);
-      console.log(`res`, res);
       setData(res.data.data[0]);
     } catch (e) {
       setError(e);

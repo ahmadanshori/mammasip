@@ -1,41 +1,42 @@
-import React, {useCallback, useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   ScrollView,
   RefreshControl,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
-import {MainButton, AskButton} from '../../components/Buttons';
-import MealSuggestions from '../../components/MealSuggestions';
-import {CalculatorItem} from '../../components/Items';
+import {
+  // MainButton,
+  AskButton,
+} from '../../components/Buttons';
+// import MealSuggestions from '../../components/MealSuggestions';
+// import {CalculatorItem} from '../../components/Items';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 // import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import Divider from '../../components/Divider';
 import {LoadingComponent} from '../../components/Loadings';
-import {getHealtyCaloriesByIdAPI} from '../../api/healtyMenu';
+// import {getHealtyCaloriesByIdAPI} from '../../api/healtyMenu';
 import {getBmrAPI, getBmiAPI} from '../../api/calculator';
-import caloriesCalculation from '../../libs/caloriesCalculation';
-import {AppContext} from '../../index';
+// import caloriesCalculation from '../../libs/caloriesCalculation';
+// import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
 // import WeightIcon from '../../assets/icons/weight.svg';
-import FoodIcon from '../../assets/icons/food.svg';
-import VirusIcon from '../../assets/icons/virus.svg';
+// import FoodIcon from '../../assets/icons/food.svg';
+// import VirusIcon from '../../assets/icons/virus.svg';
 // import QuizIcon from '../../assets/icons/quiz.svg';
 
 const CalculationDetailScreen = ({navigation, route}) => {
   const {type, field} = route.params;
   // const calculationId = route.params.calculationId || null;
-  const {token} = useContext(AppContext);
-  const [foodSuggestion, setFoodSuggestion] = useState(null);
-  const [calculationId, setCalculationId] = useState(null);
+  // const {token} = useContext(AppContext);
+  // const [foodSuggestion, setFoodSuggestion] = useState(null);
+  // const [calculationId, setCalculationId] = useState(null);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({
     get: true,
@@ -72,9 +73,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
   const getInitialData = async () => {
     try {
       const res =
-        type === 'BMR'
-          ? await getBmrAPI(token, field)
-          : await getBmiAPI(token, field);
+        type === 'BMR' ? await getBmrAPI(field) : await getBmiAPI(field);
       setData(res.data.data);
     } catch (e) {
       setError(e);
@@ -85,29 +84,29 @@ const CalculationDetailScreen = ({navigation, route}) => {
 
   //   const handleShare = () => {};
 
-  const handleNavigation = (val, param) => {
-    navigation.navigate(val, param);
-  };
+  // const handleNavigation = (val, param) => {
+  //   navigation.navigate(val, param);
+  // };
 
-  const handleCalculationId = async value => {
-    setLoading(state => ({...state, menu: true}));
-    try {
-      setCalculationId(value);
-      const resMenu = await getHealtyCaloriesByIdAPI(
-        token,
-        value.calorieId,
-        value.pekanId,
-      );
-      const calculation = caloriesCalculation(
-        resMenu.data.data[0].menuPekan[0],
-      );
-      setFoodSuggestion(calculation);
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(state => ({...state, menu: false}));
-    }
-  };
+  // const handleCalculationId = async value => {
+  //   setLoading(state => ({...state, menu: true}));
+  //   try {
+  //     setCalculationId(value);
+  //     const resMenu = await getHealtyCaloriesByIdAPI(
+  //       token,
+  //       value.calorieId,
+  //       value.pekanId,
+  //     );
+  //     const calculation = caloriesCalculation(
+  //       resMenu.data.data[0].menuPekan[0],
+  //     );
+  //     setFoodSuggestion(calculation);
+  //   } catch (e) {
+  //     setError(e);
+  //   } finally {
+  //     setLoading(state => ({...state, menu: false}));
+  //   }
+  // };
 
   const handleRefresh = () => {
     setError();
@@ -132,18 +131,27 @@ const CalculationDetailScreen = ({navigation, route}) => {
               refreshing={loading.refresh}
             />
           }>
-          <View style={styles.title}>
+          <View style={[styles.title, styles.pTop]}>
             <Text style={FONTS.textBold18}>{type} anda adalah </Text>
-            <Text style={[FONTS.textBold18, {color: COLORS.primary}]}>
+            <Text style={[FONTS.textBold18, {color: COLORS.blue}]}>
               {type === 'BMR' ? Math.round(data?.bmr) : Math.round(data?.bmi)}
             </Text>
-            <Text style={FONTS.textBold18}> kcal</Text>
+            {type === 'BMR' ? (
+              <Text style={FONTS.textBold18}> kcal</Text>
+            ) : null}
           </View>
-          <Text style={FONTS.textBold18}>
-            Kebutuhan kalori harian Anda adalah 1940.4 Kcal fieldnya calorie_day
-            cuma ada di BMR
-          </Text>
-          <View style={styles.padding}>
+          {type === 'BMR' ? (
+            <View style={styles.title}>
+              <Text style={FONTS.textBold12}>
+                Kebutuhan kalori harian Anda adalah{' '}
+              </Text>
+              <Text style={[FONTS.textBold12, {color: COLORS.blue}]}>
+                {Math.round(data?.calori_day)}
+              </Text>
+              <Text style={FONTS.textBold12}> Kcal</Text>
+            </View>
+          ) : null}
+          <View style={[styles.padding, styles.mTop]}>
             {/* <MainButton title="Bagikan" share /> */}
             <TouchableOpacity
               style={styles.refresh}
@@ -159,7 +167,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
               </Text>
             </TouchableOpacity>
             <Text style={[FONTS.text12, {textAlign: 'center'}]}>
-              Hasil analisa perhitungan {type}
+              Hasil analisa perhitungan {type === 'BMI' ? 'IMT' : type}
             </Text>
             <Divider height={2} style={styles.divider} />
             <Text
@@ -256,9 +264,9 @@ const CalculationDetailScreen = ({navigation, route}) => {
               </>
             )}
           </View> */}
-          <Divider />
+          {/* <Divider /> */}
           <View style={styles.padding}>
-            <Text style={[FONTS.textBold16, styles.titleFooter]}>
+            {/* <Text style={[FONTS.textBold16, styles.titleFooter]}>
               Alat bantu hitung lain
             </Text>
             <CalculatorItem
@@ -282,7 +290,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
               backgroundColor={COLORS.red}
               title="Resiko Penyakit Kanker"
               description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
-            />
+            /> */}
             <Text
               style={[
                 FONTS.textBold16,
@@ -303,8 +311,10 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingVertical: 32,
+    flex: 1,
   },
+  pTop: {paddingTop: 32},
+  mTop: {marginTop: 32},
   padding: {padding: 16},
   refresh: {
     flexDirection: 'row',

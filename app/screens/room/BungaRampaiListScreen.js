@@ -47,7 +47,7 @@ const BungaRampaiListScreen = ({navigation, route}) => {
   const handleNavigator = async event => {
     if (type === 4) {
       if (event.isUrl === 0) {
-        navigation.navigate('Room', {roomId: event.typeRuang});
+        navigation.navigate('Article', {id: event.idArticle});
       } else {
         const supported = await Linking.canOpenURL(event?.urlArticle);
         if (supported) {

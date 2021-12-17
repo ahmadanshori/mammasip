@@ -14,13 +14,13 @@ import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
-import {CalculatorItem} from '../../components/Items';
+// import {CalculatorItem} from '../../components/Items';
 // import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 // import WeightIcon from '../../assets/icons/weight.svg';
 import FoodIcon from '../../assets/icons/food.svg';
-import VirusIcon from '../../assets/icons/virus.svg';
+// import VirusIcon from '../../assets/icons/virus.svg';
 // import QuizIcon from '../../assets/icons/quiz.svg';
 
 const BmiScreen = ({navigation}) => {
@@ -119,7 +119,7 @@ const BmiScreen = ({navigation}) => {
             }
             disable={!field.age || !field.height || !field.weight}
           />
-          <View style={styles.marginHeight}>
+          {/* <View style={styles.marginHeight}>
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain
             </Text>
@@ -137,7 +137,7 @@ const BmiScreen = ({navigation}) => {
               title="Resiko Penyakit Kanker"
               description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
             />
-          </View>
+          </View> */}
           <View style={styles.margin}>
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain

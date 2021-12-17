@@ -5,15 +5,15 @@ import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton, AskButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
-import {CalculatorItem} from '../../components/Items';
+// import {CalculatorItem} from '../../components/Items';
 // import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
 // import {getBmrAPI} from '../../api/calculator';
 // import {AppContext} from '../../index';
 import WeightIcon from '../../assets/icons/weight.svg';
-import FoodIcon from '../../assets/icons/food.svg';
-import VirusIcon from '../../assets/icons/virus.svg';
+// import FoodIcon from '../../assets/icons/food.svg';
+// import VirusIcon from '../../assets/icons/virus.svg';
 // import QuizIcon from '../../assets/icons/quiz.svg';
 
 const WeightCalculatorScreen = ({navigation}) => {
@@ -111,7 +111,7 @@ const WeightCalculatorScreen = ({navigation}) => {
             onPress={handleCalculation}
             disable={!field.age || !field.height || !field.weight}
           />
-          <View style={styles.marginHeight}>
+          {/* <View style={styles.marginHeight}>
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain
             </Text>
@@ -129,7 +129,7 @@ const WeightCalculatorScreen = ({navigation}) => {
               title="Resiko Penyakit Kanker"
               description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
             />
-          </View>
+          </View> */}
           <View style={styles.margin}>
             <Text style={[FONTS.textBold16, styles.text]}>
               Alat bantu hitung lain
