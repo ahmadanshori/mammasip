@@ -1,14 +1,15 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import {Text, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {Text, StyleSheet, ScrollView, View, RefreshControl} from 'react-native';
 import RenderHtml from 'react-native-render-html';
+import {WebView} from 'react-native-webview';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {LoadingComponent} from '../components/Loadings';
 import {NoInternet, ErrorServer} from '../components/Errors';
 // import Accordion from '../components/Accordion';
 import {getArticleByIdAPI} from '../api/article';
-import formatDate from '../libs/formatDate';
-import {COLORS, SIZES, FONTS} from '../constants';
+// import formatDate from '../libs/formatDate';
+import {SIZES} from '../constants';
 import useErrorHandler from '../hooks/useErrorHandler';
 
 const ArticleScreen = ({route}) => {
@@ -50,37 +51,18 @@ const ArticleScreen = ({route}) => {
 
   return (
     <Container>
-      <HeaderTitle back title="Artikel" />
+      <HeaderTitle back title={data?.nameArticle} />
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              onRefresh={handleRefresh}
-              refreshing={loading.refresh}
-            />
-          }
-          contentContainerStyle={styles.container}>
-          <Text
-            style={[
-              FONTS.textBold16,
-              {color: COLORS.black, textAlign: 'center', marginTop: 16},
-            ]}>
-            {data?.nameArticle}
-          </Text>
-          <Text style={[FONTS.text10, {color: COLORS.gray, marginTop: 8}]}>
-            Dipublikasi pada{' '}
-            {formatDate(data?.createdDate, 'dd MMMM yyyy HH:mm')}
-          </Text>
-          <RenderHtml
-            contentWidth={SIZES.width}
-            source={{
-              html: html,
-            }}
+        <View style={styles.webview}>
+          <WebView
+            originWhitelist={['*']}
+            source={{html: data?.bodyArticle}}
+            containerStyle={[styles.webview]}
+            scrollEnabled
           />
-        </ScrollView>
+        </View>
       )}
       {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
@@ -89,13 +71,7 @@ const ArticleScreen = ({route}) => {
 };
 
 const styles = StyleSheet.create({
-  scroll: {paddingHorizontal: 16, paddingBottom: 16},
-  container: {paddingHorizontal: 16},
-  title: {
-    padding: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  webview: {height: SIZES.height, width: '100%'},
 });
 
 export default ArticleScreen;

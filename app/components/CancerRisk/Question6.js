@@ -27,7 +27,7 @@ const Question6 = ({onPress}) => {
       } else {
         value = false;
       }
-      onPress(value);
+      onPress(value, level === 1 ? 'Sedang' : 'Tinggi', field.time || null);
     }
   };
 
@@ -85,7 +85,6 @@ const Question6 = ({onPress}) => {
             style={[FONTS.textBold14, {color: COLORS.black, marginBottom: 16}]}>
             Berapa lama anda olah raga tiap hari ?
           </Text>
-
           <CalculatorInput
             title="Durasi (menit/minggu)?"
             type="menit"

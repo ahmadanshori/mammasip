@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {StyleSheet, Keyboard} from 'react-native';
+import {Keyboard} from 'react-native';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {
@@ -34,6 +34,7 @@ const CancerQuestionScreen = ({route}) => {
     gender: gender,
   });
   const [imt, setImt] = useState({page6: false, bmi: null});
+  const [activity, setActivity] = useState({activity: null, time: null});
 
   const handlePage = (event, type, val, pick, valuePick) => {
     setData(state => ({...state, [type]: val, [pick]: valuePick}));
@@ -43,25 +44,45 @@ const CancerQuestionScreen = ({route}) => {
     setField(state => ({...state, ...val}));
     setPage(event);
   };
-  const handleCalculation = async val => {
+  const handleCalculation = async (val, type, time) => {
     Keyboard.dismiss();
     setLoading(true);
     try {
       const res = await getBmiAPI(field);
-      setImt({page6: val, bmi: res.data.data.bmi});
+      setImt({page6: val, bmi: Math.round(res.data.data.bmi)});
+      setActivity({activity: type, time: time});
       setIsFinish(true);
     } catch (e) {
-      console.log('e', e);
+      // console.log('e', e);
     } finally {
       setLoading(false);
     }
   };
+
+  const handleRefresh = () => {
+    setData(
+      {page1: false, pick1: null},
+      {page2: false, pick2: null},
+      {page3: false, pick3: null},
+      {page4: false, pick4: null},
+      {page6: false, pick6: null},
+    );
+    setField({age: age, weight: '', height: '', gender: gender});
+    setImt({page6: false, bmi: null});
+    setActivity({activity: null, time: null});
+    setPage(1);
+    setIsFinish(false);
+  };
   return (
     <Container>
       <HeaderTitle title="Analisa Resiko Kanker" />
-
       {isFinish ? (
-        <Answer data={data} imt={imt} />
+        <Answer
+          data={data}
+          imt={imt}
+          activity={activity}
+          onRefresh={handleRefresh}
+        />
       ) : (
         <>
           <Number page={page} />
@@ -83,6 +104,5 @@ const CancerQuestionScreen = ({route}) => {
     </Container>
   );
 };
-// const styles = StyleSheet.create({});
 
 export default CancerQuestionScreen;

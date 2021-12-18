@@ -30,12 +30,12 @@ const Question4 = ({onPress, selected}) => {
           </Text>
           <QuestionButton
             selected={select === 1 ? true : false}
-            title="0 hingga 1 buah per hari"
+            title="0 hingga 1 porsi per hari"
             onPress={() => setSelect(1)}
           />
           <QuestionButton
             selected={select === 2 ? true : false}
-            title="2 atau lebih buah per hari"
+            title="2 porsi atau lebih per hari"
             onPress={() => setSelect(2)}
           />
         </View>

@@ -6,6 +6,7 @@ import Question5 from './Question5';
 import Question6 from './Question6';
 import Answer from './Answer';
 import Number from './Number';
+import AnswerComponent from './AnswerComponent';
 export {
   Question1,
   Question2,
@@ -15,4 +16,5 @@ export {
   Question6,
   Answer,
   Number,
+  AnswerComponent,
 };

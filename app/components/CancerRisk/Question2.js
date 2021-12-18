@@ -30,18 +30,13 @@ const Question2 = ({onPress, selected}) => {
           </Text>
           <QuestionButton
             selected={select === 1 ? true : false}
-            title="Tidak sama sekali"
+            title="Tidak Sama Sekali atau Tidak Melebihi Standard"
             onPress={() => setSelect(1)}
           />
           <QuestionButton
             selected={select === 2 ? true : false}
-            title="Ya, tapi tidak melebihi standard"
+            title="Ya, Melebihi Standard"
             onPress={() => setSelect(2)}
-          />
-          <QuestionButton
-            selected={select === 3 ? true : false}
-            title="Ya, melebihi standard"
-            onPress={() => setSelect(3)}
           />
         </View>
       </ScrollView>

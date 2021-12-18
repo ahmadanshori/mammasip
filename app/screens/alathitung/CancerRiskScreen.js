@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import {dropdownalert} from '../../components/AlertProvider';
+import {dropdownalert} from '../../components/AlertProvider';
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
@@ -41,7 +41,11 @@ const CaloriesScreen = ({navigation}) => {
 
   const handleCancer = () => {
     if (field.age) {
-      navigation.navigate('CancerQuestion', field);
+      if (Number(field.age) >= 18) {
+        navigation.navigate('CancerQuestion', field);
+      } else {
+        dropdownalert.alertWithType('warn', '', 'Anda masih dibawah umur!!');
+      }
     }
   };
 
@@ -100,13 +104,6 @@ const CaloriesScreen = ({navigation}) => {
           <MainButton
             title="Hitung"
             style={styles.countButton}
-            // onPress={() =>
-            //   dropdownalert.alertWithType(
-            //     'warn',
-            //     '',
-            //     'Belum bisa, Masih Diproses!!',
-            //   )
-            // }
             onPress={handleCancer}
             disable={!field.gender || !field.age}
           />

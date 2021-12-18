@@ -40,7 +40,7 @@ const ImportantMessageScreen = ({route, navigation}) => {
       return (
         <VideoMessageContent
           data={item}
-          onPress={() => navigation.navigate('Video', {url: item.url})}
+          onPress={() => navigation.navigate('Video', {url: item.url_frame})}
         />
       );
     } else {
