@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useCallback} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,20 +7,21 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {VictoryBar, VictoryChart, VictoryTheme} from 'victory-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {Container} from '../../components/Container';
-import {AskButton} from '../../components/Buttons';
+// import {AskButton} from '../../components/Buttons';
 import {HeaderTitle} from '../../components/Headers';
 import {dropdownalert} from '../../components/AlertProvider';
-import {VideoItem, CalculatorItem} from '../../components/Items';
-import {ActivityModal, ReminderModals} from '../../components/Modals';
-import Reminder from '../../components/Reminder';
-import Divider from '../../components/Divider';
+import {JournalItem, VideoItem} from '../../components/Items';
+import {ActivityModal} from '../../components/Modals';
+// import Reminder from '../../components/Reminder';
+// import Divider from '../../components/Divider';
+import {createJournalSportAPI} from '../../api/journal';
 import {COLORS, FONTS, SIZES} from '../../constants';
-import QuizIcon from '../../assets/icons/quiz.svg';
+import {AppContext} from '../../index';
 
 const data = [
   {quarter: '12/08', earnings: 100},
@@ -32,25 +33,52 @@ const data = [
   {quarter: '28/09', earnings: 68},
 ];
 const SportsJournalScreen = () => {
+  const {token, user, setLoading} = useContext(AppContext);
   const [isActivity, setIsActivity] = useState(false);
   const [time, setTime] = useState(null);
   const [isCalendar, setIsCalendar] = useState(false);
-  const [isReminder, setIsReminder] = useState(false);
+  const [field, setField] = useState({
+    id_user: user?.id_user,
+    lama_berolahraga: null,
+    level_olahraga: null,
+  });
 
-  const handleAddActivity = value => {
-    setIsActivity(false);
-  };
+  // const [isReminder, setIsReminder] = useState(false);
+
+  const handleAddActivity = useCallback(
+    async value => {
+      setIsActivity(false);
+      setLoading(true);
+      try {
+        const newData = {
+          ...field,
+          lama_berolahraga: value.time,
+          level_olahraga: value.activity,
+        };
+        console.log(`newData`, newData);
+        const res = await createJournalSportAPI(token, newData);
+        console.log(`res`, res);
+        setField(newData);
+      } catch (e) {
+        console.log(`e`, e, {...e});
+      } finally {
+        setLoading(false);
+      }
+    },
+    [token, field, setLoading],
+  );
+
   const onChange = (event, selectedDate) => {
     setIsCalendar(false);
     setTime(selectedDate);
   };
-  const handleReminder = () => {
-    setIsReminder(false);
-  };
-  const handleCloseReminder = () => {
-    setIsReminder(false);
-    setTime(null);
-  };
+  // const handleReminder = () => {
+  //   setIsReminder(false);
+  // };
+  // const handleCloseReminder = () => {
+  //   setIsReminder(false);
+  //   setTime(null);
+  // };
 
   return (
     <Container>
@@ -82,11 +110,7 @@ const SportsJournalScreen = () => {
             </View>
             <TouchableOpacity
               onPress={() => setIsActivity(true)}
-              style={{
-                elevation: 10,
-                backgroundColor: COLORS.white,
-                borderRadius: 50,
-              }}>
+              style={styles.circleIcon}>
               <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
             </TouchableOpacity>
           </View>
@@ -95,76 +119,47 @@ const SportsJournalScreen = () => {
             style={[FONTS.textBold14, {color: COLORS.secondary, marginTop: 4}]}>
             Berat
           </Text>
-
-          <VictoryChart
-            width={SIZES.width}
-            theme={VictoryTheme.material}
-            domainPadding={10}>
-            <VictoryBar
-              data={data}
-              x="quarter"
-              y="earnings"
-              // cornerRadius={{topLeft: data => console.log(`datum`, data)}}
-              style={{data: {fill: COLORS.secondary}}}
-            />
-          </VictoryChart>
-          <Text
-            style={[
-              FONTS.text12,
-              {color: COLORS.blue, textAlign: 'center', marginBottom: 32},
-            ]}>
-            Riwayat olahraga
-          </Text>
-          <Reminder
+          <View style={styles.row}>
+            <View style={styles.margin}>
+              <Text
+                style={[FONTS.textBold12, {transform: [{rotate: '270deg'}]}]}>
+                Menit
+              </Text>
+            </View>
+            <VictoryChart
+              width={SIZES.width}
+              theme={VictoryTheme.material}
+              domainPadding={10}>
+              <VictoryBar
+                data={data}
+                x="quarter"
+                y="earnings"
+                // cornerRadius={{topLeft: data => console.log(`datum`, data)}}
+                style={{data: {fill: COLORS.secondary}}}
+              />
+            </VictoryChart>
+          </View>
+          <Text style={[FONTS.textBold12, styles.tanggal]}>Tanggal</Text>
+          <View style={styles.history}>
+            <JournalItem />
+            <JournalItem />
+            <JournalItem />
+          </View>
+          {/* <Reminder
             onPress={() => setIsReminder(true)}
             time={time}
             title="Reminder Harian Aktif"
-          />
-        </View>
-        <Divider />
-        <View style={styles.wrapper}>
-          <View style={styles.header}>
-            <View style={styles.row}>
-              <MaterialCommunityIcons
-                name="meditation"
-                size={18}
-                style={styles.icon}
-              />
-              <Text style={FONTS.textBold14}>Olahraga Untuk Anda</Text>
-            </View>
-            <Text style={[FONTS.text12, {color: COLORS.primary}]}>
-              Lihat Semua
-            </Text>
-          </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-          </ScrollView>
-        </View>
-        <Divider />
-        <View style={styles.wrapper}>
-          <Text
-            style={[
-              FONTS.textBold16,
-              {color: COLORS.black, marginBottom: 16, textAlign: 'center'},
-            ]}>
-            Butuh informasi lainya?
-          </Text>
-          <AskButton />
+          /> */}
         </View>
       </ScrollView>
-      {isReminder && (
+      {/* {isReminder && (
         <ReminderModals
           onCalendar={() => setIsCalendar(true)}
           time={time}
           onSave={handleReminder}
           onClose={handleCloseReminder}
         />
-      )}
+      )} */}
       {isActivity && (
         <ActivityModal
           onClose={() => setIsActivity(false)}
@@ -185,8 +180,6 @@ const SportsJournalScreen = () => {
   );
 };
 
-export default SportsJournalScreen;
-
 const styles = StyleSheet.create({
   wrapper: {paddingHorizontal: 16, paddingVertical: 24},
   header: {
@@ -195,7 +188,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 16,
   },
-  row: {flexDirection: 'row', alignItems: 'center', marginTop: 8},
-  graphStyle: {backgroundColor: COLORS.white},
-  icon: {marginRight: 8},
+  row: {flexDirection: 'row', alignItems: 'center'},
+  margin: {
+    marginLeft: -16,
+    marginRight: -16,
+  },
+  tanggal: {color: COLORS.black, textAlign: 'center', marginTop: -16},
+
+  history: {marginTop: 24},
+  circleIcon: {elevation: 10, backgroundColor: COLORS.white, borderRadius: 50},
 });
+export default SportsJournalScreen;
