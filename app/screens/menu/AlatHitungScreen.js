@@ -20,14 +20,14 @@ const AlatHitungScreen = ({navigation}) => {
       </View>
       <CalculatorItem
         image={<ICON.bmr width={60} height={60} />}
-        onPress={() => handleNavigation('Bmr')}
+        onPress={() => handleNavigation('Bmi')}
         backgroundColor={COLORS.secondary}
         title="Kalkulator Kebutuhan Kalori"
         description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
       />
       <CalculatorItem
         image={<ICON.imt width={60} height={60} />}
-        onPress={() => handleNavigation('Bmi')}
+        onPress={() => handleNavigation('Bmr')}
         backgroundColor={COLORS.blue}
         title="Kalkulator Indeks Massa Tubuh"
         description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
