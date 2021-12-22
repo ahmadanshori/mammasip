@@ -13,14 +13,11 @@ import {
 } from '../components/Contents';
 import {NoInternet, ErrorServer} from '../components/Errors';
 import {HeaderTitle} from '../components/Headers';
-// import {AppContext} from '../index';
-// import {COLORS, SIZES} from '../constants';
 import {getRoomTypeByIdAPI} from '../api/room';
 import useErrorHandler from '../hooks/useErrorHandler';
 
 const RoomScreen = ({navigation, route}) => {
-  const {roomId} = route.params;
-  // const {token, setLoading} = useContext(AppContext);
+  const {id} = route.params;
   const [data, setData] = useState(null);
   const [load, setLoad] = useState({get: true, refresh: false});
   const [error, setError] = useErrorHandler();
@@ -31,7 +28,7 @@ const RoomScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      const resRoom = await getRoomTypeByIdAPI(roomId);
+      const resRoom = await getRoomTypeByIdAPI(id);
       setData(resRoom.data.data);
     } catch (e) {
       setError(e);
@@ -40,39 +37,6 @@ const RoomScreen = ({navigation, route}) => {
     }
   };
 
-  // const handleArticleButton = useCallback(() => {
-  //   setIsArticle(state => !state);
-  // }, []);
-
-  // const selectedVideo = useCallback(val => {
-  //   setSelecVideo(val);
-  // }, []);
-
-  // const handleNextArticle = async val => {
-  //   setLoading(true);
-  //   const oldQuery = query;
-  //   console.log(`test`, val, token, oldQuery, roomId);
-
-  //   try {
-  //     console.log('1');
-  //     const res = await getArticleByRoomAPI(
-  //       roomId,
-  //       val ? query.page + 1 : query.page - 1,
-  //     );
-  //     console.log(`res1`, res);
-  //     setArticleData(res.data.data.content[0]);
-  //     setQuery({
-  //       page: res.data.data.number,
-  //       totalPages: res.data.data.totalPages - 1,
-  //     });
-  //   } catch (e) {
-  //     console.log(`e`, e, {...e});
-  //     setQuery(oldQuery);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleNavigator = useCallback(
     (link, param) => {
       navigation.navigate(link, param);
@@ -80,9 +44,21 @@ const RoomScreen = ({navigation, route}) => {
     [navigation],
   );
 
+  const handleDeeplink = (path, pathId) => {
+    if (pathId && pathId > 0) {
+      navigation.navigate(path, {id: pathId});
+    } else {
+      if (path === 'KnowYourSelf') {
+        navigation.navigate(path, {id: 4});
+      } else {
+        navigation.navigate(path);
+      }
+    }
+  };
+
   const renderItem = ({item}) => {
     if (item.typeContent === 1) {
-      return <DestinationContent data={item} />;
+      return <DestinationContent data={item} onPress={handleDeeplink} />;
     } else if (item.typeContent === 2) {
       return (
         <ImageContent
@@ -91,7 +67,7 @@ const RoomScreen = ({navigation, route}) => {
         />
       );
     } else if (item.typeContent === 3) {
-      return <GKSContent data={item} />;
+      return <GKSContent data={item} onPress={handleDeeplink} />;
     } else if (item.typeContent === 4) {
       return (
         <ImageContent
@@ -147,35 +123,6 @@ const RoomScreen = ({navigation, route}) => {
           />
         </View>
       )}
-
-      {/* <View style={styles.wrapper}>
-        <View style={styles.header}>
-          <Text style={FONTS.textBold14}>Artikel lain yang terkait</Text>
-        </View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.horizontal}>
-          <ArticleItem category />
-          <ArticleItem category />
-          <ArticleItem category />
-          <ArticleItem category />
-        </ScrollView>
-      </View>
-      <View style={styles.wrapper}>
-        <View style={styles.header}>
-          <Text style={FONTS.textBold14}>Video yang mungkin anda suka</Text>
-        </View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.horizontal}>
-          <ArticleItem video />
-          <ArticleItem video />
-          <ArticleItem video />
-          <ArticleItem video />
-        </ScrollView>
-      </View> */}
       {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
@@ -183,43 +130,3 @@ const RoomScreen = ({navigation, route}) => {
 };
 
 export default RoomScreen;
-
-// const styles = StyleSheet.create({
-//   wrapper: {paddingHorizontal: 16, marginBottom: 16},
-//   // row: {flexDirection: 'row', alignItems: 'center', marginBottom: 10},
-//   // category: {
-//   //   paddingVertical: 4,
-//   //   paddingHorizontal: 10,
-//   //   backgroundColor: COLORS.lightPrimary,
-//   //   borderRadius: 40,
-//   //   marginRight: 16,
-//   // },
-//   img: {height: SIZES.width2, width: SIZES.width},
-//   imgWrapper: {marginRight: 10},
-//   imgList: {
-//     height: 50,
-//     width: 80,
-//     borderRadius: 6,
-//     // marginBottom: 16,
-//   },
-//   imgShadow: {
-//     height: 50,
-//     width: 80,
-//     marginTop: -50,
-//     backgroundColor: COLORS.red,
-//     // position: 'absolute',
-//     // zIndex: 99,
-//     borderRadius: 6,
-//     // top: 0,
-//   },
-//   listItem: {paddingVertical: 16, paddingLeft: 16},
-//   button: {marginTop: 16},
-//   room: {
-//     paddingVertical: 4,
-//     paddingHorizontal: 10,
-//     backgroundColor: COLORS.separator,
-//     borderRadius: 40,
-//     marginRight: 10,
-//     marginTop: 8,
-//   },
-// });

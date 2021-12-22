@@ -1,14 +1,11 @@
-import React, {useState, useEffect, useMemo} from 'react';
-import {Text, StyleSheet, ScrollView, View, RefreshControl} from 'react-native';
-import RenderHtml from 'react-native-render-html';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {LoadingComponent} from '../components/Loadings';
 import {NoInternet, ErrorServer} from '../components/Errors';
-// import Accordion from '../components/Accordion';
 import {getArticleByIdAPI} from '../api/article';
-// import formatDate from '../libs/formatDate';
 import {SIZES} from '../constants';
 import useErrorHandler from '../hooks/useErrorHandler';
 
@@ -17,16 +14,6 @@ const ArticleScreen = ({route}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [error, setError] = useErrorHandler();
-
-  const html = useMemo(() => {
-    return `<html>
-  <head>
-  </head>
-  <body>
-  ${data?.bodyArticle}
-  </body>
-</html>`;
-  }, [data?.bodyArticle]);
 
   useEffect(() => {
     getInitialData();
@@ -55,11 +42,11 @@ const ArticleScreen = ({route}) => {
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <View style={styles.webview}>
+        <View style={styles.wrapper}>
           <WebView
             originWhitelist={['*']}
             source={{html: data?.bodyArticle}}
-            containerStyle={[styles.webview]}
+            containerStyle={styles.webview}
             scrollEnabled
           />
         </View>
@@ -71,7 +58,8 @@ const ArticleScreen = ({route}) => {
 };
 
 const styles = StyleSheet.create({
-  webview: {height: SIZES.height, width: '100%'},
+  wrapper: {flex: 1},
+  webview: {height: SIZES.height, width: '100%', paddingHorizontal: 6},
 });
 
 export default ArticleScreen;

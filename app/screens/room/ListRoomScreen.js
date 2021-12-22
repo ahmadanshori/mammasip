@@ -29,7 +29,7 @@ const ListRoomScreen = ({route, navigation}) => {
   };
   const onRoom = useCallback(
     roomId => {
-      navigation.navigate('Room', {roomId});
+      navigation.navigate('Room', {id: roomId});
     },
     [navigation],
   );

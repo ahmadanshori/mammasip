@@ -2,17 +2,20 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, ScrollView, FlatList} from 'react-native';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
-import {TestimonialItem} from '../components/Items';
+// import {TestimonialItem} from '../components/Items';
 import {LoadingComponent} from '../components/Loadings';
 import {DestinationContent, VideoMessageContent} from '../components/Contents';
 import {NoInternet, ErrorServer} from '../components/Errors';
 import {COLORS} from '../constants';
-import {getImportantMessageAPI, getTestimoniAPI} from '../api/room';
+import {
+  getImportantMessageAPI,
+  // getTestimoniAPI
+} from '../api/room';
 import useErrorHandler from '../hooks/useErrorHandler';
 
 const ImportantMessageScreen = ({route, navigation}) => {
   const [data, setData] = useState([]);
-  const [testimonial, setTestimonial] = useState([]);
+  // const [testimonial, setTestimonial] = useState([]);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [error, setError] = useErrorHandler();
 
@@ -23,9 +26,9 @@ const ImportantMessageScreen = ({route, navigation}) => {
   const getInitialData = async () => {
     try {
       const res = await getImportantMessageAPI();
-      const resTestimonial = await getTestimoniAPI();
+      // const resTestimonial = await getTestimoniAPI();
       setData(res.data.data.media);
-      setTestimonial(resTestimonial.data.data);
+      // setTestimonial(resTestimonial.data.data);
     } catch (e) {
       setError(e);
     } finally {
@@ -61,7 +64,7 @@ const ImportantMessageScreen = ({route, navigation}) => {
         <LoadingComponent />
       ) : (
         <>
-          {data?.length && testimonial?.length ? (
+          {data?.length ? (
             <>
               <FlatList
                 data={data}
@@ -71,18 +74,18 @@ const ImportantMessageScreen = ({route, navigation}) => {
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.container}
-                ListFooterComponent={
-                  <View style={styles.padding}>
-                    <ScrollView
-                      horizontal
-                      showsHorizontalScrollIndicator={true}
-                      contentContainerStyle={styles.scroll}>
-                      {testimonial.map(item => (
-                        <TestimonialItem data={item} key={item.id_testimoni} />
-                      ))}
-                    </ScrollView>
-                  </View>
-                }
+                // ListFooterComponent={
+                //   <View style={styles.padding}>
+                //     <ScrollView
+                //       horizontal
+                //       showsHorizontalScrollIndicator={true}
+                //       contentContainerStyle={styles.scroll}>
+                //       {testimonial.map(item => (
+                //         <TestimonialItem data={item} key={item.id_testimoni} />
+                //       ))}
+                //     </ScrollView>
+                //   </View>
+                // }
               />
             </>
           ) : null}

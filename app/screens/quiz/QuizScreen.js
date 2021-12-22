@@ -110,19 +110,21 @@ const QuizScreen = ({route}) => {
                 Perbanyak wawasan dengan main kuis MammaSIP, Jaga Kesehatan &
                 Sayangi Dirimu.
               </Text>
-              <TouchableOpacity
-                style={styles.refreshButton}
-                activeOpacity={1}
-                onPress={handleRefreshQuiz}>
-                <Icon name="refresh" size={18} color={COLORS.white} />
-                <Text
-                  style={[
-                    FONTS.textBold12,
-                    {color: COLORS.white, marginLeft: 6},
-                  ]}>
-                  Coba Lagi Yuk
-                </Text>
-              </TouchableOpacity>
+              {count !== data.pertanyaan.length ? (
+                <TouchableOpacity
+                  style={styles.refreshButton}
+                  activeOpacity={1}
+                  onPress={handleRefreshQuiz}>
+                  <Icon name="refresh" size={18} color={COLORS.white} />
+                  <Text
+                    style={[
+                      FONTS.textBold12,
+                      {color: COLORS.white, marginLeft: 6},
+                    ]}>
+                    Coba Lagi Yuk
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
           ) : (
             <>

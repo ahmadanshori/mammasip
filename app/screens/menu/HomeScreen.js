@@ -106,7 +106,7 @@ const HomeScreen = ({navigation}) => {
           </TouchableNativeFeedback>
           <View style={styles.box}>
             <Image
-              source={require('../../assets/images/welcome.png')}
+              source={require('../../assets/images/welcome.jpg')}
               style={styles.img}
             />
           </View>

@@ -1,117 +1,173 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import React, {useState, useEffect, useCallback, useContext} from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {Calendar} from 'react-native-calendars';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
-import {VideoItem, CalculatorItem} from '../../components/Items';
-import {AskButton} from '../../components/Buttons';
 import {Sadari, Sadanis} from '../../components/Journal';
-import {dropdownalert} from '../../components/AlertProvider';
+import {SkriningModal} from '../../components/Modals';
+import {LoadingComponent} from '../../components/Loadings';
 import Divider from '../../components/Divider';
-import Accordion from '../../components/Accordion';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import {COLORS, FONTS} from '../../constants';
+import {
+  getJournalSkriningAPI,
+  createJournalSadariAPI,
+  createJournalSadanisAPI,
+} from '../../api/journal';
 import formatDate from '../../libs/formatDate';
-import QuizIcon from '../../assets/icons/quiz.svg';
+import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const SkriningJournalScreen = () => {
-  const [sadari, setSadari] = useState(null);
-  const [sadanis, setSadanis] = useState(null);
-  const [reminder, setReminder] = useState(null);
+  const {token, user, setLoading} = useContext(AppContext);
+  const [data, setData] = useState(null);
+  const [isShow, setIsShow] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [isLoad, setIsLoad] = useState(true);
+  const [error, setError] = useErrorHandler();
+
+  useEffect(() => {
+    getInitialData();
+  }, []);
+
+  let convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item[key]]: item,
+      };
+    }, initialValue);
+  };
+
+  const getInitialData = useCallback(async () => {
+    try {
+      const res = await getJournalSkriningAPI(token, user.id_user);
+      let newData = [];
+      res.data.data.marked_dates.map(item => {
+        newData.push({
+          tanggal: item.tanggal,
+          dots: [
+            {color: item.sadari && COLORS.red},
+            {color: item.sadanis && COLORS.green},
+          ],
+        });
+      });
+      const convertData = convertArrayToObject(newData, 'tanggal');
+      setData({...res.data.data, marked_dates: convertData});
+    } catch (e) {
+      setError(e);
+    } finally {
+      setIsLoad(false);
+    }
+  }, [token, user.id_user, setError]);
+
+  const handleAddActivity = useCallback(
+    async event => {
+      setIsShow(false);
+      setLoading(true);
+      try {
+        const postData = {
+          id_user: user?.id_user,
+          ...event,
+        };
+        if (selected === 'sadari') {
+          await createJournalSadariAPI(token, postData);
+        } else {
+          await createJournalSadanisAPI(token, postData);
+        }
+        getInitialData();
+      } catch (e) {
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [token, setLoading, selected, user.id_user, setError, getInitialData],
+  );
+  const handleSkrining = val => {
+    setSelected(val);
+    setIsShow(true);
+  };
+
+  const handleRefresh = () => {
+    setError();
+    setIsLoad(true);
+    getInitialData();
+  };
   return (
     <Container>
       <HeaderTitle title="Jurnal skrining SADARI & SADANIS" />
-      <ScrollView>
-        <View style={styles.wrapper}>
-          <View style={styles.row}>
-            <Text style={FONTS.textBold12}>Hari ini</Text>
-            <Text
-              style={[
-                FONTS.textBold12,
-                {color: COLORS.lightBlue, marginLeft: 8},
-              ]}>
-              {formatDate(new Date(), 'EEEE, dd MMMM yyyy')}
-            </Text>
+      {isLoad ? (
+        <LoadingComponent />
+      ) : (
+        <ScrollView>
+          <View style={styles.wrapper}>
+            <View style={styles.row}>
+              <Text style={FONTS.textBold12}>Hari ini</Text>
+              <Text
+                style={[
+                  FONTS.textBold12,
+                  {color: COLORS.lightBlue, marginLeft: 8},
+                ]}>
+                {formatDate(new Date(), 'EEEE, dd MMMM yyyy')}
+              </Text>
+            </View>
+            <View style={styles.calendar}>
+              <Calendar
+                current={formatDate(new Date(), 'yyyy-MM-dd')}
+                monthFormat={'MMMM yyyy'}
+                firstDay={1}
+                disableAllTouchEventsForDisabledDays={true}
+                markingType={'multi-dot'}
+                markedDates={data?.marked_dates}
+                enableSwipeMonths={true}
+              />
+            </View>
+            <View style={styles.row}>
+              <View style={[styles.dot, {marginRight: 16}]}>
+                <View style={styles.sadari} />
+                <Text style={[FONTS.textBold12, {color: COLORS.red}]}>
+                  Sadari
+                </Text>
+              </View>
+              <View style={styles.dot}>
+                <View style={styles.sadanis} />
+                <Text style={[FONTS.textBold12, {color: COLORS.green}]}>
+                  Sadanis
+                </Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.calendar}>
-            <Calendar
-              current={formatDate(new Date(), 'yyyy-MM-dd')}
-              // Handler which gets executed on day press. Default = undefined
-              onDayPress={day => {
-                // console.log('selected day', day);
-              }}
-              // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-              monthFormat={'MMMM yyyy'}
-              // Handler which gets executed when visible month changes in calendar. Default = undefined
-              // onMonthChange={month => {
-              //   console.log('month changed', month);
-              // }}
-              // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday
-              firstDay={1}
-              // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-              onPressArrowLeft={subtractMonth => subtractMonth()}
-              // Handler which gets executed when press arrow icon right. It receive a callback can go next month
-              onPressArrowRight={addMonth => addMonth()}
-              // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
-              disableAllTouchEventsForDisabledDays={true}
-              // Replace default month and year title with custom one. the function receive a date as parameter
-              // renderHeader={date => {
-              //   /*Return JSX*/
-              // }}
-              enableSwipeMonths={true}
+          <Divider />
+          <View style={styles.wrapper}>
+            <Text style={[FONTS.textBold16, styles.margin8]}>Sadari</Text>
+            <Text style={FONTS.text12}>Pemeriksaan Payudara Sendiri</Text>
+            <Sadari
+              data={data?.jurnal_sadari_last}
+              onPress={() => handleSkrining('sadari')}
             />
           </View>
-        </View>
-        <Divider />
-        <View style={styles.wrapper}>
-          <Text style={[FONTS.textBold12, styles.margin8]}>Sadari</Text>
-          <Text style={FONTS.text12}>Pemeriksaan Payudara Sendiri</Text>
-          <Sadari time={reminder} data={sadari} />
-        </View>
-        <Divider />
-        <View style={styles.wrapper}>
-          <Text style={[FONTS.textBold12, styles.margin8]}>Sadanis</Text>
-          <Text style={FONTS.text12}>Pemeriksaan Payudara Klinis</Text>
-          <Sadanis time={reminder} data={sadanis} />
-        </View>
-        <Divider />
-        <View style={styles.wrapper}>
-          <View style={styles.header}>
-            <View style={styles.row}>
-              <MaterialCommunityIcons
-                name="meditation"
-                size={18}
-                style={styles.icon}
-              />
-              <Text style={FONTS.textBold14}>Cara melakukan SADARI</Text>
-            </View>
-            <Text style={[FONTS.text12, {color: COLORS.primary}]}>
-              Lihat Semua
-            </Text>
+          <Divider />
+          <View style={styles.wrapper}>
+            <Text style={[FONTS.textBold16, styles.margin8]}>Sadanis</Text>
+            <Text style={FONTS.text12}>Pemeriksaan Payudara Klinis</Text>
+            <Sadanis
+              data={data?.jurnal_sadanis_last}
+              onPress={() => handleSkrining('sadanis')}
+            />
           </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-          </ScrollView>
-        </View>
-        <View style={styles.wrapper}>
-          <Text style={[FONTS.textBold16, styles.information]}>
-            Butuh informasi lainya?
-          </Text>
-          <AskButton />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      )}
+      {isShow && (
+        <SkriningModal
+          selected={selected}
+          onClose={() => setIsShow(false)}
+          onAddPress={handleAddActivity}
+        />
+      )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };
@@ -139,5 +195,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   margin8: {marginBottom: 8},
+  sadari: {
+    height: 20,
+    width: 20,
+    borderRadius: 20,
+    marginRight: 4,
+    backgroundColor: COLORS.red,
+  },
+  sadanis: {
+    height: 20,
+    width: 20,
+    borderRadius: 20,
+    marginRight: 4,
+    backgroundColor: COLORS.green,
+  },
+  dot: {flexDirection: 'row', alignItems: 'center', marginTop: 16},
 });
 export default SkriningJournalScreen;

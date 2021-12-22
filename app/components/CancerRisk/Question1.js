@@ -23,7 +23,7 @@ const Question1 = ({onPress, selected}) => {
         <View style={styles.padding}>
           <Text
             style={[FONTS.textBold14, {color: COLORS.black, marginBottom: 16}]}>
-            Apakah anda merokok?
+            Apakah Anda merokok?
           </Text>
           <QuestionButton
             selected={select === 1 ? true : false}

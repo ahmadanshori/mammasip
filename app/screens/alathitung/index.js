@@ -1,10 +1,11 @@
-import BmrScreen from './BmrScreen';
+import BmrScreen from './BmiScreen';
 import CalculationDetailScreen from './CalculationDetailScreen';
-import BmiScreen from './BmiScreen';
+import BmiScreen from './BmrScreen';
 import CancerRiskScreen from './CancerRiskScreen';
 import FoodSuggestionScreen from './FoodSuggestionScreen';
 import MenuPackageScreen from './MenuPackageScreen';
 import CancerQuestionScreen from './CancerQuestionScreen';
+import DurationScreen from './DurationScreen';
 export {
   BmrScreen,
   CalculationDetailScreen,
@@ -13,4 +14,5 @@ export {
   FoodSuggestionScreen,
   MenuPackageScreen,
   CancerQuestionScreen,
+  DurationScreen,
 };

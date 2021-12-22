@@ -32,7 +32,7 @@ const Question5 = ({onPress, data}) => {
         <View style={styles.padding}>
           <Text
             style={[FONTS.textBold14, {color: COLORS.black, marginBottom: 16}]}>
-            Menghitung masa index tubuh
+            Menghitung indeks massa tubuh
           </Text>
 
           <CalculatorInput

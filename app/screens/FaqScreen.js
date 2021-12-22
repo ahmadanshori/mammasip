@@ -5,13 +5,16 @@ import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {SearchInput} from '../components/Inputs';
 import Accordion from '../components/Accordion';
+import {NoInternet, ErrorServer} from '../components/Errors';
 import {searchFaqAPI} from '../api/faq';
 import {COLORS, FONTS} from '../constants';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 const FaqScreen = ({navigation}) => {
   const [search, setSearch] = useState('');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useErrorHandler();
 
   const renderItem = ({item}) => (
     <Accordion title={item.question_en} desc={item.answer_en} />
@@ -29,14 +32,15 @@ const FaqScreen = ({navigation}) => {
       formData.append('search', text);
       const resFaq = await searchFaqAPI(formData);
       setData(resFaq.data.data);
-    } catch (err) {
-      //   console.log(`err`, {...err});
+    } catch (e) {
+      setError(e);
     } finally {
       setLoading(false);
     }
   }, 500);
 
   const handleRefresh = () => {
+    setError();
     setLoading(true);
     handleCustomerSearch(search);
   };
@@ -71,6 +75,8 @@ const FaqScreen = ({navigation}) => {
           paddingBottom: 16,
         }}
       />
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

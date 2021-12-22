@@ -87,9 +87,6 @@ const CounselingScreen = ({navigation, route}) => {
       setSelected(val);
       setIsDownload(true);
     }
-    //   type_file
-    //  1 foto, 2 video, 3 pdf, 4 pptx
-    // 1,2,3 bisa di view baru download, 4 langsung download
   };
   const onDownload = useCallback(() => {
     setIsDownload(false);

@@ -5,8 +5,8 @@ import kenali from '../assets/icons/kenali.svg';
 import pemenang from '../assets/icons/pemenang.svg';
 import gerbang from '../assets/icons/gerbang.svg';
 import bunga from '../assets/icons/bunga.svg';
-import bmr from '../assets/icons/weight.svg';
-import bmi from '../assets/icons/food.svg';
+import imt from '../assets/icons/weight.svg';
+import bmr from '../assets/icons/food.svg';
 import virus from '../assets/icons/virus.svg';
 import girl from '../assets/icons/girl.svg';
 import messagePeople from '../assets/icons/messagePeople.svg';
@@ -16,6 +16,9 @@ import lula from '../assets/icons/lula.svg';
 import deddy from '../assets/icons/deddy.svg';
 import aboutus from '../assets/icons/aboutus.svg';
 import ayla from '../assets/icons/ayla.svg';
+import sport from '../assets/icons/olahraga.svg';
+import scales from '../assets/icons/timabngan.svg';
+import calendar from '../assets/icons/calendar.svg';
 
 export const ICON = {
   sayangi,
@@ -25,8 +28,8 @@ export const ICON = {
   pemenang,
   gerbang,
   bunga,
+  imt,
   bmr,
-  bmi,
   virus,
   girl,
   messagePeople,
@@ -36,6 +39,9 @@ export const ICON = {
   deddy,
   aboutus,
   ayla,
+  sport,
+  scales,
+  calendar,
 };
 
 const appIcons = {ICON};

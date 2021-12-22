@@ -122,7 +122,11 @@ const ActivityModal = ({onClose, onAddPress}) => {
           title="Tambah"
           style={styles.addButton}
           disable={!time ? true : false}
-          onPress={() => (time ? onAddPress({time, activity}) : {})}
+          onPress={() =>
+            time
+              ? onAddPress({activity: activity === 'Sedang' ? '1' : '2', time})
+              : {}
+          }
         />
       </TouchableOpacity>
     </TouchableOpacity>

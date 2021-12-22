@@ -21,23 +21,23 @@ const AlatHitungScreen = ({navigation}) => {
       <CalculatorItem
         image={<ICON.bmr width={60} height={60} />}
         onPress={() => handleNavigation('Bmr')}
-        backgroundColor={COLORS.blue}
-        title="Kalkulator Indeks Massa Tubuh"
-        description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
-      />
-      <CalculatorItem
-        image={<ICON.bmi width={60} height={60} />}
-        onPress={() => handleNavigation('Bmi')}
         backgroundColor={COLORS.secondary}
         title="Kalkulator Kebutuhan Kalori"
         description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
+      />
+      <CalculatorItem
+        image={<ICON.imt width={60} height={60} />}
+        onPress={() => handleNavigation('Bmi')}
+        backgroundColor={COLORS.blue}
+        title="Kalkulator Indeks Massa Tubuh"
+        description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
       />
       <CalculatorItem
         source={require('../../assets/images/woman.png')}
         image={<ICON.virus width={60} height={60} />}
         onPress={() => handleNavigation('CancerRisk')}
         backgroundColor={COLORS.red}
-        title="Resiko Penyakit Kanker"
+        title="Risiko Penyakit Kanker"
         description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
       />
     </Container>

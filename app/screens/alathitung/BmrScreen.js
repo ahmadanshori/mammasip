@@ -1,67 +1,80 @@
-import React, {useState, useCallback, useContext} from 'react';
+import React, {useState, useCallback} from 'react';
 import {View, Text, StyleSheet, StatusBar, ScrollView} from 'react-native';
-
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
-import {MainButton, AskButton} from '../../components/Buttons';
+import {MainButton} from '../../components/Buttons';
 import {ActivityLevelButton} from '../../components/RadioButton';
-// import {CalculatorItem} from '../../components/Items';
-// import {dropdownalert} from '../../components/AlertProvider';
-import {COLORS, FONTS, SIZES} from '../../constants';
+import InputButton from '../../components/Buttons/TitleButton';
+import {COLORS, FONTS, ICON, SIZES} from '../../constants';
 
-// import {getBmrAPI} from '../../api/calculator';
-// import {AppContext} from '../../index';
-import WeightIcon from '../../assets/icons/weight.svg';
-// import FoodIcon from '../../assets/icons/food.svg';
-// import VirusIcon from '../../assets/icons/virus.svg';
-// import QuizIcon from '../../assets/icons/quiz.svg';
-
-const WeightCalculatorScreen = ({navigation}) => {
-  // const {user, token, setLoading} = useContext(AppContext);
+const BmrScreen = ({navigation}) => {
   const [field, setField] = useState({
     age: '',
     weight: '',
     height: '',
     gender: 1,
-    exercise_level: '1',
+    exercise_level: null,
   });
+  const [selected, setSelected] = useState(null);
 
-  const handleNavigation = useCallback((type, param) => {
-    navigation.navigate(type, param);
-  }, []);
+  const updateDuration = event => {
+    setSelected(event);
+    setField(state => ({...state, exercise_level: event.id}));
+  };
+
+  const handleNavigation = useCallback(
+    (type, param) => {
+      navigation.navigate(type, param);
+    },
+    [navigation],
+  );
 
   const handleInput = useCallback((type, value) => {
     setField(state => ({...state, [type]: value}));
   }, []);
 
-  const handleRadioButton = useCallback(val => {
+  const handleRadioButton = val => {
     setField(state => ({...state, gender: val}));
-  }, []);
+  };
 
   const handleCalculation = useCallback(async () => {
-    handleNavigation('CalculationDetail', {type: 'BMR', field});
+    const {age, weight, height, exercise_level} = field;
+    if ((age && weight && height, exercise_level)) {
+      handleNavigation('CalculationDetail', {type: 'BMR', field});
+    }
   }, [field, handleNavigation]);
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={COLORS.darkBlue} barStyle={'light-content'} />
+      <StatusBar
+        backgroundColor={COLORS.secondary}
+        barStyle={'light-content'}
+      />
       <WeightCalculatorHeader
-        title="Hitung masa tubuh ideal"
+        title="Kenali Diri Anda"
         onPressBack={() => navigation.goBack()}
-        backgroundColor={COLORS.darkBlue}
+        backgroundColor={COLORS.secondary}
       />
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.header}>
           <View style={styles.icon}>
-            <WeightIcon width={80} height={80} />
+            <ICON.bmr width={80} height={80} />
           </View>
           <View style={styles.title}>
             <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
-              Basal Metabolic Rate (BMR)
+              Alat Pengukur Kebutuhan Kalori
             </Text>
             <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
-              Kebutuhan kalori minimal yang dipakai organ-organ tubuh untuk
-              melakukan tugas dasarnya.
+              <Text
+                style={[
+                  FONTS.text10,
+                  {color: COLORS.white, marginTop: 4, fontStyle: 'italic'},
+                ]}>
+                Basal Metabolic Rate
+              </Text>{' '}
+              (BMR) adalah kebutuhan kalori minimal yang dipakai organ-organ
+              tubuh untuk melakukan tugas dasarnya. Dengan memenuhi kebutuhan
+              kalori harian, tubuh dapat tumbuh dan berfungsi dengan baik.
             </Text>
           </View>
         </View>
@@ -105,54 +118,25 @@ const WeightCalculatorScreen = ({navigation}) => {
             value2={2}
             selected={field.gender}
           />
+          <InputButton
+            placeholder={'Pilih Durasi'}
+            title={'Durasi Olahraga Kamu'}
+            data={selected?.title}
+            onPress={() =>
+              handleNavigation('Duration', {updateDuration, selected})
+            }
+          />
           <MainButton
             title="Hitung"
             style={styles.button}
             onPress={handleCalculation}
-            disable={!field.age || !field.height || !field.weight}
+            disable={
+              !field.age ||
+              !field.height ||
+              !field.weight ||
+              !field.exercise_level
+            }
           />
-          {/* <View style={styles.marginHeight}>
-            <Text style={[FONTS.textBold16, styles.text]}>
-              Alat bantu hitung lain
-            </Text>
-            <CalculatorItem
-              image={<FoodIcon width={60} height={60} />}
-              onPress={() => handleNavigation('Bmi')}
-              backgroundColor={COLORS.secondary}
-              title="Kalkulator Kebutuhan Kalori"
-              description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
-            />
-            <CalculatorItem
-              image={<VirusIcon width={60} height={60} />}
-              onPress={() => handleNavigation('CancerRisk')}
-              backgroundColor={COLORS.red}
-              title="Resiko Penyakit Kanker"
-              description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
-            />
-          </View> */}
-          <View style={styles.margin}>
-            <Text style={[FONTS.textBold16, styles.text]}>
-              Alat bantu hitung lain
-            </Text>
-            <AskButton onPress={() => navigation.navigate('Faq')} />
-          </View>
-          {/* <View style={styles.margin}>
-            <CalculatorItem
-              image={<QuizIcon width={60} height={60} />}
-              // onPress={() => handleNavigation('WeightCalculator')}
-              onPress={() =>
-                dropdownalert.alertWithType(
-                  'warn',
-                  '',
-                  'Belum bisa, Masih Diproses!!',
-                )
-              }
-              backgroundColor={COLORS.primary}
-              title="Ayo ikutan Quiz!"
-              description="Uji pengetahuanmu dengan quiz
-              kesehatan dari mammaSIP."
-            />
-          </View> */}
         </View>
       </ScrollView>
     </View>
@@ -167,7 +151,7 @@ const styles = StyleSheet.create({
   scroll: {paddingBottom: 24},
   header: {
     width: '100%',
-    backgroundColor: COLORS.darkBlue,
+    backgroundColor: COLORS.secondary,
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: 16,
@@ -189,24 +173,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
   },
-  text: {color: COLORS.black, textAlign: 'center', marginBottom: 16},
+
   divider: {
     height: 6,
     width: 65,
     backgroundColor: COLORS.separator,
     borderRadius: 8,
   },
-  button: {marginTop: 8},
-  margin: {marginTop: 32},
-  marginHeight: {marginTop: 64},
-  askButton: {
-    backgroundColor: COLORS.shadowPrimary,
-    paddingVertical: 16,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 6,
-  },
+  button: {marginTop: 24},
 });
 
-export default WeightCalculatorScreen;
+export default BmrScreen;

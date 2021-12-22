@@ -1,4 +1,4 @@
-import React, {useState, useContext, useCallback} from 'react';
+import React, {useState, useContext, useCallback, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,38 +12,48 @@ import {VictoryBar, VictoryChart, VictoryTheme} from 'victory-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {Container} from '../../components/Container';
-// import {AskButton} from '../../components/Buttons';
+
 import {HeaderTitle} from '../../components/Headers';
-import {dropdownalert} from '../../components/AlertProvider';
-import {JournalItem, VideoItem} from '../../components/Items';
+import {LoadingComponent} from '../../components/Loadings';
+import {SportItem} from '../../components/Journal';
 import {ActivityModal} from '../../components/Modals';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 // import Reminder from '../../components/Reminder';
 // import Divider from '../../components/Divider';
-import {createJournalSportAPI} from '../../api/journal';
+// import {AskButton} from '../../components/Buttons';
+import {createJournalSportAPI, getJournalSportAPI} from '../../api/journal';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {AppContext} from '../../index';
+import formatDate from '../../libs/formatDate';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
-const data = [
-  {quarter: '12/08', earnings: 100},
-  {quarter: '14/08', earnings: 20},
-  {quarter: '17/08', earnings: 70},
-  {quarter: '21/08', earnings: 35},
-  {quarter: '4/09', earnings: 88},
-  {quarter: '15/09', earnings: 45},
-  {quarter: '28/09', earnings: 68},
-];
 const SportsJournalScreen = () => {
   const {token, user, setLoading} = useContext(AppContext);
   const [isActivity, setIsActivity] = useState(false);
   const [time, setTime] = useState(null);
   const [isCalendar, setIsCalendar] = useState(false);
-  const [field, setField] = useState({
-    id_user: user?.id_user,
-    lama_berolahraga: null,
-    level_olahraga: null,
-  });
+  const [isLoad, setIsLoad] = useState(true);
+  const [journalData, setJournalData] = useState(null);
+  const [error, setError] = useErrorHandler();
 
-  // const [isReminder, setIsReminder] = useState(false);
+  useEffect(() => {
+    getInitialData();
+  }, []);
+
+  const getInitialData = useCallback(async () => {
+    try {
+      const res = await getJournalSportAPI(token, user.id_user);
+      let newData = [];
+      res.data.data.jurnal_olahraga_last.map(item => {
+        newData.push({...item, date: formatDate(item.created_date, 'dd/MM')});
+      });
+      setJournalData({...res.data.data, jurnal_olahraga_last: newData});
+    } catch (e) {
+      setError(e);
+    } finally {
+      setIsLoad(false);
+    }
+  }, [token, user.id_user, setError]);
 
   const handleAddActivity = useCallback(
     async value => {
@@ -51,27 +61,31 @@ const SportsJournalScreen = () => {
       setLoading(true);
       try {
         const newData = {
-          ...field,
+          id_user: user?.id_user,
           lama_berolahraga: value.time,
           level_olahraga: value.activity,
         };
-        console.log(`newData`, newData);
-        const res = await createJournalSportAPI(token, newData);
-        console.log(`res`, res);
-        setField(newData);
+        await createJournalSportAPI(token, newData);
+        const res = await getJournalSportAPI(token, user.id_user);
+        setJournalData(res.data.data);
       } catch (e) {
-        console.log(`e`, e, {...e});
+        setError(e);
       } finally {
         setLoading(false);
       }
     },
-    [token, field, setLoading],
+    [token, setLoading, user.id_user, setError],
   );
 
   const onChange = (event, selectedDate) => {
     setIsCalendar(false);
     setTime(selectedDate);
   };
+  const handleRefresh = useCallback(() => {
+    setError();
+    setIsLoad(true);
+    getInitialData();
+  }, [setError, getInitialData]);
   // const handleReminder = () => {
   //   setIsReminder(false);
   // };
@@ -83,75 +97,85 @@ const SportsJournalScreen = () => {
   return (
     <Container>
       <HeaderTitle title="Jurnal olahraga anda" />
-      <ScrollView>
-        <View style={styles.wrapper}>
-          <View style={styles.header}>
-            <View>
-              <Text style={FONTS.text12}>Aktivitas dalam seminggu</Text>
-              <View style={styles.row}>
-                <Text style={FONTS.textBold24}>132</Text>
+      {isLoad ? (
+        <LoadingComponent />
+      ) : (
+        <ScrollView>
+          <View style={styles.wrapper}>
+            <View style={styles.header}>
+              <View>
+                <Text style={FONTS.text12}>Aktivitas dalam seminggu</Text>
+                <View style={styles.row}>
+                  <Text style={FONTS.textBold24}>
+                    {journalData?.jurnal_olahraga_total}
+                  </Text>
+                  <Text
+                    style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
+                    Menit
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <Text style={FONTS.text12}>Rekomendasi</Text>
+                <View style={styles.row}>
+                  <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
+                    {journalData?.jurnal_olahraga_rekomendasi}
+                  </Text>
+                  <Text
+                    style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
+                    Menit
+                  </Text>
+                </View>
+              </View>
+              <TouchableOpacity
+                onPress={() => setIsActivity(true)}
+                style={styles.circleIcon}>
+                <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
+              </TouchableOpacity>
+            </View>
+            <Text style={FONTS.text12}>Aktivitas dalam seminggu</Text>
+            <Text
+              style={[
+                FONTS.textBold14,
+                {color: COLORS.secondary, marginTop: 4},
+              ]}>
+              Berat
+            </Text>
+            <View style={styles.row}>
+              <View style={styles.margin}>
                 <Text
-                  style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
+                  style={[FONTS.textBold12, {transform: [{rotate: '270deg'}]}]}>
                   Menit
                 </Text>
               </View>
+              <VictoryChart
+                width={SIZES.width}
+                theme={VictoryTheme.material}
+                domainPadding={10}>
+                <VictoryBar
+                  data={journalData?.jurnal_olahraga_last}
+                  x="date"
+                  y="lama_berolahraga"
+                  // cornerRadius={{topLeft: data => console.log(`datum`, data)}}
+                  style={{data: {fill: COLORS.secondary}}}
+                />
+              </VictoryChart>
             </View>
-            <View>
-              <Text style={FONTS.text12}>Rekomendasi</Text>
-              <View style={styles.row}>
-                <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
-                  132
-                </Text>
-                <Text
-                  style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
-                  Menit
-                </Text>
-              </View>
+            <Text style={[FONTS.textBold12, styles.tanggal]}>Tanggal</Text>
+            <View style={styles.history}>
+              {journalData?.jurnal_olahraga_last.map(item => (
+                <SportItem key={item.id_jurnal_olahraga} data={item} />
+              ))}
             </View>
-            <TouchableOpacity
-              onPress={() => setIsActivity(true)}
-              style={styles.circleIcon}>
-              <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
-            </TouchableOpacity>
-          </View>
-          <Text style={FONTS.text12}>Aktivitas dalam seminggu</Text>
-          <Text
-            style={[FONTS.textBold14, {color: COLORS.secondary, marginTop: 4}]}>
-            Berat
-          </Text>
-          <View style={styles.row}>
-            <View style={styles.margin}>
-              <Text
-                style={[FONTS.textBold12, {transform: [{rotate: '270deg'}]}]}>
-                Menit
-              </Text>
-            </View>
-            <VictoryChart
-              width={SIZES.width}
-              theme={VictoryTheme.material}
-              domainPadding={10}>
-              <VictoryBar
-                data={data}
-                x="quarter"
-                y="earnings"
-                // cornerRadius={{topLeft: data => console.log(`datum`, data)}}
-                style={{data: {fill: COLORS.secondary}}}
-              />
-            </VictoryChart>
-          </View>
-          <Text style={[FONTS.textBold12, styles.tanggal]}>Tanggal</Text>
-          <View style={styles.history}>
-            <JournalItem />
-            <JournalItem />
-            <JournalItem />
-          </View>
-          {/* <Reminder
+            {/* <Reminder
             onPress={() => setIsReminder(true)}
             time={time}
             title="Reminder Harian Aktif"
           /> */}
-        </View>
-      </ScrollView>
+          </View>
+        </ScrollView>
+      )}
+
       {/* {isReminder && (
         <ReminderModals
           onCalendar={() => setIsCalendar(true)}
@@ -176,6 +200,8 @@ const SportsJournalScreen = () => {
           onChange={onChange}
         />
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

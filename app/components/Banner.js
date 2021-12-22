@@ -11,7 +11,7 @@ const Banner = ({onPressCategory}) => {
       <View style={styles.background} />
       <View style={styles.padding}>
         <Image
-          source={require('../assets/images/banner.png')}
+          source={require('../assets/images/banner.jpg')}
           style={styles.img}
         />
       </View>

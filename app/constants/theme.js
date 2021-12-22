@@ -26,6 +26,7 @@ export const COLORS = {
   darkBlue: '#4D7DE5',
   separator: '#EDEDED',
   border: '#E0E0E0',
+  background: 'rgba(0,0,0, 0.2)',
 };
 
 export const SIZES = {

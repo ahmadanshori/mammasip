@@ -16,7 +16,7 @@ const Answer = ({data, imt, activity, onRefresh}) => {
     <ScrollView>
       <AnswerComponent
         number="1"
-        title="Apakah anda merokok?"
+        title="Apakah Anda merokok?"
         source={require('../../assets/images/roko.png')}
         isTrue={data.page1}
         answer={data.page1 ? 'Iya' : 'Tidak'}
@@ -31,7 +31,7 @@ const Answer = ({data, imt, activity, onRefresh}) => {
       <Divider />
       <AnswerComponent
         number="2"
-        title="Apakah anda mengkonsumsi minuman beralkohol?"
+        title="Apakah Anda mengkonsumsi minuman beralkohol?"
         source={require('../../assets/images/DrinkAnswer.png')}
         isTrue={data.page2}
         answer={
@@ -53,7 +53,7 @@ const Answer = ({data, imt, activity, onRefresh}) => {
       <Divider />
       <AnswerComponent
         number="3"
-        title="Berapa banyak buah yang rata-rata anda konsumsi dalam sehari?"
+        title="Berapa banyak buah yang rata-rata Anda konsumsi dalam sehari?"
         source={require('../../assets/images/fruit.png')}
         isTrue={data.page3}
         answer={
@@ -73,7 +73,7 @@ const Answer = ({data, imt, activity, onRefresh}) => {
       <Divider />
       <AnswerComponent
         number="4"
-        title="Berapa banyak sayur yang rata-rata anda konsumsi dalam sehari?"
+        title="Berapa banyak sayur yang rata-rata Anda konsumsi dalam sehari?"
         source={require('../../assets/images/sayuran.png')}
         isTrue={data.page4}
         answer={
@@ -95,22 +95,22 @@ const Answer = ({data, imt, activity, onRefresh}) => {
       <Divider />
       <AnswerComponent
         number="5"
-        title="Menghitung masa index tubuh"
+        title="Menghitung masa indeks tubuh"
         source={require('../../assets/images/timbang.png')}
-        isTrue={true}
+        isTrue={imt.page5}
         imt={`Indeks Massa Tubuh Anda adalah = ${imt.bmi}`}
         condition={
           <Text style={styles.text}>
-            Rekomendasi MammaSIP {'\n'}- Jangan merokok Upayakan berat badan
-            Sahabat MammaSIP berada pada kisaran 18,5-22,9 untuk mengurangi
-            risiko terkena kanker.
+            Rekomendasi MammaSIP {'\n'}- Upayakan berat badan Sahabat MammaSIP
+            berada pada kisaran 18,5-22,9 untuk mengurangi risiko terkena
+            kanker.
           </Text>
         }
       />
       <Divider />
       <AnswerComponent
         number="6"
-        title="Berapa lama anda olahraga dalam sehari?"
+        title="Berapa lama Anda olahraga dalam seminggu?"
         source={require('../../assets/images/lari.png')}
         isTrue={imt.page6}
         activity={activity?.activity}

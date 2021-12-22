@@ -6,14 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  Image,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
-import {
-  // MainButton,
-  AskButton,
-} from '../../components/Buttons';
 // import MealSuggestions from '../../components/MealSuggestions';
 // import {CalculatorItem} from '../../components/Items';
 import {NoInternet, ErrorServer} from '../../components/Errors';
@@ -117,7 +114,9 @@ const CalculationDetailScreen = ({navigation, route}) => {
   return (
     <Container>
       <HeaderTitle
-        title={`Hasil Perhitungan ${type} Anda`}
+        title={`Hasil Perhitungan ${
+          type === 'BMI' ? 'IMT' : 'Kebutuhan Kalori'
+        } Anda`}
         // onSharePress={handleShare}
       />
       {loading.get ? (
@@ -132,26 +131,63 @@ const CalculationDetailScreen = ({navigation, route}) => {
             />
           }>
           <View style={[styles.title, styles.pTop]}>
-            <Text style={FONTS.textBold18}>{type} anda adalah </Text>
-            <Text style={[FONTS.textBold18, {color: COLORS.blue}]}>
-              {type === 'BMR' ? Math.round(data?.bmr) : Math.round(data?.bmi)}
-            </Text>
-            {type === 'BMR' ? (
-              <Text style={FONTS.textBold18}> kcal</Text>
-            ) : null}
+            {type === 'BMI' ? (
+              <Text style={FONTS.textBold18}>
+                IMT Anda adalah{' '}
+                <Text style={[FONTS.textBold18, {color: COLORS.blue}]}>
+                  {data?.bmi.toFixed(2)}
+                </Text>{' '}
+                Kkal
+              </Text>
+            ) : (
+              <Text style={FONTS.textBold12}>
+                BMR Anda adalah{' '}
+                <Text style={[FONTS.textBold12, {color: COLORS.blue}]}>
+                  {data?.bmr.toFixed(2)}
+                </Text>{' '}
+                Kkal
+              </Text>
+            )}
           </View>
           {type === 'BMR' ? (
-            <View style={styles.title}>
-              <Text style={FONTS.textBold12}>
-                Kebutuhan kalori harian Anda adalah{' '}
-              </Text>
-              <Text style={[FONTS.textBold12, {color: COLORS.blue}]}>
+            <Text
+              style={[
+                FONTS.textBold18,
+                {textAlign: 'center', marginHorizontal: 16},
+              ]}>
+              Kebutuhan kalori harian Anda adalah{' '}
+              <Text style={[FONTS.textBold18, {color: COLORS.blue}]}>
                 {Math.round(data?.calori_day)}
               </Text>
-              <Text style={FONTS.textBold12}> Kcal</Text>
-            </View>
+              <Text style={FONTS.textBold18}> Kkal</Text>
+            </Text>
           ) : null}
-          <View style={[styles.padding, styles.mTop]}>
+          <View style={styles.imgWrapper}>
+            {type === 'BMR' ? (
+              <Image
+                resizeMode="contain"
+                source={require('../../assets/icons/food.png')}
+                style={styles.img}
+              />
+            ) : (
+              <Image
+                resizeMode="contain"
+                source={
+                  data?.cap_en === 'Under Weigth'
+                    ? require('../../assets/images/1.png')
+                    : data?.cap_en === 'Normal Weight'
+                    ? require('../../assets/images/2.png')
+                    : data?.cap_en === 'Over Weigth'
+                    ? require('../../assets/images/3.png')
+                    : data?.cap_en === 'Obesity I'
+                    ? require('../../assets/images/4.png')
+                    : require('../../assets/images/5.png')
+                }
+                style={styles.img}
+              />
+            )}
+          </View>
+          <View style={styles.padding}>
             {/* <MainButton title="Bagikan" share /> */}
             <TouchableOpacity
               style={styles.refresh}
@@ -167,7 +203,8 @@ const CalculationDetailScreen = ({navigation, route}) => {
               </Text>
             </TouchableOpacity>
             <Text style={[FONTS.text12, {textAlign: 'center'}]}>
-              Hasil analisa perhitungan {type === 'BMI' ? 'IMT' : type}
+              Hasil analisa perhitungan{' '}
+              {type === 'BMI' ? 'IMT' : 'Kebutuhan Kalori'}
             </Text>
             <Divider height={2} style={styles.divider} />
             <Text
@@ -264,42 +301,6 @@ const CalculationDetailScreen = ({navigation, route}) => {
               </>
             )}
           </View> */}
-          {/* <Divider /> */}
-          <View style={styles.padding}>
-            {/* <Text style={[FONTS.textBold16, styles.titleFooter]}>
-              Alat bantu hitung lain
-            </Text>
-            <CalculatorItem
-              image={<FoodIcon height={60} width={60} />}
-              onPress={() => handleNavigation(type === 'BMR' ? 'Bmr' : 'Bmi')}
-              backgroundColor={COLORS.secondary}
-              title={
-                type === 'BMR'
-                  ? 'Kalkulator Kebutuhan Kalori'
-                  : 'Kalkulator Kebutuhan Kalori'
-              }
-              description={
-                type === 'BMR'
-                  ? 'Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?'
-                  : 'Hitung berat badan ideal yang sesuai untuk kesehatan anda.'
-              }
-            />
-            <CalculatorItem
-              image={<VirusIcon height={60} width={60} />}
-              onPress={() => handleNavigation('CancerRisk')}
-              backgroundColor={COLORS.red}
-              title="Resiko Penyakit Kanker"
-              description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
-            /> */}
-            <Text
-              style={[
-                FONTS.textBold16,
-                {color: COLORS.black, marginVertical: 16, textAlign: 'center'},
-              ]}>
-              Butuh informasi lainya?
-            </Text>
-            <AskButton onPress={() => navigation.navigate('Faq')} />
-          </View>
         </ScrollView>
       )}
       {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
@@ -309,13 +310,14 @@ const CalculationDetailScreen = ({navigation, route}) => {
 };
 const styles = StyleSheet.create({
   title: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'center',
+    // justifyContent: 'center',
     flex: 1,
   },
   pTop: {paddingTop: 32},
-  mTop: {marginTop: 32},
   padding: {padding: 16},
+  imgWrapper: {marginTop: 16},
+  img: {height: SIZES.width2, width: SIZES.width},
   refresh: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -333,13 +335,6 @@ const styles = StyleSheet.create({
     paddingBottom: 36,
   },
   foodImg: {height: SIZES.width3, width: SIZES.width2},
-  titleFooter: {
-    color: COLORS.black,
-    textAlign: 'center',
-    marginTop: 8,
-    marginBottom: 16,
-  },
-
   changeButton: {
     paddingBottom: 8,
     paddingRight: 16,

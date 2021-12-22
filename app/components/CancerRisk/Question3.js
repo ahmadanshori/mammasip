@@ -23,7 +23,7 @@ const Question3 = ({onPress, selected}) => {
         <View style={styles.padding}>
           <Text
             style={[FONTS.textBold14, {color: COLORS.black, marginBottom: 8}]}>
-            Berapa banyak buah yang rata-rata anda konsumsi dalam sehari?
+            Berapa banyak buah yang rata-rata Anda konsumsi dalam sehari?
           </Text>
           <Text style={[FONTS.text12, {color: COLORS.black, marginBottom: 16}]}>
             Gambar diatas sebagai acuan porsi standard

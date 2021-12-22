@@ -1,29 +1,33 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MainButton} from '../Buttons';
-import Reminder from '../Reminder';
+// import Reminder from '../Reminder';
 import {FONTS, COLORS} from '../../constants';
+import formatDate from '../../libs/formatDate';
 
-const Sadanis = ({time, data}) => {
+const Sadanis = ({time, data, onPress}) => {
   return (
     <View>
-      {data ? (
+      {data.length ? (
         <>
           <View style={styles.box}>
             <View>
-              <Text style={FONTS.text12}>Kondisi</Text>
-              <Text style={[FONTS.textBold14, {color: COLORS.primary}]}>
-                Rutin Menstruasi
+              <Text style={FONTS.text12}>Tanggal terakhir ke dokter</Text>
+              <Text style={[FONTS.textBold14, {color: COLORS.green}]}>
+                {formatDate(data[0].tgl_sadanis)}
               </Text>
             </View>
-            <View style={styles.changeButton}>
+            <TouchableOpacity
+              style={styles.changeButton}
+              activeOpacity={1}
+              onPress={onPress}>
               <Text style={[FONTS.textBold12, {color: COLORS.lightBlue}]}>
                 Ganti
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
-          <Reminder time={time} title="Reminder Aktif" />
+          {/* <Reminder time={time} title="Reminder Aktif" /> */}
         </>
       ) : (
         <>
@@ -43,6 +47,7 @@ const Sadanis = ({time, data}) => {
           <MainButton
             title="Atur tanggal terakhir SADANIS"
             backgroundColor={COLORS.secondary}
+            onPress={onPress}
           />
         </>
       )}

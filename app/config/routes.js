@@ -26,6 +26,7 @@ import {
   SportsJournalScreen,
   WeightJournalScreen,
   SkriningJournalScreen,
+  CaloriesJournalScreen,
 } from '../screens/journal';
 import {ChangePasswordScreen, EditProfileScreen} from '../screens/profile';
 import {
@@ -36,6 +37,7 @@ import {
   FoodSuggestionScreen,
   CancerQuestionScreen,
   MenuPackageScreen,
+  DurationScreen,
 } from '../screens/alathitung';
 import {ListQuizScreen, QuizScreen} from '../screens/quiz';
 import {
@@ -55,7 +57,7 @@ import ImageScreen from '../screens/ImageScreen';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
-import {COLORS, FONTS} from '../constants';
+import {COLORS} from '../constants';
 import {AppContext} from '../index';
 
 const Tab = createBottomTabNavigator();
@@ -105,13 +107,6 @@ const TabNavigator = () => {
             e.preventDefault();
             const validation = async () => {
               navigationRef.current.navigate('alathitungTab');
-              // if (token) {
-              //   navigationRef.current.navigate('alathitungTab');
-              // } else {
-              //   navigationRef.current.navigate('Login', {
-              //     nav: 'alathitungTab',
-              //   });
-              // }
             };
             validation();
           },
@@ -137,13 +132,6 @@ const TabNavigator = () => {
             e.preventDefault();
             const validation = async () => {
               navigationRef.current.navigate('SearchTab');
-              // if (token) {
-              //   navigationRef.current.navigate('VideoTab');
-              // } else {
-              //   navigationRef.current.navigate('Login', {
-              //     nav: 'VideoTab',
-              //   });
-              // }
             };
             validation();
           },
@@ -279,6 +267,7 @@ export default function App() {
             name="FoodSuggestion"
           />
           <Stack.Screen component={MenuPackageScreen} name="MenuPackage" />
+          <Stack.Screen component={DurationScreen} name="Duration" />
           <Stack.Screen
             component={CancerQuestionScreen}
             name="CancerQuestion"
@@ -288,6 +277,10 @@ export default function App() {
           <Stack.Screen
             component={SkriningJournalScreen}
             name="SkriningJournal"
+          />
+          <Stack.Screen
+            component={CaloriesJournalScreen}
+            name="CaloriesJournal"
           />
           <Stack.Screen component={ListQuizScreen} name="ListQuiz" />
           <Stack.Screen component={QuizScreen} name="Quiz" />

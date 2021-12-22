@@ -1,41 +1,84 @@
 import React, {useState, useCallback} from 'react';
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {MainButton, OutlineButton} from '../Buttons';
-import {ActivityLevelButton} from '../RadioButton';
+import InputButton from '../Buttons/TitleButton';
 import {CalculatorInput} from '../Inputs';
 
-const Question6 = ({onPress}) => {
+const Question6 = ({onPress, onPressBack}) => {
   const [field, setField] = useState({
     time: '',
-    level: 1,
+    level: null,
+    title: '',
   });
+  const [isActivity, setIsActivity] = useState(false);
 
   const handleInput = useCallback((type, value) => {
     setField(state => ({...state, [type]: value}));
   }, []);
 
   const handleButton = () => {
-    const {time, level} = field;
-    if (time) {
+    const {time, level, title} = field;
+    if (time && level) {
       let value;
       if (
-        (level === 1 && Number(time) >= 300) ||
-        (level === 2 && Number(time) >= 150)
+        (level === 2 && Number(time) >= 150) ||
+        (level === 3 && Number(time) >= 75)
       ) {
         value = true;
       } else {
         value = false;
       }
-      onPress(value, level === 1 ? 'Sedang' : 'Tinggi', field.time || null);
+      onPress(value, title, field.time);
     }
+  };
+
+  const onActivity = () => {
+    setIsActivity(true);
+  };
+
+  const handleActivity = value => {
+    setIsActivity(false);
+    setField(state => ({...state, ...value}));
   };
 
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.center}>
-          <View style={styles.box}>
+        <ScrollView
+          contentContainerStyle={styles.center}
+          horizontal
+          showsHorizontalScrollIndicator={false}>
+          <View style={styles.imgWrapper}>
+            <Image
+              resizeMode="contain"
+              source={require('../../assets/images/ringan.png')}
+              style={styles.img}
+            />
+            <Text
+              style={[
+                FONTS.textBold14,
+                {color: COLORS.green, textAlign: 'center', marginBottom: 6},
+              ]}>
+              Tidak Olahraga / Ringan
+            </Text>
+            <Text
+              style={[
+                FONTS.text10,
+                {color: COLORS.black, textAlign: 'center'},
+              ]}>
+              Tidak pernah melakukan olahraga atau beraktivitas fisik yang saat
+              melakukannya masih bisa sambil bernyanyi.
+            </Text>
+          </View>
+          <View style={styles.imgWrapper}>
             <Image
               resizeMode="contain"
               source={require('../../assets/images/sedang.png')}
@@ -53,11 +96,11 @@ const Question6 = ({onPress}) => {
                 FONTS.text10,
                 {color: COLORS.black, textAlign: 'center'},
               ]}>
-              Gerak namun tidak menyebabkan kehabisan nafas seperti jalan cepat,
-              berenang pelan & bermain tenis
+              Masih bisa diajak berbicara normal namun tidak akan sanggup
+              bernyanyi (terengah-engah).
             </Text>
           </View>
-          <View style={styles.box}>
+          <View style={styles.imgWrapper}>
             <Image
               resizeMode="contain"
               source={require('../../assets/images/berat.png')}
@@ -75,15 +118,15 @@ const Question6 = ({onPress}) => {
                 FONTS.text10,
                 {color: COLORS.black, textAlign: 'center'},
               ]}>
-              Gerakan badan intensif dan cepat seperti lari, bersepeda cepat dan
-              aerobik / senam
+              Olahraga yang pada saat melakukannya tidak bisa diajak berbicara
+              normal (terengah-engah).
             </Text>
           </View>
-        </View>
+        </ScrollView>
         <View style={styles.padding}>
           <Text
             style={[FONTS.textBold14, {color: COLORS.black, marginBottom: 16}]}>
-            Berapa lama anda olah raga tiap hari ?
+            Berapa lama Anda olahraga tiap minggu ?
           </Text>
           <CalculatorInput
             title="Durasi (menit/minggu)?"
@@ -94,14 +137,11 @@ const Question6 = ({onPress}) => {
             onChangeText={val => handleInput('time', val)}
             value={field.time}
           />
-          <ActivityLevelButton
-            title="Aktivitas level?"
-            onPress={val => handleInput('level', val)}
-            radio1="Sedang"
-            radio2="Tinggi"
-            value1={1}
-            value2={2}
-            selected={field.level}
+          <InputButton
+            placeholder={'Pilih aktivitas level'}
+            title={'Aktivitas level?'}
+            data={field?.title}
+            onPress={onActivity}
           />
         </View>
       </ScrollView>
@@ -109,28 +149,73 @@ const Question6 = ({onPress}) => {
         <MainButton
           title="Kembali"
           left
-          onPress={() => onPress(5)}
+          onPress={onPressBack}
           style={styles.halfButton}
         />
         <OutlineButton
           title="Selesai"
           right
           onPress={handleButton}
-          disable={!field.time}
+          disable={!field.time || !field?.level}
           style={styles.halfButton}
         />
       </View>
+      {isActivity ? (
+        <TouchableOpacity
+          style={styles.modal}
+          activeOpacity={1}
+          onPress={() => setIsActivity(false)}>
+          <TouchableOpacity style={styles.box} activeOpacity={1}>
+            <View style={styles.titleBox}>
+              <Text
+                style={[
+                  FONTS.textBold16,
+                  {color: COLORS.black, textAlign: 'center'},
+                ]}>
+                Aktivitas level
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={styles.selectButton}
+              activeOpacity={SIZES.opacity}
+              onPress={() =>
+                handleActivity({level: 1, title: 'Aktivitas level'})
+              }>
+              <Text style={[FONTS.text14, {color: COLORS.white}]}>
+                Tidak Olahraga / Ringan
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.selectButton}
+              activeOpacity={SIZES.opacity}
+              onPress={() => handleActivity({level: 2, title: 'Sedang'})}>
+              <Text style={[FONTS.text14, {color: COLORS.white}]}>Sedang</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.selectButton}
+              activeOpacity={SIZES.opacity}
+              onPress={() => handleActivity({level: 3, title: 'Berat'})}>
+              <Text style={[FONTS.text14, {color: COLORS.white}]}>Berat</Text>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      ) : null}
     </>
   );
 };
 
 const styles = StyleSheet.create({
   center: {
-    marginVertical: 32,
-    flexDirection: 'row',
+    // marginVertical: 32,
+    // flexDirection: 'row',
+    marginVertical: 24,
   },
-  box: {width: '50%', alignItems: 'center', paddingHorizontal: 16},
-  img: {height: SIZES.width4, width: SIZES.width4, marginBottom: 16},
+  imgWrapper: {
+    width: SIZES.width1 - 24,
+    alignItems: 'center',
+    paddingHorizontal: 8,
+  },
+  img: {height: SIZES.width3, width: SIZES.width3, marginBottom: 16},
   padding: {paddingHorizontal: 16},
   button: {
     padding: 16,
@@ -139,6 +224,33 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   halfButton: {width: '48%'},
+  modal: {
+    height: SIZES.height,
+    width: SIZES.width,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 999,
+    backgroundColor: COLORS.blackShadow,
+    paddingHorizontal: 16,
+  },
+  box: {
+    backgroundColor: COLORS.white,
+    width: '100%',
+    padding: 16,
+    borderRadius: 8,
+  },
+  titleBox: {
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderColor: COLORS.separator,
+  },
+  selectButton: {
+    backgroundColor: COLORS.primary,
+    padding: 16,
+    borderRadius: 8,
+    marginTop: 16,
+  },
 });
 
 export default Question6;

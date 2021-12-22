@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const GKSContent = ({data}) => {
+const GKSContent = ({data, onPress}) => {
   const html = `${data.gks_text}`;
   // const INJECTEDJAVASCRIPT = "document.body.style.userSelect = 'none'";
   return (
@@ -22,25 +22,33 @@ const GKSContent = ({data}) => {
         </View>
       )}
       <View style={styles.imageWrapper}>
-        <Image
-          source={{
-            uri: data.gks_media_list[0].url,
-          }}
-          style={styles.img}
-        />
+        <View style={styles.imgWrapper}>
+          <Image
+            source={{
+              uri: data.gks_media_list[0].url,
+            }}
+            style={styles.img}
+          />
+        </View>
       </View>
       <Text style={[FONTS.textBold16, styles.text]}>
         {data?.kata_pengantar}
       </Text>
-      <View pointerEvents="none">
-        <RenderHtml
-          contentWidth={SIZES.width}
-          source={{
-            html: html,
-          }}
-          // injectedJavaScript={INJECTEDJAVASCRIPT}
-        />
-      </View>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() =>
+          onPress(data.redirect_mobile_path, data.redirect_mobile_id)
+        }>
+        <View pointerEvents="none">
+          <RenderHtml
+            contentWidth={SIZES.width}
+            originWhitelist={['*']}
+            source={{
+              html: html,
+            }}
+          />
+        </View>
+      </TouchableOpacity>
       <Text style={[FONTS.sayangi, {color: COLORS.black, marginTop: 8}]}>
         #Sayangi Dirimu!
       </Text>
@@ -57,14 +65,23 @@ const styles = StyleSheet.create({
   },
   logoWrapper: {alignItems: 'flex-end'},
   logo: {height: 50, width: 50},
-  imageWrapper: {alignItems: 'center'},
-  img: {
-    height: SIZES.width2 - 16,
-    width: SIZES.width2 - 16,
-    borderRadius: SIZES.width2,
+  imageWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imgWrapper: {
+    backgroundColor: 'white',
+    borderRadius: 100,
+    overflow: 'hidden',
     marginBottom: 16,
   },
+  img: {
+    height: SIZES.width3,
+    width: SIZES.width3,
+  },
   text: {color: COLORS.black, marginBottom: 8},
+  webview: {},
 });
 
 export default GKSContent;

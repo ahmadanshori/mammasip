@@ -25,36 +25,38 @@ const BackgroundHeader = ({
   }
   return (
     <ImageBackground source={source} style={styles.background}>
-      <View style={containerStyles}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.goBack();
-          }}
-          activeOpacity={SIZES.opacity}>
-          <Icon
-            name={Platform.OS === 'ios' ? 'left' : 'arrowleft'}
-            size={18}
-            color={white ? COLORS.white : COLORS.black}
-          />
-        </TouchableOpacity>
-        <View style={styles.w15} />
-      </View>
-      <View style={styles.textWrapper}>
-        <Text
-          style={[
-            FONTS.textBold18,
-            {color: white ? COLORS.white : COLORS.black, textAlign: 'center'},
-          ]}>
-          {title}
-        </Text>
-        <Text
-          style={[
-            FONTS.text14,
-            {color: white ? COLORS.white : COLORS.black, textAlign: 'center'},
-          ]}>
-          {desc}
-        </Text>
+      <View style={styles.wrapper}>
+        <View style={containerStyles}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.goBack();
+            }}
+            activeOpacity={SIZES.opacity}>
+            <Icon
+              name={Platform.OS === 'ios' ? 'left' : 'arrowleft'}
+              size={18}
+              color={white ? COLORS.white : COLORS.black}
+            />
+          </TouchableOpacity>
+          <View style={styles.w15} />
+        </View>
+        <View style={styles.textWrapper}>
+          <Text
+            style={[
+              FONTS.textBold18,
+              {color: white ? COLORS.white : COLORS.black, textAlign: 'center'},
+            ]}>
+            {title}
+          </Text>
+          <Text
+            style={[
+              FONTS.text14,
+              {color: white ? COLORS.white : COLORS.black, textAlign: 'center'},
+            ]}>
+            {desc}
+          </Text>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -67,11 +69,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
   },
+  wrapper: {backgroundColor: COLORS.background, height: '100%'},
   background: {height: SIZES.width2 - 34, width: SIZES.width},
   textWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 24,
+    marginTop: 8,
     paddingHorizontal: 16,
   },
   button: {

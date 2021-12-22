@@ -2,12 +2,8 @@ import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Container} from '../../components/Container';
 import {CalculatorItem} from '../../components/Items';
-import {COLORS, FONTS} from '../../constants';
+import {COLORS, FONTS, ICON} from '../../constants';
 import {AppContext} from '../../index';
-
-import SportIcon from '../../assets/icons/olahraga.svg';
-import ScalesIcon from '../../assets/icons/timabngan.svg';
-import CalendarIcon from '../../assets/icons/calendar.svg';
 
 const JournalScreen = ({navigation}) => {
   const {token} = useContext(AppContext);
@@ -29,7 +25,7 @@ const JournalScreen = ({navigation}) => {
         </Text>
       </View>
       <CalculatorItem
-        image={<SportIcon height={60} width={60} />}
+        image={<ICON.sport height={60} width={60} />}
         onPress={() => handleNavigation('SportsJournal')}
         backgroundColor={COLORS.orange}
         title="Jurnal Olahraga"
@@ -37,7 +33,7 @@ const JournalScreen = ({navigation}) => {
         olahragamu sehari-hari"
       />
       <CalculatorItem
-        image={<ScalesIcon height={60} width={60} />}
+        image={<ICON.scales height={60} width={60} />}
         onPress={() => handleNavigation('WeightJournal')}
         backgroundColor={COLORS.primary}
         title="Jurnal Berat Badan"
@@ -45,7 +41,7 @@ const JournalScreen = ({navigation}) => {
         dengan dirimu."
       />
       <CalculatorItem
-        image={<CalendarIcon height={60} width={60} />}
+        image={<ICON.calendar height={60} width={60} />}
         onPress={() => handleNavigation('SkriningJournal')}
         backgroundColor={COLORS.secondary}
         title="Jurnal Skrining"

@@ -53,7 +53,7 @@ const CaloriesScreen = ({navigation}) => {
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.red} barStyle={'light-content'} />
       <WeightCalculatorHeader
-        title="Hitung kebutuhan kalori harian"
+        title="Hitung Risiko Kanker Anda"
         onPressBack={() => navigation.goBack()}
         backgroundColor={COLORS.red}
       />
@@ -64,10 +64,10 @@ const CaloriesScreen = ({navigation}) => {
           </View>
           <View style={styles.title}>
             <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
-              Pengukur resiko kanker
+              Pengukur risiko kanker
             </Text>
             <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
-              Analisa resiko kanker berdasarkan gaya hidup anda. Hasil hanya
+              Analisa risiko kanker berdasarkan gaya hidup anda. Hasil hanya
               bersifat saran & tetap membutuhkan nasehat dokter untuk hasil yg
               maksimal.
             </Text>
@@ -102,48 +102,11 @@ const CaloriesScreen = ({navigation}) => {
             </Text>
           </View>
           <MainButton
-            title="Hitung"
+            title="Selanjutnya"
             style={styles.countButton}
             onPress={handleCancer}
             disable={!field.gender || !field.age}
           />
-
-          {/* <View style={styles.marginHeight}>
-            <Text style={[FONTS.textBold16, styles.text]}>
-              Alat bantu hitung lain
-            </Text>
-            <CalculatorItem
-              image={<WeightIcon width={60} height={60} />}
-              onPress={() => handleNavigation('Bmr')}
-              backgroundColor={COLORS.blue}
-              title="Kalkulator Indeks Massa Tubuh"
-              description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
-            />
-            <CalculatorItem
-              image={<FoodIcon width={60} height={60} />}
-              onPress={() => handleNavigation('Bmi')}
-              backgroundColor={COLORS.secondary}
-              title="Kalkulator Kebutuhan Kalori"
-              description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
-            />
-          </View> */}
-          <View style={styles.margin}>
-            <Text style={[FONTS.textBold16, styles.text]}>
-              Alat bantu hitung lain
-            </Text>
-            <TouchableNativeFeedback onPress={() => handleNavigation('Faq')}>
-              <View style={styles.askButton}>
-                <Icon name="questioncircleo" size={20} color={COLORS.primary} />
-                <Text
-                  style={[
-                    FONTS.textBold14,
-                    {color: COLORS.primary, marginLeft: 8},
-                  ]}>
-                  Tanya Jawab
-                </Text>
-              </View>
-            </TouchableNativeFeedback>
-          </View>
         </View>
       </ScrollView>
     </View>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext, useCallback} from 'react';
 import {
   View,
   Text,
@@ -56,9 +56,23 @@ const KnowYourSelfScreen = ({route, navigation}) => {
     }
   };
 
-  const handleNavigation = type => {
-    navigation.navigate(type);
-  };
+  const handleNavigation = useCallback(
+    type => {
+      navigation.navigate(type);
+    },
+    [navigation],
+  );
+
+  const handleJournal = useCallback(
+    type => {
+      if (token) {
+        navigation.navigate(type);
+      } else {
+        navigation.navigate('Login', {nav: 'KnowYourSelf', id});
+      }
+    },
+    [token, navigation, id],
+  );
 
   const handleRefresh = () => {
     setError();
@@ -66,13 +80,16 @@ const KnowYourSelfScreen = ({route, navigation}) => {
     getInitialData();
   };
 
-  const onSeeAll = val => {
-    if (token) {
-      navigation.navigate('ListVideo', {id: val});
-    } else {
-      navigation.navigate('Login', {nav: 'KnowYourSelf', id});
-    }
-  };
+  const onSeeAll = useCallback(
+    val => {
+      if (token) {
+        navigation.navigate('ListVideo', {id: val});
+      } else {
+        navigation.navigate('Login', {nav: 'KnowYourSelf', id});
+      }
+    },
+    [token, id, navigation],
+  );
   return (
     <Container>
       {loading.get ? (
@@ -107,25 +124,58 @@ const KnowYourSelfScreen = ({route, navigation}) => {
               </View>
               <CalculatorItem
                 image={<ICON.bmr width={60} height={60} />}
-                onPress={() => handleNavigation('Bmr')}
-                backgroundColor={COLORS.blue}
-                title="Kalkulator Indeks Massa Tubuh"
-                description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
-              />
-              <CalculatorItem
-                image={<ICON.bmi width={60} height={60} />}
                 onPress={() => handleNavigation('Bmi')}
                 backgroundColor={COLORS.secondary}
                 title="Kalkulator Kebutuhan Kalori"
                 description="Sudahkan konsumsi makanan memenuhi kebutuhan kalori harian anda?"
               />
               <CalculatorItem
+                image={<ICON.imt width={60} height={60} />}
+                onPress={() => handleNavigation('Bmr')}
+                backgroundColor={COLORS.blue}
+                title="Kalkulator Indeks Massa Tubuh"
+                description="Hitung berat badan ideal yang sesuai untuk kesehatan anda."
+              />
+              <CalculatorItem
                 source={require('../../assets/images/woman.png')}
                 image={<ICON.virus width={60} height={60} />}
                 onPress={() => handleNavigation('CancerRisk')}
                 backgroundColor={COLORS.red}
-                title="Resiko Penyakit Kanker"
+                title="Risiko Penyakit Kanker"
                 description="Analisa dari kebiasaan dan pola makan sehari-hari anda."
+              />
+            </View>
+            <View style={styles.wrapper}>
+              <View style={[styles.row, styles.mBottom]}>
+                <Ionicons name="journal-outline" size={25} />
+                <Text
+                  style={[
+                    FONTS.textBold14,
+                    {color: COLORS.black, marginLeft: 4},
+                  ]}>
+                  Jurnal Pribadi
+                </Text>
+              </View>
+              <CalculatorItem
+                image={<ICON.sport height={60} width={60} />}
+                onPress={() => handleJournal('SportsJournal')}
+                backgroundColor={COLORS.orange}
+                title="Jurnal Olahraga"
+                description="Catat semua aktivitas kebutuhan olahragamu sehari-hari"
+              />
+              <CalculatorItem
+                image={<ICON.scales height={60} width={60} />}
+                onPress={() => handleJournal('WeightJournal')}
+                backgroundColor={COLORS.primary}
+                title="Jurnal Berat Badan"
+                description="Hitung berat badan ideal yang sesuai dengan dirimu."
+              />
+              <CalculatorItem
+                image={<ICON.calendar height={60} width={60} />}
+                onPress={() => handleJournal('SkriningJournal')}
+                backgroundColor={COLORS.secondary}
+                title="Jurnal Skrining"
+                description="Jadwal untuk dirimu melakukan SADARI & SADANIS"
               />
             </View>
             <View style={styles.wrapper}>

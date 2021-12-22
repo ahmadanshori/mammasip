@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,96 +8,163 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {Container} from '../../components/Container';
-import {AskButton, MainButton} from '../../components/Buttons';
+import {MainButton} from '../../components/Buttons';
 import {HeaderTitle} from '../../components/Headers';
-import {VideoItem} from '../../components/Items';
-import {ActivityModal, ReminderModals} from '../../components/Modals';
-import MealSuggestions from '../../components/MealSuggestions';
-import Reminder from '../../components/Reminder';
+import {WeightItem} from '../../components/Journal';
+import {WeightModal} from '../../components/Modals';
+import {LoadingComponent} from '../../components/Loadings';
 import Divider from '../../components/Divider';
-// import {dropdownalert} from '../../components/AlertProvider';
+import {NoInternet, ErrorServer} from '../../components/Errors';
+import {createJournalWeightAPI, getJournalWeightAPI} from '../../api/journal';
 import {COLORS, FONTS, SIZES} from '../../constants';
-// import QuizIcon from '../../assets/icons/quiz.svg';
+import {AppContext} from '../../index';
+import useErrorHandler from '../../hooks/useErrorHandler';
+
+// import {VideoItem} from '../../components/Items';
+// import MealSuggestions from '../../components/MealSuggestions';
+// import Reminder from '../../components/Reminder';
+// import {dropdownalert} from '../../components/AlertProvider';
 
 const WeightJournalScreen = ({navigation}) => {
+  const {token, user, setLoading} = useContext(AppContext);
   const [isActivity, setIsActivity] = useState(false);
-  const [foodSuggestion, setFoodSuggestion] = useState(null);
   const [time, setTime] = useState(null);
   const [isCalendar, setIsCalendar] = useState(false);
-  const [isReminder, setIsReminder] = useState(false);
+  const [isLoad, setIsLoad] = useState(true);
+  const [data, setData] = useState(null);
+  const [error, setError] = useErrorHandler();
 
-  const handleAddActivity = value => {
-    setIsActivity(false);
-  };
-  const handleNavigation = useCallback((val, param) => {
-    navigation.navigate(val, param);
+  // const [foodSuggestion, setFoodSuggestion] = useState(null);
+  // const [isReminder, setIsReminder] = useState(false);
+
+  useEffect(() => {
+    getInitialData();
   }, []);
-  const handleFoodSuggestion = value => {
-    setFoodSuggestion(value);
+
+  const getInitialData = async () => {
+    try {
+      const res = await getJournalWeightAPI(token, user.id_user);
+      setData(res.data.data);
+    } catch (e) {
+      setError(e);
+    } finally {
+      setIsLoad(false);
+    }
   };
+
+  const handleCreateJournal = useCallback(
+    async value => {
+      setIsActivity(false);
+      setLoading(true);
+      try {
+        const postData = {id_user: user?.id_user, ...value};
+        await createJournalWeightAPI(token, postData);
+        const res = await getJournalWeightAPI(token, user.id_user);
+        setData(res.data.data);
+      } catch (e) {
+        setError(e);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [token, user?.id_user, setError, setLoading],
+  );
+
   const onChange = (event, selectedDate) => {
     setIsCalendar(false);
     setTime(selectedDate);
   };
-  const handleReminder = () => {
-    setIsReminder(false);
+  const handleRefresh = () => {
+    setError();
+    setIsLoad(true);
+    getInitialData();
   };
-  const handleCloseReminder = () => {
-    setIsReminder(false);
-    setTime(null);
-  };
+  // const handleNavigation = useCallback((val, param) => {
+  //   navigation.navigate(val, param);
+  // }, []);
+  // const handleFoodSuggestion = value => {
+  //   setFoodSuggestion(value);
+  // };
+  // const handleReminder = () => {
+  //   setIsReminder(false);
+  // };
+  // const handleCloseReminder = () => {
+  //   setIsReminder(false);
+  //   setTime(null);
+  // };
   return (
     <Container>
       <HeaderTitle title="Jurnal berat badan anda" />
-      <ScrollView>
-        <View style={styles.wrapper}>
-          <View style={styles.header}>
-            <View>
-              <Text style={FONTS.text12}>Berat Badan Terakhir</Text>
-              <View style={styles.row}>
-                <Text style={FONTS.textBold24}>132</Text>
-                <Text
-                  style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
-                  Menit
-                </Text>
+      {isLoad ? (
+        <LoadingComponent />
+      ) : (
+        <ScrollView>
+          <View style={styles.wrapper}>
+            <View style={styles.header}>
+              <View>
+                <Text style={FONTS.text12}>Berat Badan Terakhir</Text>
+                <View style={styles.row}>
+                  <Text style={FONTS.textBold24}>
+                    {data?.jurnal_imt_berat_terakhir}
+                  </Text>
+                  <Text
+                    style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
+                    Kg
+                  </Text>
+                </View>
               </View>
-            </View>
-            <View>
-              <Text style={FONTS.text12}>Ideal</Text>
-              <View style={styles.row}>
-                <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
-                  72
-                </Text>
-                <Text
-                  style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
-                  Kg
-                </Text>
+              <View>
+                <Text style={FONTS.text12}>Ideal</Text>
+                <View style={styles.row}>
+                  <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
+                    {data?.jurnal_imt_ideal}
+                  </Text>
+                  <Text
+                    style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
+                    Kg
+                  </Text>
+                </View>
               </View>
+              <TouchableOpacity
+                onPress={() => setIsActivity(true)}
+                style={{
+                  elevation: 10,
+                  backgroundColor: COLORS.white,
+                  borderRadius: 50,
+                }}>
+                <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              onPress={() => setIsActivity(true)}
-              style={{
-                elevation: 10,
-                backgroundColor: COLORS.white,
-                borderRadius: 50,
-              }}>
-              <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
-            </TouchableOpacity>
-          </View>
-          <Reminder
+            {/* <Reminder
             onPress={() => setIsReminder(true)}
             time={time}
             title="Reminder Harian Aktif"
-          />
-        </View>
-        <Divider />
-        <View style={styles.wrapper}>
-          <View style={styles.justify}>
+          /> */}
+
+            <Image
+              resizeMode="contain"
+              source={
+                data?.jurnal_imt_kondisi_terakhir === 'Under Weigth'
+                  ? require('../../assets/images/1.png')
+                  : data?.jurnal_imt_kondisi_terakhir === 'Normal Weight'
+                  ? require('../../assets/images/2.png')
+                  : data?.jurnal_imt_kondisi_terakhir === 'Over Weigth'
+                  ? require('../../assets/images/3.png')
+                  : data?.jurnal_imt_kondisi_terakhir === 'Obesity I'
+                  ? require('../../assets/images/4.png')
+                  : require('../../assets/images/5.png')
+              }
+              style={styles.img}
+            />
+            {data.jurnal_imt_last.map(item => (
+              <WeightItem key={item.id_jurnal_imt} data={item} />
+            ))}
+          </View>
+          <Divider />
+          <View style={styles.wrapper}>
             <Text
               style={[
                 FONTS.textBold16,
@@ -105,106 +172,33 @@ const WeightJournalScreen = ({navigation}) => {
               ]}>
               Saran Menu Makanan
             </Text>
-            <TouchableOpacity
-              style={styles.changeButton}
-              onPress={() =>
-                handleNavigation('FoodSuggestion', {
-                  handleFoodSuggestion,
-                })
-              }
-              activeOpacity={SIZES.opacity}>
-              <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
-                Ubah
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {foodSuggestion ? (
-            <MealSuggestions />
-          ) : (
-            <>
-              <View style={styles.warningWrapper}>
-                <View style={styles.warning}>
-                  <Ionicons name="alert-circle" size={20} color={COLORS.red} />
-                  <Text
-                    style={[
-                      FONTS.textBold12,
-                      {color: COLORS.red, marginLeft: 6},
-                    ]}>
-                    Anda belum mengatur jumlah kalori harian
-                  </Text>
-                </View>
-                <Text
-                  style={[FONTS.text12, {color: COLORS.black, marginTop: 8}]}>
-                  Yuk tentukan jumlah kalori harian biar sehat dan berat badanmu
-                  jadi lebih ideal.
-                </Text>
-              </View>
-              <View style={styles.foodWrapper}>
-                <Image
-                  resizeMode="contain"
-                  source={require('../../assets/icons/food.png')}
-                  style={styles.foodImg}
-                />
-              </View>
-              <MainButton
-                title="Pilih Menu Makanan"
-                onPress={() =>
-                  handleNavigation('FoodSuggestion', {
-                    handleFoodSuggestion,
-                  })
-                }
+            <View style={styles.foodWrapper}>
+              <Image
+                resizeMode="contain"
+                source={require('../../assets/icons/food.png')}
+                style={styles.foodImg}
               />
-            </>
-          )}
-        </View>
-        <Divider />
-        <View style={styles.wrapper}>
-          <View style={styles.header}>
-            <View style={styles.row}>
-              <MaterialCommunityIcons
-                name="meditation"
-                size={18}
-                style={styles.icon}
-              />
-              <Text style={FONTS.textBold14}>Video pilihan untuk anda</Text>
             </View>
-            <Text style={[FONTS.text12, {color: COLORS.primary}]}>
-              Lihat Semua
-            </Text>
+            <MainButton
+              title="Pilih Jumlah Kalori"
+              onPress={() => navigation.navigate('CaloriesJournal')}
+            />
           </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-            <VideoItem />
-          </ScrollView>
-        </View>
-        <Divider />
-        <View style={styles.wrapper}>
-          <Text
-            style={[
-              FONTS.textBold16,
-              {color: COLORS.black, marginBottom: 16, textAlign: 'center'},
-            ]}>
-            Butuh informasi lainya?
-          </Text>
-          <AskButton />
-        </View>
-      </ScrollView>
-      {isReminder && (
+        </ScrollView>
+      )}
+
+      {/* {isReminder && (
         <ReminderModals
           onCalendar={() => setIsCalendar(true)}
           time={time}
           onSave={handleReminder}
           onClose={handleCloseReminder}
         />
-      )}
+      )} */}
       {isActivity && (
-        <ActivityModal
+        <WeightModal
           onClose={() => setIsActivity(false)}
-          onAddPress={handleAddActivity}
+          onAddPress={handleCreateJournal}
         />
       )}
       {isCalendar && (
@@ -217,6 +211,8 @@ const WeightJournalScreen = ({navigation}) => {
           onChange={onChange}
         />
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };
@@ -238,11 +234,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingLeft: 24,
   },
-  justify: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
+
   warning: {flexDirection: 'row', alignItems: 'center'},
   foodWrapper: {
     alignItems: 'center',
@@ -253,5 +245,12 @@ const styles = StyleSheet.create({
   row: {flexDirection: 'row', alignItems: 'center', marginTop: 8},
   graphStyle: {backgroundColor: COLORS.white},
   icon: {marginRight: 8},
+  img: {
+    height: SIZES.width2,
+    width: SIZES.width,
+    marginBottom: 32,
+    marginTop: 8,
+    marginLeft: -16,
+  },
 });
 export default WeightJournalScreen;

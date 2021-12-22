@@ -2,36 +2,41 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MainButton} from '../Buttons';
-import Reminder from '../Reminder';
+// import Reminder from '../Reminder';
 import {FONTS, COLORS} from '../../constants';
+import formatDate from '../../libs/formatDate';
 
-const Sadari = ({time, data}) => {
+const Sadari = ({data, onPress}) => {
   return (
     <View>
-      {data ? (
+      {data.length ? (
         <>
           <View style={styles.box}>
             <View style={styles.justify}>
               <View>
                 <Text style={FONTS.text12}>Kondisi</Text>
                 <Text style={[FONTS.textBold14, {color: COLORS.primary}]}>
-                  Rutin Menstruasi
+                  {data[0].jurnal_sadari_last === 1
+                    ? 'Rutin Menstruasi'
+                    : 'Tidak teratur / Menopause'}
                 </Text>
               </View>
-              <TouchableOpacity style={styles.changeButton}>
+              <TouchableOpacity style={styles.changeButton} onPress={onPress}>
                 <Text style={[FONTS.textBold12, {color: COLORS.lightBlue}]}>
                   Ganti
                 </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.marginTop}>
-              <Text style={FONTS.text12}>Tgl pertama menstruasi bulan ini</Text>
-              <Text style={[FONTS.textBold14, {color: COLORS.primary}]}>
-                12 Juli 2021
+              <Text style={FONTS.text12}>
+                Tanggal pertama menstruasi bulan ini
+              </Text>
+              <Text style={[FONTS.textBold14, {color: COLORS.red}]}>
+                {formatDate(data[0].tgl_pertama_haid)}
               </Text>
             </View>
           </View>
-          <Reminder time={time} title="Reminder Aktif" />
+          {/* <Reminder time={time} title="Reminder Aktif" /> */}
         </>
       ) : (
         <>
@@ -51,6 +56,7 @@ const Sadari = ({time, data}) => {
           <MainButton
             title="Atur tanggal mens, pertama"
             backgroundColor={COLORS.secondary}
+            onPress={onPress}
           />
         </>
       )}

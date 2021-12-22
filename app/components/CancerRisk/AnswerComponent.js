@@ -74,7 +74,7 @@ const AnswerComponent = ({
               Perbaiki yuk, Sayangi dirimu!
             </Text>
             <Text style={[FONTS.text12, {color: COLORS.gray}]}>
-              Gaya hidup yang buruk dapat memperbesar resiko kanker.
+              Gaya hidup yang buruk dapat memperbesar risiko kanker.
             </Text>
           </View>
         </View>

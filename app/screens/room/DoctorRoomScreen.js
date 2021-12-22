@@ -35,7 +35,7 @@ const DoctorRooomScreen = ({route, navigation}) => {
   };
   const onRoom = useCallback(
     roomId => {
-      navigation.navigate('Room', {roomId});
+      navigation.navigate('Room', {id: roomId});
     },
     [navigation],
   );
@@ -45,7 +45,7 @@ const DoctorRooomScreen = ({route, navigation}) => {
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <BackgroundHeader
             title={doctorData?.nama_ruang}
             desc={doctorData?.description}

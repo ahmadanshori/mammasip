@@ -75,7 +75,7 @@ const EditProfileScreen = ({navigation}) => {
         'Berhasil merubah data diri..',
       );
     } catch (e) {
-      //   console.log('e', e, {...e});
+      // setError(e);
     } finally {
       setLoading(false);
     }

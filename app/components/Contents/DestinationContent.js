@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import {COLORS, ICON, SIZES} from '../../constants';
 
-const DestinationContent = ({data}) => {
+const DestinationContent = ({data, onPress}) => {
   const html = `<div style="color: #ffffff;">${data?.kata_tujuan}</div>`;
   return (
     <View style={styles.container}>
@@ -19,14 +19,20 @@ const DestinationContent = ({data}) => {
             />
           </View>
         )}
-        <View pointerEvents="none">
-          <RenderHtml
-            contentWidth={SIZES.width}
-            source={{
-              html: html,
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() =>
+            onPress(data.redirect_mobile_path, data.redirect_mobile_id)
+          }>
+          <View pointerEvents="none">
+            <RenderHtml
+              contentWidth={SIZES.width}
+              source={{
+                html: html,
+              }}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

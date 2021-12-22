@@ -23,7 +23,7 @@ const ArticleRecomendation = ({data, onPress, seeAllOnPress}) => {
             key={item.idArticle}
             onPress={() => onPress(item.idArticle)}
             title={item.nameArticle}
-            date={formatDate(item.createdDate)}
+            date={item.createdDate}
             source={item.urlBanner}
           />
         ))}
