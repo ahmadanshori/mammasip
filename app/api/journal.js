@@ -30,3 +30,11 @@ export const getJournalSkriningAPI = (token, id) => {
     createHeader(token),
   );
 };
+
+export const updateSadariAPI = (token, id, data) => {
+  return client.put(`/jurnal_sadari/${id}`, data, createHeader(token));
+};
+
+export const updateSadanisAPI = (token, id, data) => {
+  return client.put(`/jurnal_sadanis/${id}`, data, createHeader(token));
+};

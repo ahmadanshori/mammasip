@@ -25,12 +25,12 @@ const SkriningModal = ({onClose, onAddPress, selected}) => {
     if (date) {
       if (selected === 'sadari') {
         onAddPress({
-          tgl_pertama_haid: date,
+          tgl_pertama_haid: formatDate(date, 'yyyy-MM-dd 	kk:mm:ss'),
           status_teratur: activity === 'Rutin Menstruasi' ? '1' : '2',
         });
       } else {
         onAddPress({
-          tgl_sadanis: date,
+          tgl_sadanis: formatDate(date, 'yyyy-MM-dd 	kk:mm:ss'),
         });
       }
     }
@@ -111,7 +111,11 @@ const SkriningModal = ({onClose, onAddPress, selected}) => {
           </>
         ) : null}
         <TitleButton
-          title="Hari pertama haid bulan ini"
+          title={
+            selected === 'sadari'
+              ? 'Hari pertama haid bulan ini'
+              : 'Hari terakhir anda melakukan SADANIS'
+          }
           placeholder={formatDate(new Date())}
           onPress={() => setIsDate(true)}
           data={date ? formatDate(date) : null}

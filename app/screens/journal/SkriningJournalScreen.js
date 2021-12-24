@@ -13,6 +13,8 @@ import {
   getJournalSkriningAPI,
   createJournalSadariAPI,
   createJournalSadanisAPI,
+  updateSadanisAPI,
+  updateSadariAPI,
 } from '../../api/journal';
 import formatDate from '../../libs/formatDate';
 import useErrorHandler from '../../hooks/useErrorHandler';
@@ -24,6 +26,7 @@ const SkriningJournalScreen = () => {
   const [isShow, setIsShow] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoad, setIsLoad] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
   const [error, setError] = useErrorHandler();
 
   useEffect(() => {
@@ -72,9 +75,17 @@ const SkriningJournalScreen = () => {
           ...event,
         };
         if (selected === 'sadari') {
-          await createJournalSadariAPI(token, postData);
+          if (isEdit) {
+            await updateSadariAPI(token, user.id_user, postData);
+          } else {
+            await createJournalSadariAPI(token, postData);
+          }
         } else {
-          await createJournalSadanisAPI(token, postData);
+          if (isEdit) {
+            await updateSadanisAPI(token, user.id_user, postData);
+          } else {
+            await createJournalSadanisAPI(token, postData);
+          }
         }
         getInitialData();
       } catch (e) {
@@ -83,9 +94,18 @@ const SkriningJournalScreen = () => {
         setLoading(false);
       }
     },
-    [token, setLoading, selected, user.id_user, setError, getInitialData],
+    [
+      token,
+      setLoading,
+      selected,
+      user.id_user,
+      isEdit,
+      setError,
+      getInitialData,
+    ],
   );
-  const handleSkrining = val => {
+  const handleSkrining = (val, type) => {
+    setIsEdit(type);
     setSelected(val);
     setIsShow(true);
   };
@@ -145,7 +165,8 @@ const SkriningJournalScreen = () => {
             <Text style={FONTS.text12}>Pemeriksaan Payudara Sendiri</Text>
             <Sadari
               data={data?.jurnal_sadari_last}
-              onPress={() => handleSkrining('sadari')}
+              flag={data?.sadari_flag}
+              onPress={val => handleSkrining('sadari', val)}
             />
           </View>
           <Divider />
@@ -154,7 +175,8 @@ const SkriningJournalScreen = () => {
             <Text style={FONTS.text12}>Pemeriksaan Payudara Klinis</Text>
             <Sadanis
               data={data?.jurnal_sadanis_last}
-              onPress={() => handleSkrining('sadanis')}
+              flag={data?.sadanis_flag}
+              onPress={val => handleSkrining('sadanis', val)}
             />
           </View>
         </ScrollView>

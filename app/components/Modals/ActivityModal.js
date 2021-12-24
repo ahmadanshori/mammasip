@@ -5,6 +5,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {MainButton} from '../Buttons';
 import {CalculatorInput} from '../Inputs';
+import formatDate from '../../libs/formatDate';
 
 const ActivityModal = ({onClose, onAddPress}) => {
   const [activity, setActivity] = useState('Sedang');
@@ -42,7 +43,9 @@ const ActivityModal = ({onClose, onAddPress}) => {
         <Text style={[FONTS.textBold14, {marginVertical: 24}]}>
           Tambah aktivitas hari ini
         </Text>
-        <Text style={FONTS.textBold18}>Senin, 14 Juli 2021</Text>
+        <Text style={FONTS.textBold18}>
+          {formatDate(new Date(), 'EEEE, dd MMMM yyyy')}
+        </Text>
         <View style={styles.justify}>
           <Text style={FONTS.textBold12}>Level Aktivitas</Text>
           <Tooltip

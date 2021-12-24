@@ -96,7 +96,7 @@ const SportsJournalScreen = () => {
 
   return (
     <Container>
-      <HeaderTitle title="Jurnal olahraga anda" />
+      <HeaderTitle title="Jurnal olahraga Anda" />
       {isLoad ? (
         <LoadingComponent />
       ) : (
@@ -133,14 +133,7 @@ const SportsJournalScreen = () => {
                 <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
               </TouchableOpacity>
             </View>
-            <Text style={FONTS.text12}>Aktivitas dalam seminggu</Text>
-            <Text
-              style={[
-                FONTS.textBold14,
-                {color: COLORS.secondary, marginTop: 4},
-              ]}>
-              Berat
-            </Text>
+
             <View style={styles.row}>
               <View style={styles.margin}>
                 <Text
@@ -153,7 +146,7 @@ const SportsJournalScreen = () => {
                 theme={VictoryTheme.material}
                 domainPadding={10}>
                 <VictoryBar
-                  data={journalData?.jurnal_olahraga_last}
+                  data={journalData?.jurnal_olahraga_last.reverse()}
                   x="date"
                   y="lama_berolahraga"
                   // cornerRadius={{topLeft: data => console.log(`datum`, data)}}
@@ -212,7 +205,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 16,
   },
   row: {flexDirection: 'row', alignItems: 'center'},
   margin: {

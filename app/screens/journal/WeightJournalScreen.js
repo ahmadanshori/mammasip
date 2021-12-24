@@ -97,7 +97,7 @@ const WeightJournalScreen = ({navigation}) => {
   // };
   return (
     <Container>
-      <HeaderTitle title="Jurnal berat badan anda" />
+      <HeaderTitle title="Jurnal berat badan Anda" />
       {isLoad ? (
         <LoadingComponent />
       ) : (

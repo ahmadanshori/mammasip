@@ -6,10 +6,10 @@ import {MainButton} from '../Buttons';
 import {FONTS, COLORS} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
-const Sadari = ({data, onPress}) => {
+const Sadari = ({data, flag, onPress}) => {
   return (
     <View>
-      {data.length ? (
+      {flag ? (
         <>
           <View style={styles.box}>
             <View style={styles.justify}>
@@ -21,7 +21,9 @@ const Sadari = ({data, onPress}) => {
                     : 'Tidak teratur / Menopause'}
                 </Text>
               </View>
-              <TouchableOpacity style={styles.changeButton} onPress={onPress}>
+              <TouchableOpacity
+                style={styles.changeButton}
+                onPress={() => onPress(true)}>
                 <Text style={[FONTS.textBold12, {color: COLORS.lightBlue}]}>
                   Ganti
                 </Text>
@@ -56,7 +58,7 @@ const Sadari = ({data, onPress}) => {
           <MainButton
             title="Atur tanggal mens, pertama"
             backgroundColor={COLORS.secondary}
-            onPress={onPress}
+            onPress={() => onPress(false)}
           />
         </>
       )}

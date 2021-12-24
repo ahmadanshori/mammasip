@@ -6,10 +6,10 @@ import {MainButton} from '../Buttons';
 import {FONTS, COLORS} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
-const Sadanis = ({time, data, onPress}) => {
+const Sadanis = ({flag, data, onPress}) => {
   return (
     <View>
-      {data.length ? (
+      {flag ? (
         <>
           <View style={styles.box}>
             <View>
@@ -21,7 +21,7 @@ const Sadanis = ({time, data, onPress}) => {
             <TouchableOpacity
               style={styles.changeButton}
               activeOpacity={1}
-              onPress={onPress}>
+              onPress={() => onPress('edit')}>
               <Text style={[FONTS.textBold12, {color: COLORS.lightBlue}]}>
                 Ganti
               </Text>

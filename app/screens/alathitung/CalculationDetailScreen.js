@@ -136,8 +136,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
                 IMT Anda adalah{' '}
                 <Text style={[FONTS.textBold18, {color: COLORS.blue}]}>
                   {data?.bmi.toFixed(2)}
-                </Text>{' '}
-                Kkal
+                </Text>
               </Text>
             ) : (
               <Text style={FONTS.textBold12}>

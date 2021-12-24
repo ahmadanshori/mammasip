@@ -6,11 +6,9 @@ import formatDate from '../../libs/formatDate';
 const SportItem = ({data}) => {
   const validationActivity = useMemo(() => {
     if (data?.level_olahraga === 1) {
-      return 'Tidak Olahraga / Ringan';
-    } else if (data?.level_olahraga === 2) {
       return 'Olahraga Sedang';
     } else {
-      return 'Olahraga Ringan';
+      return 'Olahraga Berat';
     }
   }, [data.level_olahraga]);
   return (
