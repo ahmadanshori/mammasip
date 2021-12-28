@@ -26,7 +26,6 @@ const SkriningJournalScreen = () => {
   const [isShow, setIsShow] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoad, setIsLoad] = useState(true);
-  const [isEdit, setIsEdit] = useState(false);
   const [error, setError] = useErrorHandler();
 
   useEffect(() => {
@@ -46,6 +45,7 @@ const SkriningJournalScreen = () => {
   const getInitialData = useCallback(async () => {
     try {
       const res = await getJournalSkriningAPI(token, user.id_user);
+
       let newData = [];
       res.data.data.marked_dates.map(item => {
         newData.push({
@@ -53,6 +53,7 @@ const SkriningJournalScreen = () => {
           dots: [
             {color: item.sadari && COLORS.red},
             {color: item.sadanis && COLORS.green},
+            {color: item.haid && COLORS.primary},
           ],
         });
       });
@@ -75,14 +76,22 @@ const SkriningJournalScreen = () => {
           ...event,
         };
         if (selected === 'sadari') {
-          if (isEdit) {
-            await updateSadariAPI(token, user.id_user, postData);
+          if (data?.sadari_flag) {
+            await updateSadariAPI(
+              token,
+              data?.jurnal_sadari_last[0]?.id_jurnal_sadari,
+              postData,
+            );
           } else {
             await createJournalSadariAPI(token, postData);
           }
         } else {
-          if (isEdit) {
-            await updateSadanisAPI(token, user.id_user, postData);
+          if (data?.sadanis_flag) {
+            await updateSadanisAPI(
+              token,
+              data?.jurnal_sadanis_last[0]?.id_jurnal_sadanis,
+              postData,
+            );
           } else {
             await createJournalSadanisAPI(token, postData);
           }
@@ -94,18 +103,9 @@ const SkriningJournalScreen = () => {
         setLoading(false);
       }
     },
-    [
-      token,
-      setLoading,
-      selected,
-      user.id_user,
-      isEdit,
-      setError,
-      getInitialData,
-    ],
+    [data, token, setLoading, selected, user.id_user, setError, getInitialData],
   );
-  const handleSkrining = (val, type) => {
-    setIsEdit(type);
+  const handleSkrining = val => {
     setSelected(val);
     setIsShow(true);
   };
@@ -145,38 +145,45 @@ const SkriningJournalScreen = () => {
               />
             </View>
             <View style={styles.row}>
-              <View style={[styles.dot, {marginRight: 16}]}>
+              <View style={styles.dot}>
+                <View style={styles.haid} />
+                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
+                  Haid
+                </Text>
+              </View>
+              <View style={[styles.dot, {marginHorizontal: 16}]}>
                 <View style={styles.sadari} />
                 <Text style={[FONTS.textBold12, {color: COLORS.red}]}>
-                  Sadari
+                  SADARI
                 </Text>
               </View>
               <View style={styles.dot}>
                 <View style={styles.sadanis} />
                 <Text style={[FONTS.textBold12, {color: COLORS.green}]}>
-                  Sadanis
+                  SADANIS
                 </Text>
               </View>
             </View>
           </View>
           <Divider />
           <View style={styles.wrapper}>
-            <Text style={[FONTS.textBold16, styles.margin8]}>Sadari</Text>
+            <Text style={[FONTS.textBold16, styles.margin8]}>SADARI</Text>
             <Text style={FONTS.text12}>Pemeriksaan Payudara Sendiri</Text>
             <Sadari
               data={data?.jurnal_sadari_last}
               flag={data?.sadari_flag}
-              onPress={val => handleSkrining('sadari', val)}
+              getInitialData={getInitialData}
+              onPress={() => handleSkrining('sadari')}
             />
           </View>
           <Divider />
           <View style={styles.wrapper}>
-            <Text style={[FONTS.textBold16, styles.margin8]}>Sadanis</Text>
+            <Text style={[FONTS.textBold16, styles.margin8]}>SADANIS</Text>
             <Text style={FONTS.text12}>Pemeriksaan Payudara Klinis</Text>
             <Sadanis
               data={data?.jurnal_sadanis_last}
               flag={data?.sadanis_flag}
-              onPress={val => handleSkrining('sadanis', val)}
+              onPress={() => handleSkrining('sadanis')}
             />
           </View>
         </ScrollView>
@@ -230,6 +237,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginRight: 4,
     backgroundColor: COLORS.green,
+  },
+  haid: {
+    height: 20,
+    width: 20,
+    borderRadius: 20,
+    marginRight: 4,
+    backgroundColor: COLORS.primary,
   },
   dot: {flexDirection: 'row', alignItems: 'center', marginTop: 16},
 });

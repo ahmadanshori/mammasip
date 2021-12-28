@@ -31,6 +31,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
   const [book, setBook] = useState([]);
   const [journal, setJournal] = useState([]);
   const [article, setArticle] = useState([]);
+  const [bookRecomendation, setBookRecomendation] = useState([]);
   const [video, setVideo] = useState([]);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [error, setError] = useErrorHandler();
@@ -39,7 +40,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
     getInitialData();
   }, []);
 
-  const getInitialData = async () => {
+  const getInitialData = useCallback(async () => {
     try {
       const res = await getRoomTypeByIdAPI(id);
       setRoomData(res.data.data);
@@ -52,13 +53,13 @@ const BungaRampaiScreen = ({navigation, route}) => {
       setJournal(resJournal.data.data.content);
       setArticle(resArticle.data.data.content);
       setVideo(resVideo.data.data.content);
-      setBook(resBookRecommendation.data.data.content);
+      setBookRecomendation(resBookRecommendation.data.data.content);
     } catch (e) {
       setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
-  };
+  }, [id, setError]);
 
   const onSeeAll = useCallback(
     (title, type) => {
@@ -103,11 +104,11 @@ const BungaRampaiScreen = ({navigation, route}) => {
     }
   }, []);
 
-  const handleRefresh = () => {
+  const handleRefresh = useCallback(() => {
     setError();
     setLoading(state => ({...state, refresh: true}));
     getInitialData();
-  };
+  }, [setError, getInitialData]);
 
   return (
     <Container>
@@ -278,7 +279,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
               </Text>
             </TouchableOpacity>
             <ScrollView horizontal showsHorizontalScrollIndicator={true}>
-              {book.map(item => (
+              {bookRecomendation.map(item => (
                 <BookItem
                   key={item.idBook}
                   title={item.nameBook}

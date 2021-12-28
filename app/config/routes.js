@@ -21,7 +21,12 @@ import {
   JournalScreen,
   ProfileScreen,
 } from '../screens/menu';
-import {LoginScreen, RegisterScreen, OtpScreen} from '../screens/auth';
+import {
+  LoginScreen,
+  RegisterScreen,
+  OtpScreen,
+  ForgotPasswordScreen,
+} from '../screens/auth';
 import {
   SportsJournalScreen,
   WeightJournalScreen,
@@ -229,6 +234,10 @@ export default function App() {
           <Stack.Screen component={LoginScreen} name="Login" />
           <Stack.Screen component={RegisterScreen} name="Register" />
           <Stack.Screen component={OtpScreen} name="Otp" />
+          <Stack.Screen
+            component={ForgotPasswordScreen}
+            name="ForgotPassword"
+          />
           <Stack.Screen
             component={ChangePasswordScreen}
             name="ChangePassword"

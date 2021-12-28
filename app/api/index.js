@@ -1,10 +1,9 @@
 import axios from 'axios';
-// import Config from 'react-native-config';
+import env from 'react-native-config';
 // import {navigate} from '../config/RootNavigation';
 
 const client = axios.create({
-  //   baseURL: `${Config.API_HOST}`,
-  baseURL: 'http://103.31.38.171:8200/core-mammasip',
+  baseURL: `${env.HOST}`,
   timeout: 10000,
 });
 export const headerOptions = {

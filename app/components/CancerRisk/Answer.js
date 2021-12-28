@@ -19,7 +19,7 @@ const Answer = ({data, imt, activity, onRefresh}) => {
         title="Apakah Anda merokok?"
         source={require('../../assets/images/roko.png')}
         isTrue={data.page1}
-        answer={data.page1 ? 'Iya' : 'Tidak'}
+        answer={data.page1 ? 'Tidak' : 'Iya'}
         condition={
           <Text style={styles.text}>
             Sebaiknya Sahabat MammaSIP {'\n'}- Jangan merokok. {'\n'}- Hindari

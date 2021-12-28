@@ -120,7 +120,8 @@ const WeightJournalScreen = ({navigation}) => {
                 <Text style={FONTS.text12}>Ideal</Text>
                 <View style={styles.row}>
                   <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
-                    {data?.jurnal_imt_ideal}
+                    {Math.round(data?.jurnal_imt_ideal)} -{' '}
+                    {Math.round(data?.jurnal_imt_ideal_next)}
                   </Text>
                   <Text
                     style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>

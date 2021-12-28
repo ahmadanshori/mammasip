@@ -8,13 +8,16 @@ import {
   ScrollView,
   Image,
   RefreshControl,
+  Linking,
+  Platform,
 } from 'react-native';
-
+import VersionCheck from 'react-native-version-check';
 import {HomeHeader} from '../../components/Headers';
 import Banner from '../../components/Banner';
 import {HomeItem} from '../../components/Items';
 import {MainButton} from '../../components/Buttons';
 import {LoadingComponent} from '../../components/Loadings';
+import {UpdateModal} from '../../components/Modals';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getRoomAPI} from '../../api/room';
 import {FONTS, COLORS, ICON, SIZES} from '../../constants';
@@ -25,9 +28,17 @@ const HomeScreen = ({navigation}) => {
   const {user, token} = useContext(AppContext);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [roomData, setRoomData] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [error, setError] = useErrorHandler();
 
   useEffect(() => {
+    // VersionCheck.getLatestVersion({
+    //   falserovider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+    // }).then(latestVersion => {
+    //   if (latestVersion !== VersionCheck.getCurrentVersion()) {
+    //     setIsUpdate(true);
+    //   }
+    // });
     getInitialData();
   }, []);
 
@@ -63,6 +74,10 @@ const HomeScreen = ({navigation}) => {
     setError();
     setLoading({get: false, refresh: true});
     getInitialData();
+  };
+
+  const hanldeUpdateGoogle = async () => {
+    await Linking.openURL('market://details?id=com.mammasip');
   };
 
   return (
@@ -124,8 +139,6 @@ const HomeScreen = ({navigation}) => {
                 key={item.id_ruang}
                 onPress={() => handleNavigator(item)}
                 colorId={item.flag_mobile_color}
-                // color={item.color}
-                // image={item.image}
               />
             ))}
             <View style={styles.aboutUsWrapper}>
@@ -146,7 +159,13 @@ const HomeScreen = ({navigation}) => {
 
             {!token ? (
               <View style={styles.footer}>
-                <Text style={FONTS.textBold24}>Lindungi diri dari kanker</Text>
+                <Text
+                  style={[
+                    FONTS.textBold24,
+                    {marginTop: 8, marginBottom: 32, textAlign: 'center'},
+                  ]}>
+                  Lindungi Diri dari Kanker Payudara
+                </Text>
                 <Text
                   style={[
                     FONTS.text14,
@@ -173,6 +192,7 @@ const HomeScreen = ({navigation}) => {
           </View>
         </ScrollView>
       )}
+      <UpdateModal visible={isUpdate} onPress={hanldeUpdateGoogle} />
       {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </View>

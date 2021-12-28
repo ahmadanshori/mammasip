@@ -19,31 +19,25 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 import formatDate from '../../libs/formatDate';
 import {AppContext} from '../../index';
 
+const initialData = {
+  email: '',
+  password: '',
+  confirmPassword: '',
+  phone: '',
+  first_name: '',
+  last_name: '',
+  gender: 1,
+  address: '',
+  tgl_lahir: '',
+};
+
 const RegisterScreen = ({navigation}) => {
-  const {user, setLoading} = useContext(AppContext);
-  const [field, setField] = useState({
-    email: '',
-    gateway_registered: '1',
-    created_by: '0',
-    username: '',
-    password: '',
-    confirmPassword: '',
-    phone: '',
-    role_id: '',
-    status_member: '',
-    tokenFCM: '',
-    first_name: '',
-    last_name: '',
-    gender: 1,
-    relegion: '',
-    address: '',
-    image_path: '',
-    tgl_lahir: '',
-  });
+  const {user, onesignalId, setLoading} = useContext(AppContext);
+  const [field, setField] = useState(initialData);
   const [error, setError] = useState(null);
   const [isCheck, setIsCheck] = useState(false);
   const [isDate, setIsDate] = useState(false);
-  const [date, setDate] = useState(null);
+  // const [date, setDate] = useState(null);
 
   const handleInput = (val, type) => {
     setField(state => ({...state, [type]: val}));
@@ -59,26 +53,37 @@ const RegisterScreen = ({navigation}) => {
   };
 
   const handleRegister = async () => {
-    dropdownalert.alertWithType('warn', '', 'Belum bisa, Masih Diproses!!');
-    // setError(null);
-    // if (field.password !== field.confirmPassword) {
-    //   setError('Password tidak sama');
-    // } else {
-    //   setLoading(true);
-    //   try {
-    //     const newData = {
-    //       ...field,
-    //       tgl_lahir: formatDate(field.tgl_lahir, 'yyyy-MM-dd'),
-    //     };
-    //     console.log(`newData`, newData);
-    //     const res = await registerAPI(newData);
-    //     console.log(`register`, res);
-    //   } catch (e) {
-    //     console.log(`e`, e, {...e});
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // }
+    setError(null);
+    if (field.password !== field.confirmPassword) {
+      setError('Password tidak sama');
+    } else {
+      setLoading(true);
+      try {
+        const newData = {
+          ...field,
+          gateway_registered: '1',
+          created_by: '0',
+          username: '',
+          role_id: '',
+          status_member: '',
+          relegion: '',
+          tokenFCM: onesignalId,
+          image_path: '',
+          tgl_lahir: formatDate(field.tgl_lahir, 'yyyy-MM-dd'),
+        };
+        const res = await registerAPI(newData);
+        if (res.data.status === '1') {
+          dropdownalert.alertWithType('success', '', res.data.message);
+          setField(initialData);
+        } else {
+          dropdownalert.alertWithType('error', '', res.data.message);
+        }
+      } catch (e) {
+        dropdownalert.alertWithType('error', '', e.data.message);
+      } finally {
+        setLoading(false);
+      }
+    }
   };
   return (
     <Container>
@@ -90,7 +95,7 @@ const RegisterScreen = ({navigation}) => {
             activeOpacity={SIZES.opacity}>
             <Icon name="arrow-back" size={22} color={COLORS.black} />
           </TouchableOpacity>
-          <View>
+          <View style={{flex: 1}}>
             <Text style={[FONTS.textBold24, {color: COLORS.primary}]}>
               Buat Akun Baru
             </Text>
@@ -99,14 +104,7 @@ const RegisterScreen = ({navigation}) => {
             </Text>
           </View>
         </View>
-        <TitleInput
-          title="Username"
-          placeholder="Username anda"
-          autoCapitalize="none"
-          onChangeText={val => handleInput(val, 'username')}
-          value={field.username}
-          maxLength={50}
-        />
+
         <TitleInput
           title="Email"
           placeholder="Email"
@@ -209,7 +207,6 @@ const RegisterScreen = ({navigation}) => {
             !field.password ||
             !field.confirmPassword ||
             !field.email ||
-            !field.username ||
             !field.first_name ||
             !field.tgl_lahir ||
             !field.phone ||

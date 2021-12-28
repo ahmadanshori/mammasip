@@ -106,7 +106,7 @@ const data = [
 const AboutUsScreen = () => {
   return (
     <View style={styles.container}>
-      <HeaderTitle back title="Tentang Kmi" />
+      <HeaderTitle back title="Tentang Kami" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
           <ICON.aboutus height={SIZES.width3} width={SIZES.width3} />
@@ -130,6 +130,15 @@ const AboutUsScreen = () => {
             berdasarkan penelitian ilmiah, referensi-referensi ilmiah, serta
             melibatkan pakar-pakar di bidang masing-masing, sehingga isinya
             dapat dipertanggungjawabkan kebenaran dan manfaatnya.
+          </Text>
+          <Text
+            style={[
+              FONTS.text12,
+              {color: COLORS.white, textAlign: 'center', marginTop: 24},
+            ]}>
+            Makna MammaSIP Mamma (kata benda) memiliki 2 arti: Ibu dan organ
+            wanita yang menghasilkan susu. S= Skrining I= Intervensi P=
+            Prevensi.
           </Text>
           <View style={styles.row}>
             <View style={styles.side} />

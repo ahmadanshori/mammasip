@@ -8,6 +8,7 @@ import bunga from '../assets/icons/bunga.svg';
 import imt from '../assets/icons/weight.svg';
 import bmr from '../assets/icons/food.svg';
 import virus from '../assets/icons/virus.svg';
+import question from '../assets/icons/question.svg';
 import girl from '../assets/icons/girl.svg';
 import messagePeople from '../assets/icons/messagePeople.svg';
 import success from '../assets/icons/success.svg';
@@ -31,6 +32,7 @@ export const ICON = {
   imt,
   bmr,
   virus,
+  question,
   girl,
   messagePeople,
   success,

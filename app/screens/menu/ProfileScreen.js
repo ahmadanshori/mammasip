@@ -1,23 +1,27 @@
-import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ToggleSwitch from 'toggle-switch-react-native';
+import React, {useContext} from 'react';
+import {View, StyleSheet, ScrollView, Linking} from 'react-native';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import ToggleSwitch from 'toggle-switch-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {Container} from '../../components/Container';
 import {ProfileHeader} from '../../components/Headers';
 import {ProfileItem} from '../../components/Items';
-import Point from '../../components/Point';
+// import Point from '../../components/Point';
 import Divider from '../../components/Divider';
-import {FONTS, COLORS} from '../../constants';
+// import {FONTS, COLORS} from '../../constants';
 import {AppContext} from '../../index';
 
 const ProfileScreen = ({navigation}) => {
   const {user, setToken, setUser} = useContext(AppContext);
-  const [isOn, setIsOn] = useState(true);
+  // const [isOn, setIsOn] = useState(true);
 
   const handleNavigate = type => {
     navigation.navigate(`${type}`);
+  };
+
+  const handleLink = async () => {
+    await Linking.openURL('http://103.31.38.171/term-condition');
   };
   const handleLogout = async () => {
     await AsyncStorage.clear();
@@ -80,11 +84,10 @@ const ProfileScreen = ({navigation}) => {
         <Divider />
         <View style={styles.wrapper}>
           <ProfileItem
-            iconName="comment-question-outline"
-            title="FAQ"
-            onPress={() => handleNavigate('Faq')}
+            iconName="ballot-outline"
+            title="Syarat & Ketentuan"
+            onPress={handleLink}
           />
-          <ProfileItem iconName="ballot-outline" title="Syarat & Ketentuan" />
           <ProfileItem
             iconName="exit-to-app"
             title="Keluar"

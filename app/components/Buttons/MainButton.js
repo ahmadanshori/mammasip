@@ -24,7 +24,7 @@ const MainButton = ({
     <TouchableOpacity
       activeOpacity={disable ? 1 : SIZES.opacity}
       style={containerStyles}
-      onPress={onPress}>
+      onPress={disable ? () => {} : onPress}>
       <View style={styles.wrapper}>
         {share ? (
           <Icon

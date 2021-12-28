@@ -19,3 +19,11 @@ export const uploaddFileAPI = (token, data) => {
 export const updateUserAPI = (token, id, data) => {
   return client.put(`/user/${id}`, data, createHeader(token));
 };
+
+export const updateTokenFCMAPI = (token, id, data) => {
+  return client.put(`/user/update_fcm/${id}`, data, createHeader(token));
+};
+
+export const forgotPassowrdAPI = email => {
+  return client.get(`/get_forgotpass/${email}`);
+};

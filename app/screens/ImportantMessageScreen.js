@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, ScrollView, FlatList} from 'react-native';
+import {StyleSheet, FlatList} from 'react-native';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 // import {TestimonialItem} from '../components/Items';

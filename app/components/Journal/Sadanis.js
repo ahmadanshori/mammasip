@@ -21,7 +21,7 @@ const Sadanis = ({flag, data, onPress}) => {
             <TouchableOpacity
               style={styles.changeButton}
               activeOpacity={1}
-              onPress={() => onPress('edit')}>
+              onPress={onPress}>
               <Text style={[FONTS.textBold12, {color: COLORS.lightBlue}]}>
                 Ganti
               </Text>

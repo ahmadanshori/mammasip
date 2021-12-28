@@ -15,6 +15,8 @@ export default id => {
     return COLORS.green;
   } else if (id === 7) {
     return COLORS.primary;
+  } else if (id === 8) {
+    return '#19B09E';
   } else {
     return COLORS.darkBlue;
   }

@@ -63,22 +63,16 @@ const CounselingListScreen = ({navigation, route}) => {
   }, []);
 
   const handleMedia = val => {
-    if (val.typeFile === 2) {
-      navigation.navigate('Video', {url: val.url_frame});
-    } else if (val.typeFile === 3) {
-      navigation.navigate('Pdf', {
-        link: val.url,
-      });
-    } else {
-      setSelected(val);
-      setIsDownload(true);
-    }
+    setSelected(val);
+    setIsDownload(true);
   };
 
   const onDownload = useCallback(() => {
     setIsDownload(false);
     if (selected.typeFile === 1) {
       handleDownload(selected.url, 'image/png');
+    } else if (selected.typeFile === 3) {
+      handleDownload(selected.url, 'application/pdf');
     } else if (selected.typeFile === 4) {
       handleDownload(
         selected.url,

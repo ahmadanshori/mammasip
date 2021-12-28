@@ -1,10 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import RenderHtml from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {COLORS, FONTS, SIZES} from '../../constants';
+import {COLORS, SIZES} from '../../constants';
 
 const VideoContent = ({data, onPress}) => {
+  const html = `<div style="color: #ffffff;">${data?.kata_pengantar}</div>`;
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -14,9 +16,14 @@ const VideoContent = ({data, onPress}) => {
           color={COLORS.white}
           style={styles.margin}
         />
-        <Text style={[FONTS.text10, {color: COLORS.white, flex: 1}]}>
-          {data?.kata_pengantar}
-        </Text>
+        <View style={{flex: 1}}>
+          <RenderHtml
+            contentWidth={SIZES.width}
+            source={{
+              html: html,
+            }}
+          />
+        </View>
         {data.flag_important === 1 && (
           <Image
             resizeMode="contain"
@@ -63,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
     backgroundColor: COLORS.primary,
-    padding: 6,
+    padding: 8,
     borderRadius: 6,
     width: '100%',
   },

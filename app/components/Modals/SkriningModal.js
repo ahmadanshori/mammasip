@@ -113,7 +113,9 @@ const SkriningModal = ({onClose, onAddPress, selected}) => {
         <TitleButton
           title={
             selected === 'sadari'
-              ? 'Hari pertama haid bulan ini'
+              ? activity === 'Rutin Menstruasi'
+                ? 'Hari pertama haid bulan ini'
+                : 'Tanggal yang Anda pilih untuk melakukan SADARI tiap bulan'
               : 'Hari terakhir anda melakukan SADANIS'
           }
           placeholder={formatDate(new Date())}

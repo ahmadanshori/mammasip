@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {VictoryBar, VictoryChart, VictoryTheme} from 'victory-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -133,7 +133,20 @@ const SportsJournalScreen = () => {
                 <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
               </TouchableOpacity>
             </View>
-
+            <View style={styles.pengingat}>
+              <MaterialCommunityIcons
+                name={'alert-circle'}
+                size={20}
+                color={COLORS.darkBlue}
+              />
+              <Text style={[FONTS.text12, {flex: 1, marginLeft: 12}]}>
+                Sahabat Mammasip dalam seminggu sebaiknya berolahraga selama{' '}
+                <Text style={FONTS.textBold12}>150 </Text>
+                menit untuk olahraga sedang, dan{' '}
+                <Text style={FONTS.textBold12}>75 </Text> menit untuk olahraga
+                berat.
+              </Text>
+            </View>
             <View style={styles.row}>
               <View style={styles.margin}>
                 <Text
@@ -207,6 +220,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   row: {flexDirection: 'row', alignItems: 'center'},
+  pengingat: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F2F6FF',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 6,
+    marginTop: 24,
+  },
   margin: {
     marginLeft: -16,
     marginRight: -16,

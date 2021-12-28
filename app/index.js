@@ -13,6 +13,7 @@ export default () => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [onesignalId, setOnesignalId] = useState(null);
 
   const OneSignalDevice = async () => {
     OneSignal.setLogLevel(6, 0);
@@ -20,16 +21,13 @@ export default () => {
     OneSignal.setNotificationWillShowInForegroundHandler(
       notificationReceivedEvent => {
         let notification = notificationReceivedEvent.getNotification();
-        // console.log('notification: ', notification);
         // const data = notification.additionalData;
-        // console.log('additionalData: ', data);
-        // Complete with null means don't show a notification.
         notificationReceivedEvent.complete(notification);
       },
     );
     // OneSignal.setInAppMessageClickHandler(event => {});
     OneSignal.setNotificationOpenedHandler(async openedEvent => {
-      const {notification} = openedEvent;
+      // const {notification} = openedEvent;
       // setOnesignalClick(notification.additionalData?.id);
       // await Linking.openURL(
       //   `staging.bukujanji://notification/${notification.additionalData.id}`,
@@ -40,8 +38,7 @@ export default () => {
     // OneSignal.addSubscriptionObserver(event => {});
     // OneSignal.addEmailSubscriptionObserver(event => {});
     const onesignalUser = await OneSignal.getDeviceState();
-    // console.log(`onesignalUser`, onesignalUser);
-    // setOneSignalData(onesignalUser.userId);
+    setOnesignalId(onesignalUser.userId);
   };
   useEffect(() => {
     SplashScreen.hide();
@@ -57,6 +54,7 @@ export default () => {
             token,
             setUser,
             user,
+            onesignalId,
           }}>
           <StatusBar
             backgroundColor={COLORS.primary}

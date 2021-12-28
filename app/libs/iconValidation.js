@@ -15,6 +15,8 @@ export default id => {
     return <ICON.gerbang height={90} width={90} />;
   } else if (id === 7) {
     return <ICON.bunga height={90} width={90} />;
+  } else if (id === 8) {
+    return <ICON.question height={90} width={90} />;
   } else {
     return <ICON.sayangi height={90} width={90} />;
   }

@@ -38,3 +38,7 @@ export const updateSadariAPI = (token, id, data) => {
 export const updateSadanisAPI = (token, id, data) => {
   return client.put(`/jurnal_sadanis/${id}`, data, createHeader(token));
 };
+
+export const updateSadariDoneAPI = (token, id, data) => {
+  return client.put(`/jurnal_sadari/done/${id}`, data, createHeader(token));
+};

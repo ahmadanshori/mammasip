@@ -64,7 +64,7 @@ const MealSuggestions = ({data}) => {
           <Feather name="sunrise" size={16} color={COLORS.red} />
           <Text
             style={[FONTS.textBold12, {color: COLORS.black, marginLeft: 10}]}>
-            Sarapan Pagi
+            Sarapan
           </Text>
         </View>
         <View style={styles.row}>
@@ -84,20 +84,25 @@ const MealSuggestions = ({data}) => {
           calories="320"
         />
       ))}
-      {data[day.field]?.selinganPagi?.map(item => (
-        <MealItem
-          key={item.id_makanan}
-          name={item.nama_makanan}
-          ingredients={item.bahan}
-          calories="320"
-        />
-      ))}
+      <View style={styles.selingan}>
+        <Text style={[FONTS.textBold12, styles.selinganText]}>
+          Selingan Pagi
+        </Text>
+        {data[day.field]?.selinganPagi?.map(item => (
+          <MealItem
+            key={item.id_makanan}
+            name={item.nama_makanan}
+            ingredients={item.bahan}
+            calories="320"
+          />
+        ))}
+      </View>
       <View style={styles.wrapper}>
         <View style={styles.row}>
           <Feather name="sun" size={16} color={COLORS.darkYellow} />
           <Text
             style={[FONTS.textBold12, {color: COLORS.black, marginLeft: 10}]}>
-            Sarapan Siang
+            Makan Siang
           </Text>
         </View>
         <View style={styles.row}>
@@ -118,20 +123,25 @@ const MealSuggestions = ({data}) => {
           calories="320"
         />
       ))}
-      {data[day.field]?.selinganSiang?.map(item => (
-        <MealItem
-          key={item.id_makanan}
-          name={item.nama_makanan}
-          ingredients={item.bahan}
-          calories="320"
-        />
-      ))}
+      <View style={styles.selingan}>
+        <Text style={[FONTS.textBold12, styles.selinganText]}>
+          Selingan Siang
+        </Text>
+        {data[day.field]?.selinganSiang?.map(item => (
+          <MealItem
+            key={item.id_makanan}
+            name={item.nama_makanan}
+            ingredients={item.bahan}
+            calories="320"
+          />
+        ))}
+      </View>
       <View style={styles.wrapper}>
         <View style={styles.row}>
           <Feather name="moon" size={16} color={COLORS.primary} />
           <Text
             style={[FONTS.textBold12, {color: COLORS.black, marginLeft: 10}]}>
-            Sarapan Malam
+            Makan Malam
           </Text>
         </View>
         <View style={styles.row}>
@@ -152,14 +162,19 @@ const MealSuggestions = ({data}) => {
           calories="320"
         />
       ))}
-      {data[day.field]?.selinganMalam?.map(item => (
-        <MealItem
-          key={item.id_makanan}
-          name={item.nama_makanan}
-          ingredients={item.bahan}
-          calories="320"
-        />
-      ))}
+      <View style={styles.selingan}>
+        <Text style={[FONTS.textBold12, styles.selinganText]}>
+          Selingan Pagi
+        </Text>
+        {data[day.field]?.selinganMalam?.map(item => (
+          <MealItem
+            key={item.id_makanan}
+            name={item.nama_makanan}
+            ingredients={item.bahan}
+            calories="320"
+          />
+        ))}
+      </View>
       <View style={styles.justify}>
         <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
           Total Kalori
@@ -198,6 +213,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginTop: 24,
   },
+  selingan: {paddingLeft: 16, paddingTop: 16},
+  selinganText: {color: COLORS.secondary, marginBottom: 6},
   justify: {
     flexDirection: 'row',
     alignItems: 'center',
