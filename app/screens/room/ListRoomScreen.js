@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useContext} from 'react';
 import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
@@ -7,9 +7,11 @@ import {RoomItem} from '../../components/Items';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getRoomTypeByIdAPI} from '../../api/room';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const ListRoomScreen = ({route, navigation}) => {
   const {id} = route.params;
+  const {token} = useContext(AppContext);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [error, setError] = useErrorHandler();
@@ -19,7 +21,7 @@ const ListRoomScreen = ({route, navigation}) => {
   }, []);
   const getInitialData = async () => {
     try {
-      const res = await getRoomTypeByIdAPI(id);
+      const res = await getRoomTypeByIdAPI(id, token);
       setData(res.data.data);
     } catch (e) {
       setError(e);

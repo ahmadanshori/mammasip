@@ -23,7 +23,11 @@ const BookItem = ({
       {isImage ? (
         <>
           {source ? (
-            <Image source={{uri: source}} style={styles.img} />
+            <Image
+              source={{uri: source}}
+              style={styles.img}
+              resizeMode="contain"
+            />
           ) : (
             <View style={[styles.img, {backgroundColor: COLORS.lightGray}]}>
               <Icon

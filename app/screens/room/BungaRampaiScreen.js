@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -24,9 +24,11 @@ import {getArticleAPI} from '../../api/article';
 import {getRoomTypeByIdAPI, getBookAPI, getVideoPageAPI} from '../../api/room';
 import {COLORS, FONTS} from '../../constants';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const BungaRampaiScreen = ({navigation, route}) => {
   const {id} = route.params;
+  const {token} = useContext(AppContext);
   const [roomData, setRoomData] = useState(null);
   const [book, setBook] = useState([]);
   const [journal, setJournal] = useState([]);
@@ -42,7 +44,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
 
   const getInitialData = useCallback(async () => {
     try {
-      const res = await getRoomTypeByIdAPI(id);
+      const res = await getRoomTypeByIdAPI(id, token);
       setRoomData(res.data.data);
       const resBook = await getBookAPI(1, 0, 5);
       const resJournal = await getBookAPI(2, 0, 5);

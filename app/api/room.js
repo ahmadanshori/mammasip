@@ -1,4 +1,4 @@
-import {client} from './';
+import {client, createHeader} from './';
 
 export const getArticleByRoomAPI = (idRuang, page) => {
   return client.get(
@@ -10,8 +10,8 @@ export const getRoomAPI = () => {
   return client.get('/ruang-master/utama');
 };
 
-export const getRoomTypeByIdAPI = idRuang => {
-  return client.get(`/ruang-master/${idRuang}`);
+export const getRoomTypeByIdAPI = (idRuang, token = '') => {
+  return client.get(`/ruang-master/${idRuang}`, createHeader(token));
 };
 
 export const getRoomByParentAPI = idRuang => {

@@ -41,7 +41,7 @@ const KnowYourSelfScreen = ({route, navigation}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getRoomTypeByIdAPI(id);
+      const res = await getRoomTypeByIdAPI(id, token);
       const resVideo1 = await getVideoAPI(1);
       const resVideo2 = await getVideoAPI(2);
       const resHealtyCalories = await getHealtyCaloriesAPI();

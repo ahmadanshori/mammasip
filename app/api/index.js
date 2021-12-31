@@ -1,6 +1,5 @@
 import axios from 'axios';
 import env from 'react-native-config';
-// import {navigate} from '../config/RootNavigation';
 
 const client = axios.create({
   baseURL: `${env.HOST}`,
@@ -44,11 +43,11 @@ const createHeaderNonAuthorization = () => {
   };
 };
 
-// client.interceptors.response.use(undefined, (err) => {
+// client.interceptors.response.use(undefined, async err => {
 //   const error = err.response;
 //   if (error && error.status === 401) {
-//     AsyncStorage.clear();
-//     navigate('Login');
+//     await AsyncStorage.clear();
+//     return navigate('Login');
 //   }
 //   throw err;
 // });

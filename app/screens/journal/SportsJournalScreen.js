@@ -12,7 +12,6 @@ import {VictoryBar, VictoryChart, VictoryTheme} from 'victory-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {Container} from '../../components/Container';
-
 import {HeaderTitle} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import {SportItem} from '../../components/Journal';
@@ -60,14 +59,19 @@ const SportsJournalScreen = () => {
       setIsActivity(false);
       setLoading(true);
       try {
-        const newData = {
+        const postData = {
           id_user: user?.id_user,
           lama_berolahraga: value.time,
           level_olahraga: value.activity,
         };
-        await createJournalSportAPI(token, newData);
+        // await createJournalSportAPI(token, postData);
+        await createJournalSportAPI('token', postData);
         const res = await getJournalSportAPI(token, user.id_user);
-        setJournalData(res.data.data);
+        let newData = [];
+        res.data.data.jurnal_olahraga_last.map(item => {
+          newData.push({...item, date: formatDate(item.created_date, 'dd/MM')});
+        });
+        setJournalData({...res.data.data, jurnal_olahraga_last: newData});
       } catch (e) {
         setError(e);
       } finally {
@@ -147,32 +151,40 @@ const SportsJournalScreen = () => {
                 berat.
               </Text>
             </View>
-            <View style={styles.row}>
-              <View style={styles.margin}>
-                <Text
-                  style={[FONTS.textBold12, {transform: [{rotate: '270deg'}]}]}>
-                  Menit
-                </Text>
-              </View>
-              <VictoryChart
-                width={SIZES.width}
-                theme={VictoryTheme.material}
-                domainPadding={10}>
-                <VictoryBar
-                  data={journalData?.jurnal_olahraga_last.reverse()}
-                  x="date"
-                  y="lama_berolahraga"
-                  // cornerRadius={{topLeft: data => console.log(`datum`, data)}}
-                  style={{data: {fill: COLORS.secondary}}}
-                />
-              </VictoryChart>
-            </View>
-            <Text style={[FONTS.textBold12, styles.tanggal]}>Tanggal</Text>
-            <View style={styles.history}>
-              {journalData?.jurnal_olahraga_last.map(item => (
-                <SportItem key={item.id_jurnal_olahraga} data={item} />
-              ))}
-            </View>
+            {journalData.jurnal_olahraga_last.length ? (
+              <>
+                <View style={styles.row}>
+                  <View style={styles.margin}>
+                    <Text
+                      style={[
+                        FONTS.textBold12,
+                        {transform: [{rotate: '270deg'}]},
+                      ]}>
+                      Menit
+                    </Text>
+                  </View>
+                  <VictoryChart
+                    width={SIZES.width}
+                    theme={VictoryTheme.material}
+                    domainPadding={10}>
+                    <VictoryBar
+                      data={journalData?.jurnal_olahraga_last.reverse()}
+                      x="date"
+                      y="lama_berolahraga"
+                      // cornerRadius={{topLeft: data => console.log(`datum`, data)}}
+                      style={{data: {fill: COLORS.secondary}}}
+                    />
+                  </VictoryChart>
+                </View>
+                <Text style={[FONTS.textBold12, styles.tanggal]}>Tanggal</Text>
+                <View style={styles.history}>
+                  {journalData?.jurnal_olahraga_last.map(item => (
+                    <SportItem key={item.id_jurnal_olahraga} data={item} />
+                  ))}
+                </View>
+              </>
+            ) : null}
+
             {/* <Reminder
             onPress={() => setIsReminder(true)}
             time={time}

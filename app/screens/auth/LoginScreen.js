@@ -3,12 +3,16 @@ import {
   View,
   Text,
   StyleSheet,
-  // Image,
-  // TouchableNativeFeedback,
+  Image,
+  TouchableNativeFeedback,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import OneSignal from 'react-native-onesignal';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import env from 'react-native-config';
@@ -17,9 +21,14 @@ import {TitleInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
 import {dropdownalert} from '../../components/AlertProvider';
 
-import {loginAPI, updateTokenFCMAPI} from '../../api/auth';
+import {loginAPI, updateTokenFCMAPI, loginGoogleAPI} from '../../api/auth';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {AppContext} from '../../index';
+
+GoogleSignin.configure({
+  webClientId: env.GOOGLEID,
+  offlineAccess: false,
+});
 
 const LoginScreen = ({navigation, route}) => {
   const {setLoading, setUser, setToken} = useContext(AppContext);
@@ -62,6 +71,49 @@ const LoginScreen = ({navigation, route}) => {
   const handleInput = (val, type) => {
     setField(state => ({...state, [type]: val}));
   };
+
+  // const handleGoogleSignin = async () => {
+  //   if (onesignalId) {
+  //     setLoading(true);
+  //     try {
+  //       await GoogleSignin.hasPlayServices();
+  //       const userInfo = await GoogleSignin.signIn();
+  //       // console.log(`userInfo`, userInfo);
+  //       const postData = {
+  //         email: userInfo.user.email,
+  //         device: 'mobile',
+  //         ip_address: '-',
+  //         tokenFCM: onesignalId,
+  //       };
+  //       const res = await loginGoogleAPI(postData);
+  //       // console.log(`res`, res);
+  //       if (res.data.status === '2') {
+  //         setError(res.data.message);
+  //       } else {
+  //       }
+  //     } catch (err) {
+  //       // console.log(`err`, err);
+  //       if (err.code === statusCodes.SIGN_IN_CANCELLED) {
+  //         // user cancelled the login flow
+  //       } else if (err.code === statusCodes.IN_PROGRESS) {
+  //         // operation (e.g. sign in) is in progress already
+  //       } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //         // play services not available or outdated
+  //       } else {
+  //         // some other error happened
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   } else {
+  //     OneSignalDevice();
+  //     return dropdownalert.alertWithType(
+  //       'warn',
+  //       '',
+  //       'Silahkan login kembali..',
+  //     );
+  //   }
+  // };
 
   const handleLogin = async () => {
     if (onesignalId) {
@@ -119,14 +171,7 @@ const LoginScreen = ({navigation, route}) => {
             </Text>
           </View>
         </View>
-        {/* <TouchableNativeFeedback
-          onPress={() =>
-            dropdownalert.alertWithType(
-              'warn',
-              '',
-              'Belum bisa, Masih Diproses!!',
-            )
-          }>
+        {/* <TouchableNativeFeedback onPress={handleGoogleSignin}>
           <View style={styles.authButton}>
             <Image
               source={require('../../assets/icons/google.png')}

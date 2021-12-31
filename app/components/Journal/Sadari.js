@@ -39,9 +39,7 @@ const Sadari = ({data, flag, onPress, getInitialData}) => {
               <View>
                 <Text style={FONTS.text12}>Kondisi</Text>
                 <Text style={[FONTS.textBold14, {color: COLORS.primary}]}>
-                  {data[0].status_teratur === 1
-                    ? 'Rutin Menstruasi'
-                    : 'Menopause'}
+                  {data[0].status_teratur === 1 ? 'Rutin Haid' : 'Menopause'}
                 </Text>
               </View>
               {!data[0].tanggal_sadari ? (
@@ -53,7 +51,12 @@ const Sadari = ({data, flag, onPress, getInitialData}) => {
               ) : null}
             </View>
             <View style={styles.marginTop}>
-              <Text style={FONTS.text12}>Tanggal SADARI</Text>
+              <Text style={FONTS.text12}>
+                Tanggal{' '}
+                {data[0].status_teratur === 1
+                  ? 'Haid Pertama'
+                  : 'Pengingat SADARI'}
+              </Text>
               <Text style={[FONTS.textBold14, {color: COLORS.primary}]}>
                 {formatDate(data[0].tgl_pertama_haid)}
               </Text>
@@ -61,12 +64,6 @@ const Sadari = ({data, flag, onPress, getInitialData}) => {
           </View>
           {data[0].tanggal_sadari ? (
             <View>
-              <View style={styles.box}>
-                <Text style={FONTS.text12}>Tanggal SADARI</Text>
-                <Text style={[FONTS.textBold14, {color: COLORS.primary}]}>
-                  {formatDate(data[0].tanggal_sadari)}
-                </Text>
-              </View>
               <View style={styles.hebatBox}>
                 <View style={styles.hebat}>
                   <View style={styles.icon}>

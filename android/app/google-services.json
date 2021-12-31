@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "502934781169",
-    "project_id": "mammasip-59779",
-    "storage_bucket": "mammasip-59779.appspot.com"
+    "project_number": "395076624382",
+    "project_id": "mammasip-89620",
+    "storage_bucket": "mammasip-89620.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:502934781169:android:439f4b82772bb014397d50",
+        "mobilesdk_app_id": "1:395076624382:android:b1cc3d3fb09be965e3aaaf",
         "android_client_info": {
           "package_name": "com.mammasip"
         }
       },
       "oauth_client": [
         {
-          "client_id": "502934781169-siukbr13jf3ve7qnlu3k2lvrkqkffkek.apps.googleusercontent.com",
+          "client_id": "395076624382-emuftong9ul9ccr9cntgg7p7lea15e31.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAl73-6RwcXwCa8FEnU2lJzyt7gdk09xYI"
+          "current_key": "AIzaSyD952JTfWrdbFfpOe3ooo319xRUMJEt5G4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "502934781169-siukbr13jf3ve7qnlu3k2lvrkqkffkek.apps.googleusercontent.com",
+              "client_id": "395076624382-emuftong9ul9ccr9cntgg7p7lea15e31.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

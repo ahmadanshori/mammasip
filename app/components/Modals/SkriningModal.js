@@ -7,7 +7,7 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
 const SkriningModal = ({onClose, onAddPress, selected}) => {
-  const [activity, setActivity] = useState('Rutin Menstruasi');
+  const [activity, setActivity] = useState('Rutin Haid');
   const [isDate, setIsDate] = useState(false);
   const [date, setDate] = useState('');
 
@@ -26,7 +26,7 @@ const SkriningModal = ({onClose, onAddPress, selected}) => {
       if (selected === 'sadari') {
         onAddPress({
           tgl_pertama_haid: formatDate(date, 'yyyy-MM-dd 	kk:mm:ss'),
-          status_teratur: activity === 'Rutin Menstruasi' ? '1' : '2',
+          status_teratur: activity === 'Rutin Haid' ? '1' : '2',
         });
       } else {
         onAddPress({
@@ -60,31 +60,27 @@ const SkriningModal = ({onClose, onAddPress, selected}) => {
         {selected === 'sadari' ? (
           <>
             <View style={styles.justify}>
-              <Text style={FONTS.textBold12}>
-                Apakah Anda rutin menstruasi ?
-              </Text>
+              <Text style={FONTS.textBold12}>Apakah Anda rutin haid ?</Text>
             </View>
             <View style={styles.buttonWrapper}>
               <TouchableOpacity
-                activeOpacity={
-                  activity === 'Rutin Menstruasi' ? 1 : SIZES.opacity
-                }
-                onPress={() => handleActivity('Rutin Menstruasi')}
+                activeOpacity={activity === 'Rutin Haid' ? 1 : SIZES.opacity}
+                onPress={() => handleActivity('Rutin Haid')}
                 style={[
                   styles.button,
-                  activity === 'Rutin Menstruasi' && styles.active,
+                  activity === 'Rutin Haid' && styles.active,
                 ]}>
                 <Text
                   style={[
                     FONTS.text14,
                     {
                       color:
-                        activity === 'Rutin Menstruasi'
+                        activity === 'Rutin Haid'
                           ? COLORS.primary
                           : COLORS.black,
                     },
                   ]}>
-                  Rutin Menstruasi
+                  Rutin Haid
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -113,7 +109,7 @@ const SkriningModal = ({onClose, onAddPress, selected}) => {
         <TitleButton
           title={
             selected === 'sadari'
-              ? activity === 'Rutin Menstruasi'
+              ? activity === 'Rutin Haid'
                 ? 'Hari pertama haid bulan ini'
                 : 'Tanggal yang Anda pilih untuk melakukan SADARI tiap bulan'
               : 'Hari terakhir anda melakukan SADANIS'

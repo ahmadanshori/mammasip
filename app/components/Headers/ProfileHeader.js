@@ -16,7 +16,18 @@ const ProfileHeader = ({data, onEdit}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.imgWrapper}>
-        <Image source={{uri: data?.image_path}} style={styles.img} />
+        {data?.image_path ? (
+          <Image source={{uri: data?.image_path}} style={styles.img} />
+        ) : (
+          <View style={[styles.img, {backgroundColor: COLORS.lightGray}]}>
+            <Ionicons
+              name="image-outline"
+              size={SIZES.width5 - 26}
+              color={COLORS.gray}
+            />
+          </View>
+        )}
+
         <Text style={[FONTS.textBold16, {color: COLORS.white}]}>
           {data?.first_name} {data?.last_name}
         </Text>
@@ -79,6 +90,8 @@ const styles = StyleSheet.create({
     width: SIZES.width4,
     borderRadius: SIZES.width4,
     marginBottom: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   row: {
     flexDirection: 'row',

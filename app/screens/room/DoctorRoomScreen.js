@@ -1,10 +1,11 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useContext} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableNativeFeedback,
+  RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {BackgroundHeader} from '../../components/Headers';
@@ -12,23 +13,28 @@ import {LoadingComponent} from '../../components/Loadings';
 import {Container} from '../../components/Container';
 import {RoomItem} from '../../components/Items';
 import ImportantMessage from '../../components/ImportantMessage';
+import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getRoomTypeByIdAPI} from '../../api/room';
 import {COLORS, FONTS} from '../../constants';
+import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const DoctorRooomScreen = ({route, navigation}) => {
   const {id} = route.params;
+  const {token} = useContext(AppContext);
   const [doctorData, setDoctorData] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
+  const [error, setError] = useErrorHandler();
 
   useEffect(() => {
     getInitialData();
   }, []);
   const getInitialData = async () => {
     try {
-      const res = await getRoomTypeByIdAPI(id);
+      const res = await getRoomTypeByIdAPI(id, token);
       setDoctorData(res.data.data);
     } catch (e) {
-      // console.log('e', e);
+      setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
@@ -39,13 +45,24 @@ const DoctorRooomScreen = ({route, navigation}) => {
     },
     [navigation],
   );
-
+  const handleRefresh = () => {
+    setError();
+    setLoading(state => ({...state, refresh: true}));
+    getInitialData();
+  };
   return (
     <Container>
       {loading.get ? (
         <LoadingComponent />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              onRefresh={handleRefresh}
+              refreshing={loading.refresh}
+            />
+          }>
           <BackgroundHeader
             title={doctorData?.nama_ruang}
             desc={doctorData?.description}
@@ -90,6 +107,8 @@ const DoctorRooomScreen = ({route, navigation}) => {
           </View>
         </ScrollView>
       )}
+      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };

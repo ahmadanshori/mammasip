@@ -40,7 +40,7 @@ const data = [
   },
   {
     id: 7,
-    name: 'Dr. Zulhijrian Noor',
+    name: 'dr. Zulhijrian Noor',
     name2: 'dr. Ripandi Yuspa',
     name3: 'dr. Shafira Diani Putri',
     job: 'Pakar/Praktisi Kedokteran Umum dan Penyuluhan',
@@ -99,7 +99,7 @@ const data = [
     id: 19,
     name: 'Kania Indriani Rosep',
     name2: 'Faris Nabhan Fahri',
-    job: 'Illustrator',
+    job: 'Ilustrator',
   },
 ];
 
@@ -132,14 +132,22 @@ const AboutUsScreen = () => {
             dapat dipertanggungjawabkan kebenaran dan manfaatnya.
           </Text>
           <Text
+            style={[FONTS.textBold18, {color: COLORS.white, marginTop: 40}]}>
+            Makna MammaSIP
+          </Text>
+          <Text
             style={[
               FONTS.text12,
               {color: COLORS.white, textAlign: 'center', marginTop: 24},
             ]}>
-            Makna MammaSIP Mamma (kata benda) memiliki 2 arti: Ibu dan organ
-            wanita yang menghasilkan susu. S= Skrining I= Intervensi P=
-            Prevensi.
+            Mamma (kata benda) memiliki 2 arti: Ibu dan organ wanita yang
+            menghasilkan susu.
           </Text>
+          <Text
+            style={[FONTS.text12, {color: COLORS.white, textAlign: 'center'}]}>
+            S= Skrining; I= Intervensi; P= Prevensi.
+          </Text>
+
           <View style={styles.row}>
             <View style={styles.side} />
             <View style={styles.text}>

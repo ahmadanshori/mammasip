@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {Container} from '../../components/Container';
 import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
@@ -17,11 +18,13 @@ import DownloadModal from '../../components/Modals/DownloadModal';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getCounselingByIdAPI} from '../../api/penyuluhan';
 import {getRoomTypeByIdAPI} from '../../api/room';
-import {COLORS, FONTS} from '../../constants';
+import {COLORS, FONTS, SIZES} from '../../constants';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const CounselingScreen = ({navigation, route}) => {
   const {id} = route.params;
+  const {token} = useContext(AppContext);
   const [roomData, setRoomData] = useState(null);
   const [browserData, setBrowserData] = useState([]);
   const [powerpointData, setPowerpointData] = useState([]);
@@ -37,11 +40,11 @@ const CounselingScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getRoomTypeByIdAPI(id);
+      const res = await getRoomTypeByIdAPI(id, token);
       setRoomData(res.data.data);
-      const resBrowser = await getCounselingByIdAPI(1);
+      const resBrowser = await getCounselingByIdAPI(1, 0, 2);
       const resPowerpoint = await getCounselingByIdAPI(2);
-      const resPoster = await getCounselingByIdAPI(3);
+      const resPoster = await getCounselingByIdAPI(3, 0, 2);
       setBrowserData(resBrowser.data.data.content);
       setPowerpointData(resPowerpoint.data.data.content);
       setPosterData(resPoster.data.data.content);
@@ -137,11 +140,11 @@ const CounselingScreen = ({navigation, route}) => {
                 onPress={() => onSeeAll(1)}
                 activeOpacity={1}>
                 <Text style={FONTS.textBold14}>Flyer</Text>
-                <Text style={[FONTS.text12, {color: COLORS.primary}]}>
+                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              <ScrollView horizontal>
+              <View style={styles.row}>
                 {browserData.map(item => (
                   <ArticleItem
                     key={item.idPenyuluhan}
@@ -151,7 +154,20 @@ const CounselingScreen = ({navigation, route}) => {
                     onPress={() => handleMedia(item.media[0])}
                   />
                 ))}
-              </ScrollView>
+                <TouchableOpacity
+                  style={styles.seeAll}
+                  activeOpacity={SIZES.opacity}
+                  onPress={() => onSeeAll(1)}>
+                  <Icon name="rightcircle" size={26} color={COLORS.primary} />
+                  <Text
+                    style={[
+                      FONTS.textBold10,
+                      {color: COLORS.primary, marginTop: 8},
+                    ]}>
+                    Lihat Semua
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
                 style={styles.header}
                 onPress={() => onSeeAll(2)}
@@ -179,7 +195,7 @@ const CounselingScreen = ({navigation, route}) => {
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              <ScrollView horizontal>
+              <View style={styles.row}>
                 {posterData.map(item => (
                   <ArticleItem
                     key={item.idPenyuluhan}
@@ -190,7 +206,20 @@ const CounselingScreen = ({navigation, route}) => {
                     onPress={() => handleMedia(item.media[0])}
                   />
                 ))}
-              </ScrollView>
+                <TouchableOpacity
+                  style={styles.seeAll}
+                  activeOpacity={SIZES.opacity}
+                  onPress={() => onSeeAll(3)}>
+                  <Icon name="rightcircle" size={26} color={COLORS.primary} />
+                  <Text
+                    style={[
+                      FONTS.textBold10,
+                      {color: COLORS.primary, marginTop: 8},
+                    ]}>
+                    Lihat Semua
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </ScrollView>
@@ -210,6 +239,16 @@ const CounselingScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
   margin: {padding: 16},
   body: {marginTop: 24},
+  seeAll: {
+    borderWidth: 1,
+    borderColor: COLORS.gray,
+    borderRadius: 6,
+    flex: 1,
+    height: SIZES.width3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  row: {flexDirection: 'row'},
   header: {
     flexDirection: 'row',
     alignItems: 'center',

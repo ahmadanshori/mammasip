@@ -4,6 +4,8 @@ export const loginAPI = data => {
   return client.post('/auth', data);
 };
 
+export const loginGoogleAPI = data => client.post('/auth_google', data);
+
 export const registerAPI = data => {
   return client.post('/register', data);
 };
