@@ -68,7 +68,7 @@ const CaloriesScreen = ({navigation}) => {
             </Text>
             <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
               Analisa risiko kanker berdasarkan gaya hidup anda. Hasil hanya
-              bersifat saran & tetap membutuhkan nasehat dokter untuk hasil yg
+              bersifat saran & tetap membutuhkan nasehat dokter untuk hasil yang
               maksimal.
             </Text>
           </View>

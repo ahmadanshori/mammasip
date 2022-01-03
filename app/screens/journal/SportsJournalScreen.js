@@ -64,8 +64,7 @@ const SportsJournalScreen = () => {
           lama_berolahraga: value.time,
           level_olahraga: value.activity,
         };
-        // await createJournalSportAPI(token, postData);
-        await createJournalSportAPI('token', postData);
+        await createJournalSportAPI(token, postData);
         const res = await getJournalSportAPI(token, user.id_user);
         let newData = [];
         res.data.data.jurnal_olahraga_last.map(item => {
@@ -144,7 +143,7 @@ const SportsJournalScreen = () => {
                 color={COLORS.darkBlue}
               />
               <Text style={[FONTS.text12, {flex: 1, marginLeft: 12}]}>
-                Sahabat Mammasip dalam seminggu sebaiknya berolahraga selama{' '}
+                Sahabat MammaSIP dalam seminggu sebaiknya berolahraga selama{' '}
                 <Text style={FONTS.textBold12}>150 </Text>
                 menit untuk olahraga sedang, dan{' '}
                 <Text style={FONTS.textBold12}>75 </Text> menit untuk olahraga

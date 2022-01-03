@@ -39,7 +39,6 @@ const WeightJournalScreen = ({navigation}) => {
 
   // const [foodSuggestion, setFoodSuggestion] = useState(null);
   // const [isReminder, setIsReminder] = useState(false);
-
   useEffect(() => {
     getInitialData();
   }, []);
@@ -106,29 +105,39 @@ const WeightJournalScreen = ({navigation}) => {
             <View style={styles.header}>
               <View>
                 <Text style={FONTS.text12}>Berat Badan Terakhir</Text>
-                <View style={styles.row}>
-                  <Text style={FONTS.textBold24}>
-                    {data?.jurnal_imt_berat_terakhir}
-                  </Text>
-                  <Text
-                    style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
-                    Kg
-                  </Text>
-                </View>
+                {data?.jurnal_imt_berat_terakhir ? (
+                  <View style={styles.row}>
+                    <Text style={FONTS.textBold24}>
+                      {data?.jurnal_imt_berat_terakhir}
+                    </Text>
+                    <Text
+                      style={[
+                        FONTS.text16,
+                        {color: COLORS.gray, marginLeft: 6},
+                      ]}>
+                      Kg
+                    </Text>
+                  </View>
+                ) : null}
               </View>
-              <View>
-                <Text style={FONTS.text12}>Ideal</Text>
-                <View style={styles.row}>
-                  <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
-                    {Math.round(data?.jurnal_imt_ideal)} -{' '}
-                    {Math.round(data?.jurnal_imt_ideal_next)}
-                  </Text>
-                  <Text
-                    style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
-                    Kg
-                  </Text>
+              {data?.jurnal_imt_ideal ? (
+                <View>
+                  <Text style={FONTS.text12}>Ideal</Text>
+                  <View style={styles.row}>
+                    <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
+                      {Math.round(data?.jurnal_imt_ideal)} -{' '}
+                      {Math.round(data?.jurnal_imt_ideal_next)}
+                    </Text>
+                    <Text
+                      style={[
+                        FONTS.text16,
+                        {color: COLORS.gray, marginLeft: 6},
+                      ]}>
+                      Kg
+                    </Text>
+                  </View>
                 </View>
-              </View>
+              ) : null}
               <TouchableOpacity
                 onPress={() => setIsActivity(true)}
                 style={{
@@ -144,22 +153,24 @@ const WeightJournalScreen = ({navigation}) => {
             time={time}
             title="Reminder Harian Aktif"
           /> */}
+            {data?.jurnal_imt_kondisi_terakhir ? (
+              <Image
+                resizeMode="contain"
+                source={
+                  data?.jurnal_imt_kondisi_terakhir === 'Under Weigth'
+                    ? require('../../assets/images/1.png')
+                    : data?.jurnal_imt_kondisi_terakhir === 'Normal Weight'
+                    ? require('../../assets/images/2.png')
+                    : data?.jurnal_imt_kondisi_terakhir === 'Over Weigth'
+                    ? require('../../assets/images/3.png')
+                    : data?.jurnal_imt_kondisi_terakhir === 'Obesity I'
+                    ? require('../../assets/images/4.png')
+                    : require('../../assets/images/5.png')
+                }
+                style={styles.img}
+              />
+            ) : null}
 
-            <Image
-              resizeMode="contain"
-              source={
-                data?.jurnal_imt_kondisi_terakhir === 'Under Weigth'
-                  ? require('../../assets/images/1.png')
-                  : data?.jurnal_imt_kondisi_terakhir === 'Normal Weight'
-                  ? require('../../assets/images/2.png')
-                  : data?.jurnal_imt_kondisi_terakhir === 'Over Weigth'
-                  ? require('../../assets/images/3.png')
-                  : data?.jurnal_imt_kondisi_terakhir === 'Obesity I'
-                  ? require('../../assets/images/4.png')
-                  : require('../../assets/images/5.png')
-              }
-              style={styles.img}
-            />
             {data.jurnal_imt_last.map(item => (
               <WeightItem key={item.id_jurnal_imt} data={item} />
             ))}

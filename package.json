@@ -6,6 +6,7 @@
     "android:dev": "cd android && ./gradlew clean && cd .. && npx react-native run-android",
     "android:prod": "cd android && ./gradlew clean && ./gradlew assembleRelease",
     "android:aab": "cd android && ./gradlew clean && ./gradlew bundleRelease",
+    "android:sh1": "cd android && ./gradlew signingReport",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

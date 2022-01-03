@@ -1,6 +1,7 @@
 import React, {useEffect, useState, createContext} from 'react';
 import {StatusBar} from 'react-native';
-import OneSignal from 'react-native-onesignal';
+// import OneSignal from 'react-native-onesignal';
+// import env from 'react-native-config';
 import SplashScreen from 'react-native-splash-screen';
 import {LoadingView} from './components/Loadings';
 import AlertProvider from './components/AlertProvider';
@@ -13,36 +14,37 @@ export default () => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
-  const [onesignalId, setOnesignalId] = useState(null);
+  // const [onesignalId, setOnesignalId] = useState(null);
 
-  const OneSignalDevice = async () => {
-    OneSignal.setLogLevel(6, 0);
-    OneSignal.setAppId('ce3c9326-8b56-4c9e-a9b6-3090aaad0d43');
-    OneSignal.setNotificationWillShowInForegroundHandler(
-      notificationReceivedEvent => {
-        let notification = notificationReceivedEvent.getNotification();
-        // const data = notification.additionalData;
-        notificationReceivedEvent.complete(notification);
-      },
-    );
-    // OneSignal.setInAppMessageClickHandler(event => {});
-    OneSignal.setNotificationOpenedHandler(async openedEvent => {
-      // const {notification} = openedEvent;
-      // setOnesignalClick(notification.additionalData?.id);
-      // await Linking.openURL(
-      //   `staging.bukujanji://notification/${notification.additionalData.id}`,
-      // );
-      // console.log('notification', notification);
-    });
-    // OneSignal.addPermissionObserver(event => {});
-    // OneSignal.addSubscriptionObserver(event => {});
-    // OneSignal.addEmailSubscriptionObserver(event => {});
-    const onesignalUser = await OneSignal.getDeviceState();
-    setOnesignalId(onesignalUser.userId);
-  };
+  // const OneSignalDevice = async () => {
+  //   OneSignal.setLogLevel(6, 0);
+  //   OneSignal.setAppId(env.ONESIGNALID);
+  //   OneSignal.setNotificationWillShowInForegroundHandler(
+  //     notificationReceivedEvent => {
+  //       let notification = notificationReceivedEvent.getNotification();
+  //       // const data = notification.additionalData;
+  //       notificationReceivedEvent.complete(notification);
+  //     },
+  //   );
+  //   // OneSignal.setInAppMessageClickHandler(event => {});
+  //   OneSignal.setNotificationOpenedHandler(async openedEvent => {
+  //     // const {notification} = openedEvent;
+  //     // setOnesignalClick(notification.additionalData?.id);
+  //     // await Linking.openURL(
+  //     //   `staging.bukujanji://notification/${notification.additionalData.id}`,
+  //     // );
+  //     // console.log('notification', notification);
+  //   });
+  //   OneSignal.addPermissionObserver(event => {});
+  //   OneSignal.addSubscriptionObserver(event => {});
+  //   OneSignal.addEmailSubscriptionObserver(event => {});
+  //   const onesignalUser = await OneSignal.getDeviceState();
+  //   console.log(`onesignalUser`, onesignalUser.userId);
+  //   setOnesignalId(onesignalUser.userId);
+  // };
   useEffect(() => {
     SplashScreen.hide();
-    OneSignalDevice();
+    // OneSignalDevice();
   }, []);
   return (
     <>
@@ -54,7 +56,7 @@ export default () => {
             token,
             setUser,
             user,
-            onesignalId,
+            // onesignalId,
           }}>
           <StatusBar
             backgroundColor={COLORS.primary}

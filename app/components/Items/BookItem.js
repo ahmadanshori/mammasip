@@ -54,13 +54,15 @@ const BookItem = ({
           </Text>
         )}
         <View style={styles.row}>
-          <Text style={[FONTS.textBold8, {color: COLORS.black}]}>
-            {formatDate(date, 'yyyy')},{' '}
-          </Text>
+          {date && date > 1 ? (
+            <Text style={[FONTS.textBold8, {color: COLORS.black}]}>
+              {date},{' '}
+            </Text>
+          ) : null}
           <Text
             style={[FONTS.textBold8, {color: COLORS.secondary, flex: 1}]}
             numberOfLines={1}>
-            {publisher}, {author}
+            {publisher ? `${publisher},` : null} {author}
           </Text>
         </View>
         <Text style={[FONTS.text8, {color: COLORS.gray}]}>

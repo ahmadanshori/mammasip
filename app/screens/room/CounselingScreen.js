@@ -43,7 +43,7 @@ const CounselingScreen = ({navigation, route}) => {
       const res = await getRoomTypeByIdAPI(id, token);
       setRoomData(res.data.data);
       const resBrowser = await getCounselingByIdAPI(1, 0, 2);
-      const resPowerpoint = await getCounselingByIdAPI(2);
+      const resPowerpoint = await getCounselingByIdAPI(2, 0, 2);
       const resPoster = await getCounselingByIdAPI(3, 0, 2);
       setBrowserData(resBrowser.data.data.content);
       setPowerpointData(resPowerpoint.data.data.content);
@@ -173,25 +173,42 @@ const CounselingScreen = ({navigation, route}) => {
                 onPress={() => onSeeAll(2)}
                 activeOpacity={1}>
                 <Text style={FONTS.textBold14}>Powerpoint</Text>
-                <Text style={[FONTS.text12, {color: COLORS.primary}]}>
+                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              {powerpointData.map(item => (
-                <ArticleDetailItem
-                  key={item.idPenyuluhan}
-                  title={item.tittle}
-                  source={item.urlBanner}
-                  date={item.createdDate}
-                  onPress={() => handleMedia(item.media[0])}
-                />
-              ))}
+              <View style={styles.row}>
+                {powerpointData.map(item => (
+                  <ArticleItem
+                    key={item.idPenyuluhan}
+                    title={item.tittle}
+                    // category={item.hastag[0].nameCategory}
+                    source={item.urlBanner}
+                    date={item.createdDate}
+                    onPress={() => handleMedia(item.media[0])}
+                  />
+                ))}
+                <TouchableOpacity
+                  style={styles.seeAll}
+                  activeOpacity={SIZES.opacity}
+                  onPress={() => onSeeAll(2)}>
+                  <Icon name="rightcircle" size={26} color={COLORS.primary} />
+                  <Text
+                    style={[
+                      FONTS.textBold10,
+                      {color: COLORS.primary, marginTop: 8},
+                    ]}>
+                    Lihat Semua
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               <TouchableOpacity
                 style={styles.header}
                 onPress={() => onSeeAll(3)}
                 activeOpacity={1}>
                 <Text style={FONTS.textBold14}>Poster</Text>
-                <Text style={[FONTS.text12, {color: COLORS.primary}]}>
+                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
                   Lihat Semua
                 </Text>
               </TouchableOpacity>

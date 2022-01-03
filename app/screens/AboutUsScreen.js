@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
 import {HeaderTitle} from '../components/Headers';
 import {COLORS, SIZES, ICON, FONTS} from '../constants';
 
@@ -109,7 +109,11 @@ const AboutUsScreen = () => {
       <HeaderTitle back title="Tentang Kami" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
-          <ICON.aboutus height={SIZES.width3} width={SIZES.width3} />
+          <Image
+            source={require('../assets/images/logo.png')}
+            style={{height: SIZES.width3, width: SIZES.width3}}
+          />
+          {/* <ICON.aboutus height={SIZES.width3} width={SIZES.width3} /> */}
           <Text
             style={[FONTS.textBold18, {color: COLORS.white, marginTop: 40}]}>
             Tentang MammaSIP
@@ -211,8 +215,8 @@ const AboutUsScreen = () => {
               Terima kasih kepada semua pihak yang tidak dapat disebutkan satu
               persatu namanya, yang turut mendukung pembuatan dan penyusunan
               website/aplikasi MammaSIP. Semoga media edukasi ini dapat membawa
-              perbaikan bagi kesehatan bangsa, serta menjadi salah satu satu
-              ladang amal soleh kita semua. Aamiin.
+              perbaikan bagi kesehatan bangsa, serta menjadi salah satu ladang
+              amal soleh kita semua. Aamiin.
             </Text>
           </View>
         </View>

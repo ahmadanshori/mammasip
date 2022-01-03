@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import OneSignal from 'react-native-onesignal';
+import env from 'react-native-config';
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
 import {dropdownalert} from '../../components/AlertProvider';
@@ -32,12 +33,34 @@ const initialData = {
 };
 
 const RegisterScreen = ({navigation}) => {
-  const {user, onesignalId, setLoading} = useContext(AppContext);
+  const {setLoading} = useContext(AppContext);
   const [field, setField] = useState(initialData);
   const [error, setError] = useState(null);
   const [isCheck, setIsCheck] = useState(false);
   const [isDate, setIsDate] = useState(false);
+  const [onesignalId, setOnesignalId] = useState(null);
   // const [date, setDate] = useState(null);
+
+  const OneSignalDevice = async () => {
+    OneSignal.setLogLevel(6, 0);
+    OneSignal.setAppId(env.ONESIGNALID);
+    OneSignal.setNotificationWillShowInForegroundHandler(
+      notificationReceivedEvent => {
+        let notification = notificationReceivedEvent.getNotification();
+        notificationReceivedEvent.complete(notification);
+      },
+    );
+    // OneSignal.setInAppMessageClickHandler(event => {});
+    OneSignal.setNotificationOpenedHandler(async openedEvent => {
+      // const {notification} = openedEvent;
+      // setOnesignalClick(notification.additionalData?.id);
+      // await Linking.openURL(
+      //   `staging.bukujanji://notification/${notification.additionalData.id}`,
+      // );
+    });
+    const onesignalUser = await OneSignal.getDeviceState();
+    setOnesignalId(onesignalUser.userId);
+  };
 
   const handleInput = (val, type) => {
     setField(state => ({...state, [type]: val}));
@@ -54,35 +77,41 @@ const RegisterScreen = ({navigation}) => {
 
   const handleRegister = async () => {
     setError(null);
-    if (field.password !== field.confirmPassword) {
-      setError('Password tidak sama');
-    } else {
-      setLoading(true);
-      try {
-        const newData = {
-          ...field,
-          gateway_registered: '1',
-          created_by: '0',
-          username: '',
-          role_id: '',
-          status_member: '',
-          relegion: '',
-          tokenFCM: onesignalId,
-          image_path: '',
-          tgl_lahir: formatDate(field.tgl_lahir, 'yyyy-MM-dd'),
-        };
-        const res = await registerAPI(newData);
-        if (res.data.status === '1') {
-          dropdownalert.alertWithType('success', '', res.data.message);
-          setField(initialData);
-        } else {
-          dropdownalert.alertWithType('error', '', res.data.message);
+    if (onesignalId) {
+      if (field.password !== field.confirmPassword) {
+        setError('Password tidak sama');
+      } else {
+        setLoading(true);
+        try {
+          const newData = {
+            ...field,
+            gateway_registered: '1',
+            created_by: '0',
+            username: '',
+            role_id: '',
+            status_member: '',
+            relegion: '',
+            tokenFCM: onesignalId,
+            image_path: '',
+            tgl_lahir: formatDate(field.tgl_lahir, 'yyyy-MM-dd'),
+          };
+          const res = await registerAPI(newData);
+          if (res.data.status === '1') {
+            dropdownalert.alertWithType('success', '', res.data.message);
+            setField(initialData);
+          } else {
+            dropdownalert.alertWithType('error', '', res.data.message);
+          }
+        } catch (e) {
+          dropdownalert.alertWithType('error', '', e.data.message);
+        } finally {
+          setLoading(false);
         }
-      } catch (e) {
-        dropdownalert.alertWithType('error', '', e.data.message);
-      } finally {
-        setLoading(false);
       }
+    } else {
+      navigation.goBack();
+      // OneSignalDevice();
+      // dropdownalert.alertWithType('warn', '', 'Silahkan daftar kembali..');
     }
   };
   return (

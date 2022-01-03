@@ -32,13 +32,13 @@ const HomeScreen = ({navigation}) => {
   const [error, setError] = useErrorHandler();
 
   useEffect(() => {
-    // VersionCheck.getLatestVersion({
-    //   falserovider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
-    // }).then(latestVersion => {
-    //   if (latestVersion !== VersionCheck.getCurrentVersion()) {
-    //     setIsUpdate(true);
-    //   }
-    // });
+    VersionCheck.getLatestVersion({
+      falserovider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+    }).then(latestVersion => {
+      if (latestVersion !== VersionCheck.getCurrentVersion()) {
+        setIsUpdate(true);
+      }
+    });
     getInitialData();
   }, []);
 
@@ -133,7 +133,7 @@ const HomeScreen = ({navigation}) => {
               ]}>
               Ruang MammaSIP
             </Text>
-            {roomData.map(item => (
+            {roomData?.map(item => (
               <HomeItem
                 data={item}
                 key={item.id_ruang}

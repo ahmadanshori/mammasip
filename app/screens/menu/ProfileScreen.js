@@ -1,29 +1,29 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, ScrollView, Linking} from 'react-native';
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import ToggleSwitch from 'toggle-switch-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import {Container} from '../../components/Container';
 import {ProfileHeader} from '../../components/Headers';
 import {ProfileItem} from '../../components/Items';
-// import Point from '../../components/Point';
 import Divider from '../../components/Divider';
-// import {FONTS, COLORS} from '../../constants';
 import {AppContext} from '../../index';
 
 const ProfileScreen = ({navigation}) => {
   const {user, setToken, setUser} = useContext(AppContext);
-  // const [isOn, setIsOn] = useState(true);
 
   const handleNavigate = type => {
     navigation.navigate(`${type}`);
   };
-
   const handleLink = async () => {
     await Linking.openURL('http://103.31.38.171/term-condition');
   };
   const handleLogout = async () => {
+    const isGoogle = await AsyncStorage.getItem('isGoogle');
+    if (isGoogle === '1') {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+    }
     await AsyncStorage.clear();
     setToken(null);
     setUser(null);

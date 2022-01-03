@@ -72,55 +72,59 @@ const LoginScreen = ({navigation, route}) => {
     setField(state => ({...state, [type]: val}));
   };
 
-  // const handleGoogleSignin = async () => {
-  //   if (onesignalId) {
-  //     setLoading(true);
-  //     try {
-  //       await GoogleSignin.hasPlayServices();
-  //       const userInfo = await GoogleSignin.signIn();
-  //       // console.log(`userInfo`, userInfo);
-  //       const postData = {
-  //         email: userInfo.user.email,
-  //         device: 'mobile',
-  //         ip_address: '-',
-  //         tokenFCM: onesignalId,
-  //       };
-  //       const res = await loginGoogleAPI(postData);
-  //       // console.log(`res`, res);
-  //       if (res.data.status === '2') {
-  //         setError(res.data.message);
-  //       } else {
-  //       }
-  //     } catch (err) {
-  //       // console.log(`err`, err);
-  //       if (err.code === statusCodes.SIGN_IN_CANCELLED) {
-  //         // user cancelled the login flow
-  //       } else if (err.code === statusCodes.IN_PROGRESS) {
-  //         // operation (e.g. sign in) is in progress already
-  //       } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-  //         // play services not available or outdated
-  //       } else {
-  //         // some other error happened
-  //       }
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   } else {
-  //     OneSignalDevice();
-  //     return dropdownalert.alertWithType(
-  //       'warn',
-  //       '',
-  //       'Silahkan login kembali..',
-  //     );
-  //   }
-  // };
+  const handleGoogleSignin = async () => {
+    if (onesignalId) {
+      setLoading(true);
+      try {
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        const postData = {
+          email: userInfo.user.email,
+          device: 'mobile',
+          ip_address: '-',
+          tokenFCM: onesignalId,
+          name: userInfo.user.name,
+          photo: userInfo.user.photo,
+        };
+        const res = await loginGoogleAPI(postData);
+        if (res.data.status === '2') {
+          setError(res.data.message);
+        } else {
+          await AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+          await AsyncStorage.setItem('isGoogle', '1');
+          setToken(res.data.data.token);
+          setUser(res.data.data.user);
+          if (id) {
+            navigation.navigate(nav, {id});
+          } else {
+            navigation.navigate(nav);
+          }
+        }
+      } catch (err) {
+        if (err.code === statusCodes.SIGN_IN_CANCELLED) {
+          // user cancelled the login flow
+        } else if (err.code === statusCodes.IN_PROGRESS) {
+          // operation (e.g. sign in) is in progress already
+        } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          // play services not available or outdated
+        } else {
+          dropdownalert.alertWithType('error', '', err.data.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      navigation.goBack();
+    }
+  };
 
   const handleLogin = async () => {
     if (onesignalId) {
       setLoading(true);
       setError(null);
       try {
-        const res = await loginAPI(field);
+        const postData = {...field, tokenFCM: onesignalId};
+        const res = await loginAPI(postData);
         if (res.data.status === '2') {
           setError(res.data.message);
         } else {
@@ -130,6 +134,7 @@ const LoginScreen = ({navigation, route}) => {
             {tokenFCM: onesignalId},
           );
           await AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+          await AsyncStorage.setItem('isGoogle', '2');
           setToken(res.data.data.token);
           setUser(res.data.data.user);
           if (id) {
@@ -171,7 +176,7 @@ const LoginScreen = ({navigation, route}) => {
             </Text>
           </View>
         </View>
-        {/* <TouchableNativeFeedback onPress={handleGoogleSignin}>
+        <TouchableNativeFeedback onPress={handleGoogleSignin}>
           <View style={styles.authButton}>
             <Image
               source={require('../../assets/icons/google.png')}
@@ -181,7 +186,7 @@ const LoginScreen = ({navigation, route}) => {
               Masuk dengan Google
             </Text>
           </View>
-        </TouchableNativeFeedback> */}
+        </TouchableNativeFeedback>
         {/* <TouchableNativeFeedback>
           <View style={styles.authButton}>
             <Image
@@ -193,64 +198,61 @@ const LoginScreen = ({navigation, route}) => {
             </Text>
           </View>
         </TouchableNativeFeedback> */}
-        {/* <View style={styles.separatorWrapper}>
+        <View style={styles.separatorWrapper}>
           <View style={styles.separator} />
           <Text style={[FONTS.text12, styles.or]}>Atau</Text>
           <View style={styles.separator} />
-        </View> */}
-        <View style={{marginTop: 64}}>
-          <TitleInput
-            title="Email"
-            placeholder="Email"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            onChangeText={val => handleInput(val, 'username')}
-            value={field.username}
-            maxLength={24}
-          />
-          <TitleInput
-            title="Password"
-            placeholder="Password"
-            pass
-            autoCapitalize="none"
-            style={styles.pass}
-            onChangeText={val => handleInput(val, 'password')}
-            value={field.password}
-            onSubmitEditing={handleLogin}
-            maxLength={24}
-          />
-          {error ? (
-            <View style={styles.error}>
-              <Icon name="alert-circle" style={styles.errorIcon} size={16} />
-              <Text style={[FONTS.text10, styles.errorIcon]}>{error}</Text>
-            </View>
-          ) : null}
-          <TouchableOpacity
-            style={styles.forgot}
-            activeOpacity={1}
-            onPress={() => navigation.navigate('ForgotPassword')}>
-            <Text style={[FONTS.text12, styles.secondary]}>
-              Lupa Kata Sandi?
-            </Text>
-          </TouchableOpacity>
-          <MainButton
-            title="Masuk"
-            style={{marginTop: 24}}
-            disable={!field.username || !field.password}
-            onPress={handleLogin}
-          />
-          <TouchableOpacity
-            style={styles.register}
-            activeOpacity={1}
-            onPress={() => navigation.navigate('Register')}>
-            <Text style={[FONTS.text12, {color: COLORS.black}]}>
-              Belum punya akun?{' '}
-            </Text>
-            <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
-              Daftar Gratis
-            </Text>
-          </TouchableOpacity>
         </View>
+
+        <TitleInput
+          title="Email"
+          placeholder="Email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          onChangeText={val => handleInput(val, 'username')}
+          value={field.username}
+          maxLength={24}
+        />
+        <TitleInput
+          title="Password"
+          placeholder="Password"
+          pass
+          autoCapitalize="none"
+          style={styles.pass}
+          onChangeText={val => handleInput(val, 'password')}
+          value={field.password}
+          onSubmitEditing={handleLogin}
+          maxLength={24}
+        />
+        {error ? (
+          <View style={styles.error}>
+            <Icon name="alert-circle" style={styles.errorIcon} size={16} />
+            <Text style={[FONTS.text10, styles.errorIcon]}>{error}</Text>
+          </View>
+        ) : null}
+        <TouchableOpacity
+          style={styles.forgot}
+          activeOpacity={1}
+          onPress={() => navigation.navigate('ForgotPassword')}>
+          <Text style={[FONTS.text12, styles.secondary]}>Lupa Kata Sandi?</Text>
+        </TouchableOpacity>
+        <MainButton
+          title="Masuk"
+          style={{marginTop: 24}}
+          disable={!field.username || !field.password}
+          onPress={handleLogin}
+        />
+        <TouchableOpacity
+          style={styles.register}
+          activeOpacity={1}
+          onPress={() => navigation.navigate('Register')}>
+          <Text style={[FONTS.text12, {color: COLORS.black}]}>
+            Belum punya akun?{' '}
+          </Text>
+          <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
+            Daftar Gratis
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </Container>
   );
