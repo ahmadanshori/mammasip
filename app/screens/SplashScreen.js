@@ -20,7 +20,7 @@ const SplashScreen = () => {
   }, []);
   return (
     <Container style={styles.container}>
-      <LogoIcon height={SIZES.width2 + 16} width={SIZES.width2 + 16} />
+      <LogoIcon height={SIZES.width3 + 16} width={SIZES.width3 + 16} />
       <View style={styles.text}>
         <Text style={[FONTS.textBold12, {color: COLORS.white}]}>
           Version 1.3
