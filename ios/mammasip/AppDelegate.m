@@ -22,8 +22,8 @@ static void InitializeFlipper(UIApplication *application) {
   [client start];
 }
 #endif
-@import UIKit
-@import Firebase
+@import UIKit;
+@import Firebase;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
