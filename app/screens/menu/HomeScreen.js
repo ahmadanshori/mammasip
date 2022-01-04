@@ -10,6 +10,7 @@ import {
   RefreshControl,
   Linking,
   Platform,
+  SafeAreaView,
 } from 'react-native';
 import VersionCheck from 'react-native-version-check';
 import {HomeHeader} from '../../components/Headers';
@@ -32,13 +33,13 @@ const HomeScreen = ({navigation}) => {
   const [error, setError] = useErrorHandler();
 
   useEffect(() => {
-    VersionCheck.getLatestVersion({
-      falserovider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
-    }).then(latestVersion => {
-      if (latestVersion !== VersionCheck.getCurrentVersion()) {
-        setIsUpdate(true);
-      }
-    });
+    // VersionCheck.getLatestVersion({
+    //   falserovider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+    // }).then(latestVersion => {
+    //   if (latestVersion !== VersionCheck.getCurrentVersion()) {
+    //     setIsUpdate(true);
+    //   }
+    // });
     getInitialData();
   }, []);
 
@@ -82,6 +83,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={{flex: 1}}>
+      <SafeAreaView style={{backgroundColor: COLORS.primary}} />
       <HomeHeader data={user} />
       {loading.get ? (
         <LoadingComponent />

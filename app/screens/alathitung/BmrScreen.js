@@ -1,5 +1,12 @@
 import React, {useState, useCallback} from 'react';
-import {View, Text, StyleSheet, StatusBar, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
 import {MainButton} from '../../components/Buttons';
@@ -46,6 +53,7 @@ const BmrScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <SafeAreaView style={{backgroundColor: COLORS.secondary}} />
       <StatusBar
         backgroundColor={COLORS.secondary}
         barStyle={'light-content'}

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   StatusBar,
   ScrollView,
+  SafeAreaView,
   TouchableNativeFeedback,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -51,6 +52,7 @@ const CaloriesScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <SafeAreaView style={{backgroundColor: COLORS.red}} />
       <StatusBar backgroundColor={COLORS.red} barStyle={'light-content'} />
       <WeightCalculatorHeader
         title="Hitung Risiko Kanker Anda"

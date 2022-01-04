@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
+import {Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -73,7 +74,7 @@ const TabNavigator = () => {
       screenOptions={{
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: COLORS.gray,
-        tabBarStyle: {paddingBottom: 4},
+        // tabBarStyle: {paddingBottom: Platform.OS === 'ios' ? 0 : 4},
         headerShown: false,
       }}>
       <Tab.Screen
