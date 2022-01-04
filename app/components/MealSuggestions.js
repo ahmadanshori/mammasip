@@ -164,7 +164,7 @@ const MealSuggestions = ({data}) => {
       ))}
       <View style={styles.selingan}>
         <Text style={[FONTS.textBold12, styles.selinganText]}>
-          Selingan Pagi
+          Selingan Malam
         </Text>
         {data[day.field]?.selinganMalam?.map(item => (
           <MealItem

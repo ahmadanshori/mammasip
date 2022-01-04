@@ -9,20 +9,17 @@ import {
   RefreshControl,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {Container} from '../../components/Container';
 import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
-import {
-  ArticleDetailItem,
-  BookItem,
-  VideoDetailItem,
-} from '../../components/Items';
+import {ArticleItem, BookItem} from '../../components/Items';
 import {dropdownalert} from '../../components/AlertProvider';
 import ImportantMessage from '../../components/ImportantMessage';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getArticleAPI} from '../../api/article';
 import {getRoomTypeByIdAPI, getBookAPI, getVideoPageAPI} from '../../api/room';
-import {COLORS, FONTS} from '../../constants';
+import {COLORS, FONTS, SIZES} from '../../constants';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
 
@@ -46,11 +43,11 @@ const BungaRampaiScreen = ({navigation, route}) => {
     try {
       const res = await getRoomTypeByIdAPI(id, token);
       setRoomData(res.data.data);
-      const resBook = await getBookAPI(1, 0, 5);
-      const resJournal = await getBookAPI(2, 0, 5);
-      const resArticle = await getArticleAPI(0, 5);
-      const resVideo = await getVideoPageAPI(0, 5);
-      const resBookRecommendation = await getBookAPI(3, 0, 5);
+      const resBook = await getBookAPI(1, 0, 2);
+      const resJournal = await getBookAPI(2, 0, 2);
+      const resArticle = await getArticleAPI(0, 2);
+      const resVideo = await getVideoPageAPI(0, 2);
+      const resBookRecommendation = await getBookAPI(3, 0, 2);
       setBook(resBook.data.data.content);
       setJournal(resJournal.data.data.content);
       setArticle(resArticle.data.data.content);
@@ -61,7 +58,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
     } finally {
       setLoading({get: false, refresh: false});
     }
-  }, [id, setError]);
+  }, [id, setError, token]);
 
   const onSeeAll = useCallback(
     (title, type) => {
@@ -94,16 +91,17 @@ const BungaRampaiScreen = ({navigation, route}) => {
   );
 
   const handleBookRecommendation = useCallback(async event => {
-    const supported = await Linking.canOpenURL(event?.urlBook);
-    if (supported) {
-      await Linking.openURL(event?.urlBook);
-    } else {
-      dropdownalert.alertWithType(
-        'warn',
-        '',
-        'website salah atau sedang dalam perbaikan!!',
-      );
-    }
+    // const supported = await Linking.canOpenURL(event?.urlBook);
+    // if (supported) {
+    //   await Linking.openURL(event?.urlBook);
+    // } else {
+    //   dropdownalert.alertWithType(
+    //     'warn',
+    //     '',
+    //     'website salah atau sedang dalam perbaikan!!',
+    //   );
+    // }
+    await Linking.openURL(event?.urlBook);
   }, []);
 
   const handleRefresh = useCallback(() => {
@@ -148,11 +146,11 @@ const BungaRampaiScreen = ({navigation, route}) => {
                     E-Book
                   </Text>
                 </View>
-                <Text style={[FONTS.text12, {color: COLORS.primary}]}>
+                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              <ScrollView horizontal showsHorizontalScrollIndicator={true}>
+              <View style={styles.row}>
                 {book.map(item => (
                   <BookItem
                     key={item.idBook}
@@ -167,7 +165,20 @@ const BungaRampaiScreen = ({navigation, route}) => {
                     }
                   />
                 ))}
-              </ScrollView>
+                <TouchableOpacity
+                  style={styles.seeAll}
+                  activeOpacity={SIZES.opacity}
+                  onPress={() => onSeeAll('E-Book', 1)}>
+                  <Icon name="rightcircle" size={26} color={COLORS.primary} />
+                  <Text
+                    style={[
+                      FONTS.textBold10,
+                      {color: COLORS.primary, marginTop: 8},
+                    ]}>
+                    Lihat Semua
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
                 style={styles.header}
                 onPress={() => onSeeAll('Jurnal', 2)}
@@ -182,11 +193,11 @@ const BungaRampaiScreen = ({navigation, route}) => {
                     Jurnal
                   </Text>
                 </View>
-                <Text style={[FONTS.text12, {color: COLORS.primary}]}>
+                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              <ScrollView horizontal showsHorizontalScrollIndicator={true}>
+              <View style={styles.row}>
                 {journal.map(item => (
                   <BookItem
                     key={item.idBook}
@@ -201,7 +212,20 @@ const BungaRampaiScreen = ({navigation, route}) => {
                     }
                   />
                 ))}
-              </ScrollView>
+                <TouchableOpacity
+                  style={styles.seeAll}
+                  activeOpacity={SIZES.opacity}
+                  onPress={() => onSeeAll('Jurnal', 2)}>
+                  <Icon name="rightcircle" size={26} color={COLORS.primary} />
+                  <Text
+                    style={[
+                      FONTS.textBold10,
+                      {color: COLORS.primary, marginTop: 8},
+                    ]}>
+                    Lihat Semua
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
                 style={styles.header}
                 onPress={() => onSeeAll('Artikel', 4)}
@@ -219,19 +243,34 @@ const BungaRampaiScreen = ({navigation, route}) => {
                     Artikel
                   </Text>
                 </View>
-                <Text style={[FONTS.text12, {color: COLORS.primary}]}>
+                <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
                   Lihat Semua
                 </Text>
               </TouchableOpacity>
-              {article.map(item => (
-                <ArticleDetailItem
-                  key={item.idArticle}
-                  title={item.nameArticle}
-                  source={item.urlBanner}
-                  date={item.createdDate}
-                  onPress={() => handleArticle(item)}
-                />
-              ))}
+              <View style={styles.row}>
+                {article.map(item => (
+                  <ArticleItem
+                    key={item.idArticle}
+                    title={item.nameArticle}
+                    source={item.urlBanner}
+                    date={item.createdDate}
+                    onPress={() => handleArticle(item)}
+                  />
+                ))}
+                <TouchableOpacity
+                  style={styles.seeAll}
+                  activeOpacity={SIZES.opacity}
+                  onPress={() => onSeeAll('Artikel', 4)}>
+                  <Icon name="rightcircle" size={26} color={COLORS.primary} />
+                  <Text
+                    style={[
+                      FONTS.textBold10,
+                      {color: COLORS.primary, marginTop: 8},
+                    ]}>
+                    Lihat Semua
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
             <TouchableOpacity
               style={styles.header}
@@ -247,21 +286,37 @@ const BungaRampaiScreen = ({navigation, route}) => {
                   Video
                 </Text>
               </View>
-              <Text style={[FONTS.text12, {color: COLORS.primary}]}>
+              <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
                 Lihat Semua
               </Text>
             </TouchableOpacity>
-            {video.map(item => (
-              <VideoDetailItem
-                key={item.idMedia}
-                data={item}
-                narsum={item.nama_narsum}
-                profesi={item.profesi_narsum}
-                onPress={() =>
-                  navigation.navigate('Video', {url: item.url_frame})
-                }
-              />
-            ))}
+            <View style={styles.row}>
+              {video.map(item => (
+                <ArticleItem
+                  key={item.idMedia}
+                  title={item.kata_pengantar}
+                  source={item.url}
+                  date={item.createdDate}
+                  onPress={() =>
+                    navigation.navigate('Video', {url: item.url_frame})
+                  }
+                  video
+                />
+              ))}
+              <TouchableOpacity
+                style={styles.seeAll}
+                activeOpacity={SIZES.opacity}
+                onPress={() => onSeeAll('Video', 5)}>
+                <Icon name="rightcircle" size={26} color={COLORS.primary} />
+                <Text
+                  style={[
+                    FONTS.textBold10,
+                    {color: COLORS.primary, marginTop: 8},
+                  ]}>
+                  Lihat Semua
+                </Text>
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity
               style={styles.header}
               onPress={() => onSeeAll('Buku Rekomendasi', 3)}
@@ -276,11 +331,11 @@ const BungaRampaiScreen = ({navigation, route}) => {
                   Buku Rekomendasi
                 </Text>
               </View>
-              <Text style={[FONTS.text12, {color: COLORS.primary}]}>
+              <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
                 Lihat Semua
               </Text>
             </TouchableOpacity>
-            <ScrollView horizontal showsHorizontalScrollIndicator={true}>
+            <View style={styles.row}>
               {bookRecomendation.map(item => (
                 <BookItem
                   key={item.idBook}
@@ -294,7 +349,20 @@ const BungaRampaiScreen = ({navigation, route}) => {
                   onPress={() => handleBookRecommendation(item)}
                 />
               ))}
-            </ScrollView>
+              <TouchableOpacity
+                style={styles.seeAll}
+                activeOpacity={SIZES.opacity}
+                onPress={() => onSeeAll('Buku Rekomendasi', 3)}>
+                <Icon name="rightcircle" size={26} color={COLORS.primary} />
+                <Text
+                  style={[
+                    FONTS.textBold10,
+                    {color: COLORS.primary, marginTop: 8},
+                  ]}>
+                  Lihat Semua
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       )}
@@ -315,6 +383,16 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   wrapper: {flexDirection: 'row', alignItems: 'center'},
+  seeAll: {
+    borderWidth: 1,
+    borderColor: COLORS.gray,
+    borderRadius: 6,
+    flex: 1,
+    height: SIZES.width2 - 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  row: {flexDirection: 'row'},
 });
 
 export default BungaRampaiScreen;

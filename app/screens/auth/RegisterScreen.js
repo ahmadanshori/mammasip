@@ -109,9 +109,9 @@ const RegisterScreen = ({navigation}) => {
         }
       }
     } else {
-      navigation.goBack();
-      // OneSignalDevice();
-      // dropdownalert.alertWithType('warn', '', 'Silahkan daftar kembali..');
+      //   navigation.goBack();
+      OneSignalDevice();
+      dropdownalert.alertWithType('warn', '', 'Silahkan daftar kembali..');
     }
   };
   return (

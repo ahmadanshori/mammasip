@@ -23,7 +23,7 @@ const SplashScreen = () => {
       <LogoIcon height={SIZES.width3 + 16} width={SIZES.width3 + 16} />
       <View style={styles.text}>
         <Text style={[FONTS.textBold12, {color: COLORS.white}]}>
-          Version 1.3
+          Version 1.4
         </Text>
       </View>
     </Container>

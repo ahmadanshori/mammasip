@@ -88,7 +88,7 @@ const Sadari = ({data, flag, onPress, getInitialData}) => {
                       FONTS.text12,
                       {color: COLORS.white, marginBottom: 4},
                     ]}>
-                    Tangal SADARI
+                    Tanggal SADARI
                   </Text>
                   <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
                     {formatDate(data[0].tanggal_sadari)}

@@ -33,13 +33,13 @@ const HomeScreen = ({navigation}) => {
   const [error, setError] = useErrorHandler();
 
   useEffect(() => {
-    // VersionCheck.getLatestVersion({
-    //   falserovider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
-    // }).then(latestVersion => {
-    //   if (latestVersion !== VersionCheck.getCurrentVersion()) {
-    //     setIsUpdate(true);
-    //   }
-    // });
+    VersionCheck.getLatestVersion({
+      falserovider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
+    }).then(latestVersion => {
+      if (latestVersion !== VersionCheck.getCurrentVersion()) {
+        setIsUpdate(true);
+      }
+    });
     getInitialData();
   }, []);
 

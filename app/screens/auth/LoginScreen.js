@@ -127,7 +127,7 @@ const LoginScreen = ({navigation, route}) => {
         const res = await loginAPI(postData);
         if (res.data.status === '2') {
           setError(res.data.message);
-        } else {
+        } else if (res.data.status === '1') {
           await updateTokenFCMAPI(
             res.data.data.token,
             res.data.data.user.id_user,

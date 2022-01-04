@@ -61,16 +61,17 @@ const BungaRampaiListScreen = ({navigation, route}) => {
         }
       }
     } else if (type === 3) {
-      const supported = await Linking.canOpenURL(event?.urlBook);
-      if (supported) {
-        await Linking.openURL(event?.urlBook);
-      } else {
-        dropdownalert.alertWithType(
-          'warn',
-          '',
-          'website salah atau sedang dalam perbaikan!!',
-        );
-      }
+      //   const supported = await Linking.canOpenURL(event?.urlBook);
+      //   if (supported) {
+      //     await Linking.openURL(event?.urlBook);
+      //   } else {
+      //     dropdownalert.alertWithType(
+      //       'warn',
+      //       '',
+      //       'website salah atau sedang dalam perbaikan!!',
+      //     );
+      //   }
+      await Linking.openURL(event?.urlBook);
     } else {
       navigation.navigate('Pdf', {link: event.urlBook});
     }
