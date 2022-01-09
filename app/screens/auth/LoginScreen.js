@@ -31,7 +31,8 @@ GoogleSignin.configure({
 });
 
 const LoginScreen = ({navigation, route}) => {
-  const {setLoading, setUser, setToken} = useContext(AppContext);
+  const {setLoading, setUser, setToken, setOnesignalId, onesignalId} =
+    useContext(AppContext);
   const {nav} = route.params;
   const id = route.params.id || null;
   const [field, setField] = useState({
@@ -40,7 +41,6 @@ const LoginScreen = ({navigation, route}) => {
     device: 'mobile',
     ip_address: '-',
   });
-  const [onesignalId, setOnesignalId] = useState(null);
   const [error, setError] = useState(null);
 
   const OneSignalDevice = async () => {
@@ -52,20 +52,15 @@ const LoginScreen = ({navigation, route}) => {
         notificationReceivedEvent.complete(notification);
       },
     );
-    // OneSignal.setInAppMessageClickHandler(event => {});
-    OneSignal.setNotificationOpenedHandler(async openedEvent => {
-      // const {notification} = openedEvent;
-      // setOnesignalClick(notification.additionalData?.id);
-      // await Linking.openURL(
-      //   `staging.bukujanji://notification/${notification.additionalData.id}`,
-      // );
-    });
     const onesignalUser = await OneSignal.getDeviceState();
+    await AsyncStorage.setItem('onesignal', onesignalUser.userId);
     setOnesignalId(onesignalUser.userId);
   };
 
   useEffect(() => {
-    OneSignalDevice();
+    if (!onesignalId) {
+      OneSignalDevice();
+    }
   }, []);
 
   const handleInput = (val, type) => {
@@ -114,7 +109,12 @@ const LoginScreen = ({navigation, route}) => {
         setLoading(false);
       }
     } else {
-      navigation.goBack();
+      OneSignalDevice();
+      return dropdownalert.alertWithType(
+        'warn',
+        '',
+        'Sedang ada gangguan, Silahkan coba kembali..',
+      );
     }
   };
 
@@ -153,7 +153,7 @@ const LoginScreen = ({navigation, route}) => {
       return dropdownalert.alertWithType(
         'warn',
         '',
-        'Silahkan login kembali..',
+        'Sedang ada gangguan, Silahkan coba kembali kembali..',
       );
     }
   };

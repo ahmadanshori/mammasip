@@ -36,6 +36,7 @@ const BungaRampaiListScreen = ({navigation, route}) => {
       } else {
         resData = await getBookAPI(type);
       }
+      console.log(`resData`, resData);
       setData(resData.data.data);
     } catch (e) {
       setError(e);

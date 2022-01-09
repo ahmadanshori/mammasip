@@ -32,10 +32,10 @@ const ArticleDetailItem = ({
       <View style={styles.body}>
         <Text style={FONTS.textBold14}>{title}</Text>
         {desc && <Text style={FONTS.text12}>{desc}</Text>}
-        {publisher ? (
+        {bookDate ? (
           <View style={styles.row}>
             <Text style={[FONTS.textBold8, {color: COLORS.black}]}>
-              {formatDate(bookDate, 'yyyy')},{' '}
+              {bookDate},{' '}
             </Text>
             {publisher || author ? (
               <Text

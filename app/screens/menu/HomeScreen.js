@@ -13,24 +13,53 @@ import {
   SafeAreaView,
 } from 'react-native';
 import VersionCheck from 'react-native-version-check';
+import OneSignal from 'react-native-onesignal';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import env from 'react-native-config';
 import {HomeHeader} from '../../components/Headers';
 import Banner from '../../components/Banner';
 import {HomeItem} from '../../components/Items';
 import {MainButton} from '../../components/Buttons';
 import {LoadingComponent} from '../../components/Loadings';
 import {UpdateModal} from '../../components/Modals';
+import {dropdownalert} from '../../components/AlertProvider';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getRoomAPI} from '../../api/room';
+import {loginGoogleAPI} from '../../api/auth';
 import {FONTS, COLORS, ICON, SIZES} from '../../constants';
 import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
 
+GoogleSignin.configure({
+  webClientId: env.GOOGLEID,
+  offlineAccess: false,
+});
+
 const HomeScreen = ({navigation}) => {
-  const {user, token} = useContext(AppContext);
+  const {user, token, onesignalId, setOnesignalId, setToken, setUser} =
+    useContext(AppContext);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [roomData, setRoomData] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
   const [error, setError] = useErrorHandler();
+
+  const OneSignalDevice = async () => {
+    OneSignal.setLogLevel(6, 0);
+    OneSignal.setAppId(env.ONESIGNALID);
+    OneSignal.setNotificationWillShowInForegroundHandler(
+      notificationReceivedEvent => {
+        let notification = notificationReceivedEvent.getNotification();
+        notificationReceivedEvent.complete(notification);
+      },
+    );
+    const onesignalUser = await OneSignal.getDeviceState();
+    await AsyncStorage.setItem('onesignal', onesignalUser.userId);
+    setOnesignalId(onesignalUser.userId);
+  };
 
   useEffect(() => {
     VersionCheck.getLatestVersion({
@@ -40,6 +69,9 @@ const HomeScreen = ({navigation}) => {
         setIsUpdate(true);
       }
     });
+    if (!onesignalId) {
+      OneSignalDevice();
+    }
     getInitialData();
   }, []);
 
@@ -68,6 +100,52 @@ const HomeScreen = ({navigation}) => {
       navigation.navigate('Faq');
     } else {
       navigation.navigate('ListRoom', {id: id_ruang});
+    }
+  };
+
+  const handleGoogleSignin = async () => {
+    if (onesignalId) {
+      setLoading(true);
+      try {
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        const postData = {
+          email: userInfo.user.email,
+          device: 'mobile',
+          ip_address: '-',
+          tokenFCM: onesignalId,
+          name: userInfo.user.name,
+          photo: userInfo.user.photo,
+        };
+        const res = await loginGoogleAPI(postData);
+        if (res.data.status === '2') {
+          setError(res.data.message);
+        } else {
+          await AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+          await AsyncStorage.setItem('isGoogle', '1');
+          setUser(res.data.data.user);
+          setToken(res.data.data.token);
+        }
+      } catch (err) {
+        if (err.code === statusCodes.SIGN_IN_CANCELLED) {
+          // user cancelled the login flow
+        } else if (err.code === statusCodes.IN_PROGRESS) {
+          // operation (e.g. sign in) is in progress already
+        } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          // play services not available or outdated
+        } else {
+          dropdownalert.alertWithType('error', '', err.data.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      OneSignalDevice();
+      return dropdownalert.alertWithType(
+        'warn',
+        '',
+        'Sedang ada gangguan, Silahkan coba kembali..',
+      );
     }
   };
 
@@ -148,11 +226,6 @@ const HomeScreen = ({navigation}) => {
                 style={styles.aboutUs}
                 activeOpacity={1}
                 onPress={() => navigation.navigate('AboutUs')}>
-                {/* <Image
-                  resizeMode="contain"
-                  source={require('../../assets/icons/logo.gif')}
-                  style={styles.logo}
-                /> */}
                 <Text style={[FONTS.textBold18, {color: COLORS.primary}]}>
                   Tentang Kami
                 </Text>
@@ -175,6 +248,22 @@ const HomeScreen = ({navigation}) => {
                   ]}>
                   Nikmati segala kemudahan & perluas wawasanmu
                 </Text>
+                <TouchableNativeFeedback onPress={handleGoogleSignin}>
+                  <View style={styles.authButton}>
+                    <Image
+                      source={require('../../assets/icons/google.png')}
+                      style={styles.googleImg}
+                    />
+                    <Text style={[FONTS.text14, styles.authText]}>
+                      Daftar dengan Google
+                    </Text>
+                  </View>
+                </TouchableNativeFeedback>
+                <View style={styles.separatorWrapper}>
+                  <View style={styles.separator} />
+                  <Text style={[FONTS.text12, styles.or]}>Atau</Text>
+                  <View style={styles.separator} />
+                </View>
                 <MainButton
                   title="Daftar Sekarang"
                   backgroundColor={COLORS.secondary}
@@ -236,6 +325,31 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
   },
   logo: {height: 50, width: 50, marginRight: 8},
+  authButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.darkWhite,
+    borderRadius: 6,
+    marginTop: 12,
+  },
+  authText: {flex: 1, color: COLORS.black, textAlign: 'center'},
+  googleImg: {height: 24, width: 24, marginRight: 16},
+  separatorWrapper: {
+    marginTop: 40,
+    marginBottom: 36,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  separator: {
+    width: '40%',
+    borderBottomWidth: 1,
+    borderColor: COLORS.black,
+  },
+  or: {color: COLORS.black, width: '20%', textAlign: 'center'},
 });
 
 export default HomeScreen;

@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import OneSignal from 'react-native-onesignal';
 import env from 'react-native-config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
 import {dropdownalert} from '../../components/AlertProvider';
@@ -33,12 +34,12 @@ const initialData = {
 };
 
 const RegisterScreen = ({navigation}) => {
-  const {setLoading} = useContext(AppContext);
+  const {setLoading, setOnesignalId, onesignalId} = useContext(AppContext);
   const [field, setField] = useState(initialData);
   const [error, setError] = useState(null);
   const [isCheck, setIsCheck] = useState(false);
   const [isDate, setIsDate] = useState(false);
-  const [onesignalId, setOnesignalId] = useState(null);
+  // const [onesignalId, setOnesignalId] = useState(null);
   // const [date, setDate] = useState(null);
 
   const OneSignalDevice = async () => {
@@ -51,16 +52,23 @@ const RegisterScreen = ({navigation}) => {
       },
     );
     // OneSignal.setInAppMessageClickHandler(event => {});
-    OneSignal.setNotificationOpenedHandler(async openedEvent => {
-      // const {notification} = openedEvent;
-      // setOnesignalClick(notification.additionalData?.id);
-      // await Linking.openURL(
-      //   `staging.bukujanji://notification/${notification.additionalData.id}`,
-      // );
-    });
+    // OneSignal.setNotificationOpenedHandler(async openedEvent => {
+    //   // const {notification} = openedEvent;
+    //   // setOnesignalClick(notification.additionalData?.id);
+    //   // await Linking.openURL(
+    //   //   `staging.bukujanji://notification/${notification.additionalData.id}`,
+    //   // );
+    // });
     const onesignalUser = await OneSignal.getDeviceState();
+    await AsyncStorage.setItem('onesignal', onesignalUser.userId);
     setOnesignalId(onesignalUser.userId);
   };
+
+  useEffect(() => {
+    if (!onesignalId) {
+      OneSignalDevice();
+    }
+  }, []);
 
   const handleInput = (val, type) => {
     setField(state => ({...state, [type]: val}));
@@ -99,6 +107,7 @@ const RegisterScreen = ({navigation}) => {
           if (res.data.status === '1') {
             dropdownalert.alertWithType('success', '', res.data.message);
             setField(initialData);
+            navigation.goBack();
           } else {
             dropdownalert.alertWithType('error', '', res.data.message);
           }
@@ -109,9 +118,12 @@ const RegisterScreen = ({navigation}) => {
         }
       }
     } else {
-      //   navigation.goBack();
       OneSignalDevice();
-      dropdownalert.alertWithType('warn', '', 'Silahkan daftar kembali..');
+      dropdownalert.alertWithType(
+        'warn',
+        '',
+        'Sedang ada gangguan, Silahkan coba kembali kembali..',
+      );
     }
   };
   return (

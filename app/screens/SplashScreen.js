@@ -1,29 +1,34 @@
 import React, {useEffect, useContext} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Container} from '../components/Container';
 import {COLORS, FONTS, SIZES} from '../constants';
 import {AppContext} from '../index';
-import LogoIcon from '../assets/icons/logo.svg';
 
 const SplashScreen = () => {
-  const {setUser, setToken} = useContext(AppContext);
+  const {setUser, setToken, setOnesignalId} = useContext(AppContext);
 
   useEffect(() => {
     const loadData = async () => {
       const jsonUser = await AsyncStorage.getItem('user');
       const userObject = jsonUser ? JSON.parse(jsonUser) : null;
+      const onesignal = await AsyncStorage.getItem('onesignal');
       setToken(userObject?.token);
       setUser(userObject?.user);
+      setOnesignalId(onesignal);
     };
     loadData();
   }, []);
   return (
     <Container style={styles.container}>
-      <LogoIcon height={SIZES.width3 + 16} width={SIZES.width3 + 16} />
+      <Image
+        resizeMode="contain"
+        source={require('../assets/images/logo.png')}
+        style={styles.img}
+      />
       <View style={styles.text}>
         <Text style={[FONTS.textBold12, {color: COLORS.white}]}>
-          Version 1.4
+          Version 1.5
         </Text>
       </View>
     </Container>
@@ -36,6 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   text: {bottom: 30, position: 'absolute', zIndex: 99},
+  img: {height: SIZES.width2 + 16, width: SIZES.width2 + 16},
 });
 
 export default SplashScreen;
