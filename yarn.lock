@@ -857,7 +857,7 @@
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
 
-"@expo/config-plugins@^4.0.12":
+"@expo/config-plugins@^4.0.15":
   "integrity" "sha512-QqxVEt2bFu3ZuI1soULRJv7i0Zrg/FMZ0IxNV7Y3AjH7fhtUJH3pPo9f6MURvqNr+PLxhBlkofkWfunrVejSkw=="
   "resolved" "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-4.0.15.tgz"
   "version" "4.0.15"
@@ -1350,12 +1350,17 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz"
   "version" "1.1.0"
 
-"@react-native-firebase/app@^14.2.1":
-  "integrity" "sha512-zfQ7VxeuwSgxFNXE2RFRnIlI+rc+/kNMLl0ChsQTzPJLOOm6GvliTBocph6qENDAwzQBXxJTss9s3rU4rsNjYg=="
-  "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-14.2.1.tgz"
-  "version" "14.2.1"
+"@react-native-firebase/analytics@^14.2.2":
+  "integrity" "sha512-5qIGO3QSNhGbQaVzlaSjfg1AoYM5Qr9GV2/Vo/asfMHAhEI4sI5vomsNeQC9nUI1yrh+Morcrp6dAzhVtOkETQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-14.2.2.tgz"
+  "version" "14.2.2"
+
+"@react-native-firebase/app@^14.2.2", "@react-native-firebase/app@14.2.2":
+  "integrity" "sha512-kp4diBisEJVKwhPMFCj0kLoG+1ofuj3WHH4lx8OPgnSi6hsfYiyN1BrDJLTYTyouhLkNYdyoRYl6sAxFY7K62Q=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-14.2.2.tgz"
+  "version" "14.2.2"
   dependencies:
-    "@expo/config-plugins" "^4.0.12"
+    "@expo/config-plugins" "^4.0.15"
     "opencollective-postinstall" "^2.0.1"
     "superstruct" "^0.6.2"
 
