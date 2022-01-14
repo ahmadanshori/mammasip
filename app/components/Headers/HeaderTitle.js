@@ -77,11 +77,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  iconBack: {
-    height: 30,
-    width: 30,
-  },
-  settingButton: {padding: 8},
   shareButton: {paddingVertical: 16, paddingHorizontal: 24},
 });
 

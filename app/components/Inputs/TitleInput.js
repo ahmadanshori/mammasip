@@ -85,28 +85,10 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   error: {borderColor: COLORS.red},
-  success: {borderColor: COLORS.border},
-  containerError: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.white,
-    borderWidth: 1,
-    borderColor: COLORS.red,
-    paddingHorizontal: 8,
-    height: 43,
-    marginTop: 8,
-  },
-  line: {
-    borderRightWidth: 1,
-    height: 18,
-    borderColor: COLORS.lightGray,
-    marginHorizontal: 16,
-  },
   input: {
     flex: 1,
     height: '100%',
     fontFamily: 'Inter-Regular',
-    // paddingLeft: 8,
   },
   buttonShow: {
     paddingHorizontal: 8,
@@ -114,16 +96,6 @@ const styles = StyleSheet.create({
   eye: {
     height: 24,
     width: 24,
-  },
-  err: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  icon: {
-    height: 14,
-    width: 14,
-    marginRight: 6,
   },
 });
 

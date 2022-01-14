@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const MainButton = ({
+const OutlineButton = ({
   title,
   style = {},
   onPress,
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   icon: {marginLeft: 8},
 });
 
-export default MainButton;
+export default OutlineButton;
