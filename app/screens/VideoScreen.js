@@ -20,15 +20,13 @@ const VideoScreen = ({route, navigation}) => {
         </TouchableOpacity>
         <View />
       </View>
-
       <WebView
-        source={{uri: url}}
+        source={{uri: `${url}&autoplay=1`}}
         mediaPlaybackRequiresUserAction={false}
         automaticallyAdjustContentInsets={false}
         scrollEnabled={false}
         allowsFullscreenVideo={true}
-        javaScriptEnabled={true}
-        //   userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"
+        userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"
       />
     </Container>
   );

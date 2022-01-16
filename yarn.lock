@@ -6839,10 +6839,10 @@
     "prop-types" "^15.6.1"
     "react-fast-compare" "^2.0.4"
 
-"react-native-webview@^11.14.3":
-  "integrity" "sha512-y/+7mE6by/uLGSIVmlp1xpJvL37rAuOL90EWTJYKZWL5iM8lN+pQkj/zwcPcGu4zNmuHdXXUk/cMR8hE89mNYg=="
-  "resolved" "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.14.3.tgz"
-  "version" "11.14.3"
+"react-native-webview@^11.16.0":
+  "integrity" "sha512-yap3dO3adMQp4z5oDzlcgcv6XPsfHAtt1E3ort94GthrunswaZhL6AfMiDOsNnKQmlUA+o4LNJsnlAy1b10rUg=="
+  "resolved" "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.16.0.tgz"
+  "version" "11.16.0"
   dependencies:
     "escape-string-regexp" "2.0.0"
     "invariant" "2.2.4"
