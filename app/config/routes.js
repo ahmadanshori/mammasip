@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -12,7 +11,7 @@ import VideoScreen from '../screens/VideoScreen';
 import RoomScreen from '../screens/RoomScreen';
 
 import FaqScreen from '../screens/FaqScreen';
-import ListSearchScreen from '../screens/ListSearchScreen';
+// import ListSearchScreen from '../screens/ListSearchScreen';
 import PdfScreen from '../screens/PdfScreen';
 import ImportantMessageScreen from '../screens/ImportantMessageScreen';
 import {
@@ -234,7 +233,7 @@ export default function App() {
           <Stack.Screen component={ListRoomScreen} name="ListRoom" />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />
-          <Stack.Screen component={ListSearchScreen} name="ListSearch" />
+          {/* <Stack.Screen component={ListSearchScreen} name="ListSearch" /> */}
           <Stack.Screen component={PdfScreen} name="Pdf" />
           <Stack.Screen
             component={ImportantMessageScreen}

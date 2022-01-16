@@ -51,15 +51,9 @@ const CounselingListScreen = ({navigation, route}) => {
       .fetch('GET', link, {
         Accept: 'application/json',
       })
-      .then(res => {
-        // setLoading(false);
-      })
-      .then(res => {
-        // setLoading(false);
-      })
-      .catch(e => {
-        // setLoading(false);
-      });
+      .then(res => {})
+      .then(res => {})
+      .catch(e => {});
   }, []);
 
   const handleMedia = val => {

@@ -27,7 +27,7 @@ const options = {
   compressImageQuality: 0.8,
 };
 
-const EditProfileScreen = ({navigation}) => {
+const EditProfileScreen = () => {
   const {user, token, setLoading, setUser} = useContext(AppContext);
   const [field, setField] = useState({
     first_name: user?.first_name,
@@ -74,8 +74,8 @@ const EditProfileScreen = ({navigation}) => {
         '',
         'Berhasil merubah data diri..',
       );
-    } catch (e) {
-      // setError(e);
+    } catch (err) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -88,7 +88,7 @@ const EditProfileScreen = ({navigation}) => {
       setIsLocal(true);
       setPicture(res);
     } catch (err) {
-      //   setError(err);
+      setError(err.message);
     }
   }, []);
 
@@ -98,7 +98,9 @@ const EditProfileScreen = ({navigation}) => {
       const res = await ImagePicker.openPicker(options);
       setIsLocal(true);
       setPicture(res);
-    } catch (err) {}
+    } catch (err) {
+      setError(err.message);
+    }
   }, []);
   const handleOpenPhoto = () => setIsPicture(true);
 

@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {Container} from '../../components/Container';
 import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
-import {ArticleDetailItem, ArticleItem} from '../../components/Items';
+import {ArticleItem} from '../../components/Items';
 import ImportantMessage from '../../components/ImportantMessage';
 import DownloadModal from '../../components/Modals/DownloadModal';
 import {NoInternet, ErrorServer} from '../../components/Errors';
@@ -56,7 +56,6 @@ const CounselingScreen = ({navigation, route}) => {
   };
 
   const handleDownload = useCallback((link, type) => {
-    // setLoading({get: true, refresh: false});
     ReactNativeBlobUtil.config({
       addAndroidDownloads: {
         useDownloadManager: true,
@@ -68,15 +67,9 @@ const CounselingScreen = ({navigation, route}) => {
       .fetch('GET', link, {
         Accept: 'application/json',
       })
-      .then(res => {
-        // setLoading({get: false, refresh: false});
-      })
-      .then(data => {
-        // setLoading({get: false, refresh: false});
-      })
-      .catch(e => {
-        // setLoading({get: false, refresh: false});
-      });
+      .then(res => {})
+      .then(data => {})
+      .catch(e => {});
   }, []);
 
   const handleMedia = val => {
@@ -114,7 +107,6 @@ const CounselingScreen = ({navigation, route}) => {
 
   return (
     <Container>
-      {/* <HeaderTitle back title="Ruang Penyuluhan" /> */}
       {loading.get ? (
         <LoadingComponent />
       ) : (

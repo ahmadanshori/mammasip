@@ -91,16 +91,6 @@ const BungaRampaiScreen = ({navigation, route}) => {
   );
 
   const handleBookRecommendation = useCallback(async event => {
-    // const supported = await Linking.canOpenURL(event?.urlBook);
-    // if (supported) {
-    //   await Linking.openURL(event?.urlBook);
-    // } else {
-    //   dropdownalert.alertWithType(
-    //     'warn',
-    //     '',
-    //     'website salah atau sedang dalam perbaikan!!',
-    //   );
-    // }
     await Linking.openURL(event?.urlBook);
   }, []);
 
@@ -340,7 +330,6 @@ const BungaRampaiScreen = ({navigation, route}) => {
                 <BookItem
                   key={item.idBook}
                   title={item.nameBook}
-                  // source={item.urlBanner}
                   isImage={false}
                   date={item.year}
                   uploadDate={item.createdDate}
