@@ -316,7 +316,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: COLORS.separator,
   },
-  logo: {height: 50, width: 50, marginRight: 8},
   authButton: {
     flexDirection: 'row',
     alignItems: 'center',
