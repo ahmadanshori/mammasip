@@ -85,6 +85,10 @@ export const FONTS = {
     fontFamily: 'Homeday',
     fontSize: 20,
   },
+  home: {
+    fontFamily: 'Homeday',
+    fontSize: 26,
+  },
 };
 
 const appTheme = {COLORS, SIZES, FONTS};

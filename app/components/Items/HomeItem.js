@@ -7,25 +7,16 @@ import colorValidation from '../../libs/colorValidation';
 const HomeItem = ({data, colorId, onPress, style = {}}) => {
   return (
     <TouchableOpacity
-      style={[styles.container, style]}
+      style={[
+        styles.container,
+        style,
+        {backgroundColor: colorValidation(colorId)},
+      ]}
       activeOpacity={1}
       onPress={onPress}>
-      <View style={{flex: 1}}>
-        <Text
-          style={[
-            FONTS.textBold14,
-            styles.text,
-            {color: colorValidation(colorId)},
-          ]}
-          numberOfLines={3}>
-          {data?.nama_ruang}
-        </Text>
-        <Text style={FONTS.text10} numberOfLines={2}>
-          {data?.description}
-        </Text>
-      </View>
-
       {colorId ? iconValidation(colorId) : null}
+      <Text style={[FONTS.textBold14, styles.text]}>{data?.nama_ruang}</Text>
+      <Text style={[FONTS.text10, styles.text]}>{data?.description}</Text>
     </TouchableOpacity>
   );
 };
@@ -33,15 +24,13 @@ const HomeItem = ({data, colorId, onPress, style = {}}) => {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 8,
-    paddingLeft: 16,
-    flexDirection: 'row',
+    padding: 24,
     alignItems: 'center',
-    justifyContent: 'space-between',
     marginBottom: 8,
-    backgroundColor: COLORS.white,
-    overflow: 'hidden',
+    backgroundColor: COLORS.primary,
+    width: '48%',
   },
-  text: {marginBottom: 4, color: COLORS.black},
+  text: {marginBottom: 4, color: COLORS.white, textAlign: 'center'},
   img: {
     height: 90,
     width: 90,

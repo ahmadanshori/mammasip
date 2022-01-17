@@ -5,6 +5,7 @@ import DownloadModal from './DownloadModal';
 import WeightModal from './WeightModal';
 import SkriningModal from './SkriningModal';
 import UpdateModal from './UpdateModal';
+import HomeModal from './HomeModal';
 export {
   ImageModal,
   ActivityModal,
@@ -13,4 +14,5 @@ export {
   WeightModal,
   SkriningModal,
   UpdateModal,
+  HomeModal,
 };
