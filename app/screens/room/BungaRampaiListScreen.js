@@ -61,7 +61,7 @@ const BungaRampaiListScreen = ({navigation, route}) => {
         }
       }
     } else if (type === 3) {
-      await Linking.openURL(event?.urlBook);
+      // await Linking.openURL(event?.urlBook);
     } else {
       navigation.navigate('Pdf', {link: event.urlBook});
     }

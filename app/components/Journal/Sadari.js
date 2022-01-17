@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-date-picker';
 import {MainButton} from '../Buttons';
 // import Reminder from '../Reminder';
 import {dropdownalert} from '../AlertProvider';
@@ -13,13 +13,13 @@ import {updateSadariDoneAPI} from '../../api/journal';
 const Sadari = ({data, flag, onPress, getInitialData}) => {
   const {token, setLoading} = useContext(AppContext);
   const [isDate, setIsDate] = useState(false);
-  const onChange = async (event, selectedDate) => {
+  const onChange = async event => {
     setIsDate(false);
-    if (selectedDate) {
+    if (event) {
       setLoading(true);
       try {
         const postData = {
-          tanggal_sadari: formatDate(selectedDate, 'yyyy-MM-dd  kk:mm:ss'),
+          tanggal_sadari: formatDate(event, 'yyyy-MM-dd  kk:mm:ss'),
         };
         await updateSadariDoneAPI(token, data[0]?.id_jurnal_sadari, postData);
         getInitialData();
@@ -148,17 +148,18 @@ const Sadari = ({data, flag, onPress, getInitialData}) => {
           />
         </>
       )}
-      {isDate ? (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={new Date()}
-          mode={'date'}
-          is24Hour={true}
-          display="default"
-          maximumDate={new Date()}
-          onChange={onChange}
-        />
-      ) : null}
+      <DatePicker
+        modal
+        open={isDate}
+        title="Pilih Tanggal"
+        date={new Date()}
+        onConfirm={onChange}
+        onCancel={() => {
+          setIsDate(false);
+        }}
+        mode="date"
+        maximumDate={new Date()}
+      />
     </View>
   );
 };

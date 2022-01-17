@@ -14,7 +14,7 @@ const DestinationContent = ({data, onPress}) => {
           <View style={styles.logoWraper}>
             <Image
               resizeMode="contain"
-              source={require('../../assets/icons/logo.gif')}
+              source={require('../../assets/icons/logo.png')}
               style={styles.logo}
             />
           </View>
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
     borderColor: COLORS.separator,
   },
   text: {color: COLORS.white, textAlign: 'center'},
-  logoWraper: {alignItems: 'center', marginBottom: 6},
-  logo: {height: 50, width: 50},
+  logoWraper: {alignItems: 'center'},
+  logo: {height: 70, width: 70},
 });
 
 export default DestinationContent;

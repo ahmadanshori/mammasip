@@ -5,14 +5,23 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, SIZES} from '../../constants';
 
 const ImageContent = ({data, onPress}) => {
-  const html = `<div style="color: #ffffff;">${data?.kata_pengantar}</div>`;
+  const html = `<div style="color: ${
+    data.flag_important === 1 ? COLORS.primary : COLORS.white
+  };">${data?.kata_pengantar}</div>`;
   return (
     <View style={styles.container}>
-      <View style={styles.wrapper}>
+      <View
+        style={[
+          styles.wrapper,
+          {
+            backgroundColor:
+              data.flag_important === 1 ? COLORS.darkYellow : COLORS.primary,
+          },
+        ]}>
         <Ionicons
           name="alert-circle-outline"
           size={20}
-          color={COLORS.white}
+          color={data.flag_important === 1 ? COLORS.primary : COLORS.white}
           style={styles.margin}
         />
         <View style={{flex: 1}}>
@@ -26,7 +35,7 @@ const ImageContent = ({data, onPress}) => {
         {data.flag_important === 1 && (
           <Image
             resizeMode="contain"
-            source={require('../../assets/icons/logo.gif')}
+            source={require('../../assets/icons/logo.png')}
             style={styles.logo}
           />
         )}
@@ -64,7 +73,7 @@ const styles = StyleSheet.create({
   margin: {
     marginRight: 6,
   },
-  logo: {height: 50, width: 50},
+  logo: {height: 70, width: 70},
   img: {
     height: SIZES.width + 56,
     width: SIZES.width - 56,

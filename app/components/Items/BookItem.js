@@ -14,10 +14,12 @@ const BookItem = ({
   author,
   uploadDate,
   isImage = true,
+  style = {},
+  imgStyle = {},
 }) => {
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={[styles.container, style]}
       activeOpacity={1}
       onPress={onPress}>
       {isImage ? (
@@ -25,11 +27,16 @@ const BookItem = ({
           {source ? (
             <Image
               source={{uri: source}}
-              style={styles.img}
+              style={[styles.img, imgStyle]}
               resizeMode="contain"
             />
           ) : (
-            <View style={[styles.img, {backgroundColor: COLORS.lightGray}]}>
+            <View
+              style={[
+                styles.img,
+                imgStyle,
+                {backgroundColor: COLORS.lightGray},
+              ]}>
               <Icon
                 name="image-outline"
                 size={SIZES.width5}
@@ -43,7 +50,7 @@ const BookItem = ({
       <View style={styles.body}>
         <Text
           style={[FONTS.textBold10, {color: COLORS.black}]}
-          numberOfLines={2}>
+          numberOfLines={4}>
           {title}
         </Text>
         {desc && (
@@ -53,18 +60,14 @@ const BookItem = ({
             {desc}
           </Text>
         )}
-        <View style={styles.row}>
-          {date && date > 1 ? (
-            <Text style={[FONTS.textBold8, {color: COLORS.black}]}>
-              {date},{' '}
+        {date && date > 1 ? (
+          <Text style={[FONTS.textBold8, {color: COLORS.black}]}>
+            {date},{' '}
+            <Text style={[FONTS.textBold8, {color: COLORS.secondary, flex: 1}]}>
+              {publisher ? `${publisher},` : null} {author}
             </Text>
-          ) : null}
-          <Text
-            style={[FONTS.textBold8, {color: COLORS.secondary, flex: 1}]}
-            numberOfLines={1}>
-            {publisher ? `${publisher},` : null} {author}
           </Text>
-        </View>
+        ) : null}
         <Text style={[FONTS.text8, {color: COLORS.gray}]}>
           Diupload {formatDate(uploadDate)}
         </Text>
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   body: {paddingVertical: 8},
-  row: {flexDirection: 'row', alignItems: 'center'},
+  row: {flexDirection: 'row'},
 });
 
 export default BookItem;

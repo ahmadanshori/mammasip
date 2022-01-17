@@ -2,9 +2,8 @@ import React, {useState, useCallback, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView, Keyboard} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import DatePicker from 'react-native-date-picker';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {TitleInput} from '../../components/Inputs';
@@ -13,7 +12,6 @@ import {MainButton, TitleButton} from '../../components/Buttons';
 import PhotoProfile from '../../components/PhotoProfile';
 import {ActivityLevelButton} from '../../components/RadioButton';
 import {dropdownalert} from '../../components/AlertProvider';
-// import {Gender} from '../../components/RadioButton';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {uploaddFileAPI, updateUserAPI} from '../../api/auth';
 import {AppContext} from '../../index';
@@ -34,7 +32,7 @@ const EditProfileScreen = () => {
     last_name: user?.last_name,
     tgl_lahir: new Date(user?.tgl_lahir),
     phone: user?.phone,
-    gender: user?.gender,
+    gender: user?.gender || 1,
   });
   const [isDate, setIsDate] = useState(false);
   const [error, setError] = useState(null);
@@ -104,9 +102,9 @@ const EditProfileScreen = () => {
   }, []);
   const handleOpenPhoto = () => setIsPicture(true);
 
-  const onChange = (event, selectedDate) => {
+  const onChange = event => {
     setIsDate(false);
-    setField(state => ({...state, tgl_lahir: selectedDate}));
+    setField(state => ({...state, tgl_lahir: event}));
   };
 
   return (
@@ -141,7 +139,6 @@ const EditProfileScreen = () => {
           data={field?.tgl_lahir ? formatDate(field?.tgl_lahir) : null}
           onPress={() => setIsDate(true)}
         />
-        {/* <Gender /> */}
 
         <ActivityLevelButton
           title="Jenis Kelamin"
@@ -188,17 +185,18 @@ const EditProfileScreen = () => {
         galeryPress={pictureWithGalery}
         onPresBack={() => setIsPicture(false)}
       />
-      {isDate ? (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={field?.tgl_lahir || new Date()}
-          mode={'date'}
-          is24Hour={true}
-          display="default"
-          maximumDate={new Date()}
-          onChange={onChange}
-        />
-      ) : null}
+      <DatePicker
+        modal
+        open={isDate}
+        title="Tanggal Lahir"
+        date={field?.tgl_lahir || new Date()}
+        onConfirm={onChange}
+        onCancel={() => {
+          setIsDate(false);
+        }}
+        mode="date"
+        maximumDate={new Date()}
+      />
     </Container>
   );
 };

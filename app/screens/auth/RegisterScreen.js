@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import OneSignal from 'react-native-onesignal';
 import env from 'react-native-config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DatePicker from 'react-native-date-picker';
 import {Container} from '../../components/Container';
 import {TitleInput} from '../../components/Inputs';
 import {dropdownalert} from '../../components/AlertProvider';
@@ -39,8 +39,6 @@ const RegisterScreen = ({navigation}) => {
   const [error, setError] = useState(null);
   const [isCheck, setIsCheck] = useState(false);
   const [isDate, setIsDate] = useState(false);
-  // const [onesignalId, setOnesignalId] = useState(null);
-  // const [date, setDate] = useState(null);
 
   const OneSignalDevice = async () => {
     OneSignal.setLogLevel(6, 0);
@@ -78,9 +76,9 @@ const RegisterScreen = ({navigation}) => {
     setIsCheck(state => !state);
   };
 
-  const onChange = (event, selectedDate) => {
+  const onChange = event => {
     setIsDate(false);
-    setField(state => ({...state, tgl_lahir: selectedDate}));
+    setField(state => ({...state, tgl_lahir: event}));
   };
 
   const handleRegister = async () => {
@@ -211,7 +209,6 @@ const RegisterScreen = ({navigation}) => {
           onChangeText={val => handleInput(val, 'password')}
           value={field.password}
           maxLength={16}
-          //   onSubmitEditing={handleLogin}
         />
         <TitleInput
           title="Ulangi Password"
@@ -222,7 +219,6 @@ const RegisterScreen = ({navigation}) => {
           onChangeText={val => handleInput(val, 'confirmPassword')}
           value={field.confirmPassword}
           maxLength={16}
-          //   onSubmitEditing={handleLogin}
         />
         {error ? (
           <View style={styles.error}>
@@ -264,19 +260,19 @@ const RegisterScreen = ({navigation}) => {
           </Text>
           <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>Masuk</Text>
         </TouchableOpacity>
-        {/* <Button title="test OTP" onPress={() => navigation.navigate('Otp')} /> */}
       </ScrollView>
-      {isDate ? (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={field?.tgl_lahir || new Date()}
-          mode={'date'}
-          is24Hour={true}
-          display="default"
-          maximumDate={new Date()}
-          onChange={onChange}
-        />
-      ) : null}
+      <DatePicker
+        modal
+        open={isDate}
+        title="Tanggal Lahir"
+        date={field?.tgl_lahir || new Date()}
+        onConfirm={onChange}
+        onCancel={() => {
+          setIsDate(false);
+        }}
+        mode="date"
+        maximumDate={new Date()}
+      />
     </Container>
   );
 };

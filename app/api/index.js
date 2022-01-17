@@ -14,6 +14,7 @@ const createHeader = token => {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
+        endpoint: 'mobile',
       },
     };
   } else {
@@ -26,6 +27,7 @@ const createHeaderForm = token => {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
+        endpoint: 'mobile',
         'Content-Type': 'multipart/form-data',
       },
     };
