@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -12,7 +11,7 @@ import VideoScreen from '../screens/VideoScreen';
 import RoomScreen from '../screens/RoomScreen';
 
 import FaqScreen from '../screens/FaqScreen';
-import ListSearchScreen from '../screens/ListSearchScreen';
+// import ListSearchScreen from '../screens/ListSearchScreen';
 import PdfScreen from '../screens/PdfScreen';
 import ImportantMessageScreen from '../screens/ImportantMessageScreen';
 import {
@@ -74,7 +73,8 @@ const TabNavigator = () => {
       screenOptions={{
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: COLORS.gray,
-        // tabBarStyle: {paddingBottom: Platform.OS === 'ios' ? 0 : 4},
+        tabBarIconStyle: {marginTop: 4},
+        tabBarLabelStyle: {marginBottom: 4},
         headerShown: false,
       }}>
       <Tab.Screen
@@ -86,7 +86,7 @@ const TabNavigator = () => {
             return (
               <Ionicons
                 name={focused ? 'home' : 'home-outline'}
-                size={22}
+                size={20}
                 color={focused ? COLORS.primary : COLORS.gray}
               />
             );
@@ -102,7 +102,7 @@ const TabNavigator = () => {
             return (
               <MaterialIcons
                 name={'article'}
-                size={22}
+                size={20}
                 color={focused ? COLORS.primary : COLORS.gray}
               />
             );
@@ -127,7 +127,7 @@ const TabNavigator = () => {
             return (
               <Ionicons
                 name={'search'}
-                size={22}
+                size={20}
                 color={focused ? COLORS.primary : COLORS.gray}
               />
             );
@@ -152,27 +152,12 @@ const TabNavigator = () => {
             return (
               <MaterialCommunityIcons
                 name={'calendar'}
-                size={22}
+                size={20}
                 color={focused ? COLORS.primary : COLORS.gray}
               />
             );
           },
         }}
-        // listeners={{
-        //   tabPress: async e => {
-        //     e.preventDefault();
-        //     const validation = async () => {
-        //       if (token) {
-        //         navigationRef.current.navigate('JournalTab');
-        //       } else {
-        //         navigationRef.current.navigate('Login', {
-        //           nav: 'JournalTab',
-        //         });
-        //       }
-        //     };
-        //     validation();
-        //   },
-        // }}
       />
       <Tab.Screen
         name="ProfileTab"
@@ -183,7 +168,7 @@ const TabNavigator = () => {
             return (
               <MaterialCommunityIcons
                 name={focused ? 'account-circle' : 'account-circle-outline'}
-                size={22}
+                size={20}
                 color={focused ? COLORS.primary : COLORS.gray}
               />
             );
@@ -248,7 +233,7 @@ export default function App() {
           <Stack.Screen component={ListRoomScreen} name="ListRoom" />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />
-          <Stack.Screen component={ListSearchScreen} name="ListSearch" />
+          {/* <Stack.Screen component={ListSearchScreen} name="ListSearch" /> */}
           <Stack.Screen component={PdfScreen} name="Pdf" />
           <Stack.Screen
             component={ImportantMessageScreen}

@@ -1,5 +1,12 @@
 import React, {useEffect, useState, useCallback, useContext} from 'react';
-import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+  Text,
+  Image,
+} from 'react-native';
 import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import {Container} from '../../components/Container';
@@ -8,6 +15,7 @@ import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getRoomTypeByIdAPI} from '../../api/room';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
+import {COLORS, FONTS} from '../../constants';
 
 const ListRoomScreen = ({route, navigation}) => {
   const {id} = route.params;
@@ -68,6 +76,49 @@ const ListRoomScreen = ({route, navigation}) => {
                 onPress={() => onRoom(item.id_ruang)}
               />
             ))}
+            {id === 3 ? (
+              <View style={styles.body}>
+                <Text
+                  style={[
+                    FONTS.textBold16,
+                    {textAlign: 'center', marginBottom: 24},
+                  ]}>
+                  Seputar Pendukung Pasien dan Penyintas
+                </Text>
+                <View style={styles.box}>
+                  <Image
+                    resizeMode="contain"
+                    source={require('../../assets/images/cinta1.png')}
+                    style={styles.img}
+                  />
+                  <Text style={[FONTS.text14, styles.flex]}>
+                    Bersikap Tepat Sebagai Teman dan Orang Terdekat Penyintas
+                    Kanker Payudara.
+                  </Text>
+                </View>
+                <View style={styles.box}>
+                  <Image
+                    resizeMode="contain"
+                    source={require('../../assets/images/cinta2.png')}
+                    style={styles.img}
+                  />
+                  <Text style={[FONTS.text14, styles.flex]}>
+                    Sikap Tepat Suami Pasien atau Penyintas Kanker Payudara.
+                  </Text>
+                </View>
+                <View style={styles.box}>
+                  <Image
+                    resizeMode="contain"
+                    source={require('../../assets/images/cinta3.png')}
+                    style={styles.img}
+                  />
+                  <Text style={[FONTS.text14, styles.flex]}>
+                    Mari Bantu Pasien Kanker Payudara Menghadapi Stigma
+                    Masyarakat yang Salah
+                  </Text>
+                </View>
+              </View>
+            ) : null}
           </View>
         </ScrollView>
       )}
@@ -79,6 +130,22 @@ const ListRoomScreen = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
   padding: {paddingHorizontal: 16, paddingTop: 24, paddingBottom: 16},
+  body: {
+    paddingTop: 24,
+    borderTopWidth: 1,
+    marginTop: 24,
+    borderColor: COLORS.separator,
+  },
+  box: {
+    padding: 24,
+    backgroundColor: '#DEEFE9',
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  img: {height: 70, width: 70, marginRight: 24},
+  flex: {flex: 1},
 });
 
 export default ListRoomScreen;

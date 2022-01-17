@@ -5,7 +5,6 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 
 const GKSContent = ({data, onPress}) => {
   const html = `${data.gks_text}`;
-  // const INJECTEDJAVASCRIPT = "document.body.style.userSelect = 'none'";
   return (
     <View
       style={[
@@ -16,7 +15,7 @@ const GKSContent = ({data, onPress}) => {
         <View style={styles.logoWrapper}>
           <Image
             resizeMode="contain"
-            source={require('../../assets/icons/logo.gif')}
+            source={require('../../assets/icons/logo.png')}
             style={styles.logo}
           />
         </View>
@@ -63,8 +62,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     backgroundColor: COLORS.red,
   },
-  logoWrapper: {alignItems: 'flex-end'},
-  logo: {height: 50, width: 50},
+  logoWrapper: {position: 'absolute', right: 16, top: 16},
+  logo: {height: 80, width: 80},
   imageWrapper: {
     flexDirection: 'row',
     alignItems: 'center',

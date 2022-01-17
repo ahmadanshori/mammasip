@@ -12,7 +12,7 @@ const ButtonContent = ({data, onPress}) => {
       <View>
         <Image
           source={require('../../assets/images/ayla.png')}
-          style={{width: 60, height: 60}}
+          style={styles.img}
         />
       </View>
       <View style={{flex: 1, marginHorizontal: 8}}>
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 16,
   },
+  img: {width: 60, height: 60},
 });
 
 export default ButtonContent;

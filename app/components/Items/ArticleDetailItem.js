@@ -36,17 +36,13 @@ const ArticleDetailItem = ({
           <View style={styles.row}>
             <Text style={[FONTS.textBold8, {color: COLORS.black}]}>
               {bookDate},{' '}
-            </Text>
-            {publisher || author ? (
               <Text
-                style={[FONTS.textBold8, {color: COLORS.secondary, flex: 1}]}
-                numberOfLines={1}>
-                {publisher}, {author}
+                style={[FONTS.textBold8, {color: COLORS.secondary, flex: 1}]}>
+                {publisher ? `${publisher},` : null} {author}
               </Text>
-            ) : null}
+            </Text>
           </View>
         ) : null}
-
         <Text style={[FONTS.text10, {color: COLORS.gray}]}>
           Diupload {formatDate(date)}
         </Text>
@@ -85,7 +81,7 @@ const styles = StyleSheet.create({
   },
   bookmark: {position: 'absolute', top: 0, right: 0, padding: 8},
   body: {paddingHorizontal: 8, flex: 1},
-  row: {flexDirection: 'row', alignItems: 'center'},
+  row: {flexDirection: 'row'},
 });
 
 export default ArticleDetailItem;

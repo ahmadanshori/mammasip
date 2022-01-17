@@ -1,45 +1,65 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {COLORS, FONTS} from '../../constants';
+import {COLORS, FONTS, SIZES} from '../../constants';
 
-const HomeHeader = ({data}) => {
+const HomeHeader = ({onPress}) => {
   return (
     <View style={styles.container}>
-      <Text style={[FONTS.textBold12, {color: COLORS.white}]}>MammaSIP</Text>
-      <View style={styles.row}>
-        {data?.first_name ? (
-          <Text style={[FONTS.text12, {color: COLORS.white, marginRight: 8}]}>
-            {data.first_name} {data?.last_name}
-          </Text>
-        ) : null}
-        {data?.image_path ? (
-          <Image source={{uri: data.image_path}} style={styles.img} />
-        ) : (
-          <Icon name="account-circle" size={24} color={COLORS.white} />
-        )}
+      <View>
+        <Text style={[FONTS.textBold16, {color: COLORS.white}]}>
+          Pesan Penting
+        </Text>
+        <Text style={[FONTS.text10, {color: COLORS.white}]}>
+          Dari tokoh publik dan pemuka Agama.
+        </Text>
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={SIZES.opacity}
+            onPress={onPress}>
+            <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
+              Lihat Video
+            </Text>
+            <Icon name="play" size={25} color={COLORS.primary} />
+          </TouchableOpacity>
+          <View />
+        </View>
       </View>
+      <Image
+        source={require('../../assets/images/owner.png')}
+        resizeMode="contain"
+        style={styles.img}
+      />
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
     backgroundColor: COLORS.primary,
     paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
-  },
-  row: {
+    paddingVertical: 16,
+    marginHorizontal: 16,
+    borderRadius: 8,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    width: '40%',
+    marginTop: -70,
   },
-  img: {height: 28, width: 28, borderRadius: 40},
+  row: {flexDirection: 'row'},
+  button: {
+    backgroundColor: COLORS.white,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    borderRadius: 6,
+    marginTop: 16,
+  },
+  img: {
+    height: 100,
+    width: 100,
+  },
 });
 
 export default HomeHeader;

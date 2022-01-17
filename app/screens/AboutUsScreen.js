@@ -5,100 +5,88 @@ import {COLORS, SIZES, ICON, FONTS} from '../constants';
 
 const data = [
   {
-    id: 1,
-    name: 'dr. Farida Briani Sobri, SpB(K)Onk',
+    name: 'dr. Farida Briani Sobri, SpB(K)Onk.',
     job: 'Spesialis Konsultan Bedah Onkologi',
     desc: 'Pemilik HAKI MammaSIP',
   },
   {
-    id: 2,
     name: 'dr. Adang Bachtiar, MPH., DSc.',
     job: 'Pakar Ilmu Kesehatan Masyarakat',
     desc: 'Pembimbing/Promotor',
   },
   {
-    id: 3,
     name: 'Dr. dr. Sonar Soni Panigoro, SpB(K)Onk., M.Epid., MARS.',
     job: 'Spesialis Konsultan Bedah Onkologi',
     desc: 'Pembimbing/Ko-Promotor',
   },
   {
-    id: 4,
     name: 'Dr. dra. Dumilah Ayuningtyas, MARS.',
     job: 'Pakar Ilmu Kesehatan Masyarakat',
     desc: 'Pembimbing/Ko-Promotor',
   },
   {
-    id: 5,
     name: 'dr. IGN Gunawan Wibisana, Sp.B.(K)Onk.',
     job: 'Pakar Ilmu Onkologi',
   },
   {
-    id: 6,
     name: 'dr. Maelissa Pramaningasih, SpB.',
     job: 'Pakar/Praktisi Bedah Umum',
   },
   {
-    id: 7,
     name: 'dr. Zulhijrian Noor',
     name2: 'dr. Ripandi Yuspa',
     name3: 'dr. Shafira Diani Putri',
     job: 'Pakar/Praktisi Kedokteran Umum dan Penyuluhan',
   },
   {
-    id: 9,
-    name: 'Fajriati M. Badrudin, S.Psi., Psikolog',
+    name: 'Fajriati M. Badrudin, S.Psi., Psikolog.',
     job: 'Pakar Psikologi',
   },
   {
-    id: 10,
-    name: 'Yayat Ruhiat, S.Sos',
+    name: 'Yayat Ruhiat, S.Sos.',
     job: 'Pakar Komunikasi Pemasaran',
   },
   {
-    id: 11,
     name: 'Dedy Aswan, S. Pd., M. Pd.',
     job: 'Pakar Ilmu Pendidikan',
   },
   {
-    id: 12,
     name: 'Muhammad Khidir, Lc. MA.',
     job: 'Pakar Ilmu Agama',
   },
   {
-    id: 13,
     name: 'dr. Wulyo Rajabto, Sp.PD., KHOM.',
     job: 'Pakar Materi',
   },
   {
-    id: 14,
     name: 'dr. Rulliana Agustin, M.Med.Ed.',
     job: 'Pakar Desain Instruksional',
   },
   {
-    id: 15,
     name: 'Dr. Cecep Kustandi, M.Pd.',
     job: 'Pakar Media',
   },
   {
-    id: 16,
-    name: 'PT. Saiber Dunia Imaji',
+    name: 'PT. Saiber Dunia Imaji.',
     job: 'Developer IT',
   },
   {
-    id: 17,
-    name: 'PT. Teknologi Informasi MEDIMEDI',
+    name: 'dr. Hardya Gustada Hikmahrachim, M.Epid.,',
+    name2: 'dr. Cita Resti Anantia Putri.,',
+    name3: 'dr. Anggindita Diah Widihidayati.',
+    job: 'Tim Riset dan Data',
+  },
+  {
+    name: 'PT. Teknologi Informasi MEDIMEDI.',
     job: 'Kreator Video Medis',
   },
   {
-    id: 18,
-    name: 'KutipanX',
+    name: 'KutipanX.',
     job: 'Videografer',
   },
   {
-    id: 19,
-    name: 'Kania Indriani Rosep',
-    name2: 'Faris Nabhan Fahri',
+    name: 'Kania Indriani Rosep.,',
+    name2: 'Faris Nabhan Fahri.',
     job: 'Ilustrator',
   },
 ];
@@ -161,8 +149,8 @@ const AboutUsScreen = () => {
             </View>
             <View style={styles.side} />
           </View>
-          {data.map(item => (
-            <View style={styles.mBottom} key={item.id}>
+          {data.map((item, index) => (
+            <View style={styles.mBottom} key={Number(index + 1).toString()}>
               <Text
                 style={[
                   FONTS.textBold14,

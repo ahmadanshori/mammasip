@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-date-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {MainButton, TitleButton} from '../Buttons';
 import {COLORS, FONTS, SIZES} from '../../constants';
@@ -16,9 +16,9 @@ const SkriningModal = ({onClose, onAddPress, selected}) => {
       setActivity(value);
     }
   };
-  const onChange = (event, selectedDate) => {
+  const onChange = event => {
     setIsDate(false);
-    setDate(selectedDate);
+    setDate(event);
   };
 
   const handleButton = () => {
@@ -125,17 +125,18 @@ const SkriningModal = ({onClose, onAddPress, selected}) => {
           onPress={handleButton}
         />
       </TouchableOpacity>
-      {isDate ? (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date || new Date()}
-          mode={'date'}
-          is24Hour={true}
-          display="default"
-          maximumDate={new Date()}
-          onChange={onChange}
-        />
-      ) : null}
+      <DatePicker
+        modal
+        open={isDate}
+        title="Pilih Tanggal"
+        date={date || new Date()}
+        onConfirm={onChange}
+        onCancel={() => {
+          setIsDate(false);
+        }}
+        mode="date"
+        maximumDate={new Date()}
+      />
     </TouchableOpacity>
   );
 };

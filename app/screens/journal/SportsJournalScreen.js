@@ -9,8 +9,6 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {VictoryBar, VictoryChart, VictoryTheme} from 'victory-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
@@ -29,8 +27,8 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 const SportsJournalScreen = () => {
   const {token, user, setLoading} = useContext(AppContext);
   const [isActivity, setIsActivity] = useState(false);
-  const [time, setTime] = useState(null);
-  const [isCalendar, setIsCalendar] = useState(false);
+  // const [time, setTime] = useState(null);
+  // const [isCalendar, setIsCalendar] = useState(false);
   const [isLoad, setIsLoad] = useState(true);
   const [journalData, setJournalData] = useState(null);
   const [error, setError] = useErrorHandler();
@@ -80,10 +78,6 @@ const SportsJournalScreen = () => {
     [token, setLoading, user.id_user, setError],
   );
 
-  const onChange = (event, selectedDate) => {
-    setIsCalendar(false);
-    setTime(selectedDate);
-  };
   const handleRefresh = useCallback(() => {
     setError();
     setIsLoad(true);
@@ -95,6 +89,10 @@ const SportsJournalScreen = () => {
   // const handleCloseReminder = () => {
   //   setIsReminder(false);
   //   setTime(null);
+  // };
+  // const onChange = event => {
+  //   setIsCalendar(false);
+  //   setTime(event);
   // };
 
   return (
@@ -193,6 +191,13 @@ const SportsJournalScreen = () => {
         </ScrollView>
       )}
 
+      {isActivity && (
+        <ActivityModal
+          onClose={() => setIsActivity(false)}
+          onAddPress={handleAddActivity}
+        />
+      )}
+
       {/* {isReminder && (
         <ReminderModals
           onCalendar={() => setIsCalendar(true)}
@@ -201,22 +206,7 @@ const SportsJournalScreen = () => {
           onClose={handleCloseReminder}
         />
       )} */}
-      {isActivity && (
-        <ActivityModal
-          onClose={() => setIsActivity(false)}
-          onAddPress={handleAddActivity}
-        />
-      )}
-      {isCalendar && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={time || new Date()}
-          mode={'time'}
-          is24Hour={true}
-          display="default"
-          onChange={onChange}
-        />
-      )}
+
       {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>

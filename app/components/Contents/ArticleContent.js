@@ -11,26 +11,17 @@ const ArticleContent = ({data, onArticle}) => {
   const html = `${data.article.abstractArticle}`;
   return (
     <View style={styles.container}>
-      {data?.kata_pengantar && (
-        <View style={styles.wrapper}>
-          <Ionicons
-            name="alert-circle-outline"
-            size={16}
-            color={COLORS.white}
-            style={styles.margin}
-          />
-          <Text style={[FONTS.text10, {color: COLORS.white, flex: 1}]}>
-            {data.kata_pengantar}
-          </Text>
-          {data.flag_important === 1 && (
-            <Image
-              resizeMode="contain"
-              source={require('../../assets/icons/logo.gif')}
-              style={styles.logo}
-            />
-          )}
-        </View>
-      )}
+      <View style={styles.box}>
+        <Image
+          source={require('../../assets/images/ayla.png')}
+          style={styles.icon}
+        />
+        <Text style={[FONTS.text10, {flex: 1, color: COLORS.white}]}>
+          Semoga Sahabat MammaSIP paham ya semua informasi sebelumnya. Untuk
+          Sahabat yang ingin membaca informasi yang lebih lengkap dan detil,
+          silahkan buka artikel di bawah ini.
+        </Text>
+      </View>
       <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
         {data.article?.nameArticle}
       </Text>
@@ -38,6 +29,41 @@ const ArticleContent = ({data, onArticle}) => {
         Dipublikasi pada{' '}
         {formatDate(data.article.createdDate, 'dd MMMM yyyy HH:mm')}
       </Text>
+      {data?.kata_pengantar && (
+        <View
+          style={[
+            styles.wrapper,
+            {
+              backgroundColor:
+                data.flag_important === 1 ? COLORS.darkYellow : COLORS.primary,
+            },
+          ]}>
+          <Ionicons
+            name="alert-circle-outline"
+            size={16}
+            color={data.flag_important === 1 ? COLORS.primary : COLORS.white}
+            style={styles.margin}
+          />
+          <Text
+            style={[
+              FONTS.text10,
+              {
+                color:
+                  data.flag_important === 1 ? COLORS.primary : COLORS.white,
+                flex: 1,
+              },
+            ]}>
+            {data.kata_pengantar}
+          </Text>
+          {data.flag_important === 1 && (
+            <Image
+              resizeMode="contain"
+              source={require('../../assets/icons/logo.png')}
+              style={styles.logo}
+            />
+          )}
+        </View>
+      )}
       <RenderHtml
         contentWidth={SIZES.width}
         source={{
@@ -86,19 +112,28 @@ const styles = StyleSheet.create({
     borderColor: COLORS.separator,
     marginHorizontal: 16,
   },
+  box: {
+    backgroundColor: COLORS.primary,
+    padding: 16,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  icon: {height: 75, width: 75, marginRight: 8},
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginTop: 12,
     backgroundColor: COLORS.primary,
-    padding: 6,
+    padding: 12,
     borderRadius: 6,
     width: '100%',
   },
   margin: {
     marginRight: 6,
   },
-  logo: {height: 50, width: 50},
+  logo: {height: 70, width: 70},
 });
 
 export default ArticleContent;

@@ -22,6 +22,7 @@ import {getRoomTypeByIdAPI, getBookAPI, getVideoPageAPI} from '../../api/room';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
+import {OutlineButton} from '../../components/Buttons';
 
 const BungaRampaiScreen = ({navigation, route}) => {
   const {id} = route.params;
@@ -91,16 +92,6 @@ const BungaRampaiScreen = ({navigation, route}) => {
   );
 
   const handleBookRecommendation = useCallback(async event => {
-    // const supported = await Linking.canOpenURL(event?.urlBook);
-    // if (supported) {
-    //   await Linking.openURL(event?.urlBook);
-    // } else {
-    //   dropdownalert.alertWithType(
-    //     'warn',
-    //     '',
-    //     'website salah atau sedang dalam perbaikan!!',
-    //   );
-    // }
     await Linking.openURL(event?.urlBook);
   }, []);
 
@@ -340,29 +331,22 @@ const BungaRampaiScreen = ({navigation, route}) => {
                 <BookItem
                   key={item.idBook}
                   title={item.nameBook}
-                  // source={item.urlBanner}
                   isImage={false}
                   date={item.year}
                   uploadDate={item.createdDate}
                   publisher={item.publisherBook}
                   author={item.authorBook}
                   onPress={() => handleBookRecommendation(item)}
+                  imgStyle={styles.book}
+                  style={styles.containerBook}
                 />
               ))}
-              <TouchableOpacity
-                style={styles.seeAll}
-                activeOpacity={SIZES.opacity}
-                onPress={() => onSeeAll('Buku Rekomendasi', 3)}>
-                <Icon name="rightcircle" size={26} color={COLORS.primary} />
-                <Text
-                  style={[
-                    FONTS.textBold10,
-                    {color: COLORS.primary, marginTop: 8},
-                  ]}>
-                  Lihat Semua
-                </Text>
-              </TouchableOpacity>
             </View>
+            <OutlineButton
+              title={'Lihat Semua'}
+              style={styles.body}
+              onPress={() => onSeeAll('Buku Rekomendasi', 3)}
+            />
           </View>
         </ScrollView>
       )}
@@ -393,6 +377,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   row: {flexDirection: 'row'},
+  containerBook: {width: '48%'},
+  book: {width: '48%', height: SIZES.width2},
 });
 
 export default BungaRampaiScreen;

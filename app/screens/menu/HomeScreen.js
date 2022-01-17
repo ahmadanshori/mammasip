@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -20,12 +20,12 @@ import {
 } from '@react-native-google-signin/google-signin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import env from 'react-native-config';
+import {Container} from '../../components/Container';
 import {HomeHeader} from '../../components/Headers';
-import Banner from '../../components/Banner';
 import {HomeItem} from '../../components/Items';
 import {MainButton} from '../../components/Buttons';
 import {LoadingComponent} from '../../components/Loadings';
-import {UpdateModal} from '../../components/Modals';
+import {HomeModal, UpdateModal} from '../../components/Modals';
 import {dropdownalert} from '../../components/AlertProvider';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getRoomAPI} from '../../api/room';
@@ -42,9 +42,11 @@ GoogleSignin.configure({
 const HomeScreen = ({navigation}) => {
   const {user, token, onesignalId, setOnesignalId, setToken, setUser} =
     useContext(AppContext);
+  const interactionRef = useRef();
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [roomData, setRoomData] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isInteraction, setIsInteraction] = useState(false);
   const [error, setError] = useErrorHandler();
 
   const OneSignalDevice = async () => {
@@ -149,6 +151,11 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
+  const interactionHandler = () => {
+    setIsInteraction(false);
+    interactionRef.current.scrollTo({y: 320});
+  };
+
   const handleRefresh = () => {
     setError();
     setLoading({get: false, refresh: true});
@@ -160,78 +167,72 @@ const HomeScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <Container>
       <SafeAreaView style={{backgroundColor: COLORS.primary}} />
-      <HomeHeader data={user} />
-      {loading.get ? (
-        <LoadingComponent />
-      ) : (
-        <ScrollView
-          contentContainerStyle={{paddingBottom: 16}}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              onRefresh={handleRefresh}
-              refreshing={loading.refresh}
-            />
-          }>
-          <Banner />
-          <TouchableNativeFeedback
-            onPress={() => navigation.navigate('ImportantMessage')}>
-            <View style={styles.message}>
-              <ICON.lula height={60} width={60} />
-              <View>
-                <Text
-                  style={[
-                    FONTS.textBold16,
-                    {color: COLORS.white, textAlign: 'center'},
-                  ]}>
-                  PESAN PENTING
-                </Text>
-                <Text
-                  style={[
-                    FONTS.text12,
-                    {color: COLORS.white, textAlign: 'center'},
-                  ]}>
-                  Lihat Video
-                </Text>
-              </View>
-              <ICON.deddy height={60} width={60} />
-            </View>
-          </TouchableNativeFeedback>
-          <View style={styles.box}>
-            <Image
-              source={require('../../assets/images/welcome.jpg')}
-              style={styles.img}
-            />
+      <ScrollView
+        contentContainerStyle={{paddingBottom: 16}}
+        showsVerticalScrollIndicator={false}
+        ref={ref => (interactionRef.current = ref)}
+        refreshControl={
+          <RefreshControl
+            onRefresh={handleRefresh}
+            refreshing={loading.refresh}
+          />
+        }>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => setIsInteraction(true)}>
+          <Image
+            source={require('../../assets/images/home.png')}
+            style={styles.homeImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+        <HomeHeader onPress={() => navigation.navigate('ImportantMessage')} />
+        {loading.get ? (
+          <View style={styles.loading}>
+            <LoadingComponent />
           </View>
+        ) : (
           <View style={styles.box}>
-            <Text
-              style={[
-                FONTS.textBold14,
-                {color: COLORS.black, marginBottom: 16},
-              ]}>
-              Ruang MammaSIP
-            </Text>
-            {roomData?.map(item => (
-              <HomeItem
-                data={item}
-                key={item.id_ruang}
-                onPress={() => handleNavigator(item)}
-                colorId={item.flag_mobile_color}
-              />
-            ))}
-            <View style={styles.aboutUsWrapper}>
-              <TouchableOpacity
-                style={styles.aboutUs}
-                activeOpacity={1}
-                onPress={() => navigation.navigate('AboutUs')}>
-                <Text style={[FONTS.textBold18, {color: COLORS.primary}]}>
-                  Tentang Kami
-                </Text>
-              </TouchableOpacity>
+            <View style={styles.title}>
+              <Text
+                style={[
+                  FONTS.textBold16,
+                  {color: COLORS.black, textAlign: 'center'},
+                ]}>
+                Ruang-ruang MammaSIP
+              </Text>
+              <Text
+                style={[
+                  FONTS.text12,
+                  {color: COLORS.black, textAlign: 'center', marginBottom: 16},
+                ]}>
+                Ayo klik menu dibawah untuk tahu lebih banyak tentang kesehatan
+                payudara Anda.
+              </Text>
             </View>
-
+            <View style={styles.list}>
+              {roomData?.map(item => (
+                <HomeItem
+                  data={item}
+                  key={item.id_ruang}
+                  onPress={() => handleNavigator(item)}
+                  colorId={item.flag_mobile_color}
+                />
+              ))}
+            </View>
+            <View style={styles.aboutUsWrapper}>
+              <MainButton
+                title="Tentang Kami"
+                onPress={() => navigation.navigate('AboutUs')}
+              />
+              <MainButton
+                title="Agenda Pertemuan"
+                style={styles.margin}
+                onPress={() => navigation.navigate('AboutUs')}
+              />
+            </View>
             {!token ? (
               <View style={styles.footer}>
                 <Text
@@ -281,50 +282,40 @@ const HomeScreen = ({navigation}) => {
               </View>
             ) : null}
           </View>
-        </ScrollView>
-      )}
+        )}
+      </ScrollView>
+      <HomeModal visible={isInteraction} onPresBack={interactionHandler} />
       <UpdateModal visible={isUpdate} onPress={hanldeUpdateGoogle} />
       {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  message: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: COLORS.secondary,
-    marginHorizontal: 16,
-    padding: 12,
-    borderRadius: 8,
-  },
+  homeImage: {width: '100%', height: SIZES.width / 1.64},
+  loading: {marginTop: 60},
   box: {paddingHorizontal: 16},
-  img: {
-    height: SIZES.width2,
-    width: '100%',
-    borderRadius: 8,
-    marginVertical: 16,
+  title: {marginVertical: 36, paddingHorizontal: 16},
+  footer: {
+    paddingTop: 24,
+    marginTop: 32,
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderColor: COLORS.separator,
   },
-  footer: {marginTop: 52, alignItems: 'center'},
   login: {flexDirection: 'row', alignItems: 'center', padding: 16},
+  list: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
   aboutUsWrapper: {
     marginTop: 24,
     paddingTop: 32,
     borderTopWidth: 1,
-    borderColor: COLORS.primary,
+    borderColor: COLORS.separator,
   },
-  aboutUs: {
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: COLORS.primary,
-  },
-  logo: {height: 50, width: 50, marginRight: 8},
   authButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -349,6 +340,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: COLORS.black,
   },
+  margin: {marginTop: 16},
   or: {color: COLORS.black, width: '20%', textAlign: 'center'},
 });
 

@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   wrapper: {backgroundColor: COLORS.background, height: '100%'},
-  background: {height: SIZES.width2 - 34, width: SIZES.width},
+  background: {height: SIZES.width2 - 34, width: '100%'},
   textWrapper: {
     justifyContent: 'center',
     alignItems: 'center',

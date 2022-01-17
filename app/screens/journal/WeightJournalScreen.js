@@ -8,8 +8,6 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import DateTimePicker from '@react-native-community/datetimepicker';
-
 import {Container} from '../../components/Container';
 import {MainButton} from '../../components/Buttons';
 import {HeaderTitle} from '../../components/Headers';
@@ -31,14 +29,10 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 const WeightJournalScreen = ({navigation}) => {
   const {token, user, setLoading} = useContext(AppContext);
   const [isActivity, setIsActivity] = useState(false);
-  const [time, setTime] = useState(null);
-  const [isCalendar, setIsCalendar] = useState(false);
   const [isLoad, setIsLoad] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useErrorHandler();
 
-  // const [foodSuggestion, setFoodSuggestion] = useState(null);
-  // const [isReminder, setIsReminder] = useState(false);
   useEffect(() => {
     getInitialData();
   }, []);
@@ -72,28 +66,12 @@ const WeightJournalScreen = ({navigation}) => {
     [token, user?.id_user, setError, setLoading],
   );
 
-  const onChange = (event, selectedDate) => {
-    setIsCalendar(false);
-    setTime(selectedDate);
-  };
   const handleRefresh = () => {
     setError();
     setIsLoad(true);
     getInitialData();
   };
-  // const handleNavigation = useCallback((val, param) => {
-  //   navigation.navigate(val, param);
-  // }, []);
-  // const handleFoodSuggestion = value => {
-  //   setFoodSuggestion(value);
-  // };
-  // const handleReminder = () => {
-  //   setIsReminder(false);
-  // };
-  // const handleCloseReminder = () => {
-  //   setIsReminder(false);
-  //   setTime(null);
-  // };
+
   return (
     <Container>
       <HeaderTitle title="Jurnal berat badan Anda" />
@@ -148,11 +126,6 @@ const WeightJournalScreen = ({navigation}) => {
                 <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
               </TouchableOpacity>
             </View>
-            {/* <Reminder
-            onPress={() => setIsReminder(true)}
-            time={time}
-            title="Reminder Harian Aktif"
-          /> */}
             {data?.jurnal_imt_kondisi_terakhir ? (
               <Image
                 resizeMode="contain"
@@ -213,16 +186,7 @@ const WeightJournalScreen = ({navigation}) => {
           onAddPress={handleCreateJournal}
         />
       )}
-      {isCalendar && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={time || new Date()}
-          mode={'time'}
-          is24Hour={true}
-          display="default"
-          onChange={onChange}
-        />
-      )}
+
       {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
