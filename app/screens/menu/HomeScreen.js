@@ -30,7 +30,7 @@ import {dropdownalert} from '../../components/AlertProvider';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getRoomAPI} from '../../api/room';
 import {loginGoogleAPI} from '../../api/auth';
-import {FONTS, COLORS, ICON, SIZES} from '../../constants';
+import {FONTS, COLORS, SIZES} from '../../constants';
 import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
 
@@ -40,7 +40,7 @@ GoogleSignin.configure({
 });
 
 const HomeScreen = ({navigation}) => {
-  const {user, token, onesignalId, setOnesignalId, setToken, setUser} =
+  const {token, onesignalId, setOnesignalId, setToken, setUser} =
     useContext(AppContext);
   const interactionRef = useRef();
   const [loading, setLoading] = useState({get: true, refresh: false});
@@ -189,6 +189,7 @@ const HomeScreen = ({navigation}) => {
           />
         </TouchableOpacity>
         <HomeHeader onPress={() => navigation.navigate('ImportantMessage')} />
+
         {loading.get ? (
           <View style={styles.loading}>
             <LoadingComponent />

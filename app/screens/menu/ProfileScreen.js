@@ -24,7 +24,8 @@ const ProfileScreen = ({navigation}) => {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
     }
-    await AsyncStorage.clear();
+    const keys = ['user', 'onesignal', 'isGoogle'];
+    await AsyncStorage.multiRemove(keys);
     setToken(null);
     setUser(null);
     navigation.navigate('HomeTab');

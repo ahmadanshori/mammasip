@@ -16,6 +16,7 @@ export default () => {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [onesignalId, setOnesignalId] = useState(null);
+  const [onboarding, setOnboarding] = useState(null);
 
   const OneSignalDevice = async () => {
     OneSignal.setLogLevel(6, 0);
@@ -48,6 +49,8 @@ export default () => {
             user,
             onesignalId,
             setOnesignalId,
+            setOnboarding,
+            onboarding,
           }}>
           <StatusBar
             backgroundColor={COLORS.primary}

@@ -6,16 +6,19 @@ import {COLORS, FONTS, SIZES} from '../constants';
 import {AppContext} from '../index';
 
 const SplashScreen = () => {
-  const {setUser, setToken, setOnesignalId} = useContext(AppContext);
+  const {setUser, setToken, setOnesignalId, setOnboarding} =
+    useContext(AppContext);
 
   useEffect(() => {
     const loadData = async () => {
       const jsonUser = await AsyncStorage.getItem('user');
       const userObject = jsonUser ? JSON.parse(jsonUser) : null;
       const onesignal = await AsyncStorage.getItem('onesignal');
+      const onboard = await AsyncStorage.getItem('onboard');
       setToken(userObject?.token);
       setUser(userObject?.user);
       setOnesignalId(onesignal);
+      setOnboarding(onboard || null);
     };
     loadData();
   }, []);

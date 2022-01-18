@@ -59,6 +59,7 @@ import CaloriesDetailScreen from '../screens/CaloriesDetailScreen';
 import ArticleScreen from '../screens/ArticleScreen';
 import AboutUsScreen from '../screens/AboutUsScreen';
 import ImageScreen from '../screens/ImageScreen';
+import OnboardingScreen from '../screens/OnboardingScreen';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -195,9 +196,8 @@ const TabNavigator = () => {
 };
 
 const Stack = createStackNavigator();
-
 export default function App() {
-  //   const {token, background, photo} = useContext(AppContext);
+  const {onboarding} = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -207,6 +207,9 @@ export default function App() {
   }, []);
   if (isLoading) {
     return <SplashScreen />;
+  }
+  if (!onboarding) {
+    return <OnboardingScreen />;
   }
 
   return (
