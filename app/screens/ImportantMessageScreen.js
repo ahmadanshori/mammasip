@@ -28,8 +28,8 @@ const ImportantMessageScreen = ({navigation}) => {
   const getInitialData = async () => {
     try {
       const res = await getImportantMessageAPI(token);
-      // const resTestimonial = await getTestimoniAPI(token);
       setData(res.data.data.media);
+      // const resTestimonial = await getTestimoniAPI(token);
       // setTestimonial(resTestimonial.data.data);
     } catch (e) {
       setError(e);
