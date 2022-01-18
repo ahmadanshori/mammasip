@@ -2,21 +2,21 @@ import {COLORS} from '../constants';
 
 export default id => {
   if (id === 1) {
-    return COLORS.darkBlue;
+    return '#701E70';
   } else if (id === 2) {
     return '#EA39A3';
   } else if (id === 3) {
-    return COLORS.red;
+    return '#F2666E';
   } else if (id === 4) {
-    return COLORS.darkRed;
+    return '#FFA4A3';
   } else if (id === 5) {
-    return COLORS.orange;
+    return '#E17FA8';
   } else if (id === 6) {
-    return COLORS.green;
+    return '#DA6CD3';
   } else if (id === 7) {
-    return COLORS.primary;
+    return '#AE72DD';
   } else if (id === 8) {
-    return '#19B09E';
+    return '#F17087';
   } else {
     return COLORS.darkBlue;
   }

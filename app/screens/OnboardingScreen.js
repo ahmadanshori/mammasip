@@ -28,7 +28,7 @@ const OnboardingScreng = () => {
               ),
               title: 'Hi Sahabat MammaSIP',
               subtitle:
-                'MammaSIP adalah media edukasi terpadu yang memberikan informasi lengkap, akurat dan bermanfaat mengenai kanker payudara.',
+                'MammaSIP adalah media edukasi terpadu yang memberikan informasi lengkap, akurat dan bermanfaat mengenai Kanker Payudara.',
             },
             {
               backgroundColor: COLORS.primary,
@@ -40,7 +40,7 @@ const OnboardingScreng = () => {
               ),
               title: 'Untuk Sahabat Yang Sedang Berjuang!',
               subtitle:
-                'MammaSIP diperuntukkan kepada masyarakat awam, penyintas kanker payudara, keluarga dan lingkungan terdekat penyintas serta tenaga dan penyuluh kesehatan.',
+                'MammaSIP diperuntukkan kepada masyarakat awam, penyintas Kanker Payudara, keluarga dan lingkungan terdekat penyintas serta tenaga dan penyuluh kesehatan.',
             },
             {
               backgroundColor: COLORS.primary,
