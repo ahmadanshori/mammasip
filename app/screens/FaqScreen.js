@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import debounce from 'lodash/debounce';
 import {Container} from '../components/Container';
@@ -9,8 +9,10 @@ import {NoInternet, ErrorServer} from '../components/Errors';
 import {searchFaqAPI} from '../api/faq';
 import {COLORS, FONTS} from '../constants';
 import useErrorHandler from '../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
-const FaqScreen = ({navigation}) => {
+const FaqScreen = () => {
+  const {token} = useContext(AppContext);
   const [search, setSearch] = useState('');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,7 +32,7 @@ const FaqScreen = ({navigation}) => {
     try {
       const formData = new FormData();
       formData.append('search', text);
-      const resFaq = await searchFaqAPI(formData);
+      const resFaq = await searchFaqAPI(token, formData);
       setData(resFaq.data.data);
     } catch (e) {
       setError(e);

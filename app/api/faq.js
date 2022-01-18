@@ -1,5 +1,7 @@
-import {client} from './';
+import {client, createHeader} from './';
 
-export const searchFaqAPI = data => client.post('/faq/search', data);
+export const searchFaqAPI = (token, data) =>
+  client.post('/faq/search', data, createHeader(token));
 
-export const searchAllDataAPI = data => client.post('/telusuri', data);
+export const searchAllDataAPI = (token, data) =>
+  client.post('/telusuri', data, createHeader(token));

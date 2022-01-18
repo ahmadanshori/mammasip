@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, FlatList} from 'react-native';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
@@ -12,8 +12,10 @@ import {
   // getTestimoniAPI
 } from '../api/room';
 import useErrorHandler from '../hooks/useErrorHandler';
+import {AppContext} from '../index';
 
-const ImportantMessageScreen = ({route, navigation}) => {
+const ImportantMessageScreen = ({navigation}) => {
+  const {token} = useContext(AppContext);
   const [data, setData] = useState([]);
   // const [testimonial, setTestimonial] = useState([]);
   const [loading, setLoading] = useState({get: true, refresh: false});
@@ -25,8 +27,8 @@ const ImportantMessageScreen = ({route, navigation}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getImportantMessageAPI();
-      // const resTestimonial = await getTestimoniAPI();
+      const res = await getImportantMessageAPI(token);
+      // const resTestimonial = await getTestimoniAPI(token);
       setData(res.data.data.media);
       // setTestimonial(resTestimonial.data.data);
     } catch (e) {

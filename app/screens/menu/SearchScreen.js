@@ -78,14 +78,14 @@ const SearchScreen = ({navigation}) => {
     try {
       const formData = new FormData();
       formData.append('search', search);
-      const resSearch = await searchAllDataAPI(formData);
+      const resSearch = await searchAllDataAPI(token, formData);
       setSearchData(resSearch.data.data);
     } catch (e) {
       setError(e);
     } finally {
       setLoading({get: false, refresh: false});
     }
-  }, [search, isSearch, setError]);
+  }, [search, token, isSearch, setError]);
 
   const handleNavigatorSearch = async (event, type) => {
     if (type === 1) {

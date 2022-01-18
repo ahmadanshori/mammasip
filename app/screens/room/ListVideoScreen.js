@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, FlatList} from 'react-native';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
@@ -7,9 +7,11 @@ import {VideoDetailItem} from '../../components/Items';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getVideoAPI} from '../../api/room';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const ListVideoScreen = ({navigation, route}) => {
   const {id} = route.params;
+  const {token} = useContext(AppContext);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({
     get: true,
@@ -23,7 +25,7 @@ const ListVideoScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      const resVideo = await getVideoAPI(id);
+      const resVideo = await getVideoAPI(token, id);
       setData(resVideo.data.data.media);
     } catch (e) {
       setError(e);

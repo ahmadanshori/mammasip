@@ -18,7 +18,7 @@ import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
 
 const CancerQuestionScreen = ({route, navigation}) => {
-  const {setLoading} = useContext(AppContext);
+  const {setLoading, token} = useContext(AppContext);
   const {age, gender} = route.params;
   const [page, setPage] = useState(1);
   const [isFinish, setIsFinish] = useState(false);
@@ -54,7 +54,7 @@ const CancerQuestionScreen = ({route, navigation}) => {
     Keyboard.dismiss();
     setLoading(true);
     try {
-      const res = await getBmiAPI(field);
+      const res = await getBmiAPI(token, field);
       setImt({
         page5: res.data.data.cap_en === 'Normal Weight' ? true : false,
         page6: val,

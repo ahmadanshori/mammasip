@@ -1,4 +1,10 @@
-import React, {useEffect, useState, useMemo, useCallback} from 'react';
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  useContext,
+} from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,9 +23,11 @@ import {LoadingComponent} from '../../components/Loadings';
 import PeopleIcon from '../../assets/icons/people1.svg';
 import {getQuizByIdAPI} from '../../api/quiz';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const QuizScreen = ({route}) => {
   const {id} = route.params;
+  const {token} = useContext(AppContext);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [select, setSelect] = useState(0);
@@ -33,7 +41,7 @@ const QuizScreen = ({route}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getQuizByIdAPI(id);
+      const res = await getQuizByIdAPI(token, id);
       setData(res.data.data);
     } catch (e) {
       setError(e);

@@ -42,9 +42,9 @@ const KnowYourSelfScreen = ({route, navigation}) => {
   const getInitialData = async () => {
     try {
       const res = await getRoomTypeByIdAPI(id, token);
-      const resVideo1 = await getVideoAPI(1);
-      const resVideo2 = await getVideoAPI(2);
-      const resHealtyCalories = await getHealtyCaloriesAPI();
+      const resVideo1 = await getVideoAPI(token, 1);
+      const resVideo2 = await getVideoAPI(token, 2);
+      const resHealtyCalories = await getHealtyCaloriesAPI(token);
       setData(res.data.data);
       setVideo1(resVideo1.data.data.media.slice(0, 4));
       setVideo2(resVideo2.data.data.media.slice(0, 4));

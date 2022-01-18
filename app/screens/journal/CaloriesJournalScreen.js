@@ -1,11 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {StyleSheet, ScrollView} from 'react-native';
 
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
@@ -14,8 +8,10 @@ import {LoadingComponent} from '../../components/Loadings';
 import {NoInternet, ErrorServer} from '../../components/Errors';
 import {getHealtyCaloriesAPI} from '../../api/healtyMenu';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const CaloriesJournalScreen = ({navigation}) => {
+  const {token} = useContext(AppContext);
   const [caloriesData, setCaloriesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useErrorHandler();
@@ -26,7 +22,7 @@ const CaloriesJournalScreen = ({navigation}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getHealtyCaloriesAPI();
+      const res = await getHealtyCaloriesAPI(token);
       setCaloriesData(res.data.data);
     } catch (e) {
       setError(e);

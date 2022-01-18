@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {Container} from '../components/Container';
@@ -8,9 +8,11 @@ import {NoInternet, ErrorServer} from '../components/Errors';
 import {getArticleByIdAPI} from '../api/article';
 import {SIZES} from '../constants';
 import useErrorHandler from '../hooks/useErrorHandler';
+import {AppContext} from '../index';
 
 const ArticleScreen = ({route}) => {
   const {id} = route.params;
+  const {token} = useContext(AppContext);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [error, setError] = useErrorHandler();
@@ -21,7 +23,7 @@ const ArticleScreen = ({route}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getArticleByIdAPI(id);
+      const res = await getArticleByIdAPI(token, id);
       setData(res.data.data[0]);
     } catch (e) {
       setError(e);

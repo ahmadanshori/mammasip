@@ -79,7 +79,7 @@ const HomeScreen = ({navigation}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getRoomAPI();
+      const res = await getRoomAPI(token);
       setRoomData(res.data.data);
     } catch (e) {
       setError(e);

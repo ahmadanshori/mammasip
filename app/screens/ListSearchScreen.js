@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, ActivityIndicator, FlatList} from 'react-native';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
@@ -8,9 +8,11 @@ import {NoInternet, ErrorServer} from '../components/Errors';
 import {getArticleAPI, getBookAPI} from '../api/article';
 import {COLORS} from '../constants';
 import useErrorHandler from '../hooks/useErrorHandler';
+import {AppContext} from '../index';
 
 const ListSearchScreen = ({navigation, route}) => {
   const {title} = route.params;
+  const {token} = useContext(AppContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState({
     get: true,
@@ -27,14 +29,14 @@ const ListSearchScreen = ({navigation, route}) => {
   const getInitialData = async () => {
     try {
       if (title === 'Buku') {
-        const resBook = await getBookAPI();
+        const resBook = await getBookAPI(token);
         setData(resBook.data.data.content);
         setQuery({
           totalPages: resBook.data.data.totalPages - 1,
           page: resBook.data.data.number,
         });
       } else {
-        const resArticle = await getArticleAPI();
+        const resArticle = await getArticleAPI(token);
         setData(resArticle.data.data.content);
         setQuery({
           totalPages: resArticle.data.data.totalPages - 1,
@@ -69,7 +71,7 @@ const ListSearchScreen = ({navigation, route}) => {
     if (query.page < query.totalPages) {
       setLoading(state => ({...state, nextPage: true}));
       try {
-        const resArticle = await getArticleAPI(query.page + 1);
+        const resArticle = await getArticleAPI(token, query.page + 1);
         setData([...data, ...resArticle.data.data.content]);
         setQuery({
           totalPages: resArticle.data.data.totalPages - 1,

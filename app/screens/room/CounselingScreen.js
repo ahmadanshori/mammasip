@@ -42,9 +42,9 @@ const CounselingScreen = ({navigation, route}) => {
     try {
       const res = await getRoomTypeByIdAPI(id, token);
       setRoomData(res.data.data);
-      const resBrowser = await getCounselingByIdAPI(1, 0, 2);
-      const resPowerpoint = await getCounselingByIdAPI(2, 0, 2);
-      const resPoster = await getCounselingByIdAPI(3, 0, 2);
+      const resBrowser = await getCounselingByIdAPI(token, 1, 0, 2);
+      const resPowerpoint = await getCounselingByIdAPI(token, 2, 0, 2);
+      const resPoster = await getCounselingByIdAPI(token, 3, 0, 2);
       setBrowserData(resBrowser.data.data.content);
       setPowerpointData(resPowerpoint.data.data.content);
       setPosterData(resPoster.data.data.content);

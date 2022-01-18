@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {ActivityIndicator, StyleSheet, FlatList} from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import {Container} from '../../components/Container';
@@ -11,9 +11,11 @@ import {getCounselingByIdAPI} from '../../api/penyuluhan';
 import DownloadModal from '../../components/Modals/DownloadModal';
 import {COLORS} from '../../constants';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import {AppContext} from '../../index';
 
 const CounselingListScreen = ({navigation, route}) => {
   const {counselingId, title} = route.params;
+  const {token} = useContext(AppContext);
   const [data, setData] = useState(null);
   const [isDownload, setIsDownload] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -30,7 +32,7 @@ const CounselingListScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      const res = await getCounselingByIdAPI(counselingId, 0, 20);
+      const res = await getCounselingByIdAPI(token, counselingId, 0, 20);
       setData(res.data.data);
     } catch (e) {
       setError(e);
@@ -91,6 +93,7 @@ const CounselingListScreen = ({navigation, route}) => {
       setLoading(state => ({...state, nextPage: true}));
       try {
         const res = await getCounselingByIdAPI(
+          token,
           counselingId,
           data.number + 1,
           20,

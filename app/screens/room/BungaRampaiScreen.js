@@ -44,11 +44,11 @@ const BungaRampaiScreen = ({navigation, route}) => {
     try {
       const res = await getRoomTypeByIdAPI(id, token);
       setRoomData(res.data.data);
-      const resBook = await getBookAPI(1, 0, 2);
-      const resJournal = await getBookAPI(2, 0, 2);
-      const resArticle = await getArticleAPI(0, 2);
-      const resVideo = await getVideoPageAPI(0, 2);
-      const resBookRecommendation = await getBookAPI(3, 0, 2);
+      const resBook = await getBookAPI(token, 1, 0, 2);
+      const resJournal = await getBookAPI(token, 2, 0, 2);
+      const resArticle = await getArticleAPI(token, 0, 2);
+      const resVideo = await getVideoPageAPI(token, 0, 2);
+      const resBookRecommendation = await getBookAPI(token, 3, 0, 2);
       setBook(resBook.data.data.content);
       setJournal(resJournal.data.data.content);
       setArticle(resArticle.data.data.content);

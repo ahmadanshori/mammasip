@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -21,7 +21,7 @@ import {LoadingComponent} from '../../components/Loadings';
 // import {getHealtyCaloriesByIdAPI} from '../../api/healtyMenu';
 import {getBmrAPI, getBmiAPI} from '../../api/calculator';
 // import caloriesCalculation from '../../libs/caloriesCalculation';
-// import {AppContext} from '../../index';
+import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
 // import WeightIcon from '../../assets/icons/weight.svg';
 // import FoodIcon from '../../assets/icons/food.svg';
@@ -31,7 +31,7 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 const CalculationDetailScreen = ({navigation, route}) => {
   const {type, field} = route.params;
   // const calculationId = route.params.calculationId || null;
-  // const {token} = useContext(AppContext);
+  const {token} = useContext(AppContext);
   // const [foodSuggestion, setFoodSuggestion] = useState(null);
   // const [calculationId, setCalculationId] = useState(null);
   const [data, setData] = useState(null);
@@ -70,7 +70,9 @@ const CalculationDetailScreen = ({navigation, route}) => {
   const getInitialData = async () => {
     try {
       const res =
-        type === 'BMR' ? await getBmrAPI(field) : await getBmiAPI(field);
+        type === 'BMR'
+          ? await getBmrAPI(token, field)
+          : await getBmiAPI(token, field);
       setData(res.data.data);
     } catch (e) {
       setError(e);

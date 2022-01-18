@@ -1,9 +1,9 @@
 import {client, createHeader} from './';
 
-export const getBmiAPI = data => {
-  return client.post('/simulate/kalkulator-bmi', data);
+export const getBmiAPI = (token, data) => {
+  return client.post('/simulate/kalkulator-bmi', data, createHeader(token));
 };
 
-export const getBmrAPI = data => {
-  return client.post('/simulate/kalkulator-kalori', data);
+export const getBmrAPI = (token, data) => {
+  return client.post('/simulate/kalkulator-kalori', data, createHeader(token));
 };

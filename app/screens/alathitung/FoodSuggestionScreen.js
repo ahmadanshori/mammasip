@@ -62,7 +62,7 @@ const FoodSuggestionScreen = ({navigation, route}) => {
 
   const getInitialData = async () => {
     try {
-      const resHealtyCalories = await getHealtyCaloriesAPI();
+      const resHealtyCalories = await getHealtyCaloriesAPI(token);
       setTotalCaloriesData(resHealtyCalories.data.data);
 
       if (calculationId) {

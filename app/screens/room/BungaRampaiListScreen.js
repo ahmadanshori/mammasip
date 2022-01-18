@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Linking, ActivityIndicator, StyleSheet, FlatList} from 'react-native';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
@@ -10,10 +10,12 @@ import {dropdownalert} from '../../components/AlertProvider';
 import {getArticleAPI} from '../../api/article';
 import {getBookAPI, getVideoPageAPI} from '../../api/room';
 import {COLORS} from '../../constants';
+import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
 
 const BungaRampaiListScreen = ({navigation, route}) => {
   const {type, title} = route.params;
+  const {token} = useContext(AppContext);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState({
     get: true,
@@ -30,11 +32,11 @@ const BungaRampaiListScreen = ({navigation, route}) => {
     try {
       let resData;
       if (type === 4) {
-        resData = await getArticleAPI();
+        resData = await getArticleAPI(token);
       } else if (type === 5) {
-        resData = await getVideoPageAPI();
+        resData = await getVideoPageAPI(token);
       } else {
-        resData = await getBookAPI(type);
+        resData = await getBookAPI(token, type);
       }
       setData(resData.data.data);
     } catch (e) {
@@ -109,11 +111,11 @@ const BungaRampaiListScreen = ({navigation, route}) => {
       try {
         let resData;
         if (type === 4) {
-          resData = await getArticleAPI(data.number + 1);
+          resData = await getArticleAPI(token, data.number + 1);
         } else if (type === 5) {
-          resData = await getVideoPageAPI(data.number + 1);
+          resData = await getVideoPageAPI(token, data.number + 1);
         } else {
-          resData = await getBookAPI(type, data.number + 1);
+          resData = await getBookAPI(token, type, data.number + 1);
         }
         setData({
           ...resData.data.data,
