@@ -189,7 +189,6 @@ const HomeScreen = ({navigation}) => {
           />
         </TouchableOpacity>
         <HomeHeader onPress={() => navigation.navigate('ImportantMessage')} />
-
         {loading.get ? (
           <View style={styles.loading}>
             <LoadingComponent />

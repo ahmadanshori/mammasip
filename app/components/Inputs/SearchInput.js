@@ -13,6 +13,7 @@ const SearchInput = ({
   keyboardType,
   onSubmitEditing,
   maxLength,
+  style = {},
 }) => {
   const [color, setColor] = useState(COLORS.border);
   const handleFocus = () => {
@@ -23,7 +24,12 @@ const SearchInput = ({
   };
 
   return (
-    <View style={[styles.wrapper, err ? styles.error : {borderColor: color}]}>
+    <View
+      style={[
+        styles.wrapper,
+        style,
+        err ? styles.error : {borderColor: color},
+      ]}>
       <TextInput
         style={styles.input}
         placeholder={placeholder}

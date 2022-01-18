@@ -1,17 +1,25 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ImageBackground,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import debounce from 'lodash/debounce';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {Container} from '../components/Container';
-import {HeaderTitle} from '../components/Headers';
 import {SearchInput} from '../components/Inputs';
 import Accordion from '../components/Accordion';
 import {NoInternet, ErrorServer} from '../components/Errors';
 import {searchFaqAPI} from '../api/faq';
-import {COLORS, FONTS} from '../constants';
+import {COLORS, FONTS, SIZES} from '../constants';
 import useErrorHandler from '../hooks/useErrorHandler';
-import {AppContext} from '../../index';
+import {AppContext} from '../index';
 
-const FaqScreen = () => {
+const FaqScreen = ({navigation}) => {
   const {token} = useContext(AppContext);
   const [search, setSearch] = useState('');
   const [data, setData] = useState([]);
@@ -49,20 +57,40 @@ const FaqScreen = () => {
 
   return (
     <Container>
-      <HeaderTitle back title="FAQ" />
-      <View style={styles.title}>
-        <Text style={[FONTS.textBold18, {color: COLORS.black}]}>
-          Tanya jawab sahabat mammaSIP
-        </Text>
-        <Text style={[FONTS.text12, {color: COLORS.black, marginBottom: 16}]}>
-          Cari dan temukan jawaban yang tepat!
-        </Text>
-        <SearchInput
-          placeholder="Cari topik pertanyaan"
-          value={search}
-          onChangeText={handleSearch}
-        />
-      </View>
+      <ImageBackground
+        source={require('../assets/images/ask.jpg')}
+        style={styles.background}>
+        <View style={styles.wrapper}>
+          <View style={styles.header}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                navigation.goBack();
+              }}
+              activeOpacity={SIZES.opacity}>
+              <Icon
+                name={Platform.OS === 'ios' ? 'left' : 'arrowleft'}
+                size={18}
+                color={COLORS.white}
+              />
+            </TouchableOpacity>
+            <View style={styles.w15} />
+          </View>
+          <View style={styles.textWrapper}>
+            <Text style={styles.title}>Tanya jawab sahabat mammaSIP</Text>
+            <Text style={styles.desc}>
+              Cari dan temukan jawaban yang tepat!
+            </Text>
+          </View>
+          <SearchInput
+            placeholder="Cari topik pertanyaan"
+            value={search}
+            onChangeText={handleSearch}
+            style={styles.search}
+          />
+        </View>
+      </ImageBackground>
+
       <FlatList
         // onEndReached={nextPage}
         // onEndReachedThreshold={0.5}
@@ -72,10 +100,7 @@ const FaqScreen = () => {
         keyExtractor={item => item.id_faq.toString()}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingHorizontal: 16,
-          paddingBottom: 16,
-        }}
+        contentContainerStyle={styles.list}
       />
       {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
@@ -84,11 +109,34 @@ const FaqScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  scroll: {paddingHorizontal: 16, paddingBottom: 16},
-  title: {
-    padding: 16,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  wrapper: {backgroundColor: COLORS.background, height: '100%'},
+  background: {height: SIZES.width2 - 16, width: '100%'},
+  textWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  button: {
+    width: '15%',
+    paddingVertical: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  w15: {width: '15%'},
+  scroll: {paddingHorizontal: 16, paddingBottom: 16},
+  title: {...FONTS.textBold16, color: COLORS.white, textAlign: 'center'},
+  desc: {...FONTS.text12, color: COLORS.white, textAlign: 'center'},
+  search: {marginHorizontal: 16, marginTop: 24},
+  list: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
   },
 });
 

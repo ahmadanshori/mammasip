@@ -12,14 +12,23 @@ const Accordion = ({title, desc}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={styles.button}
+        style={{
+          ...styles.button,
+          backgroundColor: isSelected ? COLORS.primary : COLORS.darkWhite,
+        }}
         onPress={handleButton}
         activeOpacity={1}>
-        <Text style={[FONTS.textBold12, styles.title]}>{title}</Text>
+        <Text
+          style={{
+            ...styles.title,
+            color: isSelected ? COLORS.white : COLORS.black,
+          }}>
+          {title}
+        </Text>
         <Icon
           name={isSelected ? 'up' : 'down'}
           size={14}
-          color={COLORS.black}
+          color={isSelected ? COLORS.white : COLORS.black}
           style={styles.icon}
         />
       </TouchableOpacity>
@@ -38,13 +47,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.darkWhite,
     padding: 12,
     borderRadius: 6,
     borderWidth: 1,
     borderColor: COLORS.border,
   },
-  title: {color: COLORS.black, marginRight: 8, flex: 1},
+  title: {...FONTS.textBold12, marginRight: 8, flex: 1},
   answerWrapper: {
     borderWidth: 1,
     borderRadius: 4,
