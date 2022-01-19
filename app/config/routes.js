@@ -9,11 +9,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SplashScreen from '../screens/SplashScreen';
 import VideoScreen from '../screens/VideoScreen';
 import RoomScreen from '../screens/RoomScreen';
-
 import FaqScreen from '../screens/FaqScreen';
-// import ListSearchScreen from '../screens/ListSearchScreen';
 import PdfScreen from '../screens/PdfScreen';
 import ImportantMessageScreen from '../screens/ImportantMessageScreen';
+import CaloriesDetailScreen from '../screens/CaloriesDetailScreen';
+import ArticleScreen from '../screens/ArticleScreen';
+import AboutUsScreen from '../screens/AboutUsScreen';
+import ImageScreen from '../screens/ImageScreen';
+import OnboardingScreen from '../screens/OnboardingScreen';
+import VideoDetailScreen from '../screens/VideoDetailScreen';
+import {AgendaScreen, AgendaDetailScreen} from '../screens/agenda';
 import {
   HomeScreen,
   AlatHitungScreen,
@@ -55,12 +60,6 @@ import {
   BungaRampaiListScreen,
   ListVideoScreen,
 } from '../screens/room';
-import CaloriesDetailScreen from '../screens/CaloriesDetailScreen';
-import ArticleScreen from '../screens/ArticleScreen';
-import AboutUsScreen from '../screens/AboutUsScreen';
-import ImageScreen from '../screens/ImageScreen';
-import OnboardingScreen from '../screens/OnboardingScreen';
-import VideoDetailScreen from '../screens/VideoDetailScreen';
 
 import {navigationRef, isMountedRef} from './RootNavigation';
 
@@ -232,12 +231,13 @@ export default function App() {
             component={ChangePasswordScreen}
             name="ChangePassword"
           />
+          <Stack.Screen component={AgendaScreen} name="Agenda" />
+          <Stack.Screen component={AgendaDetailScreen} name="AgendaDetail" />
           <Stack.Screen component={VideoScreen} name="Video" />
           <Stack.Screen component={RoomScreen} name="Room" />
           <Stack.Screen component={ListRoomScreen} name="ListRoom" />
           <Stack.Screen component={EditProfileScreen} name="EditProfile" />
           <Stack.Screen component={FaqScreen} name="Faq" />
-          {/* <Stack.Screen component={ListSearchScreen} name="ListSearch" /> */}
           <Stack.Screen component={PdfScreen} name="Pdf" />
           <Stack.Screen
             component={ImportantMessageScreen}
