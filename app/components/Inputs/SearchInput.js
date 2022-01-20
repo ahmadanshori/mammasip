@@ -44,7 +44,7 @@ const SearchInput = ({
         maxLength={maxLength}
       />
       <TouchableOpacity style={styles.buttonShow} onPress={onSubmitEditing}>
-        <Icon name={'search'} size={24} color={COLORS.primary} />
+        <Icon name={'search'} size={24} color={COLORS.gray} />
       </TouchableOpacity>
     </View>
   );

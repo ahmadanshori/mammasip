@@ -67,14 +67,14 @@ const data = [
     job: 'Pakar Media',
   },
   {
-    name: 'PT. Saiber Dunia Imaji.',
-    job: 'Developer IT',
-  },
-  {
     name: 'dr. Hardya Gustada Hikmahrachim, M.Epid.,',
     name2: 'dr. Cita Resti Anantia Putri.,',
     name3: 'dr. Anggindita Diah Widihidayati.',
     job: 'Tim Riset dan Data',
+  },
+  {
+    name: 'PT. Saiber Dunia Imaji.',
+    job: 'Developer IT',
   },
   {
     name: 'PT. Teknologi Informasi MEDIMEDI.',

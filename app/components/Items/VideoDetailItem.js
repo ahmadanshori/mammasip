@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
   shadowImg: {
     height: SIZES.width5 - 8,
     width: SIZES.width5 - 8,
-    // backgroundColor: COLORS.shadowPrimary,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',

@@ -230,7 +230,7 @@ const HomeScreen = ({navigation}) => {
               <MainButton
                 title="Agenda Pertemuan"
                 style={styles.margin}
-                onPress={() => navigation.navigate('AboutUs')}
+                onPress={() => navigation.navigate('Agenda')}
               />
             </View>
             {!token ? (

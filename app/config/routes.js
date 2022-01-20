@@ -18,6 +18,7 @@ import AboutUsScreen from '../screens/AboutUsScreen';
 import ImageScreen from '../screens/ImageScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import VideoDetailScreen from '../screens/VideoDetailScreen';
+import NewsScreen from '../screens/NewsScreen';
 import {AgendaScreen, AgendaDetailScreen} from '../screens/agenda';
 import {
   HomeScreen,
@@ -293,6 +294,7 @@ export default function App() {
           <Stack.Screen component={AboutUsScreen} name="AboutUs" />
           <Stack.Screen component={ImageScreen} name="Image" />
           <Stack.Screen component={VideoDetailScreen} name="VideoDetail" />
+          <Stack.Screen component={NewsScreen} name="News" />
         </>
       </Stack.Navigator>
     </NavigationContainer>

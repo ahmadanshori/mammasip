@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {Container} from '../../components/Container';
 import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
-import {ArticleItem} from '../../components/Items';
+import {ArticleItem, VideoDetailItem} from '../../components/Items';
 import ImportantMessage from '../../components/ImportantMessage';
 import DownloadModal from '../../components/Modals/DownloadModal';
 import {NoInternet, ErrorServer} from '../../components/Errors';
@@ -21,6 +21,12 @@ import {getRoomTypeByIdAPI} from '../../api/room';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
+
+const test = {
+  url: 'http://cdn.differencebetween.net/wp-content/uploads/2012/01/Difference-Between-Example-and-Sample.jpg',
+  kata_pengantar: 'aaa',
+  createdDate: new Date(),
+};
 
 const CounselingScreen = ({navigation, route}) => {
   const {id} = route.params;
@@ -230,6 +236,16 @@ const CounselingScreen = ({navigation, route}) => {
                 </TouchableOpacity>
               </View>
             </View>
+            <View style={styles.video}>
+              <Text style={styles.videoTitle}>Video Pilihan</Text>
+              <VideoDetailItem
+                // key={item.idMedia}
+                data={test}
+                // onPress={() =>
+                //   navigation.navigate('Video', {url: item.url_frame})
+                // }
+              />
+            </View>
           </View>
         </ScrollView>
       )}
@@ -265,6 +281,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     marginTop: 8,
   },
+  video: {marginVertical: 16},
+  videoTitle: {...FONTS.textBold14, marginBottom: 16},
 });
 
 export default CounselingScreen;

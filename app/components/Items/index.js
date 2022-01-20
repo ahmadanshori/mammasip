@@ -1,3 +1,4 @@
+import AgendaItem from './AgendaItem';
 import HomeItem from './HomeItem';
 import ProfileItem from './ProfileItem';
 import CalculatorItem from './CalculatorItem';
@@ -12,6 +13,7 @@ import TestimonialItem from './TestimonialItem';
 import CalorieItem from './CalorieItem';
 import RoomItem from './RoomItem';
 export {
+  AgendaItem,
   HomeItem,
   ProfileItem,
   CalculatorItem,

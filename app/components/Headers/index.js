@@ -4,11 +4,13 @@ import HeaderTitle from './HeaderTitle';
 import WeightCalculatorHeader from './WeightCalculatorHeader';
 import BackgroundHeader from './BackgroundHeader';
 import VideoHeader from './VideoHeader';
+import SearchHeader from './SearchHeader';
 export {
   HomeHeader,
   ProfileHeader,
   HeaderTitle,
   WeightCalculatorHeader,
-  VideoHeader,
   BackgroundHeader,
+  VideoHeader,
+  SearchHeader,
 };

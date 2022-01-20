@@ -30,6 +30,7 @@ const ListRoomScreen = ({route, navigation}) => {
   const getInitialData = async () => {
     try {
       const res = await getRoomTypeByIdAPI(id, token);
+      console.log(`res`, res);
       setData(res.data.data);
     } catch (e) {
       setError(e);
@@ -73,6 +74,7 @@ const ListRoomScreen = ({route, navigation}) => {
               <RoomItem
                 key={item.id_ruang}
                 title={item.nama_ruang}
+                source={item.url_picture_mobile}
                 onPress={() => onRoom(item.id_ruang)}
               />
             ))}
@@ -85,7 +87,7 @@ const ListRoomScreen = ({route, navigation}) => {
                   ]}>
                   Seputar Pendukung Pasien dan Penyintas
                 </Text>
-                <View style={styles.box}>
+                <View style={{...styles.box, backgroundColor: '#AE72DD'}}>
                   <Image
                     resizeMode="contain"
                     source={require('../../assets/images/cinta1.png')}
@@ -96,7 +98,7 @@ const ListRoomScreen = ({route, navigation}) => {
                     Kanker Payudara.
                   </Text>
                 </View>
-                <View style={styles.box}>
+                <View style={{...styles.box, backgroundColor: '#F2666E'}}>
                   <Image
                     resizeMode="contain"
                     source={require('../../assets/images/cinta2.png')}
@@ -106,7 +108,7 @@ const ListRoomScreen = ({route, navigation}) => {
                     Sikap Tepat Suami Pasien atau Penyintas Kanker Payudara.
                   </Text>
                 </View>
-                <View style={styles.box}>
+                <View style={{...styles.box, backgroundColor: '#FFA4A3'}}>
                   <Image
                     resizeMode="contain"
                     source={require('../../assets/images/cinta3.png')}
@@ -138,14 +140,13 @@ const styles = StyleSheet.create({
   },
   box: {
     padding: 24,
-    backgroundColor: '#DEEFE9',
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
   },
   img: {height: 70, width: 70, marginRight: 24},
-  flex: {flex: 1},
+  flex: {flex: 1, color: COLORS.white},
 });
 
 export default ListRoomScreen;
