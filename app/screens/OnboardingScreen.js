@@ -26,9 +26,9 @@ const OnboardingScreng = () => {
                   style={styles.img}
                 />
               ),
-              title: 'Hi Sahabat MammaSIP',
+              title: 'Salam Sahabat MammaSIP',
               subtitle:
-                'MammaSIP adalah media edukasi terpadu yang memberikan informasi lengkap, akurat dan bermanfaat mengenai Kanker Payudara.',
+                'MammaSIP adalah media edukasi terpadu yang memberikan informasi lengkap, akurat, dan bermanfaat mengenai Kanker Payudara.',
             },
             {
               backgroundColor: COLORS.primary,
@@ -38,9 +38,9 @@ const OnboardingScreng = () => {
                   style={styles.img}
                 />
               ),
-              title: 'Untuk Sahabat Yang Sedang Berjuang!',
+              title: 'Untuk Sahabat yang Sedang Berjuang!',
               subtitle:
-                'MammaSIP diperuntukkan kepada masyarakat awam, penyintas Kanker Payudara, keluarga dan lingkungan terdekat penyintas serta tenaga dan penyuluh kesehatan.',
+                'MammaSIP dapat dimanfaatkan oleh masyarakat awam, penyintas Kanker Payudara, keluarga dan lingkungan terdekat penyintas serta tenaga dan penyuluh kesehatan.',
             },
             {
               backgroundColor: COLORS.primary,
@@ -52,7 +52,7 @@ const OnboardingScreng = () => {
               ),
               title: 'Lengkap dan Informatif',
               subtitle:
-                'Banyak artikel dan jurnal tentang menjaga, menanggulangi, dan diagnosa dini pada payudaramu. dilengkapi dengan fitur memberikan menu makanan sehat dan jurnal jurnal kesehatan',
+                'Tersedia beragam artikel dan jurnal tentang menjaga kesehatan serta diagnosis dini dan penanggulangan Kanker Payudara. Dilengkapi dengan fitur kalkulator kesehatan dan jurnal pendukung kesehatan.',
             },
           ]}
         />

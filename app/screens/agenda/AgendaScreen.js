@@ -1,5 +1,12 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {StyleSheet, FlatList, Text, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  View,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import debounce from 'lodash/debounce';
 import {Container} from '../../components/Container';
 import {SearchHeader} from '../../components/Headers';
@@ -9,7 +16,7 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
 import {AgendaItem} from '../../components/Items';
 import {COLORS, FONTS, SIZES} from '../../constants';
-import {getAgendaAPI} from '../../api/agenda';
+import {getAgendaAPI, searchAgendaAPI} from '../../api/agenda';
 
 const AgendaScreen = ({navigation}) => {
   const {token} = useContext(AppContext);
@@ -29,7 +36,6 @@ const AgendaScreen = ({navigation}) => {
   const getInitalData = async () => {
     try {
       const res = await getAgendaAPI(token);
-      console.log('res', res);
       setData(res.data.data);
     } catch (e) {
       setError(e);
@@ -54,12 +60,12 @@ const AgendaScreen = ({navigation}) => {
     try {
       const formData = new FormData();
       formData.append('search', text);
-      // const resFaq = await searchFaqAPI(token, formData);
-      // setData(resFaq.data.data);
+      const res = await searchAgendaAPI(token, formData);
+      setData({number: 0, totalPages: 1, content: res.data.data});
     } catch (e) {
       setError(e);
     } finally {
-      setLoading({get: false, refresh: false});
+      setLoading(state => ({...state, refresh: false}));
     }
   }, 500);
 
@@ -71,7 +77,7 @@ const AgendaScreen = ({navigation}) => {
 
   const nextPage = async () => {
     if (data.number < data.totalPages - 1) {
-      setLoading(state => ({...state, nextPage: true}));
+      setLoading(state => ({...state, next: true}));
       try {
         const res = await getAgendaAPI(token, data.number + 1);
         setData({
@@ -81,7 +87,7 @@ const AgendaScreen = ({navigation}) => {
       } catch (e) {
         setError(e);
       } finally {
-        setLoading(state => ({...state, nextPage: false}));
+        setLoading(state => ({...state, next: false}));
       }
     }
   };
@@ -100,7 +106,7 @@ const AgendaScreen = ({navigation}) => {
         <LoadingComponent />
       ) : (
         <>
-          {data.content.length ? (
+          {data.content?.length ? (
             <FlatList
               onEndReached={nextPage}
               onEndReachedThreshold={0.5}
@@ -112,6 +118,11 @@ const AgendaScreen = ({navigation}) => {
               showsVerticalScrollIndicator={false}
               ListHeaderComponent={
                 <Text style={styles.title}>Agenda yang akan datang</Text>
+              }
+              ListFooterComponent={() =>
+                loading.next ? (
+                  <ActivityIndicator size="large" color={COLORS.primary} />
+                ) : null
               }
               contentContainerStyle={styles.list}
             />

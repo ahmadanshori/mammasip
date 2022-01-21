@@ -3,19 +3,15 @@ import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {ArticleItem} from '../Items';
 import {COLORS, FONTS} from '../../constants';
-import formatDate from '../../libs/formatDate';
 
-const ArticleRecomendation = ({data, onPress, seeAllOnPress}) => {
+const ArticleRecomendation = ({data, onPress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.row}>
           <MaterialIcons name="library-books" size={16} style={styles.icon} />
-          <Text style={FONTS.textBold14}>Rekomendasi Artikel</Text>
+          <Text style={FONTS.textBold14}>Artikel Terpopuler</Text>
         </View>
-        <Text style={[FONTS.text12, styles.seeAll]} onPress={seeAllOnPress}>
-          Lihat Semua
-        </Text>
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={true}>
         {data.map(item => (
@@ -32,7 +28,7 @@ const ArticleRecomendation = ({data, onPress, seeAllOnPress}) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {marginBottom: 8},
+  container: {marginVertical: 8},
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',

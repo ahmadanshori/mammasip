@@ -14,21 +14,25 @@ const ArticleDetailItem = ({
   publisher,
   author,
   bookDate,
+  isImage = true,
 }) => {
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
       onPress={onPress}>
-      <View>
-        {source ? (
-          <Image source={{uri: source}} style={styles.img} />
-        ) : (
-          <View style={styles.shadowImg}>
-            <Icon name="image-outline" size={30} color={COLORS.gray} />
-          </View>
-        )}
-      </View>
+      {isImage ? (
+        <View>
+          {source ? (
+            <Image source={{uri: source}} style={styles.img} />
+          ) : (
+            <View style={styles.shadowImg}>
+              <Icon name="image-outline" size={30} color={COLORS.gray} />
+            </View>
+          )}
+        </View>
+      ) : null}
+
       <View style={styles.body}>
         <Text style={FONTS.textBold14}>{title}</Text>
         {desc && <Text style={FONTS.text12}>{desc}</Text>}

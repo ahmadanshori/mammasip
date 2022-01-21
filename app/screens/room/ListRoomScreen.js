@@ -30,7 +30,6 @@ const ListRoomScreen = ({route, navigation}) => {
   const getInitialData = async () => {
     try {
       const res = await getRoomTypeByIdAPI(id, token);
-      console.log(`res`, res);
       setData(res.data.data);
     } catch (e) {
       setError(e);

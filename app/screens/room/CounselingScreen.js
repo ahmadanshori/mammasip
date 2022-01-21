@@ -16,7 +16,10 @@ import {ArticleItem, VideoDetailItem} from '../../components/Items';
 import ImportantMessage from '../../components/ImportantMessage';
 import DownloadModal from '../../components/Modals/DownloadModal';
 import {NoInternet, ErrorServer} from '../../components/Errors';
-import {getCounselingByIdAPI} from '../../api/penyuluhan';
+import {
+  getCounselingByIdAPI,
+  getCounselingVideoAPI,
+} from '../../api/penyuluhan';
 import {getRoomTypeByIdAPI} from '../../api/room';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import useErrorHandler from '../../hooks/useErrorHandler';
@@ -35,6 +38,7 @@ const CounselingScreen = ({navigation, route}) => {
   const [browserData, setBrowserData] = useState([]);
   const [powerpointData, setPowerpointData] = useState([]);
   const [posterData, setPosterData] = useState([]);
+  const [video, setVideo] = useState([]);
   const [isDownload, setIsDownload] = useState(false);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState({get: true, refresh: false});
@@ -51,6 +55,8 @@ const CounselingScreen = ({navigation, route}) => {
       const resBrowser = await getCounselingByIdAPI(token, 1, 0, 2);
       const resPowerpoint = await getCounselingByIdAPI(token, 2, 0, 2);
       const resPoster = await getCounselingByIdAPI(token, 3, 0, 2);
+      const resVideo = await getCounselingVideoAPI(token);
+      setVideo(resVideo.data.data);
       setBrowserData(resBrowser.data.data.content);
       setPowerpointData(resPowerpoint.data.data.content);
       setPosterData(resPoster.data.data.content);
@@ -238,13 +244,15 @@ const CounselingScreen = ({navigation, route}) => {
             </View>
             <View style={styles.video}>
               <Text style={styles.videoTitle}>Video Pilihan</Text>
-              <VideoDetailItem
-                // key={item.idMedia}
-                data={test}
-                // onPress={() =>
-                //   navigation.navigate('Video', {url: item.url_frame})
-                // }
-              />
+              {video.map(item => (
+                <VideoDetailItem
+                  key={item.idMedia}
+                  data={item}
+                  onPress={() =>
+                    navigation.navigate('Video', {url: item.url_frame})
+                  }
+                />
+              ))}
             </View>
           </View>
         </ScrollView>

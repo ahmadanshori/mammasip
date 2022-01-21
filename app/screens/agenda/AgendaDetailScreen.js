@@ -32,7 +32,6 @@ const AgendaScreen = ({route}) => {
   const getInitalData = async () => {
     try {
       const res = await getAgendaDetailAPI(token, id);
-      console.log('res', res);
       setData(res.data.data[0]);
     } catch (e) {
       setError(e);

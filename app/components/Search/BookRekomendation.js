@@ -2,24 +2,16 @@ import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {BookItem} from '../Items';
-import {COLORS, FONTS} from '../../constants';
+import {FONTS} from '../../constants';
 
-const ArticleRecomendation = ({seeAllOnPress, data, onPress}) => {
+const ArticleRecomendation = ({data, onPress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.row}>
           <MaterialIcons name="menu-book" size={18} style={styles.icon} />
-          <Text style={FONTS.textBold14}>Rekomendasi Buku</Text>
+          <Text style={FONTS.textBold14}>Buku Terpopuler</Text>
         </View>
-        <Text
-          style={[
-            FONTS.text12,
-            {color: COLORS.primary, paddingVertical: 6, paddingLeft: 8},
-          ]}
-          onPress={seeAllOnPress}>
-          Lihat Semua
-        </Text>
       </View>
       <ScrollView
         horizontal
@@ -36,6 +28,7 @@ const ArticleRecomendation = ({seeAllOnPress, data, onPress}) => {
             date={item.year}
             uploadDate={item.createdDate}
             onPress={() => onPress(item.urlBook)}
+            isImage={item.typeBook === 3 ? false : true}
           />
         ))}
       </ScrollView>

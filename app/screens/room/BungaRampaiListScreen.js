@@ -98,6 +98,7 @@ const BungaRampaiListScreen = ({navigation, route}) => {
             type === 1 || type === 2 || type === 3 ? item.authorBook : null
           }
           source={type === 5 ? item.url : item.urlBanner}
+          isImage={type === 3 ? false : true}
           date={item.createdDate}
           onPress={() => handleNavigator(item)}
         />

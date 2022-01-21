@@ -31,6 +31,7 @@ const RoomScreen = ({navigation, route}) => {
   const getInitialData = async () => {
     try {
       const resRoom = await getRoomTypeByIdAPI(id, token);
+      console.log('resRoom', resRoom);
       setData(resRoom.data.data);
     } catch (e) {
       setError(e);

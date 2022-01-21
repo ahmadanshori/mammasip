@@ -35,7 +35,6 @@ const FaqScreen = ({navigation}) => {
       const res = await getTopFaqAPI(token);
       setTop(res.data.data);
       const resNews = await getTopNewsAPI(token);
-      console.log('resNews', resNews);
       setNews(resNews.data.data);
     } catch (e) {
       setError(e);
@@ -82,7 +81,7 @@ const FaqScreen = ({navigation}) => {
           content: [...news.content, ...resNews.data.data.content],
         });
       } catch (e) {
-        console.log('e', e);
+        setError(e);
       } finally {
         setLoadPage(false);
       }
@@ -182,10 +181,14 @@ const FaqScreen = ({navigation}) => {
               {loadPage ? (
                 <LoadingComponent />
               ) : (
-                <OutlineButton
-                  title={'Tampilkan Selanjutnya'}
-                  onPress={nextPage}
-                />
+                <>
+                  {news.number < news.totalPages - 1 ? (
+                    <OutlineButton
+                      title={'Tampilkan Selanjutnya'}
+                      onPress={nextPage}
+                    />
+                  ) : null}
+                </>
               )}
             </>
           ) : null}
