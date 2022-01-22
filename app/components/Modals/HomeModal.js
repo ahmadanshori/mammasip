@@ -37,7 +37,7 @@ const HomeModal = ({onPresBack, visible}) => {
             />
             <View>
               <Text style={[FONTS.textBold18]}>Kenali Payudara</Text>
-              <Text style={[FONTS.home, {color: COLORS.primary}]}>
+              <Text style={[FONTS.home, {color: COLORS.secondary}]}>
                 Sayangi Dirimu
               </Text>
             </View>

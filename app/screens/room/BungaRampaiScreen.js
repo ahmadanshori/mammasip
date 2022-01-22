@@ -118,7 +118,6 @@ const BungaRampaiScreen = ({navigation, route}) => {
             title={roomData?.nama_ruang}
             desc={roomData?.description}
             source={{uri: roomData?.url_picture_bg}}
-            white
           />
           <View style={styles.margin}>
             <ImportantMessage title={roomData?.kata_pengantar} />
@@ -181,7 +180,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
                       FONTS.textBold14,
                       {color: COLORS.black, marginLeft: 6},
                     ]}>
-                    Jurnal
+                    Jurnal Kedokteran
                   </Text>
                 </View>
                 <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>

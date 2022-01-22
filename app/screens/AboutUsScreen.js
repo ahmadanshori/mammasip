@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
 import {HeaderTitle} from '../components/Headers';
-import {COLORS, SIZES, ICON, FONTS} from '../constants';
+import {COLORS, SIZES, FONTS} from '../constants';
 
 const data = [
   {
@@ -39,7 +39,7 @@ const data = [
     job: 'Pakar/Praktisi Kedokteran Umum dan Penyuluhan',
   },
   {
-    name: 'Fajriati M. Badrudin, S.Psi., Psikolog.',
+    name: 'Fajriati M. Badrudin, S.Psi., Psikolog',
     job: 'Pakar Psikologi',
   },
   {
@@ -67,26 +67,26 @@ const data = [
     job: 'Pakar Media',
   },
   {
-    name: 'dr. Hardya Gustada Hikmahrachim, M.Epid.,',
-    name2: 'dr. Cita Resti Anantia Putri.,',
-    name3: 'dr. Anggindita Diah Widihidayati.',
+    name: 'dr. Hardya Gustada Hikmahrachim, M.Epid.',
+    name2: 'dr. Cita Resti Anantia Putri',
+    name3: 'dr. Anggindita Diah Widihidayati',
     job: 'Tim Riset dan Data',
   },
   {
-    name: 'PT. Saiber Dunia Imaji.',
+    name: 'PT. Saiber Dunia Imaji',
     job: 'Developer IT',
   },
   {
-    name: 'PT. Teknologi Informasi MEDIMEDI.',
+    name: 'PT. Teknologi Informasi MEDIMEDI',
     job: 'Kreator Video Medis',
   },
   {
-    name: 'KutipanX.',
+    name: 'KutipanX',
     job: 'Videografer',
   },
   {
-    name: 'Kania Indriani Rosep.,',
-    name2: 'Faris Nabhan Fahri.',
+    name: 'Kania Indriani Rosep',
+    name2: 'Faris Nabhan Fahri',
     job: 'Ilustrator',
   },
 ];

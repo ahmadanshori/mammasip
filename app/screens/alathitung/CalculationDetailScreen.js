@@ -23,10 +23,6 @@ import {getBmrAPI, getBmiAPI} from '../../api/calculator';
 // import caloriesCalculation from '../../libs/caloriesCalculation';
 import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
-// import WeightIcon from '../../assets/icons/weight.svg';
-// import FoodIcon from '../../assets/icons/food.svg';
-// import VirusIcon from '../../assets/icons/virus.svg';
-// import QuizIcon from '../../assets/icons/quiz.svg';
 
 const CalculationDetailScreen = ({navigation, route}) => {
   const {type, field} = route.params;

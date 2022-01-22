@@ -107,7 +107,6 @@ const KnowYourSelfScreen = ({route, navigation}) => {
             title={data?.nama_ruang}
             desc={data?.description}
             source={{uri: data?.url_picture_bg}}
-            white
           />
           <View style={styles.scroll}>
             <ImportantMessage title={data?.kata_pengantar} />
@@ -234,7 +233,7 @@ const KnowYourSelfScreen = ({route, navigation}) => {
                     color={COLORS.secondary}
                   />
                   <Text style={[FONTS.textBold12, styles.title]}>
-                    Durasi 30 Menit
+                    Durasi 30 - 40 Menit
                   </Text>
                 </View>
                 <TouchableOpacity

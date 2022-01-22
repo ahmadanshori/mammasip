@@ -19,6 +19,7 @@ import {AppContext} from '../index';
 
 const RoomScreen = ({navigation, route}) => {
   const {id} = route.params;
+  const show = route.params.show || null;
   const {token} = useContext(AppContext);
   const [data, setData] = useState(null);
   const [load, setLoad] = useState({get: true, refresh: false});
@@ -31,7 +32,6 @@ const RoomScreen = ({navigation, route}) => {
   const getInitialData = async () => {
     try {
       const resRoom = await getRoomTypeByIdAPI(id, token);
-      console.log('resRoom', resRoom);
       setData(resRoom.data.data);
     } catch (e) {
       setError(e);
@@ -95,6 +95,7 @@ const RoomScreen = ({navigation, route}) => {
     } else {
       return (
         <ArticleContent
+          show={show}
           data={item}
           onArticle={val => handleNavigator('Article', {id: val})}
         />

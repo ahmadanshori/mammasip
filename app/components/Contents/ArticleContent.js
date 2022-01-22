@@ -7,21 +7,23 @@ import {ArticleItem} from '../Items';
 import formatDate from '../../libs/formatDate';
 import {OutlineButton} from '../Buttons';
 
-const ArticleContent = ({data, onArticle}) => {
+const ArticleContent = ({data, onArticle, show}) => {
   const html = `${data.article.abstractArticle}`;
   return (
     <View style={styles.container}>
-      <View style={styles.box}>
-        <Image
-          source={require('../../assets/images/ayla.png')}
-          style={styles.icon}
-        />
-        <Text style={[FONTS.text10, {flex: 1, color: COLORS.white}]}>
-          Semoga Sahabat MammaSIP paham ya semua informasi sebelumnya. Untuk
-          Sahabat yang ingin membaca informasi yang lebih lengkap dan detil,
-          silahkan buka artikel di bawah ini.
-        </Text>
-      </View>
+      {!show ? (
+        <View style={styles.box}>
+          <Image
+            source={require('../../assets/images/ayla.png')}
+            style={styles.icon}
+          />
+          <Text style={[FONTS.text10, {flex: 1, color: COLORS.white}]}>
+            Semoga Sahabat MammaSIP paham ya semua informasi sebelumnya. Untuk
+            Sahabat yang ingin membaca informasi yang lebih lengkap dan detil,
+            silahkan buka artikel di bawah ini.
+          </Text>
+        </View>
+      ) : null}
       <Text style={[FONTS.textBold14, {color: COLORS.black}]}>
         {data.article?.nameArticle}
       </Text>

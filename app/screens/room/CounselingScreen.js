@@ -134,7 +134,6 @@ const CounselingScreen = ({navigation, route}) => {
             title={roomData?.nama_ruang}
             desc={roomData?.description}
             source={{uri: roomData?.url_picture_bg}}
-            white
           />
           <View style={styles.margin}>
             <ImportantMessage title={roomData?.kata_pengantar} />
@@ -243,7 +242,7 @@ const CounselingScreen = ({navigation, route}) => {
               </View>
             </View>
             <View style={styles.video}>
-              <Text style={styles.videoTitle}>Video Pilihan</Text>
+              <Text style={styles.videoTitle}>Video Penyuluhan</Text>
               {video.map(item => (
                 <VideoDetailItem
                   key={item.idMedia}

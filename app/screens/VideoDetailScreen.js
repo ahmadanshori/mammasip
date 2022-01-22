@@ -116,7 +116,7 @@ const VideoDetailScreen = ({navigation}) => {
                 color={COLORS.secondary}
               />
               <Text style={[FONTS.textBold12, styles.title]}>
-                Durasi 30 Menit
+                Durasi 30 - 40 Menit
               </Text>
             </View>
             <TouchableOpacity

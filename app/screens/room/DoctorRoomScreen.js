@@ -41,7 +41,7 @@ const DoctorRooomScreen = ({route, navigation}) => {
   };
   const onRoom = useCallback(
     roomId => {
-      navigation.navigate('Room', {id: roomId});
+      navigation.navigate('Room', {id: roomId, show: true});
     },
     [navigation],
   );
@@ -99,6 +99,7 @@ const DoctorRooomScreen = ({route, navigation}) => {
                   <RoomItem
                     key={item.id_ruang}
                     title={item.nama_ruang}
+                    source={item.url_picture_mobile}
                     onPress={() => onRoom(item.id_ruang)}
                   />
                 );

@@ -11,13 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const BackgroundHeader = ({
-  title,
-  desc,
-  source,
-  backgroundColor,
-  white = false,
-}) => {
+const BackgroundHeader = ({title, desc, source, backgroundColor}) => {
   const navigation = useNavigation();
   const containerStyles = [styles.body];
   if (backgroundColor) {
@@ -36,7 +30,7 @@ const BackgroundHeader = ({
             <Icon
               name={Platform.OS === 'ios' ? 'left' : 'arrowleft'}
               size={18}
-              color={white ? COLORS.white : COLORS.black}
+              color={COLORS.white}
             />
           </TouchableOpacity>
           <View style={styles.w15} />
@@ -45,15 +39,12 @@ const BackgroundHeader = ({
           <Text
             style={[
               FONTS.textBold18,
-              {color: white ? COLORS.white : COLORS.black, textAlign: 'center'},
+              {color: COLORS.white, textAlign: 'center'},
             ]}>
             {title}
           </Text>
           <Text
-            style={[
-              FONTS.text14,
-              {color: white ? COLORS.white : COLORS.black, textAlign: 'center'},
-            ]}>
+            style={[FONTS.text14, {color: COLORS.white, textAlign: 'center'}]}>
             {desc}
           </Text>
         </View>

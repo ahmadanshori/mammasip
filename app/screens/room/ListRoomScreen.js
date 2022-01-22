@@ -66,7 +66,6 @@ const ListRoomScreen = ({route, navigation}) => {
             title={data?.nama_ruang}
             desc={data?.description}
             source={{uri: data?.url_picture_bg}}
-            white
           />
           <View style={styles.padding}>
             {data.child_ruang.map(item => (

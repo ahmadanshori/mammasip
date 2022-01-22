@@ -208,7 +208,7 @@ const HomeScreen = ({navigation}) => {
                   FONTS.text12,
                   {color: COLORS.black, textAlign: 'center', marginBottom: 16},
                 ]}>
-                Ayo klik menu dibawah untuk tahu lebih banyak tentang kesehatan
+                Ayo klik menu di bawah untuk tahu lebih banyak tentang kesehatan
                 payudara Anda.
               </Text>
             </View>

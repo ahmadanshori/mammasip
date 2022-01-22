@@ -40,7 +40,7 @@ const OnboardingScreng = () => {
               ),
               title: 'Untuk Sahabat yang Sedang Berjuang!',
               subtitle:
-                'MammaSIP dapat dimanfaatkan oleh masyarakat awam, penyintas Kanker Payudara, keluarga dan lingkungan terdekat penyintas serta tenaga dan penyuluh kesehatan.',
+                'MammaSIP dapat dimanfaatkan oleh masyarakat awam, penyintas Kanker Payudara, keluarga dan lingkungan terdekat penyintas, serta tenaga dan penyuluh kesehatan.',
             },
             {
               backgroundColor: COLORS.primary,
@@ -52,7 +52,7 @@ const OnboardingScreng = () => {
               ),
               title: 'Lengkap dan Informatif',
               subtitle:
-                'Tersedia beragam artikel dan jurnal tentang menjaga kesehatan serta diagnosis dini dan penanggulangan Kanker Payudara. Dilengkapi dengan fitur kalkulator kesehatan dan jurnal pendukung kesehatan.',
+                'Tersedia beragam info bergambar dan video tentang menjaga kesehatan serta diagnosis dini dan penanggulangan Kanker Payudara. Dilengkapi dengan fitur kalkulator kesehatan dan jurnal pendukung kesehatan.',
             },
           ]}
         />
