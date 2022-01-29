@@ -69,7 +69,6 @@ const ChangePasswordScreen = ({navigation}) => {
           autoFocus={true}
           onChangeText={val => handleInput(val, 'password_old')}
           value={field.password_old}
-          maxLength={16}
         />
         <TitleInput
           title="Password Baru"
@@ -79,7 +78,6 @@ const ChangePasswordScreen = ({navigation}) => {
           style={styles.pass}
           onChangeText={val => handleInput(val, 'password_new')}
           value={field.password_new}
-          maxLength={16}
         />
         <TitleInput
           title="Ulangi Password Baru"
@@ -89,7 +87,6 @@ const ChangePasswordScreen = ({navigation}) => {
           style={styles.pass}
           onChangeText={val => handleInput(val, 'password_confirm')}
           value={field.password_confirm}
-          maxLength={16}
           onSubmitEditing={handleChangePassword}
         />
         {error ? (

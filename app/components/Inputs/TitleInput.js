@@ -22,7 +22,7 @@ const TitleInput = ({
   style = {},
   onSubmitEditing,
   autoCapitalize,
-  maxLength = 25,
+  maxLength,
 }) => {
   const [show, setShow] = useState(true);
   const [color, setColor] = useState(COLORS.border);

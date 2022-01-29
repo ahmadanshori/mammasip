@@ -166,7 +166,6 @@ const RegisterScreen = ({navigation}) => {
           onChangeText={val => handleInput(val, 'first_name')}
           value={field.first_name}
           style={styles.pass}
-          maxLength={20}
         />
         <TitleInput
           title="Nama Belakang"
@@ -174,12 +173,12 @@ const RegisterScreen = ({navigation}) => {
           onChangeText={val => handleInput(val, 'last_name')}
           value={field.last_name}
           style={styles.pass}
-          maxLength={20}
         />
         <TitleInput
           title="Nomer HP"
           placeholder="081234567890"
           onChangeText={val => handleInput(val, 'phone')}
+          keyboardType={'numeric'}
           value={field.phone}
           style={styles.pass}
           maxLength={13}
@@ -208,7 +207,6 @@ const RegisterScreen = ({navigation}) => {
           style={styles.pass}
           onChangeText={val => handleInput(val, 'password')}
           value={field.password}
-          maxLength={16}
         />
         <TitleInput
           title="Ulangi Password"
@@ -218,7 +216,6 @@ const RegisterScreen = ({navigation}) => {
           style={styles.pass}
           onChangeText={val => handleInput(val, 'confirmPassword')}
           value={field.confirmPassword}
-          maxLength={16}
         />
         {error ? (
           <View style={styles.error}>
