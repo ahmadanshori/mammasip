@@ -134,7 +134,12 @@ const FaqScreen = ({navigation}) => {
                       onPress={() => navigationHandler(item.idBerita)}
                     />
                   ))}
-                  <OutlineButton title={'Tampilkan Semua'} />
+                  {news.number < news.totalPages - 1 ? (
+                    <OutlineButton
+                      title={'Tampilkan Selanjutnya'}
+                      onPress={nextPage}
+                    />
+                  ) : null}
                 </>
               ) : null}
             </>
