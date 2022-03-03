@@ -4,12 +4,13 @@ import {
   ScrollView,
   Text,
   View,
-  Linking,
+  // Linking,
   RefreshControl,
   Image,
   TouchableOpacity,
   Platform,
 } from 'react-native';
+import {WebView} from 'react-native-webview';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Container} from '../components/Container';
 import {NoInternet, ErrorServer} from '../components/Errors';
@@ -24,6 +25,7 @@ const NewsScreen = ({route, navigation}) => {
   const {id} = route.params;
   const {token} = useContext(AppContext);
   const [data, setData] = useState();
+  const [selected, setSelected] = useState();
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [error, setError] = useErrorHandler();
 
@@ -35,6 +37,9 @@ const NewsScreen = ({route, navigation}) => {
     try {
       const res = await getNewsDetailAPI(token, id);
       setData(res.data.data[0]);
+      if (res.data.data[0].media?.length) {
+        setSelected(res.data.data[0].media[0]);
+      }
     } catch (e) {
       setError(e);
     } finally {
@@ -42,9 +47,13 @@ const NewsScreen = ({route, navigation}) => {
     }
   };
 
-  const linkHandler = useCallback(async () => {
-    await Linking.openURL(data?.linkPendaftaran);
-  }, [data?.linkPendaftaran]);
+  const onSelectedImg = val => {
+    setSelected(val);
+  };
+
+  // const linkHandler = useCallback(async () => {
+  //   await Linking.openURL(data?.linkPendaftaran);
+  // }, [data?.linkPendaftaran]);
 
   const handleRefresh = () => {
     setError();
@@ -66,10 +75,58 @@ const NewsScreen = ({route, navigation}) => {
             />
           }>
           <View>
-            <Image
-              source={{uri: data?.urlPicture}}
-              style={styles.backgroundImage}
-            />
+            <View style={styles.backgroundImage}>
+              {selected?.typeFile === 2 ? (
+                <WebView
+                  source={{uri: selected?.url_frame}}
+                  mediaPlaybackRequiresUserAction={false}
+                  automaticallyAdjustContentInsets={false}
+                  scrollEnabled={false}
+                  allowsFullscreenVideo={true}
+                  userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36"
+                />
+              ) : (
+                <Image
+                  source={{
+                    uri: data.media?.length
+                      ? selected?.url
+                      : selected?.urlPicture,
+                  }}
+                  style={styles.media}
+                />
+              )}
+            </View>
+            {data.media?.length ? (
+              <ScrollView
+                horizontal
+                contentContainerStyle={styles.mediaWrapper}
+                showsHorizontalScrollIndicator={false}>
+                {data.media.map(item => (
+                  <TouchableOpacity
+                    style={styles.mediaBox}
+                    key={item.urutan}
+                    onPress={() => onSelectedImg(item)}
+                    activeOpacity={SIZES.opacity}>
+                    <Image
+                      source={{uri: data?.urlPicture}}
+                      style={styles.media}
+                    />
+                    <View
+                      style={{
+                        ...styles.video,
+                        backgroundColor:
+                          item.typeFile === selected.typeFile
+                            ? COLORS.shadowWhite
+                            : 'transparent',
+                      }}>
+                      {item.typeFile === 2 ? (
+                        <Icon name={'play'} size={24} color={COLORS.white} />
+                      ) : null}
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            ) : null}
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
@@ -104,6 +161,23 @@ const NewsScreen = ({route, navigation}) => {
 const styles = StyleSheet.create({
   body: {padding: 16},
   backgroundImage: {width: '100%', height: SIZES.width1},
+  mediaWrapper: {marginTop: 16, paddingLeft: 16},
+  mediaBox: {
+    width: SIZES.width4 + 8,
+    height: SIZES.width5,
+    borderRadius: 8,
+    overflow: 'hidden',
+    marginRight: 10,
+  },
+  media: {width: '100%', height: '100%'},
+  video: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+  },
   button: {
     position: 'absolute',
     padding: 16,
@@ -114,7 +188,6 @@ const styles = StyleSheet.create({
   wrapper: {
     marginVertical: 20,
   },
-
   date: {
     ...FONTS.textBold12,
     color: COLORS.primary,
