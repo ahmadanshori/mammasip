@@ -27,7 +27,6 @@
     "react": "17.0.1",
     "react-native": "0.64.2",
     "react-native-blob-util": "^0.13.16",
-    "react-native-calendar": "^0.13.1",
     "react-native-calendars": "^1.1266.0",
     "react-native-config": "^1.4.5",
     "react-native-date-picker": "^4.1.3",
