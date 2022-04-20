@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  SafeAreaView,
+} from 'react-native';
 import {HeaderTitle} from '../components/Headers';
 import {COLORS, SIZES, FONTS} from '../constants';
 
@@ -7,7 +14,7 @@ const data = [
   {
     name: 'dr. Farida Briani Sobri, SpB(K)Onk.',
     job: 'Spesialis Konsultan Bedah Onkologi',
-    desc: 'Pemilik HAKI MammaSIP',
+    desc: 'Pemilik HKI MammaSIP',
   },
   {
     name: 'dr. Adang Bachtiar, MPH., DSc.',
@@ -93,123 +100,139 @@ const data = [
 
 const AboutUsScreen = () => {
   return (
-    <View style={styles.container}>
-      <HeaderTitle back title="Tentang Kami" />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.body}>
-          <Image
-            source={require('../assets/images/logo.png')}
-            style={{height: SIZES.width3, width: SIZES.width3}}
-          />
-          {/* <ICON.aboutus height={SIZES.width3} width={SIZES.width3} /> */}
-          <Text
-            style={[FONTS.textBold18, {color: COLORS.white, marginTop: 40}]}>
-            Tentang MammaSIP
-          </Text>
-          <Text
-            style={[
-              FONTS.text12,
-              {color: COLORS.white, textAlign: 'center', marginVertical: 24},
-            ]}>
-            Website dan Aplikasi MammaSIP adalah luaran dari Disertasi S3 dr.
-            Farida Briani Sobri, Sp.B.(K)Onk. di Ilmu Kesehatan Masyarakat,
-            Fakultas Kesehatan Masyarakat, Universitas Indonesia (masa
-            pendidikan tahun 2020-2022).
-          </Text>
-          <Text
-            style={[FONTS.text12, {color: COLORS.white, textAlign: 'center'}]}>
-            Materi-materi edukasi dalam website dan aplikasi ini disusun
-            berdasarkan penelitian ilmiah, referensi-referensi ilmiah, serta
-            melibatkan pakar-pakar di bidang masing-masing, sehingga isinya
-            dapat dipertanggungjawabkan kebenaran dan manfaatnya.
-          </Text>
-          <Text
-            style={[FONTS.textBold18, {color: COLORS.white, marginTop: 40}]}>
-            Makna MammaSIP
-          </Text>
-          <Text
-            style={[
-              FONTS.text12,
-              {color: COLORS.white, textAlign: 'center', marginTop: 24},
-            ]}>
-            Mamma (kata benda) memiliki 2 arti: Ibu dan organ wanita yang
-            menghasilkan susu.
-          </Text>
-          <Text
-            style={[FONTS.text12, {color: COLORS.white, textAlign: 'center'}]}>
-            S= Skrining; I= Intervensi; P= Prevensi.
-          </Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <HeaderTitle back title="Tentang Kami" />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.body}>
+            <Image
+              source={require('../assets/images/logo.png')}
+              style={{height: SIZES.width3, width: SIZES.width3}}
+            />
+            {/* <ICON.aboutus height={SIZES.width3} width={SIZES.width3} /> */}
+            <Text
+              style={[FONTS.textBold18, {color: COLORS.white, marginTop: 40}]}>
+              Tentang MammaSIP
+            </Text>
+            <Text
+              style={[
+                FONTS.text12,
+                {color: COLORS.white, textAlign: 'center', marginVertical: 24},
+              ]}>
+              Website dan Aplikasi MammaSIP adalah luaran dari Disertasi S3 dr.
+              Farida Briani Sobri, Sp.B.(K)Onk. di Ilmu Kesehatan Masyarakat,
+              Fakultas Kesehatan Masyarakat, Universitas Indonesia (masa
+              pendidikan tahun 2020-2022).
+            </Text>
+            <Text
+              style={[
+                FONTS.text12,
+                {color: COLORS.white, textAlign: 'center'},
+              ]}>
+              Materi-materi edukasi dalam website dan aplikasi ini disusun
+              berdasarkan penelitian ilmiah, referensi-referensi ilmiah, serta
+              melibatkan pakar-pakar di bidang masing-masing, sehingga isinya
+              dapat dipertanggungjawabkan kebenaran dan manfaatnya.
+            </Text>
+            <Text
+              style={[FONTS.textBold18, {color: COLORS.white, marginTop: 40}]}>
+              Makna MammaSIP
+            </Text>
+            <Text
+              style={[
+                FONTS.text12,
+                {color: COLORS.white, textAlign: 'center', marginTop: 24},
+              ]}>
+              Mamma (kata benda) memiliki 2 arti: Ibu dan organ wanita yang
+              menghasilkan susu.
+            </Text>
+            <Text
+              style={[
+                FONTS.text12,
+                {color: COLORS.white, textAlign: 'center'},
+              ]}>
+              S= Skrining; I= Intervensi; P= Prevensi.
+            </Text>
 
-          <View style={styles.row}>
-            <View style={styles.side} />
-            <View style={styles.text}>
-              <Text style={[FONTS.textBold18, {color: COLORS.white}]}>
-                Siapa Kami
-              </Text>
+            <View style={styles.row}>
+              <View style={styles.side} />
+              <View style={styles.text}>
+                <Text style={[FONTS.textBold18, {color: COLORS.white}]}>
+                  Siapa Kami
+                </Text>
+              </View>
+              <View style={styles.side} />
             </View>
-            <View style={styles.side} />
-          </View>
-          {data.map((item, index) => (
-            <View style={styles.mBottom} key={Number(index + 1).toString()}>
-              <Text
-                style={[
-                  FONTS.textBold14,
-                  {color: COLORS.white, textAlign: 'center', marginBottom: 4},
-                ]}>
-                {item.name}
-              </Text>
-              {item?.name2 ? (
+            {data.map((item, index) => (
+              <View style={styles.mBottom} key={Number(index + 1).toString()}>
                 <Text
                   style={[
                     FONTS.textBold14,
                     {color: COLORS.white, textAlign: 'center', marginBottom: 4},
                   ]}>
-                  {item.name2}
+                  {item.name}
                 </Text>
-              ) : null}
-              {item?.name3 ? (
-                <Text
-                  style={[
-                    FONTS.textBold14,
-                    {color: COLORS.white, textAlign: 'center', marginBottom: 4},
-                  ]}>
-                  {item.name3}
-                </Text>
-              ) : null}
-              <Text
-                style={[
-                  FONTS.text12,
-                  {color: COLORS.gray, textAlign: 'center'},
-                ]}>
-                {item.job}
-              </Text>
-              {item?.desc ? (
+                {item?.name2 ? (
+                  <Text
+                    style={[
+                      FONTS.textBold14,
+                      {
+                        color: COLORS.white,
+                        textAlign: 'center',
+                        marginBottom: 4,
+                      },
+                    ]}>
+                    {item.name2}
+                  </Text>
+                ) : null}
+                {item?.name3 ? (
+                  <Text
+                    style={[
+                      FONTS.textBold14,
+                      {
+                        color: COLORS.white,
+                        textAlign: 'center',
+                        marginBottom: 4,
+                      },
+                    ]}>
+                    {item.name3}
+                  </Text>
+                ) : null}
                 <Text
                   style={[
                     FONTS.text12,
                     {color: COLORS.gray, textAlign: 'center'},
                   ]}>
-                  {item.desc}
+                  {item.job}
                 </Text>
-              ) : null}
+                {item?.desc ? (
+                  <Text
+                    style={[
+                      FONTS.text12,
+                      {color: COLORS.gray, textAlign: 'center'},
+                    ]}>
+                    {item.desc}
+                  </Text>
+                ) : null}
+              </View>
+            ))}
+            <View style={styles.thanks}>
+              <Text
+                style={[
+                  FONTS.text12,
+                  {color: COLORS.black, textAlign: 'center'},
+                ]}>
+                Terima kasih kepada semua pihak yang tidak dapat disebutkan satu
+                persatu namanya, yang turut mendukung pembuatan dan penyusunan
+                website/aplikasi MammaSIP. Semoga media edukasi ini dapat
+                membawa perbaikan bagi kesehatan bangsa, serta menjadi salah
+                satu ladang amal soleh kita semua. Aamiin.
+              </Text>
             </View>
-          ))}
-          <View style={styles.thanks}>
-            <Text
-              style={[
-                FONTS.text12,
-                {color: COLORS.black, textAlign: 'center'},
-              ]}>
-              Terima kasih kepada semua pihak yang tidak dapat disebutkan satu
-              persatu namanya, yang turut mendukung pembuatan dan penyusunan
-              website/aplikasi MammaSIP. Semoga media edukasi ini dapat membawa
-              perbaikan bagi kesehatan bangsa, serta menjadi salah satu ladang
-              amal soleh kita semua. Aamiin.
-            </Text>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 
