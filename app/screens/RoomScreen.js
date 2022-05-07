@@ -11,7 +11,7 @@ import {
   GKSContent,
   ArticleContent,
 } from '../components/Contents';
-import {NoInternet, ErrorServer} from '../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../components/Errors';
 import {HeaderTitle} from '../components/Headers';
 import {getRoomTypeByIdAPI} from '../api/room';
 import useErrorHandler from '../hooks/useErrorHandler';
@@ -127,7 +127,7 @@ const RoomScreen = ({navigation, route}) => {
           />
         </View>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

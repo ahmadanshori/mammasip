@@ -11,7 +11,7 @@ import {BackgroundHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import {Container} from '../../components/Container';
 import {RoomItem} from '../../components/Items';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {getRoomTypeByIdAPI} from '../../api/room';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
@@ -122,7 +122,7 @@ const ListRoomScreen = ({route, navigation}) => {
           </View>
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

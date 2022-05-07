@@ -27,7 +27,7 @@ import {MainButton} from '../../components/Buttons';
 import {LoadingComponent} from '../../components/Loadings';
 import {HomeModal, UpdateModal} from '../../components/Modals';
 import {dropdownalert} from '../../components/AlertProvider';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {getRoomAPI} from '../../api/room';
 import {loginGoogleAPI} from '../../api/auth';
 import {FONTS, COLORS, SIZES} from '../../constants';
@@ -286,7 +286,7 @@ const HomeScreen = ({navigation}) => {
       </ScrollView>
       <HomeModal visible={isInteraction} onPresBack={interactionHandler} />
       <UpdateModal visible={isUpdate} onPress={hanldeUpdateGoogle} />
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

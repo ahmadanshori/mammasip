@@ -5,7 +5,7 @@ import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import {ArticleDetailItem} from '../../components/Items';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {getCounselingByIdAPI} from '../../api/penyuluhan';
 
 import DownloadModal from '../../components/Modals/DownloadModal';
@@ -144,7 +144,7 @@ const CounselingListScreen = ({navigation, route}) => {
           onDownload={onDownload}
         />
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

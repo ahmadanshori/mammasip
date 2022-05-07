@@ -5,7 +5,7 @@ import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {CalorieItem} from '../../components/Items';
 import {LoadingComponent} from '../../components/Loadings';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {getHealtyCaloriesAPI} from '../../api/healtyMenu';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
@@ -58,7 +58,7 @@ const CaloriesJournalScreen = ({navigation}) => {
           ))}
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

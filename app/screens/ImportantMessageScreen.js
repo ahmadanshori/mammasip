@@ -5,7 +5,7 @@ import {HeaderTitle} from '../components/Headers';
 // import {TestimonialItem} from '../components/Items';
 import {LoadingComponent} from '../components/Loadings';
 import {DestinationContent, VideoMessageContent} from '../components/Contents';
-import {NoInternet, ErrorServer} from '../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../components/Errors';
 import {COLORS} from '../constants';
 import {
   getImportantMessageAPI,
@@ -93,7 +93,7 @@ const ImportantMessageScreen = ({navigation}) => {
           ) : null}
         </>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

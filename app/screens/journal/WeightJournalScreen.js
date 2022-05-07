@@ -15,7 +15,7 @@ import {WeightItem} from '../../components/Journal';
 import {WeightModal} from '../../components/Modals';
 import {LoadingComponent} from '../../components/Loadings';
 import Divider from '../../components/Divider';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {createJournalWeightAPI, getJournalWeightAPI} from '../../api/journal';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {AppContext} from '../../index';
@@ -187,7 +187,7 @@ const WeightJournalScreen = ({navigation}) => {
         />
       )}
 
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

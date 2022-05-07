@@ -17,7 +17,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {LoadingComponent} from '../../components/Loadings';
 import PeopleIcon from '../../assets/icons/people1.svg';
@@ -200,7 +200,7 @@ const QuizScreen = ({route}) => {
           )}
         </>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

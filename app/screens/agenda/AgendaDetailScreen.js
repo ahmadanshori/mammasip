@@ -10,7 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
 import {COLORS, FONTS} from '../../constants';
@@ -87,7 +87,7 @@ const AgendaScreen = ({route}) => {
           <Text style={styles.desc}>{data?.description}</Text>
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

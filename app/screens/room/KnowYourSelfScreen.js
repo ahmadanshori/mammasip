@@ -17,7 +17,7 @@ import {
   VideoDetailItem,
 } from '../../components/Items';
 import {LoadingComponent} from '../../components/Loadings';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import ImportantMessage from '../../components/ImportantMessage';
 import {getRoomTypeByIdAPI, getVideoAPI} from '../../api/room';
 import {getHealtyCaloriesAPI} from '../../api/healtyMenu';
@@ -290,7 +290,7 @@ const KnowYourSelfScreen = ({route, navigation}) => {
           </View>
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

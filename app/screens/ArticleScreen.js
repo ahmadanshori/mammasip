@@ -4,7 +4,7 @@ import {WebView} from 'react-native-webview';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {LoadingComponent} from '../components/Loadings';
-import {NoInternet, ErrorServer} from '../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../components/Errors';
 import {getArticleByIdAPI} from '../api/article';
 import {SIZES} from '../constants';
 import useErrorHandler from '../hooks/useErrorHandler';
@@ -53,7 +53,7 @@ const ArticleScreen = ({route}) => {
           />
         </View>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

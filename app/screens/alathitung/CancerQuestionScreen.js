@@ -12,7 +12,7 @@ import {
   Question6,
   Answer,
 } from '../../components/CancerRisk';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {getBmiAPI} from '../../api/calculator';
 import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
@@ -120,7 +120,7 @@ const CancerQuestionScreen = ({route, navigation}) => {
           ) : null}
         </>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

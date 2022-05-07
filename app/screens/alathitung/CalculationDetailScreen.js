@@ -13,7 +13,7 @@ import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 // import MealSuggestions from '../../components/MealSuggestions';
 // import {CalculatorItem} from '../../components/Items';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 // import {dropdownalert} from '../../components/AlertProvider';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import Divider from '../../components/Divider';
@@ -300,7 +300,7 @@ const CalculationDetailScreen = ({navigation, route}) => {
           </View> */}
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

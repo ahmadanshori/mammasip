@@ -7,7 +7,7 @@ import {Sadari, Sadanis} from '../../components/Journal';
 import {SkriningModal} from '../../components/Modals';
 import {LoadingComponent} from '../../components/Loadings';
 import Divider from '../../components/Divider';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {COLORS, FONTS} from '../../constants';
 import {
   getJournalSkriningAPI,
@@ -195,7 +195,7 @@ const SkriningJournalScreen = () => {
           onAddPress={handleAddActivity}
         />
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

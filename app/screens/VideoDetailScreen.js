@@ -11,7 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {VideoDetailItem} from '../components/Items';
-import {NoInternet, ErrorServer} from '../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../components/Errors';
 import {LoadingComponent} from '../components/Loadings';
 import {getVideoAPI} from '../api/room';
 import useErrorHandler from '../hooks/useErrorHandler';
@@ -143,7 +143,7 @@ const VideoDetailScreen = ({navigation}) => {
           ))}
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

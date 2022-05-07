@@ -15,7 +15,7 @@ import {LoadingComponent} from '../../components/Loadings';
 import {ArticleItem, VideoDetailItem} from '../../components/Items';
 import ImportantMessage from '../../components/ImportantMessage';
 import DownloadModal from '../../components/Modals/DownloadModal';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {
   getCounselingByIdAPI,
   getCounselingVideoAPI,
@@ -262,7 +262,7 @@ const CounselingScreen = ({navigation, route}) => {
           onDownload={onDownload}
         />
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

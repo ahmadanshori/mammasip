@@ -13,7 +13,7 @@ import {
 import {WebView} from 'react-native-webview';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Container} from '../components/Container';
-import {NoInternet, ErrorServer} from '../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../components/Errors';
 import useErrorHandler from '../hooks/useErrorHandler';
 import {AppContext} from '../index';
 import {COLORS, FONTS, SIZES} from '../constants';
@@ -153,7 +153,7 @@ const NewsScreen = ({route, navigation}) => {
           </View>
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

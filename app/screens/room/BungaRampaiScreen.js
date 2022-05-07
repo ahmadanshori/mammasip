@@ -16,7 +16,7 @@ import {LoadingComponent} from '../../components/Loadings';
 import {ArticleItem, BookItem} from '../../components/Items';
 import {dropdownalert} from '../../components/AlertProvider';
 import ImportantMessage from '../../components/ImportantMessage';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {getArticleAPI} from '../../api/article';
 import {getRoomTypeByIdAPI, getBookAPI, getVideoPageAPI} from '../../api/room';
 import {COLORS, FONTS, SIZES} from '../../constants';
@@ -349,7 +349,7 @@ const BungaRampaiScreen = ({navigation, route}) => {
           </View>
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

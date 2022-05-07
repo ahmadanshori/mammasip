@@ -11,7 +11,7 @@ import debounce from 'lodash/debounce';
 import {Container} from '../../components/Container';
 import {SearchHeader} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
 import {AgendaItem} from '../../components/Items';
@@ -142,7 +142,7 @@ const AgendaScreen = ({navigation}) => {
         </>
       )}
 
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

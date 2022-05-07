@@ -22,7 +22,7 @@ import {dropdownalert} from '../../components/AlertProvider';
 import {LoadingComponent} from '../../components/Loadings';
 import {SearchInput} from '../../components/Inputs';
 import DownloadModal from '../../components/Modals/DownloadModal';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {getTopArticle} from '../../api/article';
 import {getTopBook} from '../../api/book';
 import {searchAllDataAPI} from '../../api/faq';
@@ -241,7 +241,7 @@ const SearchScreen = ({navigation}) => {
           onDownload={onDownload}
         />
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

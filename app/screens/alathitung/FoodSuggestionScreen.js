@@ -15,7 +15,7 @@ import {MainButton} from '../../components/Buttons';
 import {LoadingComponent} from '../../components/Loadings';
 import Divider from '../../components/Divider';
 import MealSuggestions from '../../components/MealSuggestions';
-import {NoInternet, ErrorServer} from '../../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 
 import {
   getHealtyCaloriesAPI,
@@ -256,7 +256,7 @@ const FoodSuggestionScreen = ({navigation, route}) => {
           )}
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

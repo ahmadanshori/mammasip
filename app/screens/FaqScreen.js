@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Container} from '../components/Container';
 import {SearchHeader} from '../components/Headers';
 import Accordion from '../components/Accordion';
-import {NoInternet, ErrorServer} from '../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../components/Errors';
 import {getTopFaqAPI, getTopNewsAPI, searchFaqAPI} from '../api/faq';
 import useErrorHandler from '../hooks/useErrorHandler';
 import {AppContext} from '../index';
@@ -200,7 +200,7 @@ const FaqScreen = ({navigation}) => {
         </ScrollView>
       )}
 
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );

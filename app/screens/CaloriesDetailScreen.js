@@ -12,7 +12,7 @@ import {HeaderTitle} from '../components/Headers';
 import {LoadingComponent} from '../components/Loadings';
 import Divider from '../components/Divider';
 import MealSuggestions from '../components/MealSuggestions';
-import {NoInternet, ErrorServer} from '../components/Errors';
+import {ErrorNetwork, ErrorServer} from '../components/Errors';
 import {getHealtyCaloriesByIdAPI} from '../api/healtyMenu';
 import {COLORS, FONTS, SIZES} from '../constants';
 import caloriesCalculation from '../libs/caloriesCalculation';
@@ -150,7 +150,7 @@ const CaloriesDetailScreen = ({route}) => {
           )}
         </ScrollView>
       )}
-      {error.noInternet ? <NoInternet onPress={handleRefresh} /> : null}
+      {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
