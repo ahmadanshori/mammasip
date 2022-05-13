@@ -229,6 +229,33 @@ const AboutUsScreen = () => {
                 satu ladang amal soleh kita semua. Aamiin.
               </Text>
             </View>
+            <View style={styles.row}>
+              <View style={styles.side} />
+              <View style={styles.text}>
+                <Text style={[FONTS.textBold18, {color: COLORS.white}]}>
+                  Partner Kami
+                </Text>
+              </View>
+              <View style={styles.side} />
+            </View>
+            <View style={styles.partner}>
+              <Image
+                source={require('../assets/images/partner1.png')}
+                resizeMode="contain"
+                style={{
+                  height: SIZES.width3 + 60,
+                  width: SIZES.width3 + 60,
+                }}
+              />
+              <Image
+                source={require('../assets/images/partner2.png')}
+                resizeMode="contain"
+                style={{
+                  height: SIZES.width3 + 60,
+                  width: SIZES.width3 + 60,
+                }}
+              />
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -254,8 +281,14 @@ const styles = StyleSheet.create({
   thanks: {
     padding: 16,
     backgroundColor: COLORS.white,
-    marginBottom: 24,
+    marginBottom: 32,
     borderRadius: 8,
+  },
+  partner: {
+    marginBottom: 46,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
 
