@@ -1,5 +1,11 @@
 # mammasip
 
+BUILD AAB
+
+```groovy
+npm run android:aab
+```
+
 API
 
 ```groovy
