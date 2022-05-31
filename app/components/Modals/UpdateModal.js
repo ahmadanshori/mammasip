@@ -1,14 +1,25 @@
 import React from 'react';
-import {Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import {Text, TouchableOpacity, Modal, StyleSheet, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {COLORS, FONTS} from '../../constants';
 import {MainButton} from '../Buttons';
 
-const UpdateModal = ({onPress, visible}) => {
+const UpdateModal = ({onPress, visible, onClose}) => {
   return (
-    <Modal animationType="fade" transparent={true} visible={visible}>
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onClose}>
       <TouchableOpacity style={styles.container} activeOpacity={1}>
         <TouchableOpacity style={styles.box} activeOpacity={1}>
-          <Text style={FONTS.textBold18}>Perlu Update Nih</Text>
+          <View style={styles.wrapper}>
+            <Text style={FONTS.textBold18}>Perlu Update Nih</Text>
+            <TouchableOpacity style={styles.close} onPress={onClose}>
+              <Icon name="close" size={25} color="red" />
+            </TouchableOpacity>
+          </View>
+
           <Text style={[FONTS.text14, {marginTop: 16}]}>
             Aplikasi MammaSIP kamu udah harus diupdate untuk bisa terus dipakai.
             Banyak fitur menarik di versi terbarunya loh!
@@ -35,6 +46,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.blackShadow,
     paddingHorizontal: 16,
   },
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  close: {paddingLeft: 8},
   box: {
     width: '100%',
     padding: 16,

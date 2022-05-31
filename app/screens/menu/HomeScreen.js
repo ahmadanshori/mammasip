@@ -285,7 +285,11 @@ const HomeScreen = ({navigation}) => {
         )}
       </ScrollView>
       <HomeModal visible={isInteraction} onPresBack={interactionHandler} />
-      <UpdateModal visible={isUpdate} onPress={hanldeUpdateGoogle} />
+      <UpdateModal
+        visible={isUpdate}
+        onPress={hanldeUpdateGoogle}
+        onClose={() => setIsUpdate(false)}
+      />
       {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
