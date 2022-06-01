@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MammaSIP</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">euJBLEz9JH4wYdUilHTYaR-9Y_V4FG9cFSBnN </string>
 </resources>

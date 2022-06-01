@@ -9,10 +9,10 @@ import {
   Image,
   RefreshControl,
   Linking,
-  Platform,
+  // Platform,
   SafeAreaView,
 } from 'react-native';
-import VersionCheck from 'react-native-version-check';
+// import VersionCheck from 'react-native-version-check';
 import OneSignal from 'react-native-onesignal';
 import {
   GoogleSignin,
@@ -64,13 +64,17 @@ const HomeScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    VersionCheck.getLatestVersion({
-      falserovider: Platform.OS === 'ios' ? 'appStore' : 'playStore',
-    }).then(latestVersion => {
-      if (latestVersion !== VersionCheck.getCurrentVersion()) {
-        setIsUpdate(true);
-      }
-    });
+    // VersionCheck.getLatestVersion().then(latestVersion => {
+    //   console.log('latestVersion', latestVersion);
+    //   console.log(
+    //     'VersionCheck.getCurrentVersion()',
+    //     VersionCheck.getCurrentVersion(),
+    //   );
+    //   if (latestVersion !== VersionCheck.getCurrentVersion()) {
+    //     setIsUpdate(true);
+    //   }
+    // });
+
     if (!onesignalId) {
       OneSignalDevice();
     }
@@ -195,6 +199,7 @@ const HomeScreen = ({navigation}) => {
           </View>
         ) : (
           <View style={styles.box}>
+            <Text style={{color: 'red'}}>TESTINGGGG</Text>
             <View style={styles.title}>
               <Text
                 style={[
@@ -285,11 +290,11 @@ const HomeScreen = ({navigation}) => {
         )}
       </ScrollView>
       <HomeModal visible={isInteraction} onPresBack={interactionHandler} />
-      <UpdateModal
+      {/* <UpdateModal
         visible={isUpdate}
         onPress={hanldeUpdateGoogle}
         onClose={() => setIsUpdate(false)}
-      />
+      /> */}
       {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
