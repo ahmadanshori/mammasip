@@ -12,6 +12,7 @@ import BookDetailItem from './BookDetailItem';
 import TestimonialItem from './TestimonialItem';
 import CalorieItem from './CalorieItem';
 import RoomItem from './RoomItem';
+import JournalItem from './JournalItem';
 export {
   AgendaItem,
   HomeItem,
@@ -27,4 +28,5 @@ export {
   TestimonialItem,
   CalorieItem,
   RoomItem,
+  JournalItem,
 };

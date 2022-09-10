@@ -45,7 +45,7 @@ const HomeScreen = ({navigation}) => {
   const interactionRef = useRef();
   const [loading, setLoading] = useState({get: true, refresh: false});
   const [roomData, setRoomData] = useState([]);
-  const [isUpdate, setIsUpdate] = useState(false);
+  // const [isUpdate, setIsUpdate] = useState(false);
   const [isInteraction, setIsInteraction] = useState(false);
   const [error, setError] = useErrorHandler();
 
@@ -199,7 +199,6 @@ const HomeScreen = ({navigation}) => {
           </View>
         ) : (
           <View style={styles.box}>
-            <Text style={{color: 'red'}}>TESTINGGGG</Text>
             <View style={styles.title}>
               <Text
                 style={[

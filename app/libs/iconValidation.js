@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
-import {ICON} from '../constants';
 export default id => {
   if (id === 1) {
     return (

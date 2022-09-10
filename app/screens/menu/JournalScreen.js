@@ -47,6 +47,13 @@ const JournalScreen = ({navigation}) => {
         title="Jurnal Skrining"
         description="Jadwal untuk dirimu melakukan SADARI & SADANIS"
       />
+      <CalculatorItem
+        image={<ICON.panduan height={60} width={60} />}
+        onPress={() => handleNavigation('Guide')}
+        backgroundColor={COLORS.darkOrange}
+        title="Jurnal Panduan Skrining"
+        description="Ceklis untuk mmelakukan SADARI"
+      />
     </Container>
   );
 };

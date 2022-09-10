@@ -20,6 +20,8 @@ import ayla from '../assets/icons/ayla.svg';
 import sport from '../assets/icons/olahraga.svg';
 import scales from '../assets/icons/timabngan.svg';
 import calendar from '../assets/icons/calendar.svg';
+import panduan from '../assets/icons/panduan.svg';
+import panduan2 from '../assets/icons/panduan2.svg';
 
 export const ICON = {
   sayangi,
@@ -44,6 +46,8 @@ export const ICON = {
   sport,
   scales,
   calendar,
+  panduan,
+  panduan2,
 };
 
 const appIcons = {ICON};
