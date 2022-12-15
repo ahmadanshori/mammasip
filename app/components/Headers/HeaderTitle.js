@@ -8,6 +8,7 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 const HeaderTitle = ({
   title,
   onSharePress,
+  onGoBack,
   onDownloadPress,
   backgroundColor,
   white,
@@ -22,9 +23,7 @@ const HeaderTitle = ({
       <View style={styles.wrapper}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-            navigation.goBack();
-          }}
+          onPress={onGoBack ? onGoBack : () => navigation.goBack()}
           activeOpacity={SIZES.opacity}>
           <Icon
             name={Platform.OS === 'ios' ? 'left' : 'arrowleft'}

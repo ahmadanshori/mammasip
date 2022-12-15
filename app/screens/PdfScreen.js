@@ -41,16 +41,13 @@ const PdfScreen = ({route}) => {
       })
       .then(res => {
         // the temp file path
-        // console.log(`res`, res);
-        // console.log('The file saved to ', res.path());
+
         setLoading(false);
       })
       .then(data => {
-        // console.log(`data`, data);
         setLoading(false);
       })
       .catch(e => {
-        // console.log(`e`, e, {...e});
         setLoading(false);
       });
   };

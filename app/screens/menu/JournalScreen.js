@@ -52,7 +52,7 @@ const JournalScreen = ({navigation}) => {
         onPress={() => handleNavigation('Guide')}
         backgroundColor={COLORS.darkOrange}
         title="Jurnal Panduan Skrining"
-        description="Ceklis untuk mmelakukan SADARI"
+        description="Ceklis untuk melakukan SADARI"
       />
     </Container>
   );

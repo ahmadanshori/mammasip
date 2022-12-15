@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {COLORS, SIZES} from '../constants';
 import {AppContext} from '../index';
 
-const OnboardingScreng = () => {
+const OnboardingScreen = () => {
   const {setOnboarding} = useContext(AppContext);
   const navigationHandler = async () => {
     await AsyncStorage.setItem('onboard', 'sudah');
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   img: {height: SIZES.width1, width: SIZES.width1},
 });
 
-export default OnboardingScreng;
+export default OnboardingScreen;

@@ -2,22 +2,26 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS} from '../../constants';
+import formatDate from '../../libs/formatDate';
 
-const JournalItem = () => {
+const JournalItem = ({data}) => {
   return (
     <View style={styles.container} activeOpacity={1}>
       <View style={styles.title}>
         <Text style={FONTS.text12}>
           Sudah mengisi jurnal bulan{' '}
-          <Text style={FONTS.textBold12}>Agustus</Text>
+          <Text style={FONTS.textBold12}>
+            {formatDate(data.created_date, 'MMMM')}
+          </Text>
         </Text>
         <Icon
-          name="checkcircle"
+          name={'checkcircle'}
           size={16}
           color={'#1CC137'}
           style={styles.left}
         />
       </View>
+
       <View style={styles.row}>
         <Icon
           name="calendar"
@@ -26,7 +30,7 @@ const JournalItem = () => {
           style={styles.icon}
         />
         <Text style={[FONTS.text14, {color: COLORS.gray}]}>
-          Ditulis pada 18 Agu 2022 18:31
+          Ditulis pada {formatDate(data.created_date, 'dd MMMM yyyy HH:mm')}
         </Text>
       </View>
     </View>

@@ -8,7 +8,7 @@ import formatDate from '../../libs/formatDate';
 import {OutlineButton} from '../Buttons';
 
 const ArticleContent = ({data, onArticle, show}) => {
-  const html = `${data.article.abstractArticle}`;
+  const html = `${data.article?.abstractArticle}`;
   return (
     <View style={styles.container}>
       {!show ? (
@@ -29,7 +29,7 @@ const ArticleContent = ({data, onArticle, show}) => {
       </Text>
       <Text style={[FONTS.text10, {color: COLORS.gray, marginTop: 8}]}>
         Dipublikasi pada{' '}
-        {formatDate(data.article.createdDate, 'dd MMMM yyyy HH:mm')}
+        {formatDate(data?.article?.createdDate, 'dd MMMM yyyy HH:mm')}
       </Text>
       {data?.kata_pengantar && (
         <View
@@ -76,7 +76,7 @@ const ArticleContent = ({data, onArticle, show}) => {
         title={'Lihat Selengkapnya'}
         onPress={() => onArticle(data.article.idArticle)}
       />
-      {data.list_article_relasi.length ? (
+      {data?.list_article_relasi?.length ? (
         <>
           <Text
             style={[
@@ -88,7 +88,7 @@ const ArticleContent = ({data, onArticle, show}) => {
           <ScrollView
             horizontal
             contentContainerStyle={{paddingHorizontal: 16}}>
-            {data.list_article_relasi.map(item => (
+            {data?.list_article_relasi.map(item => (
               <ArticleItem
                 key={item.idArticle}
                 isImage={false}

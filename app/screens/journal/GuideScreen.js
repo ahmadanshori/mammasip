@@ -1,34 +1,40 @@
 import React, {useState, useEffect, useCallback, useContext} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useIsFocused} from '@react-navigation/native';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import Divider from '../../components/Divider';
 import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 import {COLORS, FONTS, ICON} from '../../constants';
-import {getJournalSkriningAPI} from '../../api/journal';
-import formatDate from '../../libs/formatDate';
+import {getJournalGuideAPI, getCheckJournalGuideAPI} from '../../api/journal';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
 import {MainButton, AskButton} from '../../components/Buttons';
 import {JournalItem} from '../../components/Items';
 
 const GuideScreen = ({navigation}) => {
-  const {token, user, setLoading} = useContext(AppContext);
-  const [data, setData] = useState([1, 2, 3, 4]);
+  const {token, user} = useContext(AppContext);
+  const isFocused = useIsFocused();
+  const [data, setData] = useState([]);
   const [isJournal, setIsJournal] = useState(false);
-  const [selected, setSelected] = useState(null);
   const [isLoad, setIsLoad] = useState(true);
   const [error, setError] = useErrorHandler();
 
   useEffect(() => {
-    getInitialData();
-  }, []);
+    isFocused && getInitialData();
+  }, [isFocused]);
 
   const getInitialData = useCallback(async () => {
     try {
-      //   const res = await getJournalSkriningAPI(token, user.id_user);
+      const resCheckJournal = await getCheckJournalGuideAPI(
+        token,
+        user.id_user,
+      );
+      setIsJournal(resCheckJournal.data.data.length ? true : false);
+      const resGuid = await getJournalGuideAPI(token, user.id_user);
+      setData(resGuid.data.data);
     } catch (e) {
       setError(e);
     } finally {
@@ -75,7 +81,11 @@ const GuideScreen = ({navigation}) => {
                     </Text>
                   </View>
                 </View>
-                <MainButton title={'Tulis Jurnal Sekarang'} right />
+                <MainButton
+                  title={'Tulis Jurnal Sekarang'}
+                  right
+                  onPress={() => navigation.navigate('GuideQuestion')}
+                />
               </>
             )}
           </View>
@@ -86,15 +96,16 @@ const GuideScreen = ({navigation}) => {
                 <Icon size={20} name="history" style={{marginRight: 8}} />
                 <Text style={FONTS.textBold14}>Riwayat Jurnal</Text>
               </View>
-              <View style={styles.year}>
+              {/* FILTER BY YEAR */}
+              {/* <View style={styles.year}>
                 <Text style={FONTS.text14}>2022</Text>
                 <Icon name="chevron-down" size={25} />
-              </View>
+              </View> */}
             </View>
             {data.length ? (
               <>
                 {data.map(item => (
-                  <JournalItem key={item} />
+                  <JournalItem key={item} data={item} />
                 ))}
               </>
             ) : (

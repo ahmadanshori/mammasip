@@ -31,7 +31,7 @@ const SplashScreen = () => {
       />
       <View style={styles.text}>
         <Text style={[FONTS.textBold12, {color: COLORS.white}]}>
-          Version 1.13.2
+          Version 1.17.1
         </Text>
       </View>
     </Container>

@@ -10,6 +10,7 @@ import {
   ButtonContent,
   GKSContent,
   ArticleContent,
+  DownloadFormulirContent,
 } from '../components/Contents';
 import {ErrorNetwork, ErrorServer} from '../components/Errors';
 import {HeaderTitle} from '../components/Headers';
@@ -90,6 +91,12 @@ const RoomScreen = ({navigation, route}) => {
         <ButtonContent
           data={item}
           onPress={() => handleNavigator('Quiz', {id: item.id_kuis})}
+        />
+      );
+    } else if (item.typeContent === 8) {
+      return (
+        <DownloadFormulirContent
+          onPress={() => handleNavigator('Pdf', {link: item.url})}
         />
       );
     } else {

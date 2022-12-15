@@ -5,6 +5,7 @@ import ImageContent from './ImageContent';
 import ButtonContent from './ButtonContent';
 import GKSContent from './GKSContent';
 import ArticleContent from './ArticleContent';
+import DownloadFormulirContent from './DownloadFormulirContent';
 export {
   DestinationContent,
   VideoContent,
@@ -13,4 +14,5 @@ export {
   ButtonContent,
   GKSContent,
   ArticleContent,
+  DownloadFormulirContent,
 };

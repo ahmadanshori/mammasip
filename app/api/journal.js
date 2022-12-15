@@ -31,6 +31,24 @@ export const getJournalSkriningAPI = (token, id) => {
   );
 };
 
+export const getJournalGuideAPI = (token, id) => {
+  return client.get(`/jurnal_panduan_sadari/user/${id}`, createHeader(token));
+};
+
+export const getCheckJournalGuideAPI = (token, id) => {
+  return client.get(
+    `/jurnal_panduan_sadari/user/today/${id}`,
+    createHeader(token),
+  );
+};
+
+export const getQuestionGuideAPI = token =>
+  client.get('/panduan_sadari', createHeader(token));
+
+export const createJournalGuideAPI = (token, data) => {
+  return client.post('/jurnal_panduan_sadari', data, createHeader(token));
+};
+
 export const updateSadariAPI = (token, id, data) => {
   return client.put(`/jurnal_sadari/${id}`, data, createHeader(token));
 };
