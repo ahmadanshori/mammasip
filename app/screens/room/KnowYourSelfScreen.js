@@ -58,9 +58,13 @@ const KnowYourSelfScreen = ({route, navigation}) => {
 
   const handleNavigation = useCallback(
     type => {
-      navigation.navigate(type);
+      if (token) {
+        navigation.navigate(type);
+      } else {
+        navigation.navigate('Login', {nav: 'KnowYourSelf'});
+      }
     },
-    [navigation],
+    [token, navigation],
   );
 
   const handleJournal = useCallback(
@@ -142,6 +146,13 @@ const KnowYourSelfScreen = ({route, navigation}) => {
                 backgroundColor={COLORS.red}
                 title="Risiko Penyakit Kanker"
                 description="Analisa dari kebiasaan dan pola makan sehari-hari Anda."
+              />
+              <CalculatorItem
+                image={<ICON.panduan height={60} width={60} />}
+                onPress={() => handleNavigation('Guide')}
+                backgroundColor={COLORS.darkOrange}
+                title="Jurnal Panduan SADARI"
+                description="Ceklis untuk melakukan SADARI"
               />
             </View>
             <View style={styles.wrapper}>

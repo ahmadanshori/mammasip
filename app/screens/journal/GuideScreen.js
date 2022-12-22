@@ -73,10 +73,10 @@ const GuideScreen = ({navigation}) => {
                   <ICON.panduan height={80} width={80} />
                   <View style={{flex: 1, marginLeft: 16}}>
                     <Text style={FONTS.textBold14}>
-                      Anda belum mengisi jurnal panduan skrining bulan ini!
+                      Anda belum mengisi jurnal panduan SADARI bulan ini!
                     </Text>
                     <Text style={{...FONTS.text12, marginTop: 8}}>
-                      Silahkan isi jurnal panduan skrining secara rutin untuk
+                      Silahkan isi jurnal panduan SADARI secara rutin untuk
                       memantau kesehatan anda.
                     </Text>
                   </View>

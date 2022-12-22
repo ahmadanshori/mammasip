@@ -100,10 +100,7 @@ const GuideQuestionScreen = ({navigation}) => {
 
   return (
     <Container>
-      <HeaderTitle
-        title="Tulis Jurnal Panduan Skrining"
-        onGoBack={backAction}
-      />
+      <HeaderTitle title="Tulis Jurnal Panduan SADARI" onGoBack={backAction} />
       {isLoad ? (
         <LoadingComponent />
       ) : (

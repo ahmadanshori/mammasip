@@ -51,7 +51,7 @@ const JournalScreen = ({navigation}) => {
         image={<ICON.panduan height={60} width={60} />}
         onPress={() => handleNavigation('Guide')}
         backgroundColor={COLORS.darkOrange}
-        title="Jurnal Panduan Skrining"
+        title="Jurnal Panduan SADARI"
         description="Ceklis untuk melakukan SADARI"
       />
     </Container>
