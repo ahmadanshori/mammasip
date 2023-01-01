@@ -48,6 +48,9 @@ export const getQuestionGuideAPI = token =>
 export const createJournalGuideAPI = (token, data) => {
   return client.post('/jurnal_panduan_sadari', data, createHeader(token));
 };
+export const getTempAPI = token => {
+  return client.get('/jurnal_panduan_sadari/v2/10', createHeader(token));
+};
 
 export const updateSadariAPI = (token, id, data) => {
   return client.put(`/jurnal_sadari/${id}`, data, createHeader(token));

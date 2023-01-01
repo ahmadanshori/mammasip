@@ -47,6 +47,7 @@ const GuideScreen = ({navigation}) => {
     setIsLoad(true);
     getInitialData();
   };
+  // console.log('data', JSON.stringify(data));
   return (
     <Container>
       <HeaderTitle title="Jurnal Panduan Skrining" />
@@ -81,13 +82,13 @@ const GuideScreen = ({navigation}) => {
                     </Text>
                   </View>
                 </View>
-                <MainButton
-                  title={'Tulis Jurnal Sekarang'}
-                  right
-                  onPress={() => navigation.navigate('GuideQuestion')}
-                />
               </>
             )}
+            <MainButton
+              title={'Tulis Jurnal Sekarang'}
+              right
+              onPress={() => navigation.navigate('GuideQuestion')}
+            />
           </View>
           <Divider />
           <View style={styles.wrapper}>
