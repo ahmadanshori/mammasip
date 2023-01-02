@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, SIZES} from '../../constants';
 
 const VideoContent = ({data, onPress}) => {
@@ -19,7 +18,7 @@ const VideoContent = ({data, onPress}) => {
               data.flag_important === 1 ? COLORS.darkYellow : COLORS.primary,
           },
         ]}>
-        <Ionicons
+        <Icon
           name="alert-circle-outline"
           size={20}
           color={data.flag_important === 1 ? COLORS.primary : COLORS.white}

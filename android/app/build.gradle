@@ -136,8 +136,8 @@ android {
         applicationId "com.mammasip"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 18
-        versionName "1.18.1"
+        versionCode 19
+        versionName "1.19.1"
         vectorDrawables.useSupportLibrary = true
         resValue "string", "build_config_package", android.defaultConfig.applicationId
     }

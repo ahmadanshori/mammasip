@@ -1,23 +1,35 @@
 import React, {useState, useEffect, useCallback, useContext} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useIsFocused} from '@react-navigation/native';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {LoadingComponent} from '../../components/Loadings';
 import Divider from '../../components/Divider';
+import {JournalItem} from '../../components/Items';
 import {ErrorNetwork, ErrorServer} from '../../components/Errors';
-import {COLORS, FONTS, ICON} from '../../constants';
+import {COLORS, FONTS, ICON, SIZES} from '../../constants';
 import {getJournalGuideAPI, getCheckJournalGuideAPI} from '../../api/journal';
+import {getVideoSkriningAPI} from '../../api/room';
+
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {AppContext} from '../../index';
 import {MainButton, AskButton} from '../../components/Buttons';
-import {JournalItem} from '../../components/Items';
+import formatDate from '../../libs/formatDate';
 
 const GuideScreen = ({navigation}) => {
   const {token, user} = useContext(AppContext);
   const isFocused = useIsFocused();
   const [data, setData] = useState([]);
+  const [video, setVideo] = useState(null);
   const [isJournal, setIsJournal] = useState(false);
   const [isLoad, setIsLoad] = useState(true);
   const [error, setError] = useErrorHandler();
@@ -33,6 +45,8 @@ const GuideScreen = ({navigation}) => {
         user.id_user,
       );
       setIsJournal(resCheckJournal.data.data.length ? true : false);
+      const resVideo = await getVideoSkriningAPI();
+      setVideo(resVideo.data.data);
       const resGuid = await getJournalGuideAPI(token, user.id_user);
       setData(resGuid.data.data);
     } catch (e) {
@@ -56,6 +70,29 @@ const GuideScreen = ({navigation}) => {
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.wrapper}>
+            {video?.url_frame ? (
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() =>
+                  navigation.navigate('Video', {url: video.url_frame})
+                }>
+                <Image source={{uri: video.url}} style={styles.imgVideo} />
+                <View style={styles.shadowImg}>
+                  <View style={styles.circleIcon}>
+                    <Ionicons
+                      name="play-circle"
+                      size={40}
+                      color={COLORS.white}
+                      style={styles.circle}
+                    />
+                  </View>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <View style={styles.notfoundImg}>
+                <Ionicons name="image-outline" size={30} color={COLORS.gray} />
+              </View>
+            )}
             {isJournal ? (
               <View style={{...styles.header, backgroundColor: '#ECFFEE'}}>
                 <ICON.panduan2 height={80} width={80} />
@@ -85,9 +122,8 @@ const GuideScreen = ({navigation}) => {
                 <MainButton
                   title={'Tulis Jurnal Sekarang'}
                   right
-                  onPress={() =>
-                    navigation.navigate('GuideQuestion', {type: 'create'})
-                  }
+                  style={styles.mt}
+                  onPress={() => navigation.navigate('GuideQuestion')}
                 />
               </>
             )}
@@ -112,9 +148,9 @@ const GuideScreen = ({navigation}) => {
                     key={item.id_jurnal_sadari.toString()}
                     data={item}
                     onPress={() =>
-                      navigation.navigate('GuideQuestion', {
-                        type: 'edit',
+                      navigation.navigate('GuideDetail', {
                         id: item.id_jurnal_sadari,
+                        month: formatDate(item.created_date, 'MMMM'),
                       })
                     }
                   />
@@ -154,10 +190,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-
     padding: 24,
     borderRadius: 8,
-    marginBottom: 24,
   },
   between: {
     flexDirection: 'row',
@@ -181,5 +215,41 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  mt: {marginTop: 24},
+  imgVideo: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: SIZES.width2,
+    width: '100%',
+    borderRadius: 8,
+    backgroundColor: COLORS.lightGray,
+    marginBottom: 16,
+  },
+  shadowImg: {
+    height: SIZES.width2,
+    width: '100%',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    zIndex: 99,
+  },
+  notfoundImg: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: SIZES.width5 - 8,
+    width: SIZES.width5 - 8,
+    borderRadius: 8,
+    backgroundColor: COLORS.separator,
+  },
+  circleIcon: {
+    backgroundColor: COLORS.background,
+    borderRadius: 50,
+    height: 47,
+    width: 47,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  circle: {marginLeft: 2},
 });
 export default GuideScreen;

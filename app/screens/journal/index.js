@@ -4,6 +4,7 @@ import SkriningJournalScreen from './SkriningJournalScreen';
 import CaloriesJournalScreen from './CaloriesJournalScreen';
 import GuideScreen from './GuideScreen';
 import GuideQuestionScreen from './GuideQuestionScreen';
+import GuideDetailScreen from './GuideDetailScreen';
 export {
   SportsJournalScreen,
   WeightJournalScreen,
@@ -11,4 +12,5 @@ export {
   CaloriesJournalScreen,
   GuideScreen,
   GuideQuestionScreen,
+  GuideDetailScreen,
 };

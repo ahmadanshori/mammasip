@@ -28,7 +28,6 @@ export default () => {
       },
     );
     const onesignalUser = await OneSignal.getDeviceState();
-    console.log('onesignalUser.userId', onesignalUser.userId);
     await AsyncStorage.setItem('onesignal', onesignalUser.userId);
     setOnesignalId(onesignalUser.userId);
   };

@@ -40,6 +40,7 @@ import {
   CaloriesJournalScreen,
   GuideScreen,
   GuideQuestionScreen,
+  GuideDetailScreen,
 } from '../screens/journal';
 import {ChangePasswordScreen, EditProfileScreen} from '../screens/profile';
 import {
@@ -282,6 +283,7 @@ export default function App() {
           />
           <Stack.Screen component={GuideScreen} name="Guide" />
           <Stack.Screen component={GuideQuestionScreen} name="GuideQuestion" />
+          <Stack.Screen component={GuideDetailScreen} name="GuideDetail" />
           <Stack.Screen
             component={CaloriesJournalScreen}
             name="CaloriesJournal"

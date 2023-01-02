@@ -1,26 +1,12 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, FONTS} from '../../constants';
 import {MainButton, OutlineButton} from '../Buttons';
 
-const QuestionGuide = ({data, groupActive, back, next}) => {
+const QuestionGuideDetail = ({data, groupActive, back, next}) => {
   const [active, setActive] = useState(0);
-  const [selected, setSelected] = useState(
-    data[groupActive].formulir[active].pilihan_jawaban[0].value,
-  );
-  const [answereData, setAnswereData] = useState([]);
-
-  const selectHandler = val => {
-    setSelected(val);
-  };
 
   const onBackHandler = () => {
     if (active === 0) {
@@ -32,31 +18,9 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
 
   const onNextHandler = () => {
     if (data[groupActive].formulir.length === active + 1) {
-      // if (data.length === groupActive + 1) {
-      const newData = [
-        ...answereData,
-        {
-          id_pertanyaan_sadari:
-            data[groupActive].formulir[active].id_panduan_sadari,
-          value: selected,
-        },
-      ];
-
-      next(newData);
+      next();
       setActive(0);
     } else {
-      const combineData = [
-        ...answereData,
-        {
-          id_pertanyaan_sadari:
-            data[groupActive].formulir[active].id_panduan_sadari,
-          value: selected,
-        },
-      ];
-      setSelected(
-        data[groupActive].formulir[active + 1].pilihan_jawaban[0].value,
-      );
-      setAnswereData(combineData);
       setActive(state => state + 1);
     }
   };
@@ -84,23 +48,27 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
         </Text>
         <View style={styles.margin}>
           {data[groupActive].formulir[active].pilihan_jawaban?.map(item => (
-            <TouchableOpacity
+            <View
               key={item.value.toString()}
               style={{
                 ...styles.button,
                 borderColor:
-                  selected === item.value ? COLORS.primary : COLORS.gray,
-              }}
-              activeOpacity={0.7}
-              onPress={() => selectHandler(item.value)}>
+                  data[groupActive].formulir[active].jawaban_user === item.value
+                    ? COLORS.primary
+                    : COLORS.gray,
+              }}>
               <MaterialIcons
                 name={
-                  selected === item.value
+                  data[groupActive].formulir[active].jawaban_user === item.value
                     ? 'radio-button-checked'
                     : 'radio-button-off'
                 }
                 size={20}
-                color={selected === item.value ? COLORS.primary : COLORS.black}
+                color={
+                  data[groupActive].formulir[active].jawaban_user === item.value
+                    ? COLORS.primary
+                    : COLORS.black
+                }
               />
               <Text
                 style={[
@@ -109,7 +77,7 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
                 ]}>
                 {item.description}
               </Text>
-            </TouchableOpacity>
+            </View>
           ))}
         </View>
       </ScrollView>
@@ -165,4 +133,4 @@ const styles = StyleSheet.create({
   halfButton: {width: '48%'},
 });
 
-export default QuestionGuide;
+export default QuestionGuideDetail;

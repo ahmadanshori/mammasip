@@ -38,3 +38,5 @@ export const getVideoPageAPI = (token, page = 0, per_page = 20) =>
     `/media/pagination/type/2/${page}/${per_page}/idMedia/asc`,
     createHeader(token),
   );
+
+export const getVideoSkriningAPI = () => client.get('/media/211');
