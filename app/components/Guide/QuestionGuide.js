@@ -21,7 +21,7 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
   const selectHandler = val => {
     setSelected(val);
   };
-
+  console.log('data', JSON.stringify(data));
   const onBackHandler = () => {
     if (active === 0) {
       back();
@@ -29,24 +29,35 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
       setActive(state => state - 1);
     }
   };
+  // console.log('answereData', JSON.stringify(answereData));
+  // console.log('selected', JSON.stringify(selected));
+  // console.log('data.length', data.length);
 
   const onNextHandler = () => {
     if (data[groupActive].formulir.length === active + 1) {
+      // if (data.length === groupActive + 1) {
+      const newData = [
+        ...answereData,
+        {
+          id_pertanyaan_sadari:
+            data[groupActive].formulir[active].id_panduan_sadari,
+          value: selected,
+        },
+      ];
+      // console.log('newData', newData);
+      next(newData);
       setActive(0);
-      if (data.length === groupActive + 1) {
-        const newData = [
-          ...answereData,
-          {
-            id_pertanyaan_sadari:
-              data[groupActive].formulir[active].id_panduan_sadari,
-            value: selected,
-          },
-        ];
-        next(newData);
-      } else {
-        next(answereData);
-      }
+      // } else {
+      //   console.log('answereData 2', JSON.stringify(answereData));
+      //   next(answereData);
+      //   setActive(0);
+      // }
     } else {
+      // console.log(
+      //   'data[groupActive].formulir.length',
+      //   data[groupActive].formulir.length,
+      // );
+      // console.log('active + 1', active + 1);
       const combineData = [
         ...answereData,
         {
@@ -105,7 +116,10 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
                 color={selected === item.value ? COLORS.primary : COLORS.black}
               />
               <Text
-                style={[FONTS.text12, {color: COLORS.black, marginLeft: 8}]}>
+                style={[
+                  FONTS.text12,
+                  {flex: 1, color: COLORS.black, marginLeft: 8},
+                ]}>
                 {item.description}
               </Text>
             </TouchableOpacity>

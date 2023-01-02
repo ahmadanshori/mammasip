@@ -47,7 +47,7 @@ const GuideScreen = ({navigation}) => {
     setIsLoad(true);
     getInitialData();
   };
-  // console.log('data', JSON.stringify(data));
+
   return (
     <Container>
       <HeaderTitle title="Jurnal Panduan Skrining" />
@@ -82,13 +82,15 @@ const GuideScreen = ({navigation}) => {
                     </Text>
                   </View>
                 </View>
+                <MainButton
+                  title={'Tulis Jurnal Sekarang'}
+                  right
+                  onPress={() =>
+                    navigation.navigate('GuideQuestion', {type: 'create'})
+                  }
+                />
               </>
             )}
-            <MainButton
-              title={'Tulis Jurnal Sekarang'}
-              right
-              onPress={() => navigation.navigate('GuideQuestion')}
-            />
           </View>
           <Divider />
           <View style={styles.wrapper}>
@@ -106,7 +108,16 @@ const GuideScreen = ({navigation}) => {
             {data.length ? (
               <>
                 {data.map(item => (
-                  <JournalItem key={item} data={item} />
+                  <JournalItem
+                    key={item.id_jurnal_sadari.toString()}
+                    data={item}
+                    onPress={() =>
+                      navigation.navigate('GuideQuestion', {
+                        type: 'edit',
+                        id: item.id_jurnal_sadari,
+                      })
+                    }
+                  />
                 ))}
               </>
             ) : (

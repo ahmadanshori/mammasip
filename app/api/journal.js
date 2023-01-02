@@ -32,7 +32,10 @@ export const getJournalSkriningAPI = (token, id) => {
 };
 
 export const getJournalGuideAPI = (token, id) => {
-  return client.get(`/jurnal_panduan_sadari/user/${id}`, createHeader(token));
+  return client.get(
+    `/jurnal_panduan_sadari/user/last/${id}`,
+    createHeader(token),
+  );
 };
 
 export const getCheckJournalGuideAPI = (token, id) => {
@@ -48,8 +51,8 @@ export const getQuestionGuideAPI = token =>
 export const createJournalGuideAPI = (token, data) => {
   return client.post('/jurnal_panduan_sadari', data, createHeader(token));
 };
-export const getTempAPI = token => {
-  return client.get('/jurnal_panduan_sadari/v2/10', createHeader(token));
+export const getTempAPI = (token, id) => {
+  return client.get(`/jurnal_panduan_sadari/v2/${id}`, createHeader(token));
 };
 
 export const updateSadariAPI = (token, id, data) => {

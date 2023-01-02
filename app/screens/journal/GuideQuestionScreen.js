@@ -14,8 +14,10 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 import {InitGuid, ResultGuide, QuestionGuide} from '../../components/Guide';
 import {LoadingComponent} from '../../components/Loadings';
 
-const GuideQuestionScreen = ({navigation}) => {
+const GuideQuestionScreen = ({navigation, route}) => {
   const {setLoading, user, token} = useContext(AppContext);
+  const type = route.params?.type || '';
+  const id = route.params?.id || '';
   const [data, setData] = useState([]);
   const [groupActive, setGroupActive] = useState(1);
   const [isGroup, setIsGroup] = useState(true);
@@ -58,9 +60,11 @@ const GuideQuestionScreen = ({navigation}) => {
 
   const getInitialData = useCallback(async () => {
     try {
-      const resTemp = await getTempAPI(token);
       const res = await getQuestionGuideAPI(token);
-      // console.log('resTemp', JSON.stringify(resTemp.data.data));
+      if (type === 'edit') {
+        const resTemp = await getTempAPI(token, id);
+        console.log('resTemp', JSON.stringify(resTemp.data.data));
+      }
       setData(res.data.data);
     } catch (e) {
       setError(e);
@@ -80,21 +84,18 @@ const GuideQuestionScreen = ({navigation}) => {
   };
 
   const handleBackToInit = () => setIsGroup(true);
-  // console.log('answereData', answereData);
+
   const handleNextPage = async val => {
-    // console.log('val', val);
-    // console.log('groupActive', groupActive);
-    // console.log(' data.length', data.length);
     if (groupActive === data.length) {
       setLoading(true);
       try {
-        const combineData = {
+        const payloadData = {
           id_user: user.id_user,
           list: [...answereData, ...val],
         };
-        // console.log('combineData', combineData);
-        // const res = await createJournalGuideAPI(token, combineData);
-        // setFinishResult(res.data.status == 1 ? true : false);
+        console.log('payloadData', payloadData);
+        const res = await createJournalGuideAPI(token, payloadData);
+        setFinishResult(true);
         setIsFinish(true);
       } catch (err) {
         setError(err);
@@ -102,12 +103,37 @@ const GuideQuestionScreen = ({navigation}) => {
         setLoading(false);
       }
     } else {
-      setAnswereData(state => [...state, ...val]);
-      setGroupActive(state => state + 1);
-      setIsGroup(true);
+      setLoading(true);
+      const combineData = [...answereData, ...val];
+      console.log('combineData', combineData);
+      let checkAnswerZero = combineData.some(e => e['value'] == 0);
+      console.log('checkAnswerZero', checkAnswerZero);
+      if (checkAnswerZero) {
+        // setAnswereData(combineData);
+        // setGroupActive(3);
+        // setIsGroup(true);
+        try {
+          const payloadData = {
+            id_user: user.id_user,
+            list: combineData,
+          };
+          console.log('payloadData', payloadData);
+          const res = await createJournalGuideAPI(token, payloadData);
+          setFinishResult(false);
+          setIsFinish(true);
+        } catch (err) {
+          setError(err);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setAnswereData(combineData);
+        setGroupActive(state => state + 1);
+        setIsGroup(true);
+      }
     }
   };
-  // console.log('data', JSON.stringify(data));
+
   return (
     <Container>
       <HeaderTitle title="Tulis Jurnal Panduan SADARI" onGoBack={backAction} />

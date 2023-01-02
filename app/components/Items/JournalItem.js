@@ -1,12 +1,15 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS} from '../../constants';
 import formatDate from '../../libs/formatDate';
 
-const JournalItem = ({data}) => {
+const JournalItem = ({data, onPress}) => {
   return (
-    <View style={styles.container} activeOpacity={1}>
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={1}
+      onPress={onPress}>
       <View style={styles.title}>
         <Text style={FONTS.text12}>
           Sudah mengisi jurnal bulan{' '}
@@ -33,7 +36,7 @@ const JournalItem = ({data}) => {
           Ditulis pada {formatDate(data.created_date, 'dd MMMM yyyy HH:mm')}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
