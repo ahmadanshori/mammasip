@@ -289,7 +289,11 @@ const styles = StyleSheet.create({
   },
   secondary: {color: COLORS.secondary},
   pass: {marginTop: 16},
-  error: {flexDirection: 'row', marginTop: 6},
+  error: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 6,
+  },
   errorIcon: {color: COLORS.red},
   forgot: {paddingVertical: 16},
   register: {

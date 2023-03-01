@@ -10,7 +10,7 @@ import Divider from '../../components/Divider';
 import {AppContext} from '../../index';
 
 const ProfileScreen = ({navigation}) => {
-  const {user, setToken, setUser} = useContext(AppContext);
+  const {user, setToken, setUser, setLoading} = useContext(AppContext);
 
   const handleNavigate = type => {
     navigation.navigate(`${type}`);
@@ -19,16 +19,22 @@ const ProfileScreen = ({navigation}) => {
     await Linking.openURL('http://103.31.38.171/term-condition');
   };
   const handleLogout = async () => {
-    const isGoogle = await AsyncStorage.getItem('isGoogle');
-    if (isGoogle === '1') {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
+    setLoading(true);
+    try {
+      const isGoogle = await AsyncStorage.getItem('isGoogle');
+      if (isGoogle === '1') {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+      }
+      const keys = ['user', 'onesignal', 'isGoogle'];
+      await AsyncStorage.multiRemove(keys);
+      setToken(null);
+      setUser(null);
+      setLoading(false);
+      navigation.navigate('HomeTab');
+    } catch (err) {
+      setLoading(false);
     }
-    const keys = ['user', 'onesignal', 'isGoogle'];
-    await AsyncStorage.multiRemove(keys);
-    setToken(null);
-    setUser(null);
-    navigation.navigate('HomeTab');
   };
   return (
     <Container>

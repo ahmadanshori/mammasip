@@ -8,16 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* mammasipTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mammasipTests.m */; };
+		0CC752F929AEFE53004DDA01 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CC752F829AEFE53004DDA01 /* GoogleService-Info.plist */; };
+		0CC7530229AF0464004DDA01 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7530129AF0464004DDA01 /* NotificationService.swift */; };
+		0CC7530629AF0464004DDA01 /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0CC752FF29AF0464004DDA01 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2EEAFADB9948A416C59F92F0 /* libPods-mammasip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E595960D5C47EA918A169B01 /* libPods-mammasip.a */; };
-		42CCDBBC278328B6004F5D30 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42CCDBBB278328B6004F5D30 /* GoogleService-Info.plist */; };
 		45C061A3061E4BA8B900543A /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C0B909C156242F68B239EB1 /* Inter-Bold.ttf */; };
+		6636C9F8BCE566D3FA2FDEEC /* libPods-mammasip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC4624F181A0615D1CA59AB /* libPods-mammasip.a */; };
 		7292F91575514E03B9E29EEF /* Homeday.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F299DFB35A784C6D9DC1B175 /* Homeday.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D586E09DEF704F3AA0913BFB /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C635149957543D1B7AD3536 /* Inter-Regular.ttf */; };
-		EC59786EE6EA1123F9294CA2 /* libPods-mammasip-mammasipTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91D8B4AACE86CA8E84157FFC /* libPods-mammasip-mammasipTests.a */; };
+		D9060766DAFCF833CB40476C /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 628C7F0DAE917DD436345224 /* libPods-OneSignalNotificationServiceExtension.a */; };
+		E26A5FA1412A1D47B3246ECB /* libPods-mammasip-mammasipTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 137EBD3BFC2B2D8E6438B28C /* libPods-mammasip-mammasipTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,14 +31,42 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = mammasip;
 		};
+		0CC7530429AF0464004DDA01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CC752FE29AF0464004DDA01;
+			remoteInfo = OneSignalNotificationServiceExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0CC7530A29AF0464004DDA01 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0CC7530629AF0464004DDA01 /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* mammasipTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mammasipTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* mammasipTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mammasipTests.m; sourceTree = "<group>"; };
 		0C71B1F1FD67499A87FEB167 /* YesevaOne-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "YesevaOne-Regular.ttf"; path = "../app/assets/fonts/YesevaOne-Regular.ttf"; sourceTree = "<group>"; };
+		0CC752F829AEFE53004DDA01 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Certificates/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0CC752FA29AF03D0004DDA01 /* mammasip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mammasip.entitlements; path = mammasip/mammasip.entitlements; sourceTree = "<group>"; };
+		0CC752FF29AF0464004DDA01 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CC7530129AF0464004DDA01 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		0CC7530329AF0464004DDA01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0CF9710529AF07E70093EAD8 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		10D01090222543BB82AC76BB /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../app/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		137EBD3BFC2B2D8E6438B28C /* libPods-mammasip-mammasipTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mammasip-mammasipTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* mammasip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mammasip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = mammasip/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = mammasip/AppDelegate.m; sourceTree = "<group>"; };
@@ -46,28 +77,29 @@
 		251A951B01104D19AFD6ED0A /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		2E1CD1DF75B84336BC3EB5E9 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		3214929475F24D62A866E753 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		42CCDBBB278328B6004F5D30 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47EA6B52D1DD442190EDE2D9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		49695A11AE537AB72421455E /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		4CF8A5C2A957450B9F35E42A /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		57C52430B789D8001CD8722E /* Pods-mammasip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mammasip.debug.xcconfig"; path = "Target Support Files/Pods-mammasip/Pods-mammasip.debug.xcconfig"; sourceTree = "<group>"; };
 		590C2B859C9441D091136B7F /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		5C71AA144EE9072B4701DF1E /* Pods-mammasip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mammasip.release.xcconfig"; path = "Target Support Files/Pods-mammasip/Pods-mammasip.release.xcconfig"; sourceTree = "<group>"; };
 		5DA113BC7AD840538DED34C6 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		628C7F0DAE917DD436345224 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		666C57AF763A872672E7F2E8 /* Pods-mammasip-mammasipTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mammasip-mammasipTests.release.xcconfig"; path = "Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests.release.xcconfig"; sourceTree = "<group>"; };
 		7C635149957543D1B7AD3536 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../app/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
+		7EC4624F181A0615D1CA59AB /* libPods-mammasip.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mammasip.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = mammasip/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		91D8B4AACE86CA8E84157FFC /* libPods-mammasip-mammasipTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mammasip-mammasipTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9206150767F447EEA7F100BE /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		AD359E25999922FA565D5CF6 /* Pods-mammasip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mammasip.debug.xcconfig"; path = "Target Support Files/Pods-mammasip/Pods-mammasip.debug.xcconfig"; sourceTree = "<group>"; };
+		A021346624F28F8698E75F8F /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		B56424C5B8FF42978B88C15E /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../app/assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		C7FC5839D5A3421AB104E227 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		C8D0C86973B4183793C14248 /* Pods-mammasip-mammasipTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mammasip-mammasipTests.debug.xcconfig"; path = "Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CC2B4170BE3E4F01A05002B1 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		CCF1B85F5DEA4823A776853C /* Pods-mammasip-mammasipTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mammasip-mammasipTests.debug.xcconfig"; path = "Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CE95308F2783BB6F2596B07B /* Pods-mammasip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mammasip.release.xcconfig"; path = "Target Support Files/Pods-mammasip/Pods-mammasip.release.xcconfig"; sourceTree = "<group>"; };
 		CEEE8DA058B243508A794CFB /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		D50FE6C750BF49899FEEF8AF /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		E00899CF22664B3FA5F825E0 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		E07FAC746EF64C50A5CCAE84 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		E595960D5C47EA918A169B01 /* libPods-mammasip.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mammasip.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		EF49B2CEDFBC33B9F4B8AE3A /* Pods-mammasip-mammasipTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mammasip-mammasipTests.release.xcconfig"; path = "Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests.release.xcconfig"; sourceTree = "<group>"; };
 		F299DFB35A784C6D9DC1B175 /* Homeday.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Homeday.ttf; path = ../app/assets/fonts/Homeday.ttf; sourceTree = "<group>"; };
 		F464AA5B571642428BB83B4E /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		F4E4728C785D43CD8EA55AFF /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
@@ -78,7 +110,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC59786EE6EA1123F9294CA2 /* libPods-mammasip-mammasipTests.a in Frameworks */,
+				E26A5FA1412A1D47B3246ECB /* libPods-mammasip-mammasipTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0CC752FC29AF0464004DDA01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9060766DAFCF833CB40476C /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,7 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EEAFADB9948A416C59F92F0 /* libPods-mammasip.a in Frameworks */,
+				6636C9F8BCE566D3FA2FDEEC /* libPods-mammasip.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,10 +150,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0CC7530029AF0464004DDA01 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				0CF9710529AF07E70093EAD8 /* OneSignalNotificationServiceExtension.entitlements */,
+				0CC7530129AF0464004DDA01 /* NotificationService.swift */,
+				0CC7530329AF0464004DDA01 /* Info.plist */,
+			);
+			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* mammasip */ = {
 			isa = PBXGroup;
 			children = (
-				42CCDBBB278328B6004F5D30 /* GoogleService-Info.plist */,
+				0CC752FA29AF03D0004DDA01 /* mammasip.entitlements */,
+				0CC752F829AEFE53004DDA01 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -128,8 +179,9 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				E595960D5C47EA918A169B01 /* libPods-mammasip.a */,
-				91D8B4AACE86CA8E84157FFC /* libPods-mammasip-mammasipTests.a */,
+				628C7F0DAE917DD436345224 /* libPods-OneSignalNotificationServiceExtension.a */,
+				7EC4624F181A0615D1CA59AB /* libPods-mammasip.a */,
+				137EBD3BFC2B2D8E6438B28C /* libPods-mammasip-mammasipTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -176,6 +228,7 @@
 				13B07FAE1A68108700A75B9A /* mammasip */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mammasipTests */,
+				0CC7530029AF0464004DDA01 /* OneSignalNotificationServiceExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				F08DCCAAE88293E13A8CC27B /* Pods */,
@@ -191,6 +244,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* mammasip.app */,
 				00E356EE1AD99517003FC87E /* mammasipTests.xctest */,
+				0CC752FF29AF0464004DDA01 /* OneSignalNotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,10 +252,12 @@
 		F08DCCAAE88293E13A8CC27B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				AD359E25999922FA565D5CF6 /* Pods-mammasip.debug.xcconfig */,
-				5C71AA144EE9072B4701DF1E /* Pods-mammasip.release.xcconfig */,
-				C8D0C86973B4183793C14248 /* Pods-mammasip-mammasipTests.debug.xcconfig */,
-				EF49B2CEDFBC33B9F4B8AE3A /* Pods-mammasip-mammasipTests.release.xcconfig */,
+				A021346624F28F8698E75F8F /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				49695A11AE537AB72421455E /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
+				57C52430B789D8001CD8722E /* Pods-mammasip.debug.xcconfig */,
+				CE95308F2783BB6F2596B07B /* Pods-mammasip.release.xcconfig */,
+				CCF1B85F5DEA4823A776853C /* Pods-mammasip-mammasipTests.debug.xcconfig */,
+				666C57AF763A872672E7F2E8 /* Pods-mammasip-mammasipTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -213,12 +269,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "mammasipTests" */;
 			buildPhases = (
-				AA837D6418A795A99163FC2F /* [CP] Check Pods Manifest.lock */,
+				F9E3A9386679EA06EF6CBDA0 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				2CD3A98B5AE1E53C9C771F52 /* [CP] Embed Pods Frameworks */,
-				71F83CE16A18D51FE9B9F107 /* [CP] Copy Pods Resources */,
+				3656EA2ED79A503BF5982360 /* [CP] Embed Pods Frameworks */,
+				48CFB33A142E179639DFA8C1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -230,22 +286,42 @@
 			productReference = 00E356EE1AD99517003FC87E /* mammasipTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		0CC752FE29AF0464004DDA01 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0CC7530729AF0464004DDA01 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				C636C0188A0C2D50B5B4D89B /* [CP] Check Pods Manifest.lock */,
+				0CC752FB29AF0464004DDA01 /* Sources */,
+				0CC752FC29AF0464004DDA01 /* Frameworks */,
+				0CC752FD29AF0464004DDA01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OneSignalNotificationServiceExtension;
+			productName = OneSignalNotificationServiceExtension;
+			productReference = 0CC752FF29AF0464004DDA01 /* OneSignalNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		13B07F861A680F5B00A75B9A /* mammasip */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "mammasip" */;
 			buildPhases = (
-				94E1AAB99A26EE04C9630132 /* [CP] Check Pods Manifest.lock */,
+				39143C21CBD67ECE85E50CB2 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				7FE88CA72A45B42676345A6F /* [CP] Embed Pods Frameworks */,
-				3F619409C1C7055A0F51C35F /* [CP] Copy Pods Resources */,
+				0CC7530A29AF0464004DDA01 /* Embed Foundation Extensions */,
+				7BC7F3A17A1792CC8C2C2D8D /* [CP] Embed Pods Frameworks */,
+				585C9F552C187F314FFB8490 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0CC7530529AF0464004DDA01 /* PBXTargetDependency */,
 			);
 			name = mammasip;
 			productName = mammasip;
@@ -258,11 +334,15 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					0CC752FE29AF0464004DDA01 = {
+						CreatedOnToolsVersion = 14.2;
 					};
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1120;
@@ -284,12 +364,20 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* mammasip */,
 				00E356ED1AD99517003FC87E /* mammasipTests */,
+				0CC752FE29AF0464004DDA01 /* OneSignalNotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0CC752FD29AF0464004DDA01 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -305,7 +393,7 @@
 				45C061A3061E4BA8B900543A /* Inter-Bold.ttf in Resources */,
 				D586E09DEF704F3AA0913BFB /* Inter-Regular.ttf in Resources */,
 				7292F91575514E03B9E29EEF /* Homeday.ttf in Resources */,
-				42CCDBBC278328B6004F5D30 /* GoogleService-Info.plist in Resources */,
+				0CC752F929AEFE53004DDA01 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +414,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		2CD3A98B5AE1E53C9C771F52 /* [CP] Embed Pods Frameworks */ = {
+		3656EA2ED79A503BF5982360 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -343,58 +431,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3F619409C1C7055A0F51C35F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		71F83CE16A18D51FE9B9F107 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7FE88CA72A45B42676345A6F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		94E1AAB99A26EE04C9630132 /* [CP] Check Pods Manifest.lock */ = {
+		39143C21CBD67ECE85E50CB2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -416,7 +453,80 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AA837D6418A795A99163FC2F /* [CP] Check Pods Manifest.lock */ = {
+		48CFB33A142E179639DFA8C1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mammasip-mammasipTests/Pods-mammasip-mammasipTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		585C9F552C187F314FFB8490 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7BC7F3A17A1792CC8C2C2D8D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mammasip/Pods-mammasip-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C636C0188A0C2D50B5B4D89B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F9E3A9386679EA06EF6CBDA0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -468,6 +578,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0CC752FB29AF0464004DDA01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CC7530229AF0464004DDA01 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13B07F871A680F5B00A75B9A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -485,12 +603,17 @@
 			target = 13B07F861A680F5B00A75B9A /* mammasip */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
+		0CC7530529AF0464004DDA01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0CC752FE29AF0464004DDA01 /* OneSignalNotificationServiceExtension */;
+			targetProxy = 0CC7530429AF0464004DDA01 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C8D0C86973B4183793C14248 /* Pods-mammasip-mammasipTests.debug.xcconfig */;
+			baseConfigurationReference = CCF1B85F5DEA4823A776853C /* Pods-mammasip-mammasipTests.debug.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -516,7 +639,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF49B2CEDFBC33B9F4B8AE3A /* Pods-mammasip-mammasipTests.release.xcconfig */;
+			baseConfigurationReference = 666C57AF763A872672E7F2E8 /* Pods-mammasip-mammasipTests.release.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = mammasipTests/Info.plist;
@@ -537,26 +660,112 @@
 			};
 			name = Release;
 		};
+		0CC7530829AF0464004DDA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A021346624F28F8698E75F8F /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MJZ479M5W2;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mammasip.yspi.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0CC7530929AF0464004DDA01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49695A11AE537AB72421455E /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MJZ479M5W2;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mammasip.yspi.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD359E25999922FA565D5CF6 /* Pods-mammasip.debug.xcconfig */;
+			baseConfigurationReference = 57C52430B789D8001CD8722E /* Pods-mammasip.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = mammasip/mammasip.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z2S64QVGY7;
+				DEVELOPMENT_TEAM = MJZ479M5W2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = mammasip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Mammasip;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.mammasip;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mammasip.yspi;
 				PRODUCT_NAME = mammasip;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -566,23 +775,29 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C71AA144EE9072B4701DF1E /* Pods-mammasip.release.xcconfig */;
+			baseConfigurationReference = CE95308F2783BB6F2596B07B /* Pods-mammasip.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = mammasip/mammasip.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z2S64QVGY7;
+				DEVELOPMENT_TEAM = MJZ479M5W2;
 				INFOPLIST_FILE = mammasip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Mammasip;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.mammasip;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mammasip.yspi;
 				PRODUCT_NAME = mammasip;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -720,6 +935,15 @@
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
 				00E356F71AD99517003FC87E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0CC7530729AF0464004DDA01 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0CC7530829AF0464004DDA01 /* Debug */,
+				0CC7530929AF0464004DDA01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

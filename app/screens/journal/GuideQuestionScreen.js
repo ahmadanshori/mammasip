@@ -4,17 +4,13 @@ import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {ErrorNetwork, ErrorServer} from '../../components/Errors';
 
-import {
-  getQuestionGuideAPI,
-  createJournalGuideAPI,
-  getTempAPI,
-} from '../../api/journal';
+import {getQuestionGuideAPI, createJournalGuideAPI} from '../../api/journal';
 import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import {InitGuid, ResultGuide, QuestionGuide} from '../../components/Guide';
 import {LoadingComponent} from '../../components/Loadings';
 
-const GuideQuestionScreen = ({navigation, route}) => {
+const GuideQuestionScreen = ({navigation}) => {
   const {setLoading, user, token} = useContext(AppContext);
 
   const [data, setData] = useState([]);

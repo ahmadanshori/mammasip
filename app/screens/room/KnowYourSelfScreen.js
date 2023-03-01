@@ -61,7 +61,7 @@ const KnowYourSelfScreen = ({route, navigation}) => {
       if (token) {
         navigation.navigate(type);
       } else {
-        navigation.navigate('Login', {nav: 'KnowYourSelf'});
+        navigation.navigate('Login', {nav: 'KnowYourSelf', id: id});
       }
     },
     [token, navigation],
@@ -147,13 +147,6 @@ const KnowYourSelfScreen = ({route, navigation}) => {
                 title="Risiko Penyakit Kanker"
                 description="Analisa dari kebiasaan dan pola makan sehari-hari Anda."
               />
-              <CalculatorItem
-                image={<ICON.panduan height={60} width={60} />}
-                onPress={() => handleNavigation('Guide')}
-                backgroundColor={COLORS.darkOrange}
-                title="Jurnal Panduan SADARI"
-                description="Ceklis untuk melakukan SADARI"
-              />
             </View>
             <View style={styles.wrapper}>
               <View style={[styles.row, styles.mBottom]}>
@@ -186,6 +179,13 @@ const KnowYourSelfScreen = ({route, navigation}) => {
                 backgroundColor={COLORS.secondary}
                 title="Jurnal Skrining"
                 description="Jadwal untuk dirimu melakukan SADARI & SADANIS"
+              />
+              <CalculatorItem
+                image={<ICON.panduan height={60} width={60} />}
+                onPress={() => handleNavigation('Guide')}
+                backgroundColor={COLORS.darkOrange}
+                title="Jurnal Panduan SADARI"
+                description="Ceklis untuk melakukan SADARI"
               />
             </View>
             <View style={styles.wrapper}>

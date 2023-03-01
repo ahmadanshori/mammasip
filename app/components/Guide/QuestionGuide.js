@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COLORS, FONTS} from '../../constants';
 import {MainButton, OutlineButton} from '../Buttons';
+import {dropdownalert} from '../AlertProvider';
 
 const QuestionGuide = ({data, groupActive, back, next}) => {
   const [active, setActive] = useState(0);
@@ -33,6 +34,7 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
   const onNextHandler = () => {
     if (data[groupActive].formulir.length === active + 1) {
       // if (data.length === groupActive + 1) {
+
       const newData = [
         ...answereData,
         {
@@ -41,9 +43,16 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
           value: selected,
         },
       ];
-
-      next(newData);
-      setActive(0);
+      if (groupActive === 0 && selected !== 1) {
+        dropdownalert.alertWithType(
+          'warn',
+          '',
+          'Pilihan anda belum bisa untuk melanjutkan!',
+        );
+      } else {
+        next(newData);
+        setActive(0);
+      }
     } else {
       const combineData = [
         ...answereData,
@@ -53,11 +62,19 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
           value: selected,
         },
       ];
-      setSelected(
-        data[groupActive].formulir[active + 1].pilihan_jawaban[0].value,
-      );
-      setAnswereData(combineData);
-      setActive(state => state + 1);
+      if (groupActive === 0 && selected !== 1) {
+        dropdownalert.alertWithType(
+          'warn',
+          '',
+          'Pilihan anda belum bisa untuk melanjutkan!',
+        );
+      } else {
+        setSelected(
+          data[groupActive].formulir[active + 1].pilihan_jawaban[0].value,
+        );
+        setAnswereData(combineData);
+        setActive(state => state + 1);
+      }
     }
   };
 
