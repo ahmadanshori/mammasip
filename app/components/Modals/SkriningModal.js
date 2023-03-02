@@ -136,6 +136,7 @@ const SkriningModal = ({onClose, onAddPress, selected}) => {
         }}
         mode="date"
         maximumDate={new Date()}
+        theme="light"
       />
     </TouchableOpacity>
   );

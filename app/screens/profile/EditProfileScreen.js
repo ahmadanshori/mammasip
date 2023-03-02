@@ -1,5 +1,13 @@
 import React, {useState, useCallback, useContext} from 'react';
-import {View, Text, StyleSheet, ScrollView, Keyboard} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -110,75 +118,82 @@ const EditProfileScreen = () => {
   return (
     <Container>
       <HeaderTitle back title="Edit data diri" />
-      <ScrollView
-        contentContainerStyle={styles.wrapper}
-        showsVerticalScrollIndicator={false}>
-        <PhotoProfile
-          source={picture}
-          onPress={handleOpenPhoto}
-          isLocal={isLocal}
-        />
-        <TitleInput
-          title="Nama Depan"
-          placeholder="Syifa"
-          onChangeText={val => handleInput(val, 'first_name')}
-          value={field.first_name}
-          maxLength={50}
-        />
-        <TitleInput
-          title="Nama Belakang"
-          placeholder="Hadju"
-          onChangeText={val => handleInput(val, 'last_name')}
-          style={styles.pass}
-          value={field.last_name}
-          maxLength={50}
-        />
-        <TitleButton
-          title="Tanggal Lahir"
-          placeholder="30 November 2000"
-          data={field?.tgl_lahir ? formatDate(field?.tgl_lahir) : null}
-          onPress={() => setIsDate(true)}
-        />
+      <KeyboardAvoidingView
+        behavior={'padding'}
+        // keyboardVerticalOffset={95}
+        style={{flex: 1}}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        <ScrollView
+          contentContainerStyle={styles.wrapper}
+          showsVerticalScrollIndicator={false}>
+          <PhotoProfile
+            source={picture}
+            onPress={handleOpenPhoto}
+            isLocal={isLocal}
+          />
+          <TitleInput
+            title="Nama Depan"
+            placeholder="Syifa"
+            onChangeText={val => handleInput(val, 'first_name')}
+            value={field.first_name}
+            maxLength={50}
+          />
+          <TitleInput
+            title="Nama Belakang"
+            placeholder="Hadju"
+            onChangeText={val => handleInput(val, 'last_name')}
+            style={styles.pass}
+            value={field.last_name}
+            maxLength={50}
+          />
+          <TitleButton
+            title="Tanggal Lahir"
+            placeholder="30 November 2000"
+            data={field?.tgl_lahir ? formatDate(field?.tgl_lahir) : null}
+            onPress={() => setIsDate(true)}
+          />
 
-        <ActivityLevelButton
-          title="Jenis Kelamin"
-          onPress={val => handleInput(val, 'gender')}
-          radio1="Laki-laki"
-          radio2="Perempuan"
-          value1={1}
-          value2={2}
-          selected={field.gender}
-          style={styles.pass}
-        />
-        <TitleInput
-          title="No Handphone"
-          placeholder="08123456789"
-          keyboardType="numeric"
-          style={styles.pass}
-          onChangeText={val => handleInput(val, 'phone')}
-          value={field.phone}
-          maxLength={16}
-        />
-        {error ? (
-          <View style={styles.error}>
-            <Icon name="alert-circle" style={styles.errorIcon} size={16} />
-            <Text style={[FONTS.text10, styles.errorIcon]}>{error}</Text>
-          </View>
-        ) : null}
-      </ScrollView>
-      <View style={styles.wrapper}>
-        <MainButton
-          title="Simpan"
-          disable={
-            !field.phone ||
-            !field.first_name ||
-            !field.last_name ||
-            !field.tgl_lahir ||
-            !field.gender
-          }
-          onPress={handleEditProfile}
-        />
-      </View>
+          <ActivityLevelButton
+            title="Jenis Kelamin"
+            onPress={val => handleInput(val, 'gender')}
+            radio1="Laki-laki"
+            radio2="Perempuan"
+            value1={1}
+            value2={2}
+            selected={field.gender}
+            style={styles.pass}
+          />
+          <TitleInput
+            title="No Handphone"
+            placeholder="08123456789"
+            keyboardType="numeric"
+            style={styles.pass}
+            onChangeText={val => handleInput(val, 'phone')}
+            value={field.phone}
+            maxLength={16}
+          />
+          {error ? (
+            <View style={styles.error}>
+              <Icon name="alert-circle" style={styles.errorIcon} size={16} />
+              <Text style={[FONTS.text10, styles.errorIcon]}>{error}</Text>
+            </View>
+          ) : null}
+        </ScrollView>
+
+        <View style={styles.wrapper}>
+          <MainButton
+            title="Simpan"
+            disable={
+              !field.phone ||
+              !field.first_name ||
+              !field.last_name ||
+              !field.tgl_lahir ||
+              !field.gender
+            }
+            onPress={handleEditProfile}
+          />
+        </View>
+      </KeyboardAvoidingView>
       <ImageModal
         visible={isPicture}
         cameraPress={pictureWithCamera}
@@ -196,6 +211,7 @@ const EditProfileScreen = () => {
         }}
         mode="date"
         maximumDate={new Date()}
+        theme="light"
       />
     </Container>
   );

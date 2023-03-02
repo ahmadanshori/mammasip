@@ -159,6 +159,7 @@ const Sadari = ({data, flag, onPress, getInitialData}) => {
         }}
         mode="date"
         maximumDate={new Date()}
+        theme="light"
       />
     </View>
   );

@@ -10,6 +10,7 @@ import {
   RefreshControl,
   Linking,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import VersionCheck from 'react-native-version-check';
 import OneSignal from 'react-native-onesignal';
@@ -34,7 +35,10 @@ import {AppContext} from '../../index';
 import useErrorHandler from '../../hooks/useErrorHandler';
 
 GoogleSignin.configure({
-  webClientId: env.GOOGLEID,
+  webClientId:
+    Platform.OS === 'android'
+      ? env.GOOGLEID
+      : '395076624382-lsnu3cpqnj8d69bn1u3q87lil9gtqrtu.apps.googleusercontent.com',
   offlineAccess: false,
 });
 

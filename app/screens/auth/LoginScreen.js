@@ -7,6 +7,7 @@ import {
   TouchableNativeFeedback,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import OneSignal from 'react-native-onesignal';
 import {
@@ -26,7 +27,10 @@ import {COLORS, FONTS, SIZES} from '../../constants';
 import {AppContext} from '../../index';
 
 GoogleSignin.configure({
-  webClientId: env.GOOGLEID,
+  webClientId:
+    Platform.OS === 'android'
+      ? env.GOOGLEID
+      : '395076624382-lsnu3cpqnj8d69bn1u3q87lil9gtqrtu.apps.googleusercontent.com',
   offlineAccess: false,
 });
 
@@ -211,7 +215,7 @@ const LoginScreen = ({navigation, route}) => {
           autoCapitalize="none"
           onChangeText={val => handleInput(val, 'username')}
           value={field.username}
-          maxLength={24}
+          // maxLength={24}
         />
         <TitleInput
           title="Password"
@@ -222,7 +226,7 @@ const LoginScreen = ({navigation, route}) => {
           onChangeText={val => handleInput(val, 'password')}
           value={field.password}
           onSubmitEditing={handleLogin}
-          maxLength={24}
+          // maxLength={24}
         />
         {error ? (
           <View style={styles.error}>

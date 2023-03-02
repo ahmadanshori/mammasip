@@ -5,6 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import OneSignal from 'react-native-onesignal';
@@ -126,138 +128,145 @@ const RegisterScreen = ({navigation}) => {
   };
   return (
     <Container>
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.iconBack}
-            onPress={() => navigation.goBack()}
-            activeOpacity={SIZES.opacity}>
-            <Icon name="arrow-back" size={22} color={COLORS.black} />
-          </TouchableOpacity>
-          <View style={{flex: 1}}>
-            <Text style={[FONTS.textBold24, {color: COLORS.primary}]}>
-              Buat Akun Baru
-            </Text>
-            <Text style={[FONTS.text12, {color: COLORS.black}]}>
-              Dapatkan banyak wawasan tentang kesehatan.
-            </Text>
+      <KeyboardAvoidingView
+        behavior={'padding'}
+        style={{flex: 1}}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        <ScrollView contentContainerStyle={styles.container}>
+          <View style={styles.header}>
+            <TouchableOpacity
+              style={styles.iconBack}
+              onPress={() => navigation.goBack()}
+              activeOpacity={SIZES.opacity}>
+              <Icon name="arrow-back" size={22} color={COLORS.black} />
+            </TouchableOpacity>
+            <View style={{flex: 1}}>
+              <Text style={[FONTS.textBold24, {color: COLORS.primary}]}>
+                Buat Akun Baru
+              </Text>
+              <Text style={[FONTS.text12, {color: COLORS.black}]}>
+                Dapatkan banyak wawasan tentang kesehatan.
+              </Text>
+            </View>
           </View>
-        </View>
 
-        <TitleInput
-          title="Email"
-          placeholder="Email"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          style={styles.pass}
-          onChangeText={val => handleInput(val, 'email')}
-          value={field.email}
-        />
-        <TitleInput
-          title="Alamat"
-          placeholder="jln. Senopati"
-          style={styles.pass}
-          onChangeText={val => handleInput(val, 'address')}
-          value={field.address}
-        />
-        <TitleInput
-          title="Nama Depan"
-          placeholder="Syifa"
-          onChangeText={val => handleInput(val, 'first_name')}
-          value={field.first_name}
-          style={styles.pass}
-        />
-        <TitleInput
-          title="Nama Belakang"
-          placeholder="Hadju"
-          onChangeText={val => handleInput(val, 'last_name')}
-          value={field.last_name}
-          style={styles.pass}
-        />
-        <TitleInput
-          title="Nomer HP"
-          placeholder="081234567890"
-          onChangeText={val => handleInput(val, 'phone')}
-          keyboardType={'numeric'}
-          value={field.phone}
-          style={styles.pass}
-          maxLength={13}
-        />
-        <TitleButton
-          title="Tanggal Lahir"
-          placeholder="1 Januari 2000"
-          onPress={() => setIsDate(true)}
-          data={field?.tgl_lahir ? formatDate(field?.tgl_lahir) : null}
-        />
-        <ActivityLevelButton
-          title="Jenis Kelamin"
-          onPress={val => handleInput(val, 'gender')}
-          radio1="Laki-laki"
-          radio2="Perempuan"
-          value1={1}
-          value2={2}
-          selected={field.gender}
-          style={styles.pass}
-        />
-        <TitleInput
-          title="Password"
-          placeholder="8-16 Karakter"
-          autoCapitalize="none"
-          pass
-          style={styles.pass}
-          onChangeText={val => handleInput(val, 'password')}
-          value={field.password}
-        />
-        <TitleInput
-          title="Ulangi Password"
-          placeholder="8-16 Karakter"
-          autoCapitalize="none"
-          pass
-          style={styles.pass}
-          onChangeText={val => handleInput(val, 'confirmPassword')}
-          value={field.confirmPassword}
-        />
-        {error ? (
-          <View style={styles.error}>
-            <Icon name="alert-circle" style={styles.errorIcon} size={16} />
-            <Text style={[FONTS.text10, styles.errorIcon]}>{error}</Text>
+          <TitleInput
+            title="Email"
+            placeholder="Email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            style={styles.pass}
+            onChangeText={val => handleInput(val, 'email')}
+            value={field.email}
+          />
+          <TitleInput
+            title="Alamat"
+            placeholder="jln. Senopati"
+            style={styles.pass}
+            onChangeText={val => handleInput(val, 'address')}
+            value={field.address}
+          />
+          <TitleInput
+            title="Nama Depan"
+            placeholder="Syifa"
+            onChangeText={val => handleInput(val, 'first_name')}
+            value={field.first_name}
+            style={styles.pass}
+          />
+          <TitleInput
+            title="Nama Belakang"
+            placeholder="Hadju"
+            onChangeText={val => handleInput(val, 'last_name')}
+            value={field.last_name}
+            style={styles.pass}
+          />
+          <TitleInput
+            title="Nomer HP"
+            placeholder="081234567890"
+            onChangeText={val => handleInput(val, 'phone')}
+            keyboardType={'numeric'}
+            value={field.phone}
+            style={styles.pass}
+            maxLength={13}
+          />
+          <TitleButton
+            title="Tanggal Lahir"
+            placeholder="1 Januari 2000"
+            onPress={() => setIsDate(true)}
+            data={field?.tgl_lahir ? formatDate(field?.tgl_lahir) : null}
+          />
+          <ActivityLevelButton
+            title="Jenis Kelamin"
+            onPress={val => handleInput(val, 'gender')}
+            radio1="Laki-laki"
+            radio2="Perempuan"
+            value1={1}
+            value2={2}
+            selected={field.gender}
+            style={styles.pass}
+          />
+          <TitleInput
+            title="Password"
+            placeholder="8-16 Karakter"
+            autoCapitalize="none"
+            pass
+            style={styles.pass}
+            onChangeText={val => handleInput(val, 'password')}
+            value={field.password}
+          />
+          <TitleInput
+            title="Ulangi Password"
+            placeholder="8-16 Karakter"
+            autoCapitalize="none"
+            pass
+            style={styles.pass}
+            onChangeText={val => handleInput(val, 'confirmPassword')}
+            value={field.confirmPassword}
+          />
+          {error ? (
+            <View style={styles.error}>
+              <Icon name="alert-circle" style={styles.errorIcon} size={16} />
+              <Text style={[FONTS.text10, styles.errorIcon]}>{error}</Text>
+            </View>
+          ) : null}
+          <View style={styles.check}>
+            <TouchableOpacity style={styles.checkIcon} onPress={handleCheck}>
+              <Icon
+                name={isCheck ? 'checkbox' : 'square-outline'}
+                size={20}
+                color={COLORS.primary}
+              />
+            </TouchableOpacity>
+            <Text style={[FONTS.text12, styles.secondary]}>
+              Setuju dengan kebijakan & aturan mammaSIP.
+            </Text>
           </View>
-        ) : null}
-        <View style={styles.check}>
-          <TouchableOpacity style={styles.checkIcon} onPress={handleCheck}>
-            <Icon
-              name={isCheck ? 'checkbox' : 'square-outline'}
-              size={20}
-              color={COLORS.primary}
-            />
+          <MainButton
+            title="Daftar Sekarang"
+            disable={
+              !field.password ||
+              !field.confirmPassword ||
+              !field.email ||
+              !field.first_name ||
+              !field.tgl_lahir ||
+              !field.phone ||
+              !isCheck
+            }
+            onPress={handleRegister}
+          />
+          <TouchableOpacity
+            style={styles.register}
+            activeOpacity={1}
+            onPress={() => navigation.goBack()}>
+            <Text style={[FONTS.text12, {color: COLORS.black}]}>
+              Sudah punya akun?{' '}
+            </Text>
+            <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>
+              Masuk
+            </Text>
           </TouchableOpacity>
-          <Text style={[FONTS.text12, styles.secondary]}>
-            Setuju dengan kebijakan & aturan mammaSIP.
-          </Text>
-        </View>
-        <MainButton
-          title="Daftar Sekarang"
-          disable={
-            !field.password ||
-            !field.confirmPassword ||
-            !field.email ||
-            !field.first_name ||
-            !field.tgl_lahir ||
-            !field.phone ||
-            !isCheck
-          }
-          onPress={handleRegister}
-        />
-        <TouchableOpacity
-          style={styles.register}
-          activeOpacity={1}
-          onPress={() => navigation.goBack()}>
-          <Text style={[FONTS.text12, {color: COLORS.black}]}>
-            Sudah punya akun?{' '}
-          </Text>
-          <Text style={[FONTS.textBold12, {color: COLORS.primary}]}>Masuk</Text>
-        </TouchableOpacity>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
       <DatePicker
         modal
         open={isDate}
@@ -269,6 +278,7 @@ const RegisterScreen = ({navigation}) => {
         }}
         mode="date"
         maximumDate={new Date()}
+        theme="light"
       />
     </Container>
   );

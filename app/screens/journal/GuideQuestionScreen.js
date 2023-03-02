@@ -118,6 +118,8 @@ const GuideQuestionScreen = ({navigation}) => {
       }
     }
   };
+  console.log('data', JSON.stringify(data));
+  console.log('groupActive', groupActive);
 
   return (
     <Container>

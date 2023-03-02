@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {Keyboard} from 'react-native';
+import {Keyboard, KeyboardAvoidingView, Platform} from 'react-native';
 import {Container} from '../../components/Container';
 import {HeaderTitle} from '../../components/Headers';
 import {
@@ -92,34 +92,39 @@ const CancerQuestionScreen = ({route, navigation}) => {
   return (
     <Container>
       <HeaderTitle title="Analisa Risiko Kanker" />
-      {isFinish ? (
-        <Answer
-          data={data}
-          imt={imt}
-          activity={activity}
-          onRefresh={handleRefreshQuestion}
-        />
-      ) : (
-        <>
-          <Number page={page} />
-          {page === 1 ? (
-            <Question1 onPress={handlePage} selected={data.pick1} />
-          ) : page === 2 ? (
-            <Question2 onPress={handlePage} selected={data.pick2} />
-          ) : page === 3 ? (
-            <Question3 onPress={handlePage} selected={data.pick3} />
-          ) : page === 4 ? (
-            <Question4 onPress={handlePage} selected={data.pick4} />
-          ) : page === 5 ? (
-            <Question5 onPress={handleImt} data={field} />
-          ) : page === 6 ? (
-            <Question6
-              onPress={handleCalculation}
-              onPressBack={() => setPage(5)}
-            />
-          ) : null}
-        </>
-      )}
+      <KeyboardAvoidingView
+        behavior={'padding'}
+        style={{flex: 1}}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        {isFinish ? (
+          <Answer
+            data={data}
+            imt={imt}
+            activity={activity}
+            onRefresh={handleRefreshQuestion}
+          />
+        ) : (
+          <>
+            <Number page={page} />
+            {page === 1 ? (
+              <Question1 onPress={handlePage} selected={data.pick1} />
+            ) : page === 2 ? (
+              <Question2 onPress={handlePage} selected={data.pick2} />
+            ) : page === 3 ? (
+              <Question3 onPress={handlePage} selected={data.pick3} />
+            ) : page === 4 ? (
+              <Question4 onPress={handlePage} selected={data.pick4} />
+            ) : page === 5 ? (
+              <Question5 onPress={handleImt} data={field} />
+            ) : page === 6 ? (
+              <Question6
+                onPress={handleCalculation}
+                onPressBack={() => setPage(5)}
+              />
+            ) : null}
+          </>
+        )}
+      </KeyboardAvoidingView>
       {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
