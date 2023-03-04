@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     fontFamily: 'Inter-Regular',
+    color: COLORS.black,
   },
   buttonShow: {
     paddingHorizontal: 8,

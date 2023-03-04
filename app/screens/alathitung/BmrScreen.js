@@ -6,6 +6,8 @@ import {
   StatusBar,
   ScrollView,
   SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
@@ -63,90 +65,95 @@ const BmrScreen = ({navigation}) => {
         onPressBack={() => navigation.goBack()}
         backgroundColor={COLORS.secondary}
       />
-      <ScrollView contentContainerStyle={styles.scroll}>
-        <View style={styles.header}>
-          <View style={styles.icon}>
-            <ICON.bmr width={80} height={80} />
+      <KeyboardAvoidingView
+        behavior={'padding'}
+        style={{flex: 1}}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        <ScrollView contentContainerStyle={styles.scroll}>
+          <View style={styles.header}>
+            <View style={styles.icon}>
+              <ICON.bmr width={80} height={80} />
+            </View>
+            <View style={styles.title}>
+              <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
+                Alat Pengukur Kebutuhan Kalori
+              </Text>
+              <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
+                <Text
+                  style={[
+                    FONTS.text10,
+                    {color: COLORS.white, marginTop: 4, fontStyle: 'italic'},
+                  ]}>
+                  Basal Metabolic Rate
+                </Text>{' '}
+                (BMR) adalah kebutuhan kalori minimal yang dipakai organ-organ
+                tubuh untuk melakukan tugas dasarnya. Dengan memenuhi kebutuhan
+                kalori harian, tubuh dapat tumbuh dan berfungsi dengan baik.
+              </Text>
+            </View>
           </View>
-          <View style={styles.title}>
-            <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
-              Alat Pengukur Kebutuhan Kalori
-            </Text>
-            <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
-              <Text
-                style={[
-                  FONTS.text10,
-                  {color: COLORS.white, marginTop: 4, fontStyle: 'italic'},
-                ]}>
-                Basal Metabolic Rate
-              </Text>{' '}
-              (BMR) adalah kebutuhan kalori minimal yang dipakai organ-organ
-              tubuh untuk melakukan tugas dasarnya. Dengan memenuhi kebutuhan
-              kalori harian, tubuh dapat tumbuh dan berfungsi dengan baik.
-            </Text>
+          <View style={styles.body}>
+            <View style={styles.dividerWrapper}>
+              <View style={styles.divider} />
+            </View>
+            <CalculatorInput
+              title="Berapa usia anda"
+              type="Tahun"
+              placeholder="18"
+              maxLength={3}
+              keyboardType="numeric"
+              onChangeText={val => handleInput('age', val)}
+              value={field.age}
+            />
+            <CalculatorInput
+              title="Berat badan"
+              type="Kg"
+              placeholder="56"
+              maxLength={3}
+              keyboardType="numeric"
+              onChangeText={val => handleInput('weight', val)}
+              value={field.weight}
+            />
+            <CalculatorInput
+              title="Tinggi Badan"
+              type="Cm"
+              placeholder="164"
+              maxLength={3}
+              keyboardType="numeric"
+              onChangeText={val => handleInput('height', val)}
+              value={field.height}
+            />
+            <ActivityLevelButton
+              title="Jenis Kelamin"
+              onPress={handleRadioButton}
+              radio1="Laki-laki"
+              radio2="Perempuan"
+              value1={1}
+              value2={2}
+              selected={field.gender}
+            />
+            <InputButton
+              placeholder={'Pilih Durasi'}
+              title={'Durasi Olahraga Kamu'}
+              data={selected?.title}
+              onPress={() =>
+                handleNavigation('Duration', {updateDuration, selected})
+              }
+            />
+            <MainButton
+              title="Hitung"
+              style={styles.button}
+              onPress={handleCalculation}
+              disable={
+                !field.age ||
+                !field.height ||
+                !field.weight ||
+                !field.exercise_level
+              }
+            />
           </View>
-        </View>
-        <View style={styles.body}>
-          <View style={styles.dividerWrapper}>
-            <View style={styles.divider} />
-          </View>
-          <CalculatorInput
-            title="Berapa usia anda"
-            type="Tahun"
-            placeholder="18"
-            maxLength={3}
-            keyboardType="numeric"
-            onChangeText={val => handleInput('age', val)}
-            value={field.age}
-          />
-          <CalculatorInput
-            title="Berat badan"
-            type="Kg"
-            placeholder="56"
-            maxLength={3}
-            keyboardType="numeric"
-            onChangeText={val => handleInput('weight', val)}
-            value={field.weight}
-          />
-          <CalculatorInput
-            title="Tinggi Badan"
-            type="Cm"
-            placeholder="164"
-            maxLength={3}
-            keyboardType="numeric"
-            onChangeText={val => handleInput('height', val)}
-            value={field.height}
-          />
-          <ActivityLevelButton
-            title="Jenis Kelamin"
-            onPress={handleRadioButton}
-            radio1="Laki-laki"
-            radio2="Perempuan"
-            value1={1}
-            value2={2}
-            selected={field.gender}
-          />
-          <InputButton
-            placeholder={'Pilih Durasi'}
-            title={'Durasi Olahraga Kamu'}
-            data={selected?.title}
-            onPress={() =>
-              handleNavigation('Duration', {updateDuration, selected})
-            }
-          />
-          <MainButton
-            title="Hitung"
-            style={styles.button}
-            onPress={handleCalculation}
-            disable={
-              !field.age ||
-              !field.height ||
-              !field.weight ||
-              !field.exercise_level
-            }
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };

@@ -12,7 +12,6 @@ import {LoadingComponent} from '../../components/Loadings';
 
 const GuideQuestionScreen = ({navigation}) => {
   const {setLoading, user, token} = useContext(AppContext);
-
   const [data, setData] = useState([]);
   const [groupActive, setGroupActive] = useState(1);
   const [isGroup, setIsGroup] = useState(true);
@@ -57,6 +56,7 @@ const GuideQuestionScreen = ({navigation}) => {
     try {
       const res = await getQuestionGuideAPI(token);
       setData(res.data.data);
+      console.log('data', JSON.stringify(res.data.data));
     } catch (e) {
       setError(e);
     } finally {
@@ -118,8 +118,6 @@ const GuideQuestionScreen = ({navigation}) => {
       }
     }
   };
-  console.log('data', JSON.stringify(data));
-  console.log('groupActive', groupActive);
 
   return (
     <Container>

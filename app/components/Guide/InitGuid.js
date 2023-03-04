@@ -26,7 +26,7 @@ const InitGuid = ({onPress, groupActive}) => {
           {groupActive === 1
             ? 'Perhatikan waktu, kebiasaan & posisi anda!'
             : groupActive === 2
-            ? 'Lakukan perabaan payudara dengan cara :'
+            ? 'Lakukan perabaan payudara dengan cara yang dicontohkan pada video di awal.'
             : 'Saat ini payudara Sahabat MammaSIP aman. Ulangi SADARI 1 bulan lagi ya, dan jangan lupa SADANIS setahun sekali.'}
         </Text>
         {groupActive === 3 ? (

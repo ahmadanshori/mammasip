@@ -1,11 +1,12 @@
 import React, {useState, useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import Pdf from 'react-native-pdf';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 
 import {Container} from '../components/Container';
 import {HeaderTitle} from '../components/Headers';
 import {DownloadModal} from '../components/Modals';
+import {ProgreesLoading} from '../components/Loadings';
 
 import {SIZES} from '../constants';
 import {AppContext} from '../index';
@@ -14,6 +15,9 @@ const PdfScreen = ({route}) => {
   const {link} = route.params;
   const {setLoading} = useContext(AppContext);
   const [isVisible, setIsVisible] = useState(false);
+  const [isProgress, setIsProgress] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [finishProgress, setFinishProgress] = useState(null);
 
   const handleVisible = () => {
     setIsVisible(state => !state);
@@ -50,6 +54,55 @@ const PdfScreen = ({route}) => {
       .catch(e => {
         setLoading(false);
       });
+
+    if (Platform.OS === 'ios') {
+      let dirs = ReactNativeBlobUtil.fs.dirs;
+
+      ReactNativeBlobUtil.config({
+        fileCache: true,
+        notification: true,
+        IOSDownloadTask: true,
+        path:
+          dirs.DocumentDir + `/mammasip${(Math.random() * 101).toFixed()}.pdf`,
+      })
+        .fetch('GET', link, {
+          Accept: 'application/json',
+        })
+        .progress((received, total) => {
+          if (!isProgress) {
+            setIsProgress(true);
+          }
+          if (!finishProgress) {
+            setFinishProgress(Number(total));
+          }
+          setProgress(Number(received));
+        })
+        .then(async res => {
+          setIsProgress(false);
+          ReactNativeBlobUtil.ios.previewDocument(res.path());
+          setProgress(0);
+        })
+        .catch(e => {
+          setProgress(0);
+          setIsProgress(false);
+        });
+    } else {
+      ReactNativeBlobUtil.config({
+        fileCache: false,
+        addAndroidDownloads: {
+          useDownloadManager: true,
+          notification: true,
+          mime: 'application/pdf',
+          description: 'Downloading...',
+        },
+      })
+        .fetch('GET', link, {
+          Accept: 'application/json',
+        })
+        .then(res => {})
+        .then(data => {})
+        .catch(e => {});
+    }
   };
   return (
     <Container>
@@ -75,6 +128,9 @@ const PdfScreen = ({route}) => {
       {isVisible && (
         <DownloadModal onClose={handleVisible} onDownload={handleDownload} />
       )}
+      {isProgress ? (
+        <ProgreesLoading progress={progress} finishProgress={finishProgress} />
+      ) : null}
     </Container>
   );
 };

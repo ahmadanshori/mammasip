@@ -20,17 +20,17 @@ const HeaderTitle = ({
   }
   return (
     <View style={containerStyles}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={onGoBack ? onGoBack : () => navigation.goBack()}
+        activeOpacity={SIZES.opacity}>
+        <Icon
+          name={Platform.OS === 'ios' ? 'left' : 'arrowleft'}
+          size={18}
+          color={white ? COLORS.white : COLORS.black}
+        />
+      </TouchableOpacity>
       <View style={styles.wrapper}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={onGoBack ? onGoBack : () => navigation.goBack()}
-          activeOpacity={SIZES.opacity}>
-          <Icon
-            name={Platform.OS === 'ios' ? 'left' : 'arrowleft'}
-            size={18}
-            color={white ? COLORS.white : COLORS.black}
-          />
-        </TouchableOpacity>
         <Text
           style={[
             FONTS.textBold14,
@@ -49,7 +49,9 @@ const HeaderTitle = ({
         <TouchableOpacity style={styles.shareButton} onPress={onDownloadPress}>
           <MaterialIcons name="file-download" size={18} />
         </TouchableOpacity>
-      ) : null}
+      ) : (
+        <View style={styles.empty} />
+      )}
     </View>
   );
 };
@@ -71,12 +73,13 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 16,
-    paddingHorizontal: 24,
+    width: '15%',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
   shareButton: {paddingVertical: 16, paddingHorizontal: 24},
+  empty: {width: '15%', height: 44},
 });
 
 export default HeaderTitle;

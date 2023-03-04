@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     height: SIZES.width5 - 8,
     width: SIZES.width5 - 8,
     borderRadius: 8,
+    backgroundColor: COLORS.lightGray,
   },
   shadowImg: {
     justifyContent: 'center',

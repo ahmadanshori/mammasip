@@ -1,3 +1,4 @@
 import LoadingView from './LoadingView';
 import LoadingComponent from './LoadingComponent';
-export {LoadingView, LoadingComponent};
+import ProgreesLoading from './ProgreesLoading';
+export {LoadingView, LoadingComponent, ProgreesLoading};

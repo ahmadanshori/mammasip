@@ -6,6 +6,8 @@ import {
   StatusBar,
   ScrollView,
   SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {WeightCalculatorHeader} from '../../components/Headers';
 import {CalculatorInput} from '../../components/Inputs';
@@ -50,74 +52,78 @@ const WeightCalculatorScreen = ({navigation}) => {
         onPressBack={() => navigation.goBack()}
         backgroundColor={COLORS.blue}
       />
-      <ScrollView
-        contentContainerStyle={styles.scroll}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <View style={styles.icon}>
-            <ICON.imt width={80} height={80} />
-          </View>
-          <View style={styles.title}>
-            <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
-              Alat Pengukur Indeks Massa Tubuh
-            </Text>
+      <KeyboardAvoidingView
+        behavior={'padding'}
+        style={{flex: 1}}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        <ScrollView
+          contentContainerStyle={styles.scroll}
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.header}>
+            <View style={styles.icon}>
+              <ICON.imt width={80} height={80} />
+            </View>
+            <View style={styles.title}>
+              <Text style={[FONTS.textBold14, {color: COLORS.white}]}>
+                Alat Pengukur Indeks Massa Tubuh
+              </Text>
 
-            <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
-              <Text
-                style={[
-                  FONTS.text10,
-                  {color: COLORS.white, marginTop: 4, fontStyle: 'italic'},
-                ]}>
-                Body Mass Index
-              </Text>{' '}
-              (BMI) atau Indeks Massa Tubuh (IMT) adalah parameter yang
-              digunakan untuk menghitung berat badan seseorang. Melalui
-              perhitungan ini, akan diketahui apakah berat badan Anda tergolong
-              normal, kurang, atau berlebih
-            </Text>
+              <Text style={[FONTS.text10, {color: COLORS.white, marginTop: 4}]}>
+                <Text
+                  style={[
+                    FONTS.text10,
+                    {color: COLORS.white, marginTop: 4, fontStyle: 'italic'},
+                  ]}>
+                  Body Mass Index
+                </Text>{' '}
+                (BMI) atau Indeks Massa Tubuh (IMT) adalah parameter yang
+                digunakan untuk menghitung berat badan seseorang. Melalui
+                perhitungan ini, akan diketahui apakah berat badan Anda
+                tergolong normal, kurang, atau berlebih
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.body}>
-          <View style={styles.dividerWrapper}>
-            <View style={styles.divider} />
-          </View>
-          <CalculatorInput
-            title="Berapa usia anda"
-            type="Tahun"
-            placeholder="18"
-            maxLength={3}
-            keyboardType="numeric"
-            onChangeText={val => handleInput('age', val)}
-            value={field.age}
-          />
-          <CalculatorInput
-            title="Berat badan"
-            type="Kg"
-            placeholder="56"
-            maxLength={3}
-            keyboardType="numeric"
-            onChangeText={val => handleInput('weight', val)}
-            value={field.weight}
-          />
-          <CalculatorInput
-            title="Tinggi Badan"
-            type="Cm"
-            placeholder="164"
-            maxLength={3}
-            keyboardType="numeric"
-            onChangeText={val => handleInput('height', val)}
-            value={field.height}
-          />
-          <ActivityLevelButton
-            title="Jenis Kelamin"
-            onPress={handleRadioButton}
-            radio1="Laki-laki"
-            radio2="Perempuan"
-            value1={1}
-            value2={2}
-            selected={field.gender}
-          />
-          {/* <InputButton
+          <View style={styles.body}>
+            <View style={styles.dividerWrapper}>
+              <View style={styles.divider} />
+            </View>
+            <CalculatorInput
+              title="Berapa usia anda"
+              type="Tahun"
+              placeholder="18"
+              maxLength={3}
+              keyboardType="numeric"
+              onChangeText={val => handleInput('age', val)}
+              value={field.age}
+            />
+            <CalculatorInput
+              title="Berat badan"
+              type="Kg"
+              placeholder="56"
+              maxLength={3}
+              keyboardType="numeric"
+              onChangeText={val => handleInput('weight', val)}
+              value={field.weight}
+            />
+            <CalculatorInput
+              title="Tinggi Badan"
+              type="Cm"
+              placeholder="164"
+              maxLength={3}
+              keyboardType="numeric"
+              onChangeText={val => handleInput('height', val)}
+              value={field.height}
+            />
+            <ActivityLevelButton
+              title="Jenis Kelamin"
+              onPress={handleRadioButton}
+              radio1="Laki-laki"
+              radio2="Perempuan"
+              value1={1}
+              value2={2}
+              selected={field.gender}
+            />
+            {/* <InputButton
             placeholder={'Pilih Durasi'}
             title={'Durasi Olahraga Kamu'}
             data={selected?.title}
@@ -125,14 +131,15 @@ const WeightCalculatorScreen = ({navigation}) => {
               handleNavigation('Duration', {updateDuration, selected})
             }
           /> */}
-          <MainButton
-            title="Hitung"
-            style={styles.button}
-            onPress={handleCalculation}
-            disable={!field.age || !field.height || !field.weight}
-          />
-        </View>
-      </ScrollView>
+            <MainButton
+              title="Hitung"
+              style={styles.button}
+              onPress={handleCalculation}
+              disable={!field.age || !field.height || !field.weight}
+            />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };

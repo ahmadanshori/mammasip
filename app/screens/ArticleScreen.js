@@ -61,7 +61,7 @@ const ArticleScreen = ({route}) => {
 
 const styles = StyleSheet.create({
   wrapper: {flex: 1},
-  webview: {height: SIZES.height, width: '100%', paddingHorizontal: 6},
+  webview: {height: SIZES.height, width: '100%', paddingHorizontal: 12},
 });
 
 export default ArticleScreen;

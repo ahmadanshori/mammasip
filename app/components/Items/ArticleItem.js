@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     height: SIZES.width3,
     width: SIZES.width3,
     borderRadius: 8,
+    backgroundColor: COLORS.lightGray,
   },
   shadowImg: {
     height: SIZES.width3,
