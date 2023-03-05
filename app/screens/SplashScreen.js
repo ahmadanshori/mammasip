@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Container} from '../components/Container';
 import {COLORS, FONTS, SIZES} from '../constants';
@@ -31,7 +31,7 @@ const SplashScreen = () => {
       />
       <View style={styles.text}>
         <Text style={[FONTS.textBold12, {color: COLORS.white}]}>
-          Version 1.20.1
+          Version {Platform.OS === 'ios' ? '1.5.1' : '1.20.1'}
         </Text>
       </View>
     </Container>

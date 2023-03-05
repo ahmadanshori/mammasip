@@ -43,6 +43,7 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
           value: selected,
         },
       ];
+
       if (groupActive === 0 && selected === 0) {
         dropdownalert.alertWithType(
           'warn',
@@ -62,7 +63,7 @@ const QuestionGuide = ({data, groupActive, back, next}) => {
           value: selected,
         },
       ];
-      if (groupActive === 0 && selected !== 1) {
+      if (groupActive === 0 && selected === 0) {
         dropdownalert.alertWithType(
           'warn',
           '',

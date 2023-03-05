@@ -25,7 +25,7 @@ const GuideDetailScreen = ({navigation, route}) => {
   const [answereData, setAnswereData] = useState([]);
   const [isLoad, setIsLoad] = useState(true);
   const [error, setError] = useErrorHandler();
-  console.log('answereData', answereData);
+
   useEffect(() => {
     getInitialData();
   }, []);
@@ -43,7 +43,6 @@ const GuideDetailScreen = ({navigation, route}) => {
         });
       });
       setData(resDetail.data.data.formulir_user);
-      console.log('answer', answer);
       setAnswereData(answer);
     } catch (e) {
       setError(e);

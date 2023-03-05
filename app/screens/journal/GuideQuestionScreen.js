@@ -56,7 +56,6 @@ const GuideQuestionScreen = ({navigation}) => {
     try {
       const res = await getQuestionGuideAPI(token);
       setData(res.data.data);
-      console.log('data', JSON.stringify(res.data.data));
     } catch (e) {
       setError(e);
     } finally {
