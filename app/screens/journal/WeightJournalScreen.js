@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Container} from '../../components/Container';
@@ -75,104 +77,109 @@ const WeightJournalScreen = ({navigation}) => {
   return (
     <Container>
       <HeaderTitle title="Jurnal berat badan Anda" />
-      {isLoad ? (
-        <LoadingComponent />
-      ) : (
-        <ScrollView>
-          <View style={styles.wrapper}>
-            <View style={styles.header}>
-              <View>
-                <Text style={FONTS.text12}>Berat Badan Terakhir</Text>
-                {data?.jurnal_imt_berat_terakhir ? (
-                  <View style={styles.row}>
-                    <Text style={FONTS.textBold24}>
-                      {data?.jurnal_imt_berat_terakhir}
-                    </Text>
-                    <Text
-                      style={[
-                        FONTS.text16,
-                        {color: COLORS.gray, marginLeft: 6},
-                      ]}>
-                      Kg
-                    </Text>
+      <KeyboardAvoidingView
+        behavior={'padding'}
+        keyboardVerticalOffset={40}
+        style={styles.flex}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        {isLoad ? (
+          <LoadingComponent />
+        ) : (
+          <ScrollView>
+            <View style={styles.wrapper}>
+              <View style={styles.header}>
+                <View>
+                  <Text style={FONTS.text12}>Berat Badan Terakhir</Text>
+                  {data?.jurnal_imt_berat_terakhir ? (
+                    <View style={styles.row}>
+                      <Text style={FONTS.textBold24}>
+                        {data?.jurnal_imt_berat_terakhir}
+                      </Text>
+                      <Text
+                        style={[
+                          FONTS.text16,
+                          {color: COLORS.gray, marginLeft: 6},
+                        ]}>
+                        Kg
+                      </Text>
+                    </View>
+                  ) : null}
+                </View>
+                {data?.jurnal_imt_ideal ? (
+                  <View>
+                    <Text style={FONTS.text12}>Ideal</Text>
+                    <View style={styles.row}>
+                      <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
+                        {Math.round(data?.jurnal_imt_ideal)} -{' '}
+                        {Math.round(data?.jurnal_imt_ideal_next)}
+                      </Text>
+                      <Text
+                        style={[
+                          FONTS.text16,
+                          {color: COLORS.gray, marginLeft: 6},
+                        ]}>
+                        Kg
+                      </Text>
+                    </View>
                   </View>
                 ) : null}
+                <TouchableOpacity
+                  onPress={() => setIsActivity(true)}
+                  style={{
+                    elevation: 10,
+                    backgroundColor: COLORS.white,
+                    borderRadius: 50,
+                  }}>
+                  <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
+                </TouchableOpacity>
               </View>
-              {data?.jurnal_imt_ideal ? (
-                <View>
-                  <Text style={FONTS.text12}>Ideal</Text>
-                  <View style={styles.row}>
-                    <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
-                      {Math.round(data?.jurnal_imt_ideal)} -{' '}
-                      {Math.round(data?.jurnal_imt_ideal_next)}
-                    </Text>
-                    <Text
-                      style={[
-                        FONTS.text16,
-                        {color: COLORS.gray, marginLeft: 6},
-                      ]}>
-                      Kg
-                    </Text>
-                  </View>
-                </View>
+              {data?.jurnal_imt_kondisi_terakhir ? (
+                <Image
+                  resizeMode="contain"
+                  source={
+                    data?.jurnal_imt_kondisi_terakhir === 'Under Weigth'
+                      ? require('../../assets/images/1.png')
+                      : data?.jurnal_imt_kondisi_terakhir === 'Normal Weight'
+                      ? require('../../assets/images/2.png')
+                      : data?.jurnal_imt_kondisi_terakhir === 'Over Weigth'
+                      ? require('../../assets/images/3.png')
+                      : data?.jurnal_imt_kondisi_terakhir === 'Obesity I'
+                      ? require('../../assets/images/4.png')
+                      : require('../../assets/images/5.png')
+                  }
+                  style={styles.img}
+                />
               ) : null}
-              <TouchableOpacity
-                onPress={() => setIsActivity(true)}
-                style={{
-                  elevation: 10,
-                  backgroundColor: COLORS.white,
-                  borderRadius: 50,
-                }}>
-                <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
-              </TouchableOpacity>
-            </View>
-            {data?.jurnal_imt_kondisi_terakhir ? (
-              <Image
-                resizeMode="contain"
-                source={
-                  data?.jurnal_imt_kondisi_terakhir === 'Under Weigth'
-                    ? require('../../assets/images/1.png')
-                    : data?.jurnal_imt_kondisi_terakhir === 'Normal Weight'
-                    ? require('../../assets/images/2.png')
-                    : data?.jurnal_imt_kondisi_terakhir === 'Over Weigth'
-                    ? require('../../assets/images/3.png')
-                    : data?.jurnal_imt_kondisi_terakhir === 'Obesity I'
-                    ? require('../../assets/images/4.png')
-                    : require('../../assets/images/5.png')
-                }
-                style={styles.img}
-              />
-            ) : null}
 
-            {data.jurnal_imt_last.map(item => (
-              <WeightItem key={item.id_jurnal_imt} data={item} />
-            ))}
-          </View>
-          <Divider />
-          <View style={styles.wrapper}>
-            <Text
-              style={[
-                FONTS.textBold16,
-                {color: COLORS.black, marginBottom: 8},
-              ]}>
-              Saran Menu Makanan
-            </Text>
-            <View style={styles.foodWrapper}>
-              <Image
-                resizeMode="contain"
-                source={require('../../assets/icons/food.png')}
-                style={styles.foodImg}
+              {data.jurnal_imt_last.map(item => (
+                <WeightItem key={item.id_jurnal_imt} data={item} />
+              ))}
+            </View>
+            <Divider />
+            <View style={styles.wrapper}>
+              <Text
+                style={[
+                  FONTS.textBold16,
+                  {color: COLORS.black, marginBottom: 8},
+                ]}>
+                Saran Menu Makanan
+              </Text>
+              <View style={styles.foodWrapper}>
+                <Image
+                  resizeMode="contain"
+                  source={require('../../assets/icons/food.png')}
+                  style={styles.foodImg}
+                />
+              </View>
+              <MainButton
+                title="Pilih Jumlah Kalori"
+                onPress={() => navigation.navigate('CaloriesJournal')}
               />
             </View>
-            <MainButton
-              title="Pilih Jumlah Kalori"
-              onPress={() => navigation.navigate('CaloriesJournal')}
-            />
-          </View>
-        </ScrollView>
-      )}
+          </ScrollView>
+        )}
 
-      {/* {isReminder && (
+        {/* {isReminder && (
         <ReminderModals
           onCalendar={() => setIsCalendar(true)}
           time={time}
@@ -180,19 +187,20 @@ const WeightJournalScreen = ({navigation}) => {
           onClose={handleCloseReminder}
         />
       )} */}
-      {isActivity && (
-        <WeightModal
-          onClose={() => setIsActivity(false)}
-          onAddPress={handleCreateJournal}
-        />
-      )}
-
+        {isActivity && (
+          <WeightModal
+            onClose={() => setIsActivity(false)}
+            onAddPress={handleCreateJournal}
+          />
+        )}
+      </KeyboardAvoidingView>
       {error.noInternet ? <ErrorNetwork onPress={handleRefresh} /> : null}
       {error.error ? <ErrorServer onPress={handleRefresh} /> : null}
     </Container>
   );
 };
 const styles = StyleSheet.create({
+  flex: {flex: 1},
   wrapper: {paddingHorizontal: 16, paddingVertical: 24},
   header: {
     flexDirection: 'row',

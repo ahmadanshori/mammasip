@@ -5,6 +5,8 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -98,106 +100,119 @@ const SportsJournalScreen = () => {
   return (
     <Container>
       <HeaderTitle title="Jurnal olahraga Anda" />
-      {isLoad ? (
-        <LoadingComponent />
-      ) : (
-        <ScrollView>
-          <View style={styles.wrapper}>
-            <View style={styles.header}>
-              <View>
-                <Text style={FONTS.text12}>Aktivitas dalam seminggu</Text>
-                <View style={styles.row}>
-                  <Text style={FONTS.textBold24}>
-                    {journalData?.jurnal_olahraga_total}
-                  </Text>
-                  <Text
-                    style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
-                    Menit
-                  </Text>
-                </View>
-              </View>
-              <View>
-                <Text style={FONTS.text12}>Rekomendasi</Text>
-                <View style={styles.row}>
-                  <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
-                    {journalData?.jurnal_olahraga_rekomendasi}
-                  </Text>
-                  <Text
-                    style={[FONTS.text16, {color: COLORS.gray, marginLeft: 6}]}>
-                    Menit
-                  </Text>
-                </View>
-              </View>
-              <TouchableOpacity
-                onPress={() => setIsActivity(true)}
-                style={styles.circleIcon}>
-                <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.pengingat}>
-              <MaterialCommunityIcons
-                name={'alert-circle'}
-                size={20}
-                color={COLORS.darkBlue}
-              />
-              <Text style={[FONTS.text12, {flex: 1, marginLeft: 12}]}>
-                Sahabat MammaSIP dalam seminggu sebaiknya berolahraga selama{' '}
-                <Text style={FONTS.textBold12}>150 </Text>
-                menit untuk olahraga sedang, dan{' '}
-                <Text style={FONTS.textBold12}>75 </Text> menit untuk olahraga
-                berat.
-              </Text>
-            </View>
-            {journalData.jurnal_olahraga_last.length ? (
-              <>
-                <View style={styles.row}>
-                  <View style={styles.margin}>
+      <KeyboardAvoidingView
+        behavior={'padding'}
+        keyboardVerticalOffset={40}
+        style={styles.flex}
+        enabled={Platform.OS === 'ios' ? true : false}>
+        {isLoad ? (
+          <LoadingComponent />
+        ) : (
+          <ScrollView>
+            <View style={styles.wrapper}>
+              <View style={styles.header}>
+                <View>
+                  <Text style={FONTS.text12}>Aktivitas dalam seminggu</Text>
+                  <View style={styles.row}>
+                    <Text style={FONTS.textBold24}>
+                      {journalData?.jurnal_olahraga_total}
+                    </Text>
                     <Text
                       style={[
-                        FONTS.textBold12,
-                        {transform: [{rotate: '270deg'}]},
+                        FONTS.text16,
+                        {color: COLORS.gray, marginLeft: 6},
                       ]}>
                       Menit
                     </Text>
                   </View>
-                  <VictoryChart
-                    width={SIZES.width}
-                    theme={VictoryTheme.material}
-                    domainPadding={10}>
-                    <VictoryBar
-                      data={journalData?.jurnal_olahraga_last.reverse()}
-                      x="date"
-                      y="lama_berolahraga"
-                      // cornerRadius={{topLeft: data => console.log(`datum`, data)}}
-                      style={{data: {fill: COLORS.secondary}}}
-                    />
-                  </VictoryChart>
                 </View>
-                <Text style={[FONTS.textBold12, styles.tanggal]}>Tanggal</Text>
-                <View style={styles.history}>
-                  {journalData?.jurnal_olahraga_last.map(item => (
-                    <SportItem key={item.id_jurnal_olahraga} data={item} />
-                  ))}
+                <View>
+                  <Text style={FONTS.text12}>Rekomendasi</Text>
+                  <View style={styles.row}>
+                    <Text style={[FONTS.textBold24, {color: COLORS.green}]}>
+                      {journalData?.jurnal_olahraga_rekomendasi}
+                    </Text>
+                    <Text
+                      style={[
+                        FONTS.text16,
+                        {color: COLORS.gray, marginLeft: 6},
+                      ]}>
+                      Menit
+                    </Text>
+                  </View>
                 </View>
-              </>
-            ) : null}
+                <TouchableOpacity
+                  onPress={() => setIsActivity(true)}
+                  style={styles.circleIcon}>
+                  <Icon name="pluscircle" size={50} color={COLORS.darkBlue} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.pengingat}>
+                <MaterialCommunityIcons
+                  name={'alert-circle'}
+                  size={20}
+                  color={COLORS.darkBlue}
+                />
+                <Text style={[FONTS.text12, {flex: 1, marginLeft: 12}]}>
+                  Sahabat MammaSIP dalam seminggu sebaiknya berolahraga selama{' '}
+                  <Text style={FONTS.textBold12}>150 </Text>
+                  menit untuk olahraga sedang, dan{' '}
+                  <Text style={FONTS.textBold12}>75 </Text> menit untuk olahraga
+                  berat.
+                </Text>
+              </View>
+              {journalData.jurnal_olahraga_last.length ? (
+                <>
+                  <View style={styles.row}>
+                    <View style={styles.margin}>
+                      <Text
+                        style={[
+                          FONTS.textBold12,
+                          {transform: [{rotate: '270deg'}]},
+                        ]}>
+                        Menit
+                      </Text>
+                    </View>
+                    <VictoryChart
+                      width={SIZES.width}
+                      theme={VictoryTheme.material}
+                      domainPadding={10}>
+                      <VictoryBar
+                        data={journalData?.jurnal_olahraga_last.reverse()}
+                        x="date"
+                        y="lama_berolahraga"
+                        // cornerRadius={{topLeft: data => console.log(`datum`, data)}}
+                        style={{data: {fill: COLORS.secondary}}}
+                      />
+                    </VictoryChart>
+                  </View>
+                  <Text style={[FONTS.textBold12, styles.tanggal]}>
+                    Tanggal
+                  </Text>
+                  <View style={styles.history}>
+                    {journalData?.jurnal_olahraga_last.map(item => (
+                      <SportItem key={item.id_jurnal_olahraga} data={item} />
+                    ))}
+                  </View>
+                </>
+              ) : null}
 
-            {/* <Reminder
+              {/* <Reminder
             onPress={() => setIsReminder(true)}
             time={time}
             title="Reminder Harian Aktif"
           /> */}
-          </View>
-        </ScrollView>
-      )}
+            </View>
+          </ScrollView>
+        )}
 
-      {isActivity && (
-        <ActivityModal
-          onClose={() => setIsActivity(false)}
-          onAddPress={handleAddActivity}
-        />
-      )}
-
+        {isActivity && (
+          <ActivityModal
+            onClose={() => setIsActivity(false)}
+            onAddPress={handleAddActivity}
+          />
+        )}
+      </KeyboardAvoidingView>
       {/* {isReminder && (
         <ReminderModals
           onCalendar={() => setIsCalendar(true)}
@@ -214,6 +229,7 @@ const SportsJournalScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  flex: {flex: 1},
   wrapper: {paddingHorizontal: 16, paddingVertical: 24},
   header: {
     flexDirection: 'row',

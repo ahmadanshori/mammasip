@@ -116,13 +116,14 @@ const EditProfileScreen = () => {
   };
 
   return (
-    <Container>
-      <HeaderTitle back title="Edit data diri" />
-      <KeyboardAvoidingView
-        behavior={'padding'}
-        // keyboardVerticalOffset={95}
-        style={{flex: 1}}
-        enabled={Platform.OS === 'ios' ? true : false}>
+    <KeyboardAvoidingView
+      behavior={'padding'}
+      // keyboardVerticalOffset={95}
+      style={{flex: 1}}
+      enabled={Platform.OS === 'ios' ? true : false}>
+      <Container>
+        <HeaderTitle back title="Edit data diri" />
+
         <ScrollView
           contentContainerStyle={styles.wrapper}
           showsVerticalScrollIndicator={false}>
@@ -193,27 +194,28 @@ const EditProfileScreen = () => {
             onPress={handleEditProfile}
           />
         </View>
-      </KeyboardAvoidingView>
-      <ImageModal
-        visible={isPicture}
-        cameraPress={pictureWithCamera}
-        galeryPress={pictureWithGalery}
-        onPresBack={() => setIsPicture(false)}
-      />
-      <DatePicker
-        modal
-        open={isDate}
-        title="Tanggal Lahir"
-        date={field?.tgl_lahir || new Date()}
-        onConfirm={onChange}
-        onCancel={() => {
-          setIsDate(false);
-        }}
-        mode="date"
-        maximumDate={new Date()}
-        theme="light"
-      />
-    </Container>
+
+        <ImageModal
+          visible={isPicture}
+          cameraPress={pictureWithCamera}
+          galeryPress={pictureWithGalery}
+          onPresBack={() => setIsPicture(false)}
+        />
+        <DatePicker
+          modal
+          open={isDate}
+          title="Tanggal Lahir"
+          date={field?.tgl_lahir || new Date()}
+          onConfirm={onChange}
+          onCancel={() => {
+            setIsDate(false);
+          }}
+          mode="date"
+          maximumDate={new Date()}
+          theme="light"
+        />
+      </Container>
+    </KeyboardAvoidingView>
   );
 };
 
